@@ -6,6 +6,9 @@ import java.util.Objects;
 
 public abstract class Product {
 
+    /**
+     *
+     */
     public Product(){
 
     }
@@ -42,38 +45,74 @@ public abstract class Product {
         }
     }
 
+    /**
+     *
+     * @return id int
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id int
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return String this.name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name String
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return String this.description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     *
+     * @param description String
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     *
+     * @return String image
+     */
     public String getImage() {
         return image;
     }
 
+    /**
+     *
+     * @param image String, path of the image
+     */
     public void setImage(String image) {
         this.image = image;
     }
 
+    /**
+     *
+     * @return int quantity
+     */
     public int getQuantity() {
         return quantity;
     }
