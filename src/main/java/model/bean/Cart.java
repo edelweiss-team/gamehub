@@ -1,5 +1,6 @@
 package model.bean;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -90,7 +91,7 @@ public class Cart {
 
         Integer oldQuantity;
         oldQuantity = productsQuantity.get(product.getId());
-        Integer newQuantity = oldQuantity - quantity;
+        int newQuantity = oldQuantity - quantity;
 
         if (newQuantity > 0) {
             productsQuantity.put(product.getId(), newQuantity);
@@ -111,6 +112,10 @@ public class Cart {
 
     public Product getProduct(Integer productId) {
         return products.get(productId);
+    }
+
+    public Collection<Product> getAllProducts() {
+        return products.values();
     }
 
     private User user;
