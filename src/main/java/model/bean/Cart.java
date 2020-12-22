@@ -123,7 +123,6 @@ public class Cart {
     private int numberOfItems;
     private LinkedHashMap<Integer, Product> products;
     private LinkedHashMap<Integer, Integer> productsQuantity;
-
-
+    
 
 }
