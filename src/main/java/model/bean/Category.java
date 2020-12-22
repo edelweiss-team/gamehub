@@ -40,10 +40,12 @@ public class Category {
 
     @Override
     public boolean equals(Object o) {
-        if(o == null)
+        if (o == null) {
             return false;
-        if (!(o instanceof Category))
+        }
+        if (!(o instanceof Category)) {
             return false;
+        }
         Category category = (Category) o;
         return name.equals(category.name);
     }
@@ -55,11 +57,11 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", image='" + image + '\'' +
-                '}';
+        return "Category{"
+                + "name='" + name + '\''
+                + ", description='" + description + '\''
+                + ", image='" + image + '\''
+                + '}';
     }
 
     private String name;
