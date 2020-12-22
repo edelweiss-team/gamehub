@@ -129,7 +129,7 @@ class CartTest {
         testCart.removeProduct(toAddProduct, 9);
         //assert verificano che è stato tolto da entrambe le liste
         assertAll(
-                () -> assertEquals(testCart.contains(toAddProduct.getId()),false),
+            () -> assertEquals(testCart.contains(toAddProduct.getId()),false),
             () -> assertEquals(null,testCart.getQuantitySingleProduct(toAddProduct.getId()))
         );
     }
