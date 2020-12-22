@@ -31,6 +31,17 @@ class CartTest {
     }
 
     @Test
+    void addNotValidQuantityProduct2() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            User testUser = new User();
+            Product toAddProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56, "Descrizione",
+                    "path immagine ", new ArrayList<>(), new ArrayList<>(), 15, "grandezza", 5);
+            Cart testCart = new Cart(testUser);
+            testCart.addProduct(toAddProduct, null);
+        });
+    }
+
+    @Test
     void addNewProduct() {
         User testUser = new User();
         Product toAddProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56, "Descrizione",
