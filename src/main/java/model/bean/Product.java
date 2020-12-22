@@ -16,8 +16,8 @@ public abstract class Product {
      * @param price double
      * @param description String
      * @param image String
-     * @param categories Collection<Categories>
-     * @param tags Collection<Tag>
+     * @param categories Collection<Category></Category>
+     * @param tags Collection<Tag></Tag>
      * @param quantity int
      */
     public Product(int id, String name, double price, String description, String image,
