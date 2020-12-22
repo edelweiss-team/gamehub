@@ -21,7 +21,7 @@ public abstract class Product {
      * @param quantity int
      */
     public Product(int id, String name, double price, String description, String image,
-                   Collection<Category> categories, Collection<Tag> tags, int quantity){
+                   Collection<Category> categories, Collection<Tag> tags, int quantity) {
         this.description = description;
         this.id = id;
         this.image = image;
@@ -31,13 +31,15 @@ public abstract class Product {
 
         //inseriamo le categorie
         this.categories = new HashMap<>();
-        for(Category c : categories)
+        for (Category c : categories) {
             this.categories.put(c.getName(), c);
+        }
 
         //inseriamo i tag
         this.tags = new HashMap<>();
-        for(Tag t : tags)
+        for (Tag t : tags) {
             this.tags.put(t.getName(), t);
+        }
     }
 
     public int getId() {
@@ -88,33 +90,35 @@ public abstract class Product {
         this.price = price;
     }
 
-    public Category hasCategory(String categoryName){
+    public Category hasCategory(String categoryName) {
         return this.categories.get(categoryName);
     }
 
-    public Tag hasTag(String tagName){
+    public Tag hasTag(String tagName) {
         return this.tags.get(tagName);
     }
 
-    public void addCategory(Category c){
+    public void addCategory(Category c) {
         this.categories.put(c.getName(), c);
     }
 
-    public Category removeCategory(Category c){
+    public Category removeCategory(Category c) {
         Category toRemove = this.categories.get(c.getName());
-        if(toRemove != null)
+        if (toRemove != null) {
             this.categories.remove(c.getName());
+        }
         return toRemove;
     }
 
-    public void addTag(Tag t){
+    public void addTag(Tag t) {
         this.tags.put(t.getName(), t);
     }
 
-    public Tag removeTag(Tag t){
+    public Tag removeTag(Tag t) {
         Tag toRemove = this.tags.get(t.getName());
-        if(toRemove != null)
+        if (toRemove != null) {
             this.tags.remove(t.getName());
+        }
         return toRemove;
     }
 
@@ -125,8 +129,9 @@ public abstract class Product {
     public void setCategories(Collection<Category> categories) {
         //inseriamo le categorie
         this.categories = new HashMap<>();
-        for(Category c : categories)
+        for (Category c : categories) {
             this.categories.put(c.getName(), c);
+        }
     }
 
     public Collection<Tag> getTags() {
@@ -136,16 +141,18 @@ public abstract class Product {
     public void setTags(Collection<Tag> tags) {
         //inseriamo i tag
         this.tags = new HashMap<>();
-        for(Tag t : tags)
+        for (Tag t : tags) {
             this.tags.put(t.getName(), t);
+        }
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o == null)
+        if (o == null) {
             return false;
-        else if(getClass() != o.getClass())
+        } else if (getClass() != o.getClass()) {
             return false;
+        }
         Product product = (Product) o;
         return id == product.id;
     }
@@ -157,14 +164,14 @@ public abstract class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", image='" + image + '\'' +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                '}';
+        return "Product{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", description='" + description + '\''
+                + ", image='" + image + '\''
+                + ", quantity=" + quantity
+                + ", price=" + price
+                + '}';
     }
 
     private int id;

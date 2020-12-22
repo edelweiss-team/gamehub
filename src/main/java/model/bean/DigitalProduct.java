@@ -2,11 +2,12 @@ package model.bean;
 
 import java.util.Collection;
 
-public class DigitalProduct extends Product{
+public class DigitalProduct extends Product {
 
     public DigitalProduct(int id, String name, double price, String description, String image,
                           Collection<Category> categories, Collection<Tag> tags, int quantity,
-                          String platform, String releaseDate, int requiredAge, String softwareHouse, String publisher){
+                          String platform, String releaseDate, int requiredAge,
+                          String softwareHouse, String publisher) {
 
         super(id, name, price, description, image, categories, tags, quantity);
         this.platform = platform;
@@ -54,6 +55,17 @@ public class DigitalProduct extends Product{
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()
+                + " platform='" + platform + '\''
+                + ", releaseDate='" + releaseDate + '\''
+                + ", requiredAge=" + requiredAge
+                + ", softwareHouse='" + softwareHouse + '\''
+                + ", publisher='" + publisher + '\''
+                + '}';
     }
 
     private String platform;

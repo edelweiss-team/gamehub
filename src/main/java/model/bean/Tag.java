@@ -2,9 +2,7 @@ package model.bean;
 
 import java.util.Objects;
 
-/**
- *
- */
+
 public class Tag {
 
     public Tag(){
@@ -12,23 +10,25 @@ public class Tag {
     }
 
     /**
+     *
      * @param name String
      */
-    public Tag(String name){
+    public Tag(String name) {
         this.name = name;
     }
 
     /**
-     *
-     * @param o
+     * @param o Object
      * @return true iff
      */
     @Override
     public boolean equals(Object o) {
-        if(o == null)
+        if (o == null) {
             return false;
-        if (!(o instanceof Tag))
+        }
+        if (!(o instanceof Tag)) {
             return false;
+        }
         Tag tag = (Tag) o;
         return Objects.equals(name, tag.name);
     }

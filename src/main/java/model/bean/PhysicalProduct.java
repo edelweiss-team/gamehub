@@ -2,7 +2,7 @@ package model.bean;
 
 import java.util.Collection;
 
-public class PhysicalProduct extends Product{
+public class PhysicalProduct extends Product {
     public PhysicalProduct(int id, String name, double price, String description, String image,
                            Collection<Category> categories, Collection<Tag> tags, int quantity,
                            String size, double weight) {
@@ -25,6 +25,14 @@ public class PhysicalProduct extends Product{
 
     public void setWeight(double weight) {
         this.weight = weight;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()
+                + " size='" + size + '\''
+                + ", weight=" + weight
+                + '}';
     }
 
     private String size;
