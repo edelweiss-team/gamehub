@@ -97,6 +97,18 @@ class CartTest {
     }
 
     @Test
+    void removeZeroQuantity() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            User testUser = new User();
+            Product toAddProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56, "Descrizione",
+                    "path immagine ", new ArrayList<>(), new ArrayList<>(), 15, "grandezza", 5);
+            Cart testCart = new Cart(testUser);
+            testCart.addProduct(toAddProduct,6);
+            testCart.removeProduct(toAddProduct, 0);
+        });
+    }
+
+    @Test
     void removeLotQuantity() {
         assertThrows(IllegalArgumentException.class, () -> {
             User testUser = new User();
