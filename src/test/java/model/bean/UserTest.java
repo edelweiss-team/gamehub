@@ -50,20 +50,6 @@ class UserTest {
     }
 
     @Test
-    void getPasswordOk(){
-        User u = new User("gigino", "password", "Luigi", "Tufano", "Via Marchese", "Boscoreale", "Italia", "12-12-1999", "gigino@gmail.com",
-                'M', "3351212121");
-        assertEquals(u.getPassword(), "password");
-    }
-
-    @Test
-    void getPasswordNotOk(){
-        User u = new User("gigino", "password", "Luigi", "Tufano", "Via Marchese", "Boscoreale", "Italia", "12-12-1999", "gigino@gmail.com",
-                'M', "3351212121");
-        assertNotEquals(u.getPassword(), "Pasquale");
-    }
-
-    @Test
     void testEqualsOk() {
         User u = new User("gigino", "password", "Luigi", "Tufano", "Via Marchese", "Boscoreale", "Italia", "12-12-1999", "gigino@gmail.com",
                 'M', "3351212121");
