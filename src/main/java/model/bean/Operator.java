@@ -7,12 +7,12 @@ public class Operator extends User {
     }
 
     public Operator(User u, String contractTime, String cv) {
-        super(u.getUsername(), u.getPassword(), u.getName(), u.getSurname(), u.getAddress(),
+        super(u.getUsername(), u.getName(), u.getSurname(), u.getAddress(),
             u.getCity(), u.getCountry(), u.getBirthDate(), u.getMail(), u.getSex(),
             u.getTelephone());
         this.contractTime = contractTime;
         this.cv = cv;
-
+        this.setPasswordHash(u.getPasswordHash());
     }
 
     public Operator(String username, String password, String name, String surname, String address,

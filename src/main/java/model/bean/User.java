@@ -1,15 +1,18 @@
 package model.bean;
 
+import java.math.BigInteger;
+import java.nio.charset.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 public class User {
 
     public User() { }
 
-    public User(String username, String password, String name, String surname, String address,
-        String city, String country, String birthDate, String mail, char sex, String telephone) {
+    public User(String username, String name, String surname, String address, String city,
+                String country, String birthDate, String mail, char sex, String telephone) {
         this.username = username;
-        this.password = password;
         this.name = name;
         this.surname = surname;
         this.address = address;
@@ -19,6 +22,29 @@ public class User {
         this.mail = mail;
         this.sex = sex;
         this.telephone = telephone;
+        this.passwordHash = "";
+    }
+
+    public User(String username, String password, String name, String surname, String address,
+        String city, String country, String birthDate, String mail, char sex, String telephone) {
+        this.username = username;
+        this.name = name;
+        this.surname = surname;
+        this.address = address;
+        this.city = city;
+        this.country = country;
+        this.birthDate = birthDate;
+        this.mail = mail;
+        this.sex = sex;
+        this.telephone = telephone;
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-1");
+            digest.reset();
+            digest.update(password.getBytes(StandardCharsets.UTF_8));
+            this.passwordHash = String.format("%040x", new BigInteger(1, digest.digest()));
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String getUsername() {
@@ -29,12 +55,23 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-1");
+            digest.reset();
+            digest.update(password.getBytes(StandardCharsets.UTF_8));
+            this.passwordHash = String.format("%040x", new BigInteger(1, digest.digest()));
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String getName() {
@@ -112,7 +149,7 @@ public class User {
     @Override
     public String toString() {
         return "User{"
-                + "username='" + username + '\'' + ", password='" + password + '\''
+                + "username='" + username + '\'' + ", password='" + passwordHash + '\''
                 + ", name='" + name + '\'' + ", surname='" + surname + '\'' + ", address='"
                 + address + '\'' + ", city='" + city + '\'' + ", country='" + country + '\''
                 + ", birthDate='" + birthDate + '\'' + ", mail='" + mail + '\'' + ", sex="
@@ -137,7 +174,7 @@ public class User {
 
 
     private String username;
-    private String password;
+    private String passwordHash;
     private String name;
     private String surname;
     private String address;

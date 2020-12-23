@@ -8,10 +8,11 @@ public class Moderator extends User {
 
     // constructor by a User instance
     public Moderator(User u, String contractTime) {
-        super(u.getUsername(), u.getPassword(), u.getName(), u.getSurname(), u.getAddress(),
+        super(u.getUsername(), u.getName(), u.getSurname(), u.getAddress(),
                 u.getCity(), u.getCountry(), u.getBirthDate(), u.getMail(), u.getSex(),
                 u.getTelephone());
         this.contractTime = contractTime;
+        this.setPasswordHash(u.getPasswordHash());
     }
 
     // constructor by parameters
@@ -34,7 +35,7 @@ public class Moderator extends User {
 
     @Override
     public String toString() {
-        return "Moderator{" +
+        return super.toString() + "Moderator{" +
                 "contractTime='" + contractTime + '\'' +
                 '}';
     }
