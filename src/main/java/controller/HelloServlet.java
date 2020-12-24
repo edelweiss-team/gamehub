@@ -3,6 +3,9 @@ package controller;
 import model.bean.Category;
 import model.dao.CategoryDAO;
 
+import model.bean.User;
+import model.dao.UserDAO;
+
 import java.io.*;
 import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
