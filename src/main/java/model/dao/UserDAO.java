@@ -15,7 +15,7 @@ public class UserDAO {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("UPDATE user set password=?,"
-                    + " name=?, surname=?," + " address=?, city=?, country=?, birthDate=?,"
+                    + " name=?, surname=?, address=?, city=?, country=?, birthDate=?,"
                     + " mail=?, sex=?, telephone=? WHERE username=?;");
             st.setString(1, u.getPasswordHash());
             st.setString(2, u.getName());
@@ -28,6 +28,7 @@ public class UserDAO {
             st.setString(9, Character.toString(u.getSex()));
             st.setString(10, u.getTelephone());
             st.setString(11, u.getUsername());
+            st.executeUpdate();
             st.close();
             cn.close();
         } catch (SQLException e) {
@@ -52,6 +53,7 @@ public class UserDAO {
             st.setString(9, u.getMail());
             st.setString(10, Character.toString(u.getSex()));
             st.setString(11, u.getTelephone());
+            st.executeUpdate();
             st.close();
             cn.close();
         } catch (SQLException e) {
@@ -169,7 +171,7 @@ public class UserDAO {
         ArrayList<User> users = new ArrayList<>();
         try {
             Connection cn = ConPool.getConnection();
-            PreparedStatement st = cn.prepareStatement("SELECT * FROM User U WHERE 1=1;");
+            PreparedStatement st = cn.prepareStatement("SELECT * FROM user U WHERE 1=1;");
             ResultSet rs = st.executeQuery();
             User u = null;
             while (rs.next()) {
@@ -203,7 +205,7 @@ public class UserDAO {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("SELECT * "
-                + "FROM User U WHERE LOWER(U.username) LIKE ? LIMIT ? OFFSET ?;");
+                + "FROM user U WHERE LOWER(U.username) LIKE ? LIMIT ? OFFSET ?;");
             st.setString(1, "%" + usernameFragment.toLowerCase() + "%");
             st.setInt(2, limit);
             st.setInt(3, offset);
