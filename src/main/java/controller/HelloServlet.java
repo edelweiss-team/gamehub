@@ -1,12 +1,16 @@
 package controller;
 
+import model.bean.Category;
+import model.dao.CategoryDAO;
+
 import java.io.*;
+import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-@WebServlet(name = "index.html", value = "/index.html")
+@WebServlet("/index.html")
 public class HelloServlet extends HttpServlet {
     private String message;
 

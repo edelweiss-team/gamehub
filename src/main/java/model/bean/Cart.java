@@ -13,6 +13,7 @@ public class Cart {
         products = new LinkedHashMap<>();
         productsQuantity =  new LinkedHashMap<>();
     }
+    public Cart(){}
 
     public User getUser() {
         return user;
