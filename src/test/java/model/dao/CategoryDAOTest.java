@@ -1,23 +1,27 @@
 package model.dao;
 
 import model.bean.Category;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class CategoryDAOTest {
-    private final CategoryDAO cd=new CategoryDAO();
+
+    private final @NotNull CategoryDAO cd=new CategoryDAO();
 
     @Test
     void doRetrieveByNameOk() {
         Category cat1= new Category("Sparatutto","sparatutto per tutti","path");
         cd.doSave(cat1);
         Category cat2=cd.doRetrieveByName("Sparatutto");
-        assertTrue(cat1.getName().equals(cat2.getName()) && cat1.getDescription().equals(cat2.getDescription())
-                            && cat1.getImage().equals(cat2.getImage()));
+        if(cat2 != null)
+            assertTrue(cat1.getName().equals(cat2.getName())
+                    && cat1.getDescription().equals(cat2.getDescription())
+                    && cat1.getImage().equals(cat2.getImage()));
+        else
+            fail();
         cd.doDeleteByName(cat1.getName());
     }
 
@@ -56,8 +60,11 @@ class CategoryDAOTest {
         Category cat1=new Category("Avventura","Avventura per tutti","path");
         cd.doSave(cat1);
         Category cat2=cd.doRetrieveByName("Avventura");
-        assertTrue(cat1.getName().equals(cat2.getName()) && cat1.getDescription().equals(cat2.getDescription())
-                            && cat1.getImage().equals(cat2.getImage()));
+        if(cat2 != null)
+            assertTrue(cat1.getName().equals(cat2.getName()) && cat1.getDescription().equals(cat2.getDescription())
+                                && cat1.getImage().equals(cat2.getImage()));
+        else
+            fail();
         cd.doDeleteByName(cat1.getName());
     }
 
@@ -81,8 +88,11 @@ class CategoryDAOTest {
         cat1.setImage("path2");
         cd.doUpdateByName(cat1, oldName);
         cat1=cd.doRetrieveByName(cat1.getName());
-        assertFalse(cat1.getName().equals(oldName) && cat1.getDescription().equals(oldDesc) &&
-                            cat1.getImage().equals(oldImage));
+        if(cat1 != null)
+            assertFalse(cat1.getName().equals(oldName) && cat1.getDescription().equals(oldDesc) &&
+                                cat1.getImage().equals(oldImage));
+        else
+            fail();
         cd.doDeleteByName(cat1.getName());
     }
 
@@ -102,7 +112,8 @@ class CategoryDAOTest {
     @Test
     void doRetrieveAllxNone() {
         try {
-            ArrayList<Category> list=cd.doRetrieveAll();
+            ArrayList<Category> list =cd.doRetrieveAll();
+            assertTrue(list.isEmpty());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -114,6 +125,7 @@ class CategoryDAOTest {
         cd.doSave(cat1);
         try {
             ArrayList<Category> list=cd.doRetrieveAll();
+            assertEquals(cat1, list.get(0));
             cd.doDeleteByName(cat1.getName());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -128,6 +140,8 @@ class CategoryDAOTest {
         cd.doSave(cat2);
         try {
             ArrayList<Category> list=cd.doRetrieveAll();
+            assertEquals(cat1, list.get(0));
+            assertEquals(cat1, list.get(1));
             cd.doDeleteByName(cat1.getName());
             cd.doDeleteByName(cat2.getName());
         } catch (SQLException throwables) {

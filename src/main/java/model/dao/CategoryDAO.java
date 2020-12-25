@@ -3,10 +3,12 @@ package model.dao;
 import java.sql.*;
 import java.util.ArrayList;
 import model.bean.Category;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class CategoryDAO {
 
-    public Category doRetrieveByName(String name) {
+    public @Nullable Category doRetrieveByName(@NotNull String name) {
         try {
             Connection cn = ConPool.getConnection();
             Statement st = cn.createStatement();
@@ -23,7 +25,7 @@ public class CategoryDAO {
         }
     }
 
-    public void doDeleteByName(String name) {
+    public void doDeleteByName(@NotNull String name) {
         try {
             Connection cn = ConPool.getConnection();
             Statement st = cn.createStatement();
@@ -53,7 +55,7 @@ public class CategoryDAO {
         }
     }
 
-    public void doUpdateByName(Category c, String oldName) {
+    public void doUpdateByName(Category c, @NotNull String oldName) {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement ps = cn.prepareStatement(
@@ -72,11 +74,11 @@ public class CategoryDAO {
         }
     }
 
-    public ArrayList<Category> doRetrieveAll() throws SQLException {
+    public @NotNull ArrayList<Category> doRetrieveAll() throws SQLException {
         Connection cn = ConPool.getConnection();
         Statement st = cn.createStatement();
         ArrayList<Category> categories = new ArrayList<>();
-        ResultSet rs = st.executeQuery("SELECT * FROM Category WHERE 1=1;");
+        ResultSet rs = st.executeQuery("SELECT * FROM Category;");
         while (rs.next()) {
             Category category = new Category(rs.getString(1), rs.getString(2),
                     rs.getString(3));
