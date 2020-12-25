@@ -9,13 +9,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CategoryDAOTest {
 
-    private final @NotNull CategoryDAO cd=new CategoryDAO();
+    private final @NotNull CategoryDAO cd = new CategoryDAO();
 
     @Test
     void doRetrieveByNameOk() {
-        Category cat1= new Category("Sparatutto","sparatutto per tutti","path");
+        Category cat1 = new Category("Sparatutto","sparatutto per tutti","path");
         cd.doSave(cat1);
-        Category cat2=cd.doRetrieveByName("Sparatutto");
+        Category cat2 = cd.doRetrieveByName("Sparatutto");
         if(cat2 != null)
             assertTrue(cat1.getName().equals(cat2.getName())
                     && cat1.getDescription().equals(cat2.getDescription())
@@ -57,9 +57,9 @@ class CategoryDAOTest {
 
     @Test
     void doSaveOk() {
-        Category cat1=new Category("Avventura","Avventura per tutti","path");
+        Category cat1 = new Category("Avventura","Avventura per tutti","path");
         cd.doSave(cat1);
-        Category cat2=cd.doRetrieveByName("Avventura");
+        Category cat2 = cd.doRetrieveByName("Avventura");
         if(cat2 != null)
             assertTrue(cat1.getName().equals(cat2.getName()) && cat1.getDescription().equals(cat2.getDescription())
                                 && cat1.getImage().equals(cat2.getImage()));
@@ -70,7 +70,7 @@ class CategoryDAOTest {
 
     @Test
     void doSaveNotOk() {
-        Category cat1= new Category("TestxSaveNotOk","test di prova","path");
+        Category cat1 = new Category("TestxSaveNotOk","test di prova","path");
         cd.doSave(cat1);
         assertThrows(RuntimeException.class,()->cd.doSave(cat1));
         cd.doDeleteByName(cat1.getName());
@@ -106,7 +106,6 @@ class CategoryDAOTest {
     void doUpdateByNameNotOkNull() {
         Category cat1 = new Category("TestxUpdateNotOkNull","test di prova1","path1");
         assertThrows(RuntimeException.class,()->cd.doUpdateByName(cat1,"'limit"));
-
     }
 
     @Test
@@ -121,10 +120,10 @@ class CategoryDAOTest {
 
     @Test
     void doRetrieveAllxOne() {
-        Category cat1=new Category("TestxRetrieveAllxOne","test di prova1","path1");
+        Category cat1 = new Category("TestxRetrieveAllxOne","test di prova1","path1");
         cd.doSave(cat1);
         try {
-            ArrayList<Category> list=cd.doRetrieveAll();
+            ArrayList<Category> list = cd.doRetrieveAll();
             assertEquals(cat1, list.get(0));
             cd.doDeleteByName(cat1.getName());
         } catch (SQLException throwables) {
@@ -134,12 +133,12 @@ class CategoryDAOTest {
 
     @Test
     void doRetrieveAllxAll() {
-        Category cat1=new Category("TestxRetrieveAllxOne1","test di prova1","path1");
-        Category cat2=new Category("TestxRetrieveAllxOne2","test di prova1","path1");
+        Category cat1 = new Category("TestxRetrieveAllxOne1","test di prova1","path1");
+        Category cat2 = new Category("TestxRetrieveAllxOne2","test di prova1","path1");
         cd.doSave(cat1);
         cd.doSave(cat2);
         try {
-            ArrayList<Category> list=cd.doRetrieveAll();
+            ArrayList<Category> list = cd.doRetrieveAll();
             assertEquals(cat1, list.get(0));
             assertEquals(cat1, list.get(1));
             cd.doDeleteByName(cat1.getName());
