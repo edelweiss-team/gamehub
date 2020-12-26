@@ -1,5 +1,7 @@
 package model.bean;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -71,13 +73,9 @@ public class Order {
     }
 
 
-    public void addProduct(Product product, Integer quantity) {
+    public void addProduct(@NotNull Product product, @NotNull Integer quantity) {
 
-        if (product == null) {
-            throw new IllegalArgumentException("Il prodotto aggiunto al carrello non è valido ");
-        }
-
-        if (quantity == null || quantity < 1) {
+        if (quantity < 1) {
             throw new IllegalArgumentException("Il prodotto aggiunto al carrello "
                     + "deve avere una quantità maggiore di zero ");
         }
@@ -128,7 +126,6 @@ public class Order {
             productsQuantity.remove(product.getId());
             products.remove(product.getId());
         }
-
     }
 
     public Integer getQuantitySingleProduct(Integer productId) {
@@ -156,7 +153,4 @@ public class Order {
     private int numberOfItems;
     private HashMap<Integer, Product> products;
     private HashMap<Integer, Integer> productsQuantity;
-
-
-
 }

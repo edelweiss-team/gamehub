@@ -6,17 +6,6 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderTest {
-
-    @Test
-    void addNullProduct() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            User testUser = new User();
-            Product nullProduct = null;
-            Cart testCart = new Cart(testUser);
-            testCart.addProduct(nullProduct,12);
-        });
-    }
-
     @Test
     void addNotValidQuantityProduct() {
         assertThrows(IllegalArgumentException.class, () -> {
@@ -150,8 +139,8 @@ class OrderTest {
         testOrder.removeProduct(toAddProduct, 9);
         //assert verificano che è stato tolto da entrambe le liste
         assertAll(
-                () -> assertEquals(testOrder.contains(toAddProduct.getId()),false),
-                () -> assertEquals(null,testOrder.getQuantitySingleProduct(toAddProduct.getId()))
+                () -> assertFalse(testOrder.contains(toAddProduct.getId())),
+                () -> assertNull(testOrder.getQuantitySingleProduct(toAddProduct.getId()))
         );
     }
 
