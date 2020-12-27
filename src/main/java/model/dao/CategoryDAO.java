@@ -1,10 +1,15 @@
 package model.dao;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import model.bean.Category;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 
 public class CategoryDAO {
 
@@ -85,6 +90,27 @@ public class CategoryDAO {
             categories.add(category);
         }
         st.close();
+        cn.close();
+        return categories;
+    }
+
+    public @NotNull ArrayList<Category> doRetrieveByNameFragment(@NotNull String name, int offset,
+                                                                 int limit) throws SQLException {
+        Connection cn = ConPool.getConnection();
+        ArrayList<Category> categories = new ArrayList<>();
+        PreparedStatement ps = cn.prepareStatement("SELECT * FROM Category where name like ? limit ? offset ?;");
+        String likeString = "%" + name + "%";
+        ps.setString(1, likeString);
+        ps.setInt(2, limit);
+        ps.setInt(3, offset);
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Category category = new Category(rs.getString(1), rs.getString(2),
+                    rs.getString(3));
+            categories.add(category);
+        }
+        ps.close();
         cn.close();
         return categories;
     }
