@@ -51,7 +51,9 @@ public class TagDAO {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("DELETE FROM tag WHERE name=?;");
             st.setString(1, name);
-            st.executeUpdate();
+            if (st.executeUpdate() != 1) {
+                throw new RuntimeException();
+            }
             st.close();
             cn.close();
         } catch (SQLException e) {
@@ -86,6 +88,8 @@ public class TagDAO {
             return null;
         }
     }
+
+
 
 
 }
