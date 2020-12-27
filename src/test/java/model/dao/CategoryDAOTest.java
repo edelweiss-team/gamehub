@@ -140,7 +140,7 @@ class CategoryDAOTest {
         try {
             ArrayList<Category> list = cd.doRetrieveAll();
             assertEquals(cat1, list.get(0));
-            assertEquals(cat1, list.get(1));
+            assertEquals(cat2, list.get(1));
             cd.doDeleteByName(cat1.getName());
             cd.doDeleteByName(cat2.getName());
         } catch (SQLException throwables) {
@@ -183,7 +183,7 @@ class CategoryDAOTest {
         try {
             ArrayList<Category> list = cd.doRetrieveByNameFragment("NameFragment", 0, 1000);
             assertEquals(cat1, list.get(0));
-            assertEquals(cat1, list.get(1));
+            assertEquals(cat2, list.get(1));
             cd.doDeleteByName(cat1.getName());
             cd.doDeleteByName(cat2.getName());
         } catch (SQLException throwables) {

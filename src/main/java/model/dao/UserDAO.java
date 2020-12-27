@@ -11,9 +11,12 @@ import org.jetbrains.annotations.Nullable;
 
 public class UserDAO {
 
-    public void doUpdate(User u) {
+    @Nullable
+    public void doUpdate(@NotNull User u) {
+
+        Connection cn = null;
         try {
-            Connection cn = ConPool.getConnection();
+            cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("UPDATE user set password=?,"
                     + " name=?, surname=?, address=?, city=?, country=?, birthDate=?,"
                     + " mail=?, sex=?, telephone=? WHERE username=?;");
@@ -28,12 +31,15 @@ public class UserDAO {
             st.setString(9, Character.toString(u.getSex()));
             st.setString(10, u.getTelephone());
             st.setString(11, u.getUsername());
-            st.executeUpdate();
+            if(st.executeUpdate() != 1)
+                throw new RuntimeException();
             st.close();
             cn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException throwables) {
+            throw new RuntimeException(throwables);
         }
+
+
     }
 
     public void doSave(User u) {
@@ -154,12 +160,14 @@ public class UserDAO {
         }
     }
 
-    public void doDeleteFromUsername(String username) {
+    @Nullable
+    public void doDeleteFromUsername(@NotNull String username) {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("DELETE FROM user WHERE username=?;");
             st.setString(1, username);
-            st.executeUpdate();
+            if(st.executeUpdate() != 1)
+                throw new RuntimeException();
             st.close();
             cn.close();
         } catch (SQLException e) {
