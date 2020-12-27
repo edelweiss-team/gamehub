@@ -1,9 +1,9 @@
 package model.bean;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Collection;
 import java.util.HashMap;
+import org.jetbrains.annotations.NotNull;
+
 
 
 public class Order {

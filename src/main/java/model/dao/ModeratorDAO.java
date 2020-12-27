@@ -1,25 +1,30 @@
 package model.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import model.bean.Moderator;
 import model.bean.User;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 public class ModeratorDAO {
+
     public boolean doSave(Moderator m) {
-        UserDAO uDAO = new UserDAO();
+        UserDAO udao = new UserDAO();
         String username = m.getUsername();
 
         // checks if the 'user' external-key exists in DB.
-        if (uDAO.doRetrieveByUsername(username) != null) {
+        if (udao.doRetrieveByUsername(username) != null) {
             try {
                 Connection cn = ConPool.getConnection();
-                PreparedStatement st = cn.prepareStatement("INSERT INTO moderator(user, contractTime)" +
-                                                                " VALUES (?,?);");
+                PreparedStatement st = cn.prepareStatement("INSERT INTO moderator(user, contractTime)"
+                        + " VALUES (?,?);");
                 st.setString(1, username);
-                st.setDate(2, m.getContractTimeAsDate());
+                st.setString(2, m.getContractTime());
 
                 st.executeUpdate();
                 st.close();
@@ -35,17 +40,17 @@ public class ModeratorDAO {
     }
 
     public boolean doUpdate(Moderator m) {
-        UserDAO uDAO = new UserDAO();
+        UserDAO udao = new UserDAO();
         String username = m.getUsername();
 
         // checks if the 'user' external-key exists in DB.
-        if (uDAO.doRetrieveByUsername(username) != null) {
+        if (udao.doRetrieveByUsername(username) != null) {
             try {
                 Connection cn = ConPool.getConnection();
-                PreparedStatement st = cn.prepareStatement("UPDATE moderator SET contractTime = ?" +
-                                                                " WHERE moderator.user = ?");
+                PreparedStatement st = cn.prepareStatement("UPDATE moderator SET contractTime = ?"
+                        + " WHERE moderator.user = ?");
 
-                st.setDate(1, m.getContractTimeAsDate());
+                st.setString(1, m.getContractTime());
                 st.setString(2, username);
 
                 st.executeUpdate();
@@ -61,11 +66,11 @@ public class ModeratorDAO {
         return false;
     }
 
-    public boolean doDeleteByUsername(String username) {
-        UserDAO uDAO = new UserDAO();
+    public boolean doDeleteByUsername(@NotNull String username) {
+        UserDAO udao = new UserDAO();
 
         // checks if the 'user' external-key exists in DB.
-        if (uDAO.doRetrieveByUsername(username) != null) {
+        if (udao.doRetrieveByUsername(username) != null) {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement st = cn.prepareStatement("DELETE FROM moderator WHERE user=?;");
@@ -83,8 +88,9 @@ public class ModeratorDAO {
         return false;
     }
 
+    @NotNull
     public ArrayList<Moderator> doRetrieveAll() {
-        UserDAO uDAO = new UserDAO();
+        UserDAO udao = new UserDAO();
         ArrayList<Moderator> moderators = new ArrayList<>();
 
         try {
@@ -94,20 +100,16 @@ public class ModeratorDAO {
 
             Moderator m = null;
             String username = null;
-            Date contractTime = null;
+            String contractTime = null;
             User user = null;
-            GregorianCalendar contractTimeAsCalendar = null;
 
             while (rs.next()) {
-                contractTime = rs.getDate(1);
+                contractTime = rs.getString(1);
                 username = rs.getString(2);
 
-                user = uDAO.doRetrieveByUsername(username);
-                // we need to convert 'sql.Date' to 'GregorianCalendar'
-                contractTimeAsCalendar = new GregorianCalendar();
-                contractTimeAsCalendar.setTime(contractTime);
+                user = udao.doRetrieveByUsername(username);
 
-                m = new Moderator(user, contractTimeAsCalendar);
+                m = new Moderator(user, contractTime);
                 moderators.add(m);
             }
             rs.close();
@@ -119,27 +121,24 @@ public class ModeratorDAO {
         }
     }
 
-    public Moderator doRetriveByUsername(String username) {
-        UserDAO uDAO = new UserDAO();
+    @Nullable
+    public  Moderator doRetriveByUsername(@NotNull String username) {
+        UserDAO udao = new UserDAO();
         User user = null;
 
-        if ((user = uDAO.doRetrieveByUsername(username)) != null) {
+        if ((user = udao.doRetrieveByUsername(username)) != null) {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement st = cn.prepareStatement("SELECT * FROM moderator WHERE moderator.user=?;");
                 st.setString(1, username);
                 ResultSet rs = st.executeQuery();
 
-                Date contractTime = null;
-                GregorianCalendar contractTimeAsCalendar= null;
+                String contractTime;
                 Moderator m = null;
 
                 if (rs.next()) {
-                    contractTime = rs.getDate(1);
-                    contractTimeAsCalendar = new GregorianCalendar();
-                    contractTimeAsCalendar.setTime(contractTime);
-
-                    m = new Moderator(user, contractTimeAsCalendar);
+                    contractTime = rs.getString(1);
+                    m = new Moderator(user, contractTime);
                 }
                 rs.close();
                 st.close();
