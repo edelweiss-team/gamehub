@@ -101,6 +101,9 @@ public class Cart {
             products.remove(product.getId());
         }
 
+        this.totalPrice -= product.getPrice() * quantity;
+        this.numberOfItems -= quantity;
+
     }
 
     public Integer getQuantitySingleProduct(Integer productId) {
