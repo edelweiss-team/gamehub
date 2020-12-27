@@ -11,6 +11,8 @@ public class PhysicalProduct extends Product {
         this.weight = weight;
     }
 
+    public PhysicalProduct() {}
+
     public String getSize() {
         return size;
     }

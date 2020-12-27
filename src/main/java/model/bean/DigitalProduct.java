@@ -4,6 +4,8 @@ import java.util.Collection;
 
 public class DigitalProduct extends Product {
 
+    public DigitalProduct() {}
+
     public DigitalProduct(int id, String name, double price, String description, String image,
                           Collection<Category> categories, Collection<Tag> tags, int quantity,
                           String platform, String releaseDate, int requiredAge,
