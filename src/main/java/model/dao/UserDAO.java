@@ -31,8 +31,9 @@ public class UserDAO {
             st.setString(9, Character.toString(u.getSex()));
             st.setString(10, u.getTelephone());
             st.setString(11, u.getUsername());
-            if(st.executeUpdate() != 1)
+            if (st.executeUpdate() != 1) {
                 throw new RuntimeException();
+            }
             st.close();
             cn.close();
         } catch (SQLException throwables) {
@@ -166,8 +167,9 @@ public class UserDAO {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("DELETE FROM user WHERE username=?;");
             st.setString(1, username);
-            if(st.executeUpdate() != 1)
+            if (st.executeUpdate() != 1) {
                 throw new RuntimeException();
+            }
             st.close();
             cn.close();
         } catch (SQLException e) {
