@@ -18,7 +18,9 @@ public class CategoryDAO {
             Connection cn = ConPool.getConnection();
             Statement st = cn.createStatement();
             Category category = null;
-            ResultSet rs = st.executeQuery("SELECT * FROM Category C WHERE C.name='" + name + "';");
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM Category C WHERE C.name=?;");
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 category = new Category(rs.getString(1), rs.getString(2), rs.getString(3));
             }
@@ -33,8 +35,10 @@ public class CategoryDAO {
     public void doDeleteByName(@NotNull String name) {
         try {
             Connection cn = ConPool.getConnection();
-            Statement st = cn.createStatement();
-            st.executeUpdate("DELETE FROM Category WHERE name='" + name + "';");
+            PreparedStatement st = cn.prepareStatement("DELETE FROM Category WHERE name=?;");
+            st.setString(1, name);
+            if(st.executeUpdate() != 1)
+                throw new RuntimeException();
             st.close();
             cn.close();
         } catch (SQLException e) {
