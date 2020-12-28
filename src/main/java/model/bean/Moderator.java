@@ -23,7 +23,7 @@ public class Moderator extends User {
      * @param u the user corresponding to the moderator
      * @param contractTime the contract expiration date
      */
-    public Moderator(User u, String contractTime) {
+    public Moderator(@NotNull User u, @NotNull String contractTime) {
         super(u.getUsername(), u.getName(), u.getSurname(), u.getAddress(),
                 u.getCity(), u.getCountry(), u.getBirthDate(), u.getMail(), u.getSex(),
                 u.getTelephone());
@@ -49,9 +49,11 @@ public class Moderator extends User {
      * @param telephone password is the password that the Admin uses to Log in the site
      * @param contractTime the contract expiration date
      */
-    public Moderator(String username, String password, String name, String surname, String address,
-                     String city, String country, String birthDate, String mail, char sex,
-                     String telephone, String contractTime) {
+    public Moderator(@NotNull String username, @NotNull String password, @NotNull String name,
+                     @NotNull String surname, @NotNull String address, @NotNull String city,
+                     @NotNull String country, @NotNull String birthDate,
+                     @NotNull String mail, char sex, @NotNull String telephone,
+                     @NotNull String contractTime) {
 
         super(username, password, name, surname, address, city, country, birthDate, mail, sex,
                 telephone);
@@ -60,7 +62,7 @@ public class Moderator extends User {
 
 
     // constructor by a 'Moderator' instance.
-    public Moderator(Moderator m) {
+    public Moderator(@NotNull Moderator m) {
         super(m.getUsername(), m.getName(), m.getSurname(), m.getAddress(),
                 m.getCity(), m.getCountry(), m.getBirthDate(), m.getMail(), m.getSex(),
                 m.getTelephone());
@@ -72,13 +74,14 @@ public class Moderator extends User {
      *
      * @return a String the contract expiration date.
      */
+    @NotNull
     public String getContractTime() {
         return this.contractTime;
     }
 
 
     /**
-     * Set a new contract time for the moderator
+     * Set a new contract time for the moderator.
      *
      * @param contractTime a String the contract expiration date, must be not null.
      */
@@ -93,7 +96,6 @@ public class Moderator extends User {
                 + '}';
     }
 
-    @NotNull
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -109,6 +111,6 @@ public class Moderator extends User {
         return Objects.equals(this.getContractTime(), moderator.getContractTime());
     }
 
-
+    @NotNull
     private String contractTime;
 }

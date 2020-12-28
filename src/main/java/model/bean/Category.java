@@ -2,6 +2,7 @@ package model.bean;
 
 import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
+
 /**
  * This class represents a Category used to divide products ,
  * a product can have multiple categories.
@@ -47,7 +48,7 @@ public class Category {
     }
 
     /**
-     * Get the description of the category
+     * Get the description of the category.
      *
      * @return a String that is a description of the category.
      */

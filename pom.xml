@@ -58,6 +58,12 @@
             <artifactId>annotations</artifactId>
             <version>20.1.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/black.ninia/jep -->
+        <dependency>
+            <groupId>black.ninia</groupId>
+            <artifactId>jep</artifactId>
+            <version>3.9.0</version>
+        </dependency>
 
     </dependencies>
 

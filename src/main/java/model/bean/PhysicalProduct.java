@@ -12,18 +12,18 @@ public class PhysicalProduct extends Product {
 
     /**
      * Constructs a new DigitalProduct starting from the product standard attributes,
-     * plus the size, weigth.
+     * plus the size, weight.
      *
      * @param id the product's id.
      * @param name the product's name.
      * @param price the product's price.
-     * @param description the product's descrption.
+     * @param description the product's description.
      * @param image a String indicating the path of the product's image.
      * @param categories a list indicating the categories to which the product belongs.
      * @param tags a list indicating the tags to which the product belongs.
      * @param quantity the product's stock quantity.
      * @param size the product's size
-     * @param weight the product's weigth in kg
+     * @param weight the product's weight in kg
      */
     public PhysicalProduct(int id, @NotNull String name, double price, @NotNull String description,
                            @NotNull String image, @NotNull Collection<Category> categories,

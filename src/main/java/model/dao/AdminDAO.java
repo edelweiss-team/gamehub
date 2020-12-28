@@ -1,11 +1,13 @@
 package model.dao;
 
+import java.sql.*;
+import java.util.ArrayList;
 import model.bean.Admin;
 import model.bean.Moderator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import java.sql.*;
-import java.util.ArrayList;
+
+
 
 
 public class AdminDAO {
@@ -68,7 +70,9 @@ public class AdminDAO {
         if (mdao.doRetrieveByUsername(username) != null) {
             try {
                 Connection cn = ConPool.getConnection();
-                PreparedStatement st = cn.prepareStatement("DELETE FROM admin WHERE admin.moderator=?;");
+                PreparedStatement st = cn.prepareStatement(
+                        "DELETE FROM admin WHERE admin.moderator=?;"
+                );
                 st.setString(1, username);
                 st.executeUpdate();
                 st.close();
@@ -124,7 +128,9 @@ public class AdminDAO {
         if ((moderator = mdao.doRetrieveByUsername(username)) != null) {
             try {
                 Connection cn = ConPool.getConnection();
-                PreparedStatement st = cn.prepareStatement("SELECT * FROM admin WHERE admin.moderator=?;");
+                PreparedStatement st = cn.prepareStatement(
+                        "SELECT * FROM admin WHERE admin.moderator=?;"
+                );
                 st.setString(1, username);
                 ResultSet rs = st.executeQuery();
 
