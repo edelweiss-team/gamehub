@@ -3,9 +3,9 @@ package model.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
-import model.bean.Category;
-import model.bean.PhysicalProduct;
-import model.bean.Tag;
+
+import model.bean.*;
+import org.jetbrains.annotations.NotNull;
 
 
 public class PhysicalProductDAO {
@@ -205,5 +205,156 @@ public class PhysicalProductDAO {
 
         }
     }
+
+    public ArrayList<PhysicalProduct> doRetrieveAllByCategory(
+            String categoryName, int offset, int limit) {
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("select id, name, price, "
+                    + "description, image, weight, size, quantity "
+                    + "from physicalbelonging, physicalproduct "
+                    + "where physicalbelonging.physicalProduct = physicalproduct.id "
+                    + "and physicalbelonging.category = ? LIMIT ?, ?;");
+
+            ps.setString(1, categoryName);
+            ps.setInt(2, offset);
+            ps.setInt(3, limit);
+            ResultSet rs = ps.executeQuery();
+
+            ArrayList<PhysicalProduct> prodotti = new ArrayList<>();
+            while (rs.next()) {
+                PhysicalProduct p = new PhysicalProduct();
+                p.setId(rs.getInt(1));
+                p.setName(rs.getString(2));
+                p.setPrice(rs.getDouble(3));
+                p.setDescription(rs.getString(4));
+                p.setImage(rs.getString(5));
+                p.setWeight(rs.getDouble(6));
+                p.setSize(rs.getString(7));
+                p.setQuantity(rs.getInt(8));
+
+                p.setCategories(doRetrieveAllProdCatById(p.getId()));
+                p.setTags(doRetrieveAllProdTagById(p.getId()));
+
+                prodotti.add(p);
+
+            }
+
+            return prodotti;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void doUpdate(PhysicalProduct p){
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("UPDATE physicalproduct SET name=?, "
+                    + "price=?, description=?, image=?, weight=?, size=?, "
+                    + "quantity=? WHERE id=?;");
+
+            ps.setString(1, p.getName());
+            ps.setDouble(2, p.getPrice());
+            ps.setString(3,p.getDescription());
+            ps.setString(4, p.getImage());
+            ps.setDouble(5, p.getWeight());
+            ps.setString(6, p.getSize());
+            ps.setInt(7, p.getQuantity());
+            ps.setInt(8, p.getId());
+
+            if(ps.executeUpdate() != 1)
+                throw new RuntimeException();
+
+            ps = con.prepareStatement("DELETE FROM physicalbelonging WHERE physicalProduct=?;");
+            ps.setInt(1, p.getId());
+            ps.executeUpdate();
+
+            for (Category c : p.getCategories()) {
+                ps = con.prepareStatement("INSERT INTO "
+                        + "physicalbelonging(physicalProduct, category) VALUES (?,?)");
+                ps.setInt(1, p.getId());
+                ps.setString(2, c.getName());
+                ps.executeUpdate();
+            }
+
+            ps = con.prepareStatement("DELETE FROM physicalcharacteristic WHERE physicalProduct=?;");
+            ps.setInt(1, p.getId());
+            ps.executeUpdate();
+
+            for (Tag c : p.getTags()) {
+                ps = con.prepareStatement("INSERT INTO "
+                        + "physicalcharacteristic(physicalProduct, tag) VALUES (?,?)");
+                ps.setInt(1, p.getId());
+                ps.setString(2, c.getName());
+                ps.executeUpdate();
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        }
+    }
+
+    @NotNull
+    public ArrayList<PhysicalProduct> doRetrieveByAllFragment(
+            @NotNull String name, @NotNull String desc, @NotNull Double price,
+            @NotNull String nameTag, @NotNull String nameCategory,
+            int offset, int limit) {
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT dp.id, dp.name, dp.price, dp.description, "
+                            + "dp.image, dp.weight, dp.size, dp.quantity"
+                            + " FROM physicalbelonging db,physicalcharacteristic dc,physicalproduct dp "
+                            + " where db.physicalProduct=dp.id and dc.physicalProduct=dp.id "
+                            + "       and LOWER(dp.name) LIKE ? and LOWER(dp.description) LIKE ? "
+                            + "       and dp.price <= ? "
+                            + "       and LOWER(dc.tag) LIKE ? and LOWER(db.category) LIKE ?"
+                            + " group by  dp.id, dp.name, dp.price, dp.description, "
+                            + "dp.image, dp.weight, dp.size, dp.quantity "
+                            + "LIMIT ?,?; ");
+
+            ps.setString(1, "%" + name.toLowerCase() + "%");
+            ps.setString(2, "%" + desc.toLowerCase() + "%");
+            ps.setDouble(3, price);
+            ps.setString(4, "%" + nameTag.toLowerCase() + "%");
+            ps.setString(5, "%" + nameCategory.toLowerCase() + "%");
+            ps.setInt(6, offset);
+            ps.setInt(7, limit);
+
+            ResultSet rs = ps.executeQuery();
+
+            ArrayList<PhysicalProduct> prodotti = new ArrayList<>();
+            while (rs.next()) {
+                PhysicalProduct p = new PhysicalProduct();
+                p.setId(rs.getInt(1));
+                p.setName(rs.getString(2));
+                p.setPrice(rs.getDouble(3));
+                p.setDescription(rs.getString(4));
+                p.setImage(rs.getString(5));
+                p.setWeight(rs.getDouble(6));
+                p.setSize(rs.getString(7));
+                p.setQuantity(rs.getInt(8));
+
+
+                p.setCategories(doRetrieveAllProdCatById(p.getId()));
+                p.setTags(doRetrieveAllProdTagById(p.getId()));
+
+                prodotti.add(p);
+
+            }
+
+            return prodotti;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        }
+
+    }
+
 
 }

@@ -121,7 +121,7 @@ public class Admin extends Moderator {
     public void setSuperAdmin(boolean superAdmin) {
         isSuperAdmin = superAdmin;
     }
-    
+
     @Override
     public String toString() {
         return super.toString() + ", Admin{"
