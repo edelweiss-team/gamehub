@@ -34,13 +34,13 @@ class ModeratorDAOTest {
         Moderator m2;
 
         mDAO.doSave(m);
-        m2 = mDAO.doRetriveByUsername(u.getUsername());
+        m2 = mDAO.doRetrieveByUsername(u.getUsername());
 
         // Deleting user and moderator from DB
         mDAO.doDeleteByUsername(m.getUsername());
         uDAO.doDeleteFromUsername(u.getUsername());
 
-        assertTrue(m2.equals(m));
+        assertEquals(m2, m);
     }
 
     @Test
@@ -64,13 +64,13 @@ class ModeratorDAOTest {
         m.setContractTime("2020-10-20");
         mDAO.doUpdate(m);
 
-        m2 = mDAO.doRetriveByUsername(u.getUsername());
+        m2 = mDAO.doRetrieveByUsername(u.getUsername());
         // deleting user and moderator from DB.
         mDAO.doDeleteByUsername(m.getUsername());
         uDAO.doDeleteFromUsername(u.getUsername());
 
         // comparing the local and db-retrived moderator
-        assertTrue(m.equals(m2));
+        assertEquals(m, m2);
     }
 
     @Test
@@ -91,7 +91,7 @@ class ModeratorDAOTest {
         mDAO.doDeleteByUsername(m.getUsername());
         uDAO.doDeleteFromUsername(u.getUsername());
 
-        assertNull(mDAO.doRetriveByUsername(u.getUsername()));
+        assertNull(mDAO.doRetrieveByUsername(u.getUsername()));
     }
 
     @Test
@@ -154,19 +154,19 @@ class ModeratorDAOTest {
         Moderator m2;
         mDAO.doSave(m);
 
-        m2 = mDAO.doRetriveByUsername(m.getUsername());
+        m2 = mDAO.doRetrieveByUsername(m.getUsername());
 
         // deleting user and moderator from db
         mDAO.doDeleteByUsername(m.getUsername());
         uDAO.doDeleteFromUsername(u.getUsername());
 
-        assertTrue(m.equals(m2));
+        assertEquals(m, m2);
     }
 
     @Test
     void doRetiveByUsernameNotOk() {
         Moderator m = new Moderator(u, contractTime);
         m.setUsername("usernameNotInDB");
-        assertNull(mDAO.doRetriveByUsername(m.getUsername()));
+        assertNull(mDAO.doRetrieveByUsername(m.getUsername()));
     }
 }

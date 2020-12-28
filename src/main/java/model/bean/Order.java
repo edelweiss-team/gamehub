@@ -41,6 +41,7 @@ public class Order {
         return id;
     }
 
+    @NotNull
     public String getData() {
         return data;
     }
@@ -50,7 +51,7 @@ public class Order {
         this.id = id;
     }
 
-    public void setData(String data) {
+    public void setData(@NotNull String data) {
         this.data = data;
     }
 
@@ -62,19 +63,21 @@ public class Order {
         this.totPrice = totPrice;
     }
 
+    @NotNull
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(@NotNull User user) {
         this.user = user;
     }
 
+    @Nullable
     public Operator getOperator() {
         return operator;
     }
 
-    public void setOperator(Operator operator) {
+    public void setOperator(@Nullable Operator operator) {
         this.operator = operator;
     }
 
@@ -101,19 +104,14 @@ public class Order {
         this.numberOfItems += quantity;
     }
 
-    public void removeProduct(Product product, Integer quantity) {
-
-        if (product == null) {
-            throw new IllegalArgumentException("Un prodotto nullo non "
-                    + "può essere rimosso dal carrello ");
-        }
+    public void removeProduct(@NotNull Product product, @NotNull Integer quantity) {
 
         if (!products.containsKey(product.getId())) {
             throw new IllegalArgumentException("Il prodotto che si vuole rimuovere non "
                     + "esiste all'interno del carrello");
         }
 
-        if (quantity == null || quantity < 1) {
+        if (quantity < 1) {
             throw new IllegalArgumentException("La quantità che si desidera "
                     + "rimuovere non è valida");
         }
@@ -134,29 +132,37 @@ public class Order {
         }
     }
 
-    public Integer getQuantitySingleProduct(Integer productId) {
-        return productsQuantity.get(productId);
+    @NotNull
+    public Integer getQuantitySingleProduct(@NotNull Integer productId) {
+        return productsQuantity.get(productId) != null ? productsQuantity.get(productId) : 0;
     }
 
-    public boolean contains(Integer productId) {
+    public boolean contains(@NotNull Integer productId) {
         return products.containsKey(productId);
     }
 
-    public Product getProduct(Integer productId) {
+    @NotNull
+    public Product getProduct(@NotNull Integer productId) {
         return products.get(productId);
     }
 
+    @NotNull
     public Collection<Product> getAllProducts() {
         return products.values();
     }
 
 
     private int id;
+    @NotNull
     private String data;
     private double totPrice;
+    @NotNull
     private User user;
+    @Nullable
     private Operator operator;
     private int numberOfItems;
-    private HashMap<Integer, Product> products;
-    private HashMap<Integer, Integer> productsQuantity;
+    @NotNull
+    private final HashMap<Integer, Product> products;
+    @NotNull
+    private final HashMap<Integer, Integer> productsQuantity;
 }

@@ -13,13 +13,14 @@ import org.jetbrains.annotations.Nullable;
 
 public class ModeratorDAO {
 
-    private final UserDAO uDAO = new UserDAO();
+    @NotNull
+    private final UserDAO udao = new UserDAO();
 
-    public boolean doSave(Moderator m) {
+    public boolean doSave(@NotNull Moderator m) {
         String username = m.getUsername();
 
         // checks if the 'user' external-key exists in DB.
-        if (uDAO.doRetrieveByUsername(username) != null) {
+        if (udao.doRetrieveByUsername(username) != null) {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement st = cn.prepareStatement("INSERT INTO moderator(user, contractTime)"
@@ -40,11 +41,11 @@ public class ModeratorDAO {
         return false;
     }
 
-    public boolean doUpdate(Moderator m) {
+    public boolean doUpdate(@NotNull Moderator m) {
         String username = m.getUsername();
 
         // checks if the 'user' external-key exists in DB.
-        if (uDAO.doRetrieveByUsername(username) != null) {
+        if (udao.doRetrieveByUsername(username) != null) {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement st = cn.prepareStatement("UPDATE moderator SET contractTime = ?"
@@ -71,7 +72,7 @@ public class ModeratorDAO {
     public boolean doDeleteByUsername(@NotNull String username) {
 
         // checks if the 'user' external-key exists in DB.
-        if (uDAO.doRetrieveByUsername(username) != null) {
+        if (udao.doRetrieveByUsername(username) != null) {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement st = cn.prepareStatement("DELETE FROM moderator WHERE user=?;");
@@ -107,8 +108,8 @@ public class ModeratorDAO {
                 contractTime = rs.getString(1);
                 username = rs.getString(2);
 
-                user = uDAO.doRetrieveByUsername(username);
-
+                user = udao.doRetrieveByUsername(username);
+                assert user != null;
                 m = new Moderator(user, contractTime);
                 moderators.add(m);
             }
@@ -116,17 +117,19 @@ public class ModeratorDAO {
             st.close();
             cn.close();
 
-        } catch (SQLException e) { }
+        } catch (SQLException e) {
+            return new ArrayList<>();
+        }
 
         return moderators;
     }
 
     @Nullable
-    public  Moderator doRetriveByUsername(@NotNull String username) {
+    public Moderator doRetriveByUsername(@NotNull String username) {
         User user;
         Moderator moderator = null;
 
-        if ((user = uDAO.doRetrieveByUsername(username)) != null) {
+        if ((user = udao.doRetrieveByUsername(username)) != null) {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement st = cn.prepareStatement("SELECT * FROM moderator WHERE moderator.user=?;");

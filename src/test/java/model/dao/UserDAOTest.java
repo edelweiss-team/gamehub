@@ -236,4 +236,16 @@ class UserDAOTest {
         ud.doDeleteFromUsername(u2.getUsername());
     }
 
+    @Test
+    void doRetrieveByUsernameFragmentNotOk() {
+        User u1 = new User("NameFragmentUsername","password", "Name", "Surname", "Address", "City", "Country", "2020-11-16", "Mail", 'M', "1111111111");
+        User u2 = new User("username2NameFragment","password2", "Name2", "Surname2", "Address2", "City2", "Country2", "2020-11-13", "Mail2", 'F', "1111111112");
+        ud.doSave(u1);
+        ud.doSave(u2);
+        ArrayList<User> list = ud.doRetrieveByUsernameFragment("NameFragment", -50000, -1);
+        assertTrue(list.isEmpty());
+        ud.doDeleteFromUsername(u1.getUsername());
+        ud.doDeleteFromUsername(u2.getUsername());
+    }
+
 }

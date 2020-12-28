@@ -54,7 +54,7 @@ class OrderTest {
         assertEquals(14, testOrder.getQuantitySingleProduct(toAddProduct.getId()));
     }
 
-    @Test
+    /*@Test
     void removeNullProduct() {
         assertThrows(IllegalArgumentException.class, () -> {
             User testUser = new User();
@@ -63,7 +63,7 @@ class OrderTest {
             Order testOrder = new Order(57, testUser, testOperator, "21-12-2020");
             testOrder.removeProduct(nullProduct, 12);
         });
-    }
+    }*/
 
     @Test
     void removeProductNotContent() {
@@ -77,7 +77,7 @@ class OrderTest {
         });
     }
 
-    @Test
+    /*@Test
     void removeQuantityNull() {
         assertThrows(IllegalArgumentException.class, () -> {
             User testUser = new User();
@@ -88,7 +88,7 @@ class OrderTest {
             testOrder.addProduct(toAddProduct,6);
             testOrder.removeProduct(toAddProduct, null);
         });
-    }
+    }*/
 
     @Test
     void removeZeroQuantity() {
