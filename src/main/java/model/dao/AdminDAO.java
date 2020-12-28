@@ -15,7 +15,7 @@ public class AdminDAO {
         String username = a.getUsername();
 
         // checks if the 'user' external-key exists in DB.
-        if (mDAO.doRetriveByUsername(username) != null) {
+        if (mDAO.doRetrieveByUsername(username) != null) {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement st = cn.prepareStatement("INSERT INTO admin(moderator, superAdmin)" +
@@ -40,7 +40,7 @@ public class AdminDAO {
         String username = a.getUsername();
 
         // checks if the 'user' external-key exists in DB.
-        if (mDAO.doRetriveByUsername(username) != null) {
+        if (mDAO.doRetrieveByUsername(username) != null) {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement st = cn.prepareStatement("UPDATE admin SET superAdmin = ?" +
@@ -64,7 +64,7 @@ public class AdminDAO {
 
     public boolean doDeleteByUsername(String username) {
         // checks if the 'user' external-key exists in DB.
-        if (mDAO.doRetriveByUsername(username) != null) {
+        if (mDAO.doRetrieveByUsername(username) != null) {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement st = cn.prepareStatement("DELETE FROM admin WHERE admin.moderator=?;");
@@ -99,7 +99,7 @@ public class AdminDAO {
                 isSuperAdmin = rs.getBoolean(1);
                 username = rs.getString(2);
 
-                moderator = mDAO.doRetriveByUsername(username);
+                moderator = mDAO.doRetrieveByUsername(username);
 
                 a = new Admin(moderator, isSuperAdmin);
                 admins.add(a);
@@ -116,7 +116,7 @@ public class AdminDAO {
         Admin a = null;
         Moderator moderator;
 
-        if ((moderator = mDAO.doRetriveByUsername(username)) != null) {
+        if ((moderator = mDAO.doRetrieveByUsername(username)) != null) {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement st = cn.prepareStatement("SELECT * FROM admin WHERE admin.moderator=?;");
