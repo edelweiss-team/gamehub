@@ -93,9 +93,9 @@ public class AdminDAO {
             ResultSet rs = st.executeQuery();
 
             boolean isSuperAdmin;
-            String username = null;
-            Moderator moderator = null;
-            Admin a = null;
+            String username;
+            Moderator moderator;
+            Admin a;
 
             while (rs.next()) {
                 isSuperAdmin = rs.getBoolean(1);
@@ -110,7 +110,7 @@ public class AdminDAO {
             st.close();
             cn.close();
         } catch (SQLException e) {
-            return new ArrayList<>();
+            throw new RuntimeException("can't retrieve admins");
         }
 
         return admins;
@@ -136,7 +136,7 @@ public class AdminDAO {
                 st.close();
                 cn.close();
             } catch (SQLException e) {
-                return null;
+                throw new RuntimeException("can't retrieve an admin");
             }
         }
 
