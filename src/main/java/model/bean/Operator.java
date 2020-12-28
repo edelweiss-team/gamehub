@@ -6,7 +6,8 @@ import org.jetbrains.annotations.Nullable;
 public class Operator extends User {
 
     public Operator() {
-
+        this.contractTime = "";
+        this.cv = "";
     }
 
     public Operator(User u, @NotNull String contractTime, @NotNull String cv) {
@@ -31,12 +32,12 @@ public class Operator extends User {
 
     }
 
-    @Nullable
+    @NotNull
     public String getContractTime() {
         return this.contractTime;
     }
 
-    @Nullable
+    @NotNull
     public String getCv() {
         return this.cv;
     }
@@ -58,8 +59,8 @@ public class Operator extends User {
                 + ", cv='" + cv + '\'' + '}';
     }
 
-    @Nullable
+    @NotNull
     private String contractTime;
-    @Nullable
+    @NotNull
     private String cv;
 }
