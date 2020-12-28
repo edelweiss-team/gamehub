@@ -1,9 +1,15 @@
 package model.bean;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/**
+ * This class represents a Cart used to store the items in the session and,
+ * as for logged users, in the database too.
+ */
 public class Cart {
 
     public Cart(User user) {
@@ -13,7 +19,10 @@ public class Cart {
         products = new LinkedHashMap<>();
         productsQuantity =  new LinkedHashMap<>();
     }
-    public Cart(){}
+
+    public Cart() {
+
+    }
 
     public User getUser() {
         return user;
@@ -106,8 +115,15 @@ public class Cart {
 
     }
 
-    public Integer getQuantitySingleProduct(Integer productId) {
-        return productsQuantity.get(productId);
+    /**
+     * Method to return the quantity of a product in the cart.
+     *
+     * @param productId an Integer representing the product id to get the quantity, must be not null.
+     * @return The quantity of the product if it is in the cart, 0 otherwise.
+     */
+    @NotNull
+    public Integer getQuantitySingleProduct(@NotNull Integer productId) {
+        return (productsQuantity.get(productId) != null) ? productsQuantity.get(productId) : 0;
     }
 
     public boolean contains(Integer productId) {
@@ -118,6 +134,7 @@ public class Cart {
         return products.get(productId);
     }
 
+    @NotNull
     public Collection<Product> getAllProducts() {
         return products.values();
     }

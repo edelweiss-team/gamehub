@@ -2,16 +2,18 @@ package model.dao;
 
 import java.sql.*;
 import model.bean.*;
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 
 public class CartDAO {
-    private UserDAO udao = new UserDAO();
-    private DigitalProductDAO dcd = new DigitalProductDAO();
-    private PhysicalProductDAO pcd = new PhysicalProductDAO();
+    @NotNull
+    private final UserDAO udao = new UserDAO();
+    @NotNull
+    private final DigitalProductDAO dcd = new DigitalProductDAO();
+    @NotNull
+    private final PhysicalProductDAO pcd = new PhysicalProductDAO();
 
-
-    @Nullable
     public void doSaveOrUpdate(@NotNull Cart c) {
         if (c.getUser() != null) {
             try {
@@ -107,18 +109,99 @@ public class CartDAO {
     }
 
     @Nullable
+    public Product doAddProduct(@NotNull Cart c, @NotNull Product p) {
+        try {
+            Connection cn = ConPool.getConnection();
+            PreparedStatement ps;
+            User u = c.getUser();
+
+            if (u == null) {
+                return null;
+            } else if (p instanceof DigitalProduct) {
+                ps = cn.prepareStatement("INSERT INTO digitalcontaining values "
+                        + "(?, ?, ?) on duplicate key update quantity=?;");
+                ps.setInt(1, p.getId());
+                ps.setString(2, u.getUsername());
+                ps.setInt(3, c.getQuantitySingleProduct(p.getId()));
+                ps.setInt(4, c.getQuantitySingleProduct(p.getId()));
+            } else if (p instanceof PhysicalProduct) {
+                ps = cn.prepareStatement("INSERT INTO physicalcontaining values "
+                        + "(?, ?, ?) on duplicate key update quantity=?;");
+                ps.setInt(1, p.getId());
+                ps.setString(2, u.getUsername());
+                ps.setInt(3, c.getQuantitySingleProduct(p.getId()));
+                ps.setInt(4, c.getQuantitySingleProduct(p.getId()));
+                ps.executeUpdate();
+            }
+            return p;
+
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    @Nullable
+    public Product doRemoveProduct(@NotNull Cart c, @NotNull Product p) {
+        try {
+            Connection cn = ConPool.getConnection();
+            PreparedStatement ps;
+            User u = c.getUser();
+
+            if (u == null) {
+                return null;
+            } else if (p instanceof DigitalProduct) {
+                ps = cn.prepareStatement(
+                        "DELETE FROM digitalcontaining where cart=? AND digitalProduct=?;"
+                );
+                ps.setString(1, u.getUsername());
+                ps.setInt(2, p.getId());
+                if (ps.executeUpdate() < 1) {
+                    throw new RuntimeException("Product is not contained in the cart.");
+                }
+
+                ps = cn.prepareStatement("INSERT INTO digitalcontaining values "
+                        + "(?, ?, ?) on duplicate key update quantity=?;");
+                ps.setInt(1, p.getId());
+                ps.setString(2, u.getUsername());
+                ps.setInt(3, c.getQuantitySingleProduct(p.getId()));
+                ps.setInt(4, c.getQuantitySingleProduct(p.getId()));
+            } else if (p instanceof PhysicalProduct) {
+                ps = cn.prepareStatement(
+                        "DELETE FROM physicalcontaining where cart=? AND physicalProduct=?;"
+                );
+                ps.setString(1, u.getUsername());
+                ps.setInt(2, p.getId());
+                if (ps.executeUpdate() < 1) {
+                    throw new RuntimeException("Product is not contained in the cart.");
+                }
+                ps = cn.prepareStatement("INSERT INTO physicalcontaining values "
+                        + "(?, ?, ?) on duplicate key update quantity=?;");
+                ps.setInt(1, p.getId());
+                ps.setString(2, u.getUsername());
+                ps.setInt(3, c.getQuantitySingleProduct(p.getId()));
+                ps.setInt(4, c.getQuantitySingleProduct(p.getId()));
+                ps.executeUpdate();
+            }
+            return p;
+
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
     public void doRemoveAllUserCartProducts(@NotNull Cart c) {
         if (c.getUser() != null) {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement ps1;
                 PreparedStatement ps2;
+
                 ps1 = cn.prepareStatement("DELETE FROM digitalcontaining WHERE cart=?;");
                 ps1.setString(1, c.getUser().getUsername());
                 ps2 = cn.prepareStatement("DELETE FROM physicalcontaining WHERE cart=?;");
                 ps2.setString(1, c.getUser().getUsername());
                 if (ps1.executeUpdate() == 0 && ps2.executeUpdate() == 0) {
-                    throw new RuntimeException();
+                    throw new RuntimeException("The cart doesn't exist.");
                 }
                 ps1.close();
                 ps2.close();

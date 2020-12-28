@@ -117,7 +117,7 @@ public class ModeratorDAO {
             cn.close();
             return moderators;
         } catch (SQLException e) {
-            return null;
+            return new ArrayList<>();
         }
     }
 
