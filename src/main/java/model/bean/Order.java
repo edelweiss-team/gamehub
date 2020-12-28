@@ -43,7 +43,7 @@ public class Order {
         return id;
     }
 
-    public @NotNull String getData() {
+    public String getData() {
         return data;
     }
 
@@ -52,7 +52,7 @@ public class Order {
         this.id = id;
     }
 
-    public void setData(@NotNull String data) {
+    public void setData(String data) {
         this.data = data;
     }
 
@@ -64,19 +64,19 @@ public class Order {
         this.totPrice = totPrice;
     }
 
-    public @NotNull User getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(@NotNull User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
-    public @Nullable Operator getOperator() {
+    public Operator getOperator() {
         return operator;
     }
 
-    public void setOperator(@Nullable Operator operator) {
+    public void setOperator(Operator operator) {
         this.operator = operator;
     }
 
@@ -103,7 +103,7 @@ public class Order {
         this.numberOfItems += quantity;
     }
 
-    public void removeProduct(@Nullable Product product, @Nullable Integer quantity) {
+    public void removeProduct(Product product, Integer quantity) {
 
         if (product == null) {
             throw new IllegalArgumentException("Un prodotto nullo non "
@@ -136,42 +136,29 @@ public class Order {
         }
     }
 
-    /**
-     * Method to return the quantity of a product in the order.
-     *
-     * @param productId an Integer representing the product id to get the quantity,
-     *                  must be not null.
-     * @return The quantity of the product if it is in the cart, 0 otherwise.
-     */
-    @NotNull
-    public Integer getQuantitySingleProduct(@NotNull Integer productId) {
-        return (productsQuantity.get(productId) != null) ? productsQuantity.get(productId) : 0;
+    public Integer getQuantitySingleProduct(Integer productId) {
+        return productsQuantity.get(productId);
     }
 
-    public boolean contains(@NotNull Integer productId) {
+    public boolean contains(Integer productId) {
         return products.containsKey(productId);
     }
 
-    public @Nullable Product getProduct(@NotNull Integer productId) {
+    public Product getProduct(Integer productId) {
         return products.get(productId);
     }
 
-    public @NotNull Collection<Product> getAllProducts() {
+    public Collection<Product> getAllProducts() {
         return products.values();
     }
 
 
     private int id;
-    @NotNull
     private String data;
     private double totPrice;
-    @NotNull
     private User user;
-    @Nullable
     private Operator operator;
     private int numberOfItems;
-    @NotNull
-    private final HashMap<Integer, Product> products;
-    @NotNull
-    private final HashMap<Integer, Integer> productsQuantity;
+    private HashMap<Integer, Product> products;
+    private HashMap<Integer, Integer> productsQuantity;
 }
