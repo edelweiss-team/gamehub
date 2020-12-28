@@ -26,7 +26,7 @@ class OrderTest {
             Product toAddProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56, "Descrizione",
                     "path immagine ", new ArrayList<>(), new ArrayList<>(), 15, "grandezza", 5);
             Order testOrder = new Order(57, testUser, testOperator, "21-12-2020");
-            testOrder.addProduct(toAddProduct, null);
+            testOrder.addProduct(toAddProduct, -1);
         });
     }
 
@@ -39,7 +39,7 @@ class OrderTest {
                 "path immagine ", new ArrayList<>(), new ArrayList<>(), 15, "grandezza", 5);
         Order testOrder = new Order(57, testUser, testOperator, "21-12-2020");
         testOrder.addProduct(toAddProduct, 10);
-        assertEquals(true, testOrder.contains(toAddProduct.getId()));
+        assertTrue(testOrder.contains(toAddProduct.getId()));
     }
 
     @Test
