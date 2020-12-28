@@ -8,8 +8,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class Order {
 
-
-
     public Order(int id, User user, Operator operator, String data) {
         this.id = id;
         this.data = data;
@@ -21,7 +19,12 @@ public class Order {
         productsQuantity = new HashMap<>();
     }
 
-    public Order() {}
+    public Order() {
+        this.numberOfItems = 0;
+        this.totPrice = 0;
+        this.products = new HashMap<>();
+        this.productsQuantity = new HashMap<>();
+    }
 
     public int getNumberOfItems() {
         return numberOfItems;
@@ -38,7 +41,6 @@ public class Order {
     public String getData() {
         return data;
     }
-
 
     public void setId(int id) {
         this.id = id;
@@ -72,11 +74,10 @@ public class Order {
         this.operator = operator;
     }
 
-
     public void addProduct(@NotNull Product product, @NotNull Integer quantity) {
 
         if (quantity < 1) {
-            throw new IllegalArgumentException("Il prodotto aggiunto al carrello "
+            throw new IllegalArgumentException("Il prodotto aggiunto all'ordine "
                     + "deve avere una quantità maggiore di zero ");
         }
 
@@ -99,12 +100,12 @@ public class Order {
 
         if (product == null) {
             throw new IllegalArgumentException("Un prodotto nullo non "
-                    + "può essere rimosso dal carrello ");
+                    + "può essere rimosso dall'ordine ");
         }
 
         if (!products.containsKey(product.getId())) {
             throw new IllegalArgumentException("Il prodotto che si vuole rimuovere non "
-                    + "esiste all'interno del carrello");
+                    + "esiste all'interno dell'ordine");
         }
 
         if (quantity == null || quantity < 1) {
