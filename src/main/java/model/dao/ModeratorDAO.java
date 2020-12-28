@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class ModeratorDAO {
 
-    public boolean doSave(Moderator m) {
+    public boolean doSave(@NotNull Moderator m) {
         UserDAO udao = new UserDAO();
         String username = m.getUsername();
 
@@ -39,7 +39,7 @@ public class ModeratorDAO {
         return false;
     }
 
-    public boolean doUpdate(Moderator m) {
+    public boolean doUpdate(@NotNull Moderator m) {
         UserDAO udao = new UserDAO();
         String username = m.getUsername();
 
@@ -52,7 +52,6 @@ public class ModeratorDAO {
 
                 st.setString(1, m.getContractTime());
                 st.setString(2, username);
-
                 st.executeUpdate();
                 st.close();
                 cn.close();

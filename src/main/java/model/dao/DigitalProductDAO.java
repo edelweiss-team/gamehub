@@ -4,10 +4,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import model.bean.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 
 public class DigitalProductDAO {
 
+    @NotNull
     public ArrayList<DigitalProduct> doRetrieveAll(int offset, int limit) {
 
         try (Connection con = ConPool.getConnection()) {
@@ -47,6 +49,7 @@ public class DigitalProductDAO {
         }
     }
 
+    @Nullable
     public DigitalProduct doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("SELECT * from digitalproduct WHERE id=?");
@@ -86,8 +89,8 @@ public class DigitalProductDAO {
         }
     }
 
-
-    public DigitalProduct doSave(DigitalProduct p) {
+    @Nullable
+    public DigitalProduct doSave(@NotNull DigitalProduct p) {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("INSERT INTO digitalproduct(name, price,"
@@ -157,6 +160,7 @@ public class DigitalProductDAO {
     }
 
     //Restituisce tutte le catgeorie di un prodotto
+    @NotNull
     public ArrayList<Category> doRetrieveAllProdCatById(int id) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("select category "
@@ -180,12 +184,12 @@ public class DigitalProductDAO {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
-
         }
     }
 
 
     //Restituisce tutti i tag di un prodotto
+    @NotNull
     public ArrayList<Tag> doRetrieveAllProdTagById(int id) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("select tag "
@@ -212,8 +216,9 @@ public class DigitalProductDAO {
         }
     }
 
+    @NotNull
     public ArrayList<DigitalProduct> doRetrieveAllByCategory(
-            String categoryName, int offset, int limit) {
+            @NotNull String categoryName, int offset, int limit) {
 
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("select id, name, price,"
@@ -258,7 +263,7 @@ public class DigitalProductDAO {
     }
 
 
-    public void doUpdate(DigitalProduct p) {
+    public void doUpdate(@NotNull DigitalProduct p) {
 
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("UPDATE digitalproduct SET name=?, "

@@ -1,6 +1,7 @@
 package model.dao;
 
 import model.bean.*;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -9,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DigitalProductDAOTest {
 
-    private final DigitalProductDAO dao = new DigitalProductDAO();
-    private final CategoryDAO catdao = new CategoryDAO();
-    private final TagDAO tagdao = new TagDAO();
+    private final @NotNull DigitalProductDAO dao = new DigitalProductDAO();
+    private final @NotNull CategoryDAO catdao = new CategoryDAO();
+    private final @NotNull TagDAO tagdao = new TagDAO();
 
     @Test
     void doRetrieveByIdOkAndDoSaveOk() {
@@ -379,7 +380,7 @@ class DigitalProductDAOTest {
         dao.doUpdate(p);
         DigitalProduct dp = dao.doRetrieveById(p.getId());
 
-        assertTrue(dp.getQuantity()==p.getQuantity());
+        assertEquals(dp.getQuantity(), p.getQuantity());
 
         dao.doDelete(p.getId());
     }
@@ -387,9 +388,14 @@ class DigitalProductDAOTest {
     @Test
     void doUpdateProductNotValid() {
         assertThrows(RuntimeException.class, () -> {
-            DigitalProduct p = new DigitalProduct(7, "NuovoProdottoTesting", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
-                    "xbox", "1999-05-0522", 18, "testing", "testingpub");
+            DigitalProduct p = new DigitalProduct(7, "NuovoProdottoTesting", 23.56,
+                    "testing", "imagetesting", new ArrayList<>() , new ArrayList<>(), 330,
+                    "xbox", "1999-05-02", 18, "testing",
+                    "testingpub");
+            dao.doSave(p);
+            p.setReleaseDate("1999-05-0522");
             dao.doUpdate(p);
+            dao.doDelete(p.getId());
         });
     }
 

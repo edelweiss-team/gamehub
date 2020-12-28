@@ -37,8 +37,9 @@ public class CategoryDAO {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("DELETE FROM Category WHERE name=?;");
             st.setString(1, name);
-            if(st.executeUpdate() != 1)
+            if (st.executeUpdate() != 1) {
                 throw new RuntimeException();
+            }
             st.close();
             cn.close();
         } catch (SQLException e) {
@@ -46,7 +47,7 @@ public class CategoryDAO {
         }
     }
 
-    public void doSave(Category c) {
+    public void doSave(@NotNull Category c) {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement ps = cn.prepareStatement(

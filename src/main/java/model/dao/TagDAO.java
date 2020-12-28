@@ -8,10 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.bean.Tag;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class TagDAO {
 
-    public void doSave(Tag t) {
+    public void doSave(@NotNull Tag t) {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("INSERT INTO tag(name)"
@@ -25,7 +26,8 @@ public class TagDAO {
         }
     }
 
-    public Tag doRetrieveByName(String name) {
+    @Nullable
+    public Tag doRetrieveByName(@NotNull String name) {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("SELECT * FROM tag T WHERE T.name=?;");
@@ -46,7 +48,7 @@ public class TagDAO {
         }
     }
 
-    public void doDelete(String name) {
+    public void doDelete(@NotNull String name) {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("DELETE FROM tag WHERE name=?;");
@@ -61,7 +63,7 @@ public class TagDAO {
         }
     }
 
-
+    @NotNull
     public ArrayList<Tag> doRetrieveByNameFragment(
             @NotNull String nameFragment, int offset, int limit) {
         ArrayList<Tag> tags = new ArrayList<>();
@@ -85,7 +87,7 @@ public class TagDAO {
             cn.close();
             return tags;
         } catch (SQLException e) {
-            return null;
+            return new ArrayList<>();
         }
     }
 

@@ -6,10 +6,12 @@ import java.util.ArrayList;
 
 import model.bean.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 
 public class PhysicalProductDAO {
 
+    @NotNull
     public ArrayList<PhysicalProduct> doRetrieveAll(int offset, int limit) {
 
         try (Connection con = ConPool.getConnection()) {
@@ -46,6 +48,7 @@ public class PhysicalProductDAO {
         }
     }
 
+    @Nullable
     public PhysicalProduct doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("SELECT * from physicalproduct WHERE id=?");
@@ -64,27 +67,18 @@ public class PhysicalProductDAO {
                 p.setWeight(rs.getDouble(6));
                 p.setSize(rs.getString(7));
                 p.setQuantity(rs.getInt(8));
-
-
-
                 p.setCategories(doRetrieveAllProdCatById(p.getId()));
                 p.setTags(doRetrieveAllProdTagById(p.getId()));
-
-
-
             }
-
             return p;
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
-
         }
     }
 
-
-    public PhysicalProduct doSave(PhysicalProduct p) {
+    @Nullable
+    public PhysicalProduct doSave(@NotNull PhysicalProduct p) {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("INSERT INTO physicalproduct( name, price,"
@@ -150,6 +144,7 @@ public class PhysicalProductDAO {
     }
 
     //Restituisce tutte le catgeorie di un prodotto
+    @NotNull
     public ArrayList<Category> doRetrieveAllProdCatById(int id) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("select category "
@@ -179,6 +174,7 @@ public class PhysicalProductDAO {
 
 
     //Restituisce tutti i tag di un prodotto
+    @NotNull
     public ArrayList<Tag> doRetrieveAllProdTagById(int id) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("select tag "
@@ -206,8 +202,9 @@ public class PhysicalProductDAO {
         }
     }
 
+    @NotNull
     public ArrayList<PhysicalProduct> doRetrieveAllByCategory(
-            String categoryName, int offset, int limit) {
+            @NotNull String categoryName, int offset, int limit) {
 
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("select id, name, price, "
@@ -248,7 +245,7 @@ public class PhysicalProductDAO {
 
     }
 
-    public void doUpdate(PhysicalProduct p){
+    public void doUpdate(@NotNull PhysicalProduct p) {
 
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("UPDATE physicalproduct SET name=?, "
@@ -264,8 +261,9 @@ public class PhysicalProductDAO {
             ps.setInt(7, p.getQuantity());
             ps.setInt(8, p.getId());
 
-            if(ps.executeUpdate() != 1)
+            if (ps.executeUpdate() != 1) {
                 throw new RuntimeException();
+            }
 
             ps = con.prepareStatement("DELETE FROM physicalbelonging WHERE physicalProduct=?;");
             ps.setInt(1, p.getId());
