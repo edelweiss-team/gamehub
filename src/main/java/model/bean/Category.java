@@ -48,7 +48,7 @@ public class Category {
     }
 
     /**
-     * Get the description of the category
+     * Get the description of the category.
      *
      * @return a String that is a description of the category.
      */
