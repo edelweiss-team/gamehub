@@ -99,10 +99,10 @@ public class ModeratorDAO {
             PreparedStatement st = cn.prepareStatement("SELECT * FROM moderator");
             ResultSet rs = st.executeQuery();
 
-            Moderator m = null;
-            String username = null;
-            String contractTime = null;
-            User user = null;
+            Moderator m;
+            String username;
+            String contractTime;
+            User user;
 
             while (rs.next()) {
                 contractTime = rs.getString(1);
@@ -118,7 +118,7 @@ public class ModeratorDAO {
             cn.close();
 
         } catch (SQLException e) {
-            return new ArrayList<>();
+            throw new RuntimeException("can't retrieve moderators");
         }
 
         return moderators;
@@ -145,7 +145,7 @@ public class ModeratorDAO {
                 st.close();
                 cn.close();
             } catch (SQLException e) {
-                throw new RuntimeException();
+                throw new RuntimeException("can't retrieve a moderator");
             }
         }
 
