@@ -387,16 +387,16 @@ class DigitalProductDAOTest {
 
     @Test
     void doUpdateProductNotValid() {
+        DigitalProduct p = new DigitalProduct(7, "NuovoProdottoTesting", 23.56,
+                "testing", "imagetesting", new ArrayList<>() , new ArrayList<>(), 330,
+                "xbox", "1999-05-02", 18, "testing",
+                "testingpub");
         assertThrows(RuntimeException.class, () -> {
-            DigitalProduct p = new DigitalProduct(7, "NuovoProdottoTesting", 23.56,
-                    "testing", "imagetesting", new ArrayList<>() , new ArrayList<>(), 330,
-                    "xbox", "1999-05-02", 18, "testing",
-                    "testingpub");
             dao.doSave(p);
             p.setReleaseDate("1999-05-0522");
             dao.doUpdate(p);
-            dao.doDelete(p.getId());
         });
+        dao.doDelete(p.getId());
     }
 
     @Test
