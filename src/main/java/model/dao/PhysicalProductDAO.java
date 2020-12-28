@@ -3,7 +3,6 @@ package model.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
-
 import model.bean.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -254,16 +253,16 @@ public class PhysicalProductDAO {
 
             ps.setString(1, p.getName());
             ps.setDouble(2, p.getPrice());
-            ps.setString(3,p.getDescription());
+            ps.setString(3, p.getDescription());
             ps.setString(4, p.getImage());
             ps.setDouble(5, p.getWeight());
             ps.setString(6, p.getSize());
             ps.setInt(7, p.getQuantity());
             ps.setInt(8, p.getId());
 
-            if (ps.executeUpdate() != 1) {
-                throw new RuntimeException();
-            }
+            ps.executeUpdate();
+
+
 
             ps = con.prepareStatement("DELETE FROM physicalbelonging WHERE physicalProduct=?;");
             ps.setInt(1, p.getId());
@@ -277,7 +276,8 @@ public class PhysicalProductDAO {
                 ps.executeUpdate();
             }
 
-            ps = con.prepareStatement("DELETE FROM physicalcharacteristic WHERE physicalProduct=?;");
+            ps = con.prepareStatement("DELETE FROM "
+                    + "physicalcharacteristic WHERE physicalProduct=?;");
             ps.setInt(1, p.getId());
             ps.executeUpdate();
 
@@ -306,7 +306,8 @@ public class PhysicalProductDAO {
             PreparedStatement ps = con.prepareStatement(
                     "SELECT dp.id, dp.name, dp.price, dp.description, "
                             + "dp.image, dp.weight, dp.size, dp.quantity"
-                            + " FROM physicalbelonging db,physicalcharacteristic dc,physicalproduct dp "
+                            + " FROM physicalbelonging db,physicalcharacteristic dc,"
+                            + "physicalproduct dp "
                             + " where db.physicalProduct=dp.id and dc.physicalProduct=dp.id "
                             + "       and LOWER(dp.name) LIKE ? and LOWER(dp.description) LIKE ? "
                             + "       and dp.price <= ? "
