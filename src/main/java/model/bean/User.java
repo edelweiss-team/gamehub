@@ -163,7 +163,7 @@ public class User {
     }
 
     @Override
-    public boolean equals(@Nullable Object o) {
+    public boolean equals(Object o) {
         if (o == null) {
             return false;
         } else if (getClass() != o.getClass()) {
