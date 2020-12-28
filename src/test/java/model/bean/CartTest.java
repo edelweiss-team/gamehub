@@ -42,20 +42,54 @@ class CartTest {
     }
 
     @Test
+    void getProductQuantityPresent(){
+        Cart c = new Cart(
+                new User(
+                        "prova", "provaN", "provaS", "provaA", "provaC",
+                        "provaC2", "12-12-1999", "mail@s.com", 'M',
+                        "33342121212"
+                        )
+        );
+        Product toAddProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56,
+                "Descrizione", "path immagine ", new ArrayList<>(), new ArrayList<>(),
+                15, "grandezza", 5);
+        c.addProduct(toAddProduct, 2);
+        assertEquals(c.getQuantitySingleProduct(toAddProduct.getId()), 2);
+    }
+
+    @Test
+    void getProductQuantityNotPresent(){
+        Cart c = new Cart(
+                new User(
+                        "prova", "provaN", "provaS", "provaA", "provaC",
+                        "provaC2", "12-12-1999", "mail@s.com", 'M',
+                        "33342121212"
+                )
+        );
+        Product toAddProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56,
+                "Descrizione", "path immagine ", new ArrayList<>(), new ArrayList<>(),
+                15, "grandezza", 5);
+        c.addProduct(toAddProduct, 2);
+        assertEquals(c.getQuantitySingleProduct(53), 0);
+    }
+
+    @Test
     void addNewProduct() {
         User testUser = new User();
-        Product toAddProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56, "Descrizione",
-                "path immagine ", new ArrayList<>(), new ArrayList<>(), 15, "grandezza", 5);
+        Product toAddProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56,
+                "Descrizione", "path immagine ", new ArrayList<>(), new ArrayList<>(),
+                15, "grandezza", 5);
         Cart testCart = new Cart(testUser);
         testCart.addProduct(toAddProduct, 10);
-        assertEquals(true, testCart.contains(toAddProduct.getId()));
+        assertTrue(testCart.contains(toAddProduct.getId()));
     }
 
     @Test
     void addProductAlreadyIn() {
         User testUser = new User();
-        Product toAddProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56, "Descrizione",
-                "path immagine ", new ArrayList<>(), new ArrayList<>(), 15, "grandezza", 5);
+        Product toAddProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56,
+                "Descrizione", "path immagine ", new ArrayList<>(), new ArrayList<>(), 15,
+                "grandezza", 5);
         Cart testCart = new Cart(testUser);
         testCart.addProduct(toAddProduct, 10);
         testCart.addProduct(toAddProduct,4);
@@ -77,8 +111,9 @@ class CartTest {
     void removeProductNotContent() {
         assertThrows(IllegalArgumentException.class, () -> {
             User testUser = new User();
-            Product notContentProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56, "Descrizione",
-                    "path immagine ", new ArrayList<>(), new ArrayList<>(), 15, "grandezza", 5);
+            Product notContentProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56,
+                    "Descrizione", "path immagine ", new ArrayList<>(), new ArrayList<>(),
+                    15, "grandezza", 5);
             Cart testCart = new Cart(testUser);
             testCart.removeProduct(notContentProduct, 12);
         });
@@ -123,8 +158,9 @@ class CartTest {
     @Test
     void removeSomeItemsQuantity() {
             User testUser = new User();
-            Product toAddProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56, "Descrizione",
-                    "path immagine ", new ArrayList<>(), new ArrayList<>(), 15, "grandezza", 5);
+            Product toAddProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56,
+                    "Descrizione", "path immagine ", new ArrayList<>(), new ArrayList<>(),
+                    15, "grandezza", 5);
             Cart testCart = new Cart(testUser);
             testCart.addProduct(toAddProduct,9);
             testCart.removeProduct(toAddProduct, 7);
@@ -141,8 +177,8 @@ class CartTest {
         testCart.removeProduct(toAddProduct, 9);
         //assert verificano che è stato tolto da entrambe le liste
         assertAll(
-            () -> assertEquals(testCart.contains(toAddProduct.getId()),false),
-            () -> assertEquals(null,testCart.getQuantitySingleProduct(toAddProduct.getId()))
+            () -> assertFalse(testCart.contains(toAddProduct.getId())),
+            () -> assertEquals(0, testCart.getQuantitySingleProduct(toAddProduct.getId()))
         );
     }
 
