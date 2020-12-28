@@ -74,6 +74,11 @@ public class Admin extends Moderator {
         this.isSuperAdmin = isSuperAdmin;
     }
 
+    public Admin(Moderator m, boolean isSuperAdmin) {
+        super(m);
+        this.isSuperAdmin = isSuperAdmin;
+    }
+
     /**
      * Constructs a new Admin starting from the user standard attributes,
      * plus the contractTime attribute.

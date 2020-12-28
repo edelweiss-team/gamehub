@@ -13,12 +13,13 @@ import org.jetbrains.annotations.Nullable;
 
 public class ModeratorDAO {
 
-    public boolean doSave(@NotNull Moderator m) {
-        UserDAO udao = new UserDAO();
+    private final UserDAO uDAO = new UserDAO();
+
+    public boolean doSave(Moderator m) {
         String username = m.getUsername();
 
         // checks if the 'user' external-key exists in DB.
-        if (udao.doRetrieveByUsername(username) != null) {
+        if (uDAO.doRetrieveByUsername(username) != null) {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement st = cn.prepareStatement("INSERT INTO moderator(user, contractTime)"
@@ -39,12 +40,11 @@ public class ModeratorDAO {
         return false;
     }
 
-    public boolean doUpdate(@NotNull Moderator m) {
-        UserDAO udao = new UserDAO();
+    public boolean doUpdate(Moderator m) {
         String username = m.getUsername();
 
         // checks if the 'user' external-key exists in DB.
-        if (udao.doRetrieveByUsername(username) != null) {
+        if (uDAO.doRetrieveByUsername(username) != null) {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement st = cn.prepareStatement("UPDATE moderator SET contractTime = ?"
@@ -52,9 +52,12 @@ public class ModeratorDAO {
 
                 st.setString(1, m.getContractTime());
                 st.setString(2, username);
-                st.executeUpdate();
-                st.close();
-                cn.close();
+
+                if (st.executeUpdate() != 1) {
+                    st.close();
+                    cn.close();
+                    throw new RuntimeException("can't update");
+                }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -66,10 +69,9 @@ public class ModeratorDAO {
     }
 
     public boolean doDeleteByUsername(@NotNull String username) {
-        UserDAO udao = new UserDAO();
 
         // checks if the 'user' external-key exists in DB.
-        if (udao.doRetrieveByUsername(username) != null) {
+        if (uDAO.doRetrieveByUsername(username) != null) {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement st = cn.prepareStatement("DELETE FROM moderator WHERE user=?;");
@@ -89,7 +91,6 @@ public class ModeratorDAO {
 
     @NotNull
     public ArrayList<Moderator> doRetrieveAll() {
-        UserDAO udao = new UserDAO();
         ArrayList<Moderator> moderators = new ArrayList<>();
 
         try {
@@ -106,7 +107,7 @@ public class ModeratorDAO {
                 contractTime = rs.getString(1);
                 username = rs.getString(2);
 
-                user = udao.doRetrieveByUsername(username);
+                user = uDAO.doRetrieveByUsername(username);
 
                 m = new Moderator(user, contractTime);
                 moderators.add(m);
@@ -114,40 +115,37 @@ public class ModeratorDAO {
             rs.close();
             st.close();
             cn.close();
-            return moderators;
-        } catch (SQLException e) {
-            return new ArrayList<>();
-        }
+
+        } catch (SQLException e) { }
+
+        return moderators;
     }
 
     @Nullable
     public  Moderator doRetriveByUsername(@NotNull String username) {
-        UserDAO udao = new UserDAO();
-        User user = null;
+        User user;
+        Moderator moderator = null;
 
-        if ((user = udao.doRetrieveByUsername(username)) != null) {
+        if ((user = uDAO.doRetrieveByUsername(username)) != null) {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement st = cn.prepareStatement("SELECT * FROM moderator WHERE moderator.user=?;");
                 st.setString(1, username);
                 ResultSet rs = st.executeQuery();
 
-                String contractTime;
-                Moderator m = null;
-
                 if (rs.next()) {
-                    contractTime = rs.getString(1);
-                    m = new Moderator(user, contractTime);
+                    String contractTime = rs.getString(1);
+                    moderator = new Moderator(user, contractTime);
                 }
+
                 rs.close();
                 st.close();
                 cn.close();
-                return m;
             } catch (SQLException e) {
-                return null;
+                throw new RuntimeException();
             }
         }
 
-        return null;
+        return moderator;
     }
 }
