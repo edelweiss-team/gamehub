@@ -394,7 +394,7 @@ class CartDAOTest {
         assertEquals(c.getQuantitySingleProduct(p1.getId()), c.getQuantitySingleProduct(p1.getId()));
 
         us.doDeleteFromUsername(u.getUsername());
-        digDAO.doDelete(p1.getId());
+        phyDAO.doDelete(p1.getId());
         digDAO.doDelete(p2.getId());
     }
 
