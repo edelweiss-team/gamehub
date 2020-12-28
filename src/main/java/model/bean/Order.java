@@ -8,8 +8,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class Order {
 
-
-
     public Order(int id, @NotNull User user, @Nullable Operator operator, @NotNull String data) {
         this.id = id;
         this.data = data;

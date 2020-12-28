@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class OperatorDAO {
 
-    public void doUpdate(Operator o) {
+    public void doUpdate(@NotNull Operator o) {
         try {
             UserDAO ud = new UserDAO();
             ud.doUpdate(o);
@@ -28,11 +28,11 @@ public class OperatorDAO {
             }
             cn.close();
         } catch (SQLException e) {
-            return;
+            throw new RuntimeException(e);
         }
     }
 
-    public void doSave(Operator o) {
+    public void doSave(@NotNull Operator o) {
         try {
             UserDAO ud = new UserDAO();
             ud.doSave(o);
@@ -46,11 +46,13 @@ public class OperatorDAO {
             st.close();
             cn.close();
         } catch (SQLException e) {
-            return;
+            throw new RuntimeException(e);
         }
     }
 
-    public Operator doRetrieveByUsernamePassword(String username, String password) {
+    @Nullable
+    public Operator doRetrieveByUsernamePassword(
+            @NotNull String username, @NotNull String password) {
         try {
             UserDAO ud = new UserDAO();
             User u = ud.doRetrieveByUsernamePassword(username, password);
@@ -72,7 +74,8 @@ public class OperatorDAO {
         }
     }
 
-    public Operator doRetrieveByUsername(String username) {
+    @Nullable
+    public Operator doRetrieveByUsername(@NotNull String username) {
         try {
             UserDAO ud = new UserDAO();
             User u = ud.doRetrieveByUsername(username);
@@ -92,7 +95,7 @@ public class OperatorDAO {
         }
     }
 
-    public void doDeleteByUsername(String username) {
+    public void doDeleteByUsername(@NotNull String username) {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("DELETE FROM operator"
@@ -110,7 +113,7 @@ public class OperatorDAO {
         }
     }
 
-
+    @NotNull
     public ArrayList<Operator> doRetrieveAll() {
         ArrayList<Operator> operators = new ArrayList<>();
         try {
@@ -141,13 +144,13 @@ public class OperatorDAO {
             cn.close();
             return operators;
         } catch (SQLException e) {
-            return null;
+            return new ArrayList<>();
         }
     }
 
-    @Nullable
-    public ArrayList<Operator> doRetrieveByUsernameFragment(@NotNull String
-        usernameFragment, int offset, int limit) {
+    @NotNull
+    public ArrayList<Operator> doRetrieveByUsernameFragment(
+            @NotNull String usernameFragment, int offset, int limit) {
         ArrayList<Operator> operators = new ArrayList<>();
         try {
             Connection cn = ConPool.getConnection();
@@ -181,7 +184,7 @@ public class OperatorDAO {
             cn.close();
             return operators;
         } catch (SQLException e) {
-            return null;
+            return new ArrayList<>();
         }
     }
 

@@ -11,7 +11,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class UserDAO {
 
-    @Nullable
     public void doUpdate(@NotNull User u) {
 
         Connection cn = null;
@@ -43,7 +42,7 @@ public class UserDAO {
 
     }
 
-    public void doSave(User u) {
+    public void doSave(@NotNull User u) {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("INSERT INTO user(username, password,"
@@ -68,7 +67,8 @@ public class UserDAO {
         }
     }
 
-    public User doRetrieveByUsernamePassword(String username, String password) {
+    @Nullable
+    public User doRetrieveByUsernamePassword(@NotNull String username, @NotNull String password) {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("SELECT * FROM user U WHERE "
@@ -100,7 +100,8 @@ public class UserDAO {
         }
     }
 
-    public User doRetrieveByUsername(String username) {
+    @Nullable
+    public User doRetrieveByUsername(@NotNull String username) {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("SELECT * FROM user U WHERE U.username=?;");
@@ -130,7 +131,8 @@ public class UserDAO {
         }
     }
 
-    public User doRetrieveByMail(String mail) {
+    @Nullable
+    public User doRetrieveByMail(@NotNull String mail) {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("SELECT * FROM user U WHERE"
@@ -161,7 +163,6 @@ public class UserDAO {
         }
     }
 
-    @Nullable
     public void doDeleteFromUsername(@NotNull String username) {
         try {
             Connection cn = ConPool.getConnection();
@@ -177,6 +178,7 @@ public class UserDAO {
         }
     }
 
+    @NotNull
     public ArrayList<User> doRetrieveAll() {
         ArrayList<User> users = new ArrayList<>();
         try {
@@ -204,11 +206,11 @@ public class UserDAO {
             cn.close();
             return users;
         } catch (SQLException e) {
-            return null;
+            return new ArrayList<>();
         }
     }
 
-    @Nullable
+    @NotNull
     public ArrayList<User> doRetrieveByUsernameFragment(@NotNull
         String usernameFragment, int offset, int limit) {
         ArrayList<User> users = new ArrayList<>();
@@ -241,7 +243,7 @@ public class UserDAO {
             cn.close();
             return users;
         } catch (SQLException e) {
-            return null;
+            return new ArrayList<>();
         }
     }
 }
