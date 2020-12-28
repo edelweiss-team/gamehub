@@ -1,6 +1,8 @@
 package model.bean;
 
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class Category {
 
@@ -8,33 +10,33 @@ public class Category {
 
     }
 
-    public Category(String name, String description, String image) {
+    public Category(@NotNull String name, @NotNull String description, @NotNull String image) {
         this.name = name;
         this.description = description;
         this.image = image;
     }
 
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NotNull String name) {
         this.name = name;
     }
 
-    public String getDescription() {
+    public @Nullable String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(@NotNull String description) {
         this.description = description;
     }
 
-    public String getImage() {
+    public @Nullable String getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(@NotNull String image) {
         this.image = image;
     }
 
@@ -64,7 +66,10 @@ public class Category {
                 + '}';
     }
 
+    @Nullable
     private String name;
+    @Nullable
     private String description;
+    @Nullable
     private String image;
 }

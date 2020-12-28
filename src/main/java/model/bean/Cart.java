@@ -2,7 +2,6 @@ package model.bean;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class Cart {
 
-    public Cart(User user) {
+    public Cart(@Nullable User user) {
         totalPrice = 0;
         numberOfItems = 0;
         this.user = user;
@@ -21,14 +20,19 @@ public class Cart {
     }
 
     public Cart() {
-
+        totalPrice = 0;
+        numberOfItems = 0;
+        this.user = null;
+        products = new LinkedHashMap<>();
+        productsQuantity =  new LinkedHashMap<>();
     }
 
+    @Nullable
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(@Nullable User user) {
         this.user = user;
     }
 
@@ -48,9 +52,7 @@ public class Cart {
         this.totalPrice = totalPrice;
     }
 
-
-
-    public void addProduct(Product product, Integer quantity) {
+    public void addProduct(@Nullable Product product, @Nullable Integer quantity) {
 
         if (product == null) {
             throw new IllegalArgumentException("Il prodotto aggiunto al carrello non è valido ");
@@ -78,7 +80,7 @@ public class Cart {
 
 
 
-    public void removeProduct(Product product, Integer quantity) {
+    public void removeProduct(@Nullable Product product, @Nullable Integer quantity) {
 
         if (product == null) {
             throw new IllegalArgumentException("Un prodotto nullo non "
@@ -126,11 +128,12 @@ public class Cart {
         return (productsQuantity.get(productId) != null) ? productsQuantity.get(productId) : 0;
     }
 
-    public boolean contains(Integer productId) {
+    public boolean contains(@NotNull Integer productId) {
         return products.containsKey(productId);
     }
 
-    public Product getProduct(Integer productId) {
+    @Nullable
+    public Product getProduct(@NotNull Integer productId) {
         return products.get(productId);
     }
 
@@ -139,11 +142,14 @@ public class Cart {
         return products.values();
     }
 
+    @Nullable
     private User user;
     private double totalPrice;
     private int numberOfItems;
-    private LinkedHashMap<Integer, Product> products;
-    private LinkedHashMap<Integer, Integer> productsQuantity;
+    @NotNull
+    private final LinkedHashMap<Integer, Product> products;
+    @NotNull
+    private final LinkedHashMap<Integer, Integer> productsQuantity;
 
 
 }
