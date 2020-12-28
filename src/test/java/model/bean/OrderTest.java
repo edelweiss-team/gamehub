@@ -26,7 +26,7 @@ class OrderTest {
             Product toAddProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56, "Descrizione",
                     "path immagine ", new ArrayList<>(), new ArrayList<>(), 15, "grandezza", 5);
             Order testOrder = new Order(57, testUser, testOperator, "21-12-2020");
-            testOrder.addProduct(toAddProduct, null);
+            testOrder.addProduct(toAddProduct, -1);
         });
     }
 
@@ -39,7 +39,7 @@ class OrderTest {
                 "path immagine ", new ArrayList<>(), new ArrayList<>(), 15, "grandezza", 5);
         Order testOrder = new Order(57, testUser, testOperator, "21-12-2020");
         testOrder.addProduct(toAddProduct, 10);
-        assertEquals(true, testOrder.contains(toAddProduct.getId()));
+        assertTrue(testOrder.contains(toAddProduct.getId()));
     }
 
     @Test
@@ -140,10 +140,40 @@ class OrderTest {
         //assert verificano che è stato tolto da entrambe le liste
         assertAll(
                 () -> assertFalse(testOrder.contains(toAddProduct.getId())),
-                () -> assertNull(testOrder.getQuantitySingleProduct(toAddProduct.getId()))
+                () -> assertEquals(0, testOrder.getQuantitySingleProduct(toAddProduct.getId()))
         );
     }
 
+    @Test
+    void getProductQuantityPresent(){
+        Order o = new Order(1,
+                new User(
+                        "prova", "provaN", "provaS", "provaA", "provaC",
+                        "provaC2", "12-12-1999", "mail@s.com", 'M',
+                        "33342121212"
+                ), null, "23-23-1999"
+        );
+        Product toAddProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56,
+                "Descrizione", "path immagine ", new ArrayList<>(), new ArrayList<>(),
+                15, "grandezza", 5);
+        o.addProduct(toAddProduct, 2);
+        assertEquals(o.getQuantitySingleProduct(toAddProduct.getId()), 2);
+    }
 
+    @Test
+    void getProductQuantityNotPresent(){
+        Order o = new Order(1,
+                new User(
+                        "prova", "provaN", "provaS", "provaA", "provaC",
+                        "provaC2", "12-12-1999", "mail@s.com", 'M',
+                        "33342121212"
+                ), null, "23-23-1999"
+        );
+        Product toAddProduct = new PhysicalProduct( 54 ,"Prodotto prova", 55.56,
+                "Descrizione", "path immagine ", new ArrayList<>(), new ArrayList<>(),
+                15, "grandezza", 5);
+        o.addProduct(toAddProduct, 2);
+        assertEquals(o.getQuantitySingleProduct(53), 0);
+    }
 
 }

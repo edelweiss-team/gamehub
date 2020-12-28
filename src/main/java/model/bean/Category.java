@@ -1,40 +1,41 @@
 package model.bean;
 
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 public class Category {
 
-    public Category(){
-
+    public Category() {
+        this.name = this.description = this.image = "";
     }
 
-    public Category(String name, String description, String image) {
+    public Category(@NotNull String name, @NotNull String description, @NotNull String image) {
         this.name = name;
         this.description = description;
         this.image = image;
     }
 
-    public String getName() {
+    public @NotNull String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NotNull String name) {
         this.name = name;
     }
 
-    public String getDescription() {
+    public @NotNull String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(@NotNull String description) {
         this.description = description;
     }
 
-    public String getImage() {
+    public @NotNull String getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(@NotNull String image) {
         this.image = image;
     }
 
@@ -64,7 +65,10 @@ public class Category {
                 + '}';
     }
 
+    @NotNull
     private String name;
+    @NotNull
     private String description;
+    @NotNull
     private String image;
 }

@@ -5,13 +5,28 @@ import java.nio.charset.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 public class User {
 
-    public User() { }
+    public User() {
+        this.address = "";
+        this.name = "";
+        this.surname = "";
+        this.username = "";
+        this.city = "";
+        this.country = "";
+        this.birthDate = "";
+        this.mail = "";
+        this.sex = ' ';
+        this.telephone = "";
+        this.passwordHash = "";
+    }
 
-    public User(String username, String name, String surname, String address, String city,
-                String country, String birthDate, String mail, char sex, String telephone) {
+    public User(@NotNull String username, @NotNull String name, @NotNull String surname,
+                @NotNull String address, @NotNull String city, @NotNull String country,
+                @NotNull String birthDate, @NotNull String mail, char sex,
+                @NotNull String telephone) {
         this.username = username;
         this.name = name;
         this.surname = surname;
@@ -25,8 +40,10 @@ public class User {
         this.passwordHash = "";
     }
 
-    public User(String username, String password, String name, String surname, String address,
-        String city, String country, String birthDate, String mail, char sex, String telephone) {
+    public User(@NotNull String username, @NotNull String password, @NotNull String name,
+                @NotNull String surname, @NotNull String address, @NotNull String city,
+                @NotNull String country, @NotNull String birthDate, @NotNull String mail,
+                char sex, @NotNull String telephone) {
         this.username = username;
         this.name = name;
         this.surname = surname;
@@ -47,23 +64,23 @@ public class User {
         }
     }
 
-    public String getUsername() {
+    public @NotNull String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(@NotNull String username) {
         this.username = username;
     }
 
-    public String getPasswordHash() {
+    public @NotNull String getPasswordHash() {
         return passwordHash;
     }
 
-    public void setPasswordHash(String passwordHash) {
+    public void setPasswordHash(@NotNull String passwordHash) {
         this.passwordHash = passwordHash;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(@NotNull String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-1");
             digest.reset();
@@ -74,59 +91,59 @@ public class User {
         }
     }
 
-    public String getName() {
+    public @NotNull String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NotNull String name) {
         this.name = name;
     }
 
-    public String getSurname() {
+    public @NotNull String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname) {
+    public void setSurname(@NotNull String surname) {
         this.surname = surname;
     }
 
-    public String getAddress() {
+    public @NotNull String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(@NotNull String address) {
         this.address = address;
     }
 
-    public String getCity() {
+    public @NotNull String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(@NotNull String city) {
         this.city = city;
     }
 
-    public String getCountry() {
+    public @NotNull String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(@NotNull String country) {
         this.country = country;
     }
 
-    public String getBirthDate() {
+    public @NotNull String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(@NotNull String birthDate) {
         this.birthDate = birthDate;
     }
 
-    public String getMail() {
+    public @NotNull String getMail() {
         return mail;
     }
 
-    public void setMail(String mail) {
+    public void setMail(@NotNull String mail) {
         this.mail = mail;
     }
 
@@ -138,11 +155,11 @@ public class User {
         this.sex = sex;
     }
 
-    public String getTelephone() {
+    public @NotNull String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(String telephone) {
+    public void setTelephone(@NotNull String telephone) {
         this.telephone = telephone;
     }
 
@@ -172,16 +189,25 @@ public class User {
         return Objects.hash(username);
     }
 
-
+    @NotNull
     private String username;
+    @NotNull
     private String passwordHash;
+    @NotNull
     private String name;
+    @NotNull
     private String surname;
+    @NotNull
     private String address;
+    @NotNull
     private String city;
+    @NotNull
     private String country;
+    @NotNull
     private String birthDate;
+    @NotNull
     private String mail;
     private char sex;
+    @NotNull
     private String telephone;
 }
