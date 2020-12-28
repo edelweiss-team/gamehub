@@ -2,11 +2,8 @@ package model.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
-import model.bean.Category;
-import model.bean.DigitalProduct;
-import model.bean.Product;
-import model.bean.Tag;
+import model.bean.*;
+import org.jetbrains.annotations.NotNull;
 
 
 public class DigitalProductDAO {
@@ -56,7 +53,7 @@ public class DigitalProductDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
-            DigitalProduct p =null;
+            DigitalProduct p = null;
 
             if (rs.next()) {
                 p = new DigitalProduct();
@@ -173,9 +170,9 @@ public class DigitalProductDAO {
             ArrayList<Category> categories = new ArrayList<>();
 
             while (rs.next()) {
-                CategoryDAO categoryDAO = new CategoryDAO();
+                CategoryDAO categoryDao = new CategoryDAO();
                 Category temp;
-                temp = categoryDAO.doRetrieveByName(rs.getString(1));
+                temp = categoryDao.doRetrieveByName(rs.getString(1));
                 categories.add(temp);
             }
 
@@ -202,9 +199,9 @@ public class DigitalProductDAO {
             ArrayList<Tag> tags = new ArrayList<>();
 
             while (rs.next()) {
-                TagDAO tagDAO = new TagDAO();
+                TagDAO tagDao = new TagDAO();
                 Tag temp;
-                temp = tagDAO.doRetrieveByName(rs.getString(1));
+                temp = tagDao.doRetrieveByName(rs.getString(1));
                 tags.add(temp);
             }
 
@@ -212,8 +209,169 @@ public class DigitalProductDAO {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<DigitalProduct> doRetrieveAllByCategory(
+            String categoryName, int offset, int limit) {
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("select id, name, price,"
+                    + " description, image, platform,"
+                    + "releaseDate, requiredAge, softwareHouse, publisher, quantity "
+                    + "from digitalbelonging, digitalproduct "
+                    + "where digitalbelonging.digitalProduct = digitalproduct.id "
+                    + "and digitalbelonging.category = ? LIMIT ?, ?;");
+
+            ps.setString(1, categoryName);
+            ps.setInt(2, offset);
+            ps.setInt(3, limit);
+            ResultSet rs = ps.executeQuery();
+
+            ArrayList<DigitalProduct> prodotti = new ArrayList<>();
+            while (rs.next()) {
+                DigitalProduct p = new DigitalProduct();
+                p.setId(rs.getInt(1));
+                p.setName(rs.getString(2));
+                p.setPrice(rs.getDouble(3));
+                p.setDescription(rs.getString(4));
+                p.setImage(rs.getString(5));
+                p.setPlatform(rs.getString(6));
+                p.setReleaseDate(rs.getString(7));
+                p.setRequiredAge(rs.getInt(8));
+                p.setSoftwareHouse(rs.getString(9));
+                p.setPublisher(rs.getString(10));
+                p.setQuantity(rs.getInt(11));
+
+
+                p.setCategories(doRetrieveAllProdCatById(p.getId()));
+                p.setTags(doRetrieveAllProdTagById(p.getId()));
+
+                prodotti.add(p);
+            }
+
+            return prodotti;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void doUpdate(DigitalProduct p) {
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("UPDATE digitalproduct SET name=?, "
+                    + "price=?, description=?, image=?, platform=?, releaseDate=?,"
+                    + " requiredAge=?, softwareHouse=?, publisher=?, quantity=? WHERE id=?;");
+
+            ps.setString(1, p.getName());
+            ps.setDouble(2, p.getPrice());
+            ps.setString(3, p.getDescription());
+            ps.setString(4, p.getImage());
+            ps.setString(5, p.getPlatform());
+            ps.setString(6, p.getReleaseDate());
+            ps.setInt(7, p.getRequiredAge());
+            ps.setString(8, p.getSoftwareHouse());
+            ps.setString(9, p.getPublisher());
+            ps.setInt(10, p.getQuantity());
+            ps.setInt(11, p.getId());
+
+            ps.executeUpdate();
+
+            ps = con.prepareStatement("DELETE FROM digitalbelonging WHERE digitalProduct=?;");
+            ps.setInt(1, p.getId());
+            ps.executeUpdate();
+
+            for (Category c : p.getCategories()) {
+                ps = con.prepareStatement("INSERT INTO "
+                        + "digitalbelonging(digitalProduct, category) VALUES (?,?)");
+                ps.setInt(1, p.getId());
+                ps.setString(2, c.getName());
+                ps.executeUpdate();
+            }
+
+            ps = con.prepareStatement("DELETE FROM digitalcharacteristic WHERE digitalProduct=?;");
+            ps.setInt(1, p.getId());
+            ps.executeUpdate();
+
+            for (Tag c : p.getTags()) {
+                ps = con.prepareStatement("INSERT INTO "
+                        + "digitalcharacteristic(digitalProduct, tag) VALUES (?,?)");
+                ps.setInt(1, p.getId());
+                ps.setString(2, c.getName());
+                ps.executeUpdate();
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
 
         }
+    }
+
+    @NotNull
+    public ArrayList<DigitalProduct> doRetrieveByAllFragment(
+             @NotNull String name, @NotNull String desc, @NotNull Double price,
+             @NotNull String softHouse, @NotNull String nameTag, @NotNull String nameCategory,
+             int offset, int limit) {
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT dp.id, dp.name, dp.price, dp.description, "
+                    + "dp.image, dp.platform, dp.releaseDate, dp.requiredAge, dp.softwareHouse, "
+                    + "dp.publisher, dp.quantity"
+                    + " FROM digitalbelonging db,digitalcharacteristic dc,digitalproduct dp "
+                    + " where db.digitalProduct=dp.id and dc.digitalProduct=dp.id "
+                    + "       and LOWER(dp.name) LIKE ? and LOWER(dp.description) LIKE ? "
+                    + "       and dp.price <= ? and LOWER(dp.softwareHouse) LIKE ? "
+                    + "       and LOWER(dc.tag) LIKE ? and LOWER(db.category) LIKE ?"
+                    + " group by dp.id, dp.description, dp.image, dp.name, dp.platform, "
+                    + "          dp.price, dp.publisher, dp.quantity, dp.releaseDate,"
+                    + " dp.requiredAge, dp.softwareHouse "
+                    + "LIMIT ?,?; ");
+
+            ps.setString(1, "%" + name.toLowerCase() + "%");
+            ps.setString(2, "%" + desc.toLowerCase() + "%");
+            ps.setDouble(3, price);
+            ps.setString(4, "%" + softHouse.toLowerCase() + "%");
+            ps.setString(5, "%" + nameTag.toLowerCase() + "%");
+            ps.setString(6, "%" + nameCategory.toLowerCase() + "%");
+            ps.setInt(7, offset);
+            ps.setInt(8, limit);
+
+            ResultSet rs = ps.executeQuery();
+
+            ArrayList<DigitalProduct> prodotti = new ArrayList<>();
+            while (rs.next()) {
+                DigitalProduct p = new DigitalProduct();
+                p.setId(rs.getInt(1));
+                p.setName(rs.getString(2));
+                p.setPrice(rs.getDouble(3));
+                p.setDescription(rs.getString(4));
+                p.setImage(rs.getString(5));
+                p.setPlatform(rs.getString(6));
+                p.setReleaseDate(rs.getString(7));
+                p.setRequiredAge(rs.getInt(8));
+                p.setSoftwareHouse(rs.getString(9));
+                p.setPublisher(rs.getString(10));
+                p.setQuantity(rs.getInt(11));
+
+
+                p.setCategories(doRetrieveAllProdCatById(p.getId()));
+                p.setTags(doRetrieveAllProdTagById(p.getId()));
+
+                prodotti.add(p);
+
+            }
+
+            return prodotti;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        }
+
     }
 
 }
