@@ -123,7 +123,7 @@ public class Admin extends Moderator {
     /**
      * Determines whatever or not the Admin is a super-admin.
      *
-     * @return true iff the admin is a super-admin, false otherwise.
+     * @return true if the admin is a super-admin, false otherwise.
      */
     public boolean isSuperAdmin() {
         return isSuperAdmin;
