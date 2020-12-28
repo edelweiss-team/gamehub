@@ -125,7 +125,7 @@ public class ModeratorDAO {
     }
 
     @Nullable
-    public Moderator doRetriveByUsername(@NotNull String username) {
+    public Moderator doRetrieveByUsername(@NotNull String username) {
         User user;
         Moderator moderator = null;
 
