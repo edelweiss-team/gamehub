@@ -6,11 +6,22 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class User {
 
-    public User() { }
+    public User() {
+        this.address = "";
+        this.name = "";
+        this.surname = "";
+        this.username = "";
+        this.city = "";
+        this.country = "";
+        this.birthDate = "";
+        this.mail = "";
+        this.sex = ' ';
+        this.telephone = "";
+        this.passwordHash = "";
+    }
 
     public User(@NotNull String username, @NotNull String name, @NotNull String surname,
                 @NotNull String address, @NotNull String city, @NotNull String country,
@@ -53,7 +64,7 @@ public class User {
         }
     }
 
-    public @Nullable String getUsername() {
+    public @NotNull String getUsername() {
         return username;
     }
 
@@ -61,7 +72,7 @@ public class User {
         this.username = username;
     }
 
-    public @Nullable String getPasswordHash() {
+    public @NotNull String getPasswordHash() {
         return passwordHash;
     }
 
@@ -80,7 +91,7 @@ public class User {
         }
     }
 
-    public @Nullable String getName() {
+    public @NotNull String getName() {
         return name;
     }
 
@@ -88,7 +99,7 @@ public class User {
         this.name = name;
     }
 
-    public @Nullable String getSurname() {
+    public @NotNull String getSurname() {
         return surname;
     }
 
@@ -96,7 +107,7 @@ public class User {
         this.surname = surname;
     }
 
-    public @Nullable String getAddress() {
+    public @NotNull String getAddress() {
         return address;
     }
 
@@ -104,7 +115,7 @@ public class User {
         this.address = address;
     }
 
-    public @Nullable String getCity() {
+    public @NotNull String getCity() {
         return city;
     }
 
@@ -112,7 +123,7 @@ public class User {
         this.city = city;
     }
 
-    public @Nullable String getCountry() {
+    public @NotNull String getCountry() {
         return country;
     }
 
@@ -120,7 +131,7 @@ public class User {
         this.country = country;
     }
 
-    public @Nullable String getBirthDate() {
+    public @NotNull String getBirthDate() {
         return birthDate;
     }
 
@@ -128,7 +139,7 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public @Nullable String getMail() {
+    public @NotNull String getMail() {
         return mail;
     }
 
@@ -144,7 +155,7 @@ public class User {
         this.sex = sex;
     }
 
-    public @Nullable String getTelephone() {
+    public @NotNull String getTelephone() {
         return telephone;
     }
 
@@ -178,25 +189,25 @@ public class User {
         return Objects.hash(username);
     }
 
-    @Nullable
+    @NotNull
     private String username;
-    @Nullable
+    @NotNull
     private String passwordHash;
-    @Nullable
+    @NotNull
     private String name;
-    @Nullable
+    @NotNull
     private String surname;
-    @Nullable
+    @NotNull
     private String address;
-    @Nullable
+    @NotNull
     private String city;
-    @Nullable
+    @NotNull
     private String country;
-    @Nullable
+    @NotNull
     private String birthDate;
-    @Nullable
+    @NotNull
     private String mail;
     private char sex;
-    @Nullable
+    @NotNull
     private String telephone;
 }

@@ -2,12 +2,11 @@ package model.bean;
 
 import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class Category {
 
-    public Category(){
-
+    public Category() {
+        this.name = this.description = this.image = "";
     }
 
     public Category(@NotNull String name, @NotNull String description, @NotNull String image) {
@@ -16,7 +15,7 @@ public class Category {
         this.image = image;
     }
 
-    public @Nullable String getName() {
+    public @NotNull String getName() {
         return name;
     }
 
@@ -24,7 +23,7 @@ public class Category {
         this.name = name;
     }
 
-    public @Nullable String getDescription() {
+    public @NotNull String getDescription() {
         return description;
     }
 
@@ -32,7 +31,7 @@ public class Category {
         this.description = description;
     }
 
-    public @Nullable String getImage() {
+    public @NotNull String getImage() {
         return image;
     }
 
@@ -66,10 +65,10 @@ public class Category {
                 + '}';
     }
 
-    @Nullable
+    @NotNull
     private String name;
-    @Nullable
+    @NotNull
     private String description;
-    @Nullable
+    @NotNull
     private String image;
 }

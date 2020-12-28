@@ -1,15 +1,22 @@
 package model.bean;
 
 import java.util.Collection;
+import org.jetbrains.annotations.NotNull;
 
 public class DigitalProduct extends Product {
 
-    public DigitalProduct() {}
+    public DigitalProduct() {
+        this.platform = "";
+        this.publisher = "";
+        this.releaseDate = "";
+        this.softwareHouse = "";
+    }
 
-    public DigitalProduct(int id, String name, double price, String description, String image,
-                          Collection<Category> categories, Collection<Tag> tags, int quantity,
-                          String platform, String releaseDate, int requiredAge,
-                          String softwareHouse, String publisher) {
+    public DigitalProduct(int id, @NotNull String name, double price, @NotNull String description,
+                          @NotNull String image, @NotNull Collection<Category> categories,
+                          @NotNull Collection<Tag> tags, int quantity,
+                          @NotNull String platform, @NotNull String releaseDate, int requiredAge,
+                          @NotNull String softwareHouse, @NotNull String publisher) {
 
         super(id, name, price, description, image, categories, tags, quantity);
         this.platform = platform;
@@ -19,19 +26,19 @@ public class DigitalProduct extends Product {
         this.publisher = publisher;
     }
 
-    public String getPlatform() {
+    public @NotNull String getPlatform() {
         return platform;
     }
 
-    public void setPlatform(String platform) {
+    public void setPlatform(@NotNull String platform) {
         this.platform = platform;
     }
 
-    public String getReleaseDate() {
+    public @NotNull String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
+    public void setReleaseDate(@NotNull String releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -43,19 +50,19 @@ public class DigitalProduct extends Product {
         this.requiredAge = requiredAge;
     }
 
-    public String getSoftwareHouse() {
+    public @NotNull String getSoftwareHouse() {
         return softwareHouse;
     }
 
-    public void setSoftwareHouse(String softwareHouse) {
+    public void setSoftwareHouse(@NotNull String softwareHouse) {
         this.softwareHouse = softwareHouse;
     }
 
-    public String getPublisher() {
+    public @NotNull String getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(String publisher) {
+    public void setPublisher(@NotNull String publisher) {
         this.publisher = publisher;
     }
 
@@ -70,9 +77,13 @@ public class DigitalProduct extends Product {
                 + '}';
     }
 
+    @NotNull
     private String platform;
+    @NotNull
     private String releaseDate;
     private int requiredAge;
+    @NotNull
     private String softwareHouse;
+    @NotNull
     private String publisher;
 }

@@ -3,14 +3,14 @@ package model.bean;
 import java.util.Collection;
 import java.util.HashMap;
 import org.jetbrains.annotations.NotNull;
-
+import org.jetbrains.annotations.Nullable;
 
 
 public class Order {
 
 
 
-    public Order(int id, User user, Operator operator, String data) {
+    public Order(int id, @NotNull User user, @Nullable Operator operator, @NotNull String data) {
         this.id = id;
         this.data = data;
         this.user = user;
@@ -21,7 +21,15 @@ public class Order {
         productsQuantity = new HashMap<>();
     }
 
-    public Order() {}
+    public Order() {
+        this.id = 0;
+        this.data = "";
+        this.numberOfItems = 0;
+        this.user = new User();
+        this.products = new HashMap<>();
+        this.productsQuantity = new HashMap<>();
+        this.totPrice = 0;
+    }
 
     public int getNumberOfItems() {
         return numberOfItems;
@@ -35,7 +43,7 @@ public class Order {
         return id;
     }
 
-    public String getData() {
+    public @NotNull String getData() {
         return data;
     }
 
@@ -44,7 +52,7 @@ public class Order {
         this.id = id;
     }
 
-    public void setData(String data) {
+    public void setData(@NotNull String data) {
         this.data = data;
     }
 
@@ -56,19 +64,19 @@ public class Order {
         this.totPrice = totPrice;
     }
 
-    public User getUser() {
+    public @NotNull User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(@NotNull User user) {
         this.user = user;
     }
 
-    public Operator getOperator() {
+    public @Nullable Operator getOperator() {
         return operator;
     }
 
-    public void setOperator(Operator operator) {
+    public void setOperator(@Nullable Operator operator) {
         this.operator = operator;
     }
 
@@ -95,7 +103,7 @@ public class Order {
         this.numberOfItems += quantity;
     }
 
-    public void removeProduct(Product product, Integer quantity) {
+    public void removeProduct(@Nullable Product product, @Nullable Integer quantity) {
 
         if (product == null) {
             throw new IllegalArgumentException("Un prodotto nullo non "
@@ -128,29 +136,42 @@ public class Order {
         }
     }
 
-    public Integer getQuantitySingleProduct(Integer productId) {
-        return productsQuantity.get(productId);
+    /**
+     * Method to return the quantity of a product in the order.
+     *
+     * @param productId an Integer representing the product id to get the quantity,
+     *                  must be not null.
+     * @return The quantity of the product if it is in the cart, 0 otherwise.
+     */
+    @NotNull
+    public Integer getQuantitySingleProduct(@NotNull Integer productId) {
+        return (productsQuantity.get(productId) != null) ? productsQuantity.get(productId) : 0;
     }
 
-    public boolean contains(Integer productId) {
+    public boolean contains(@NotNull Integer productId) {
         return products.containsKey(productId);
     }
 
-    public Product getProduct(Integer productId) {
+    public @Nullable Product getProduct(@NotNull Integer productId) {
         return products.get(productId);
     }
 
-    public Collection<Product> getAllProducts() {
+    public @NotNull Collection<Product> getAllProducts() {
         return products.values();
     }
 
 
     private int id;
+    @NotNull
     private String data;
     private double totPrice;
+    @NotNull
     private User user;
+    @Nullable
     private Operator operator;
     private int numberOfItems;
-    private HashMap<Integer, Product> products;
-    private HashMap<Integer, Integer> productsQuantity;
+    @NotNull
+    private final HashMap<Integer, Product> products;
+    @NotNull
+    private final HashMap<Integer, Integer> productsQuantity;
 }

@@ -1,19 +1,21 @@
 package model.bean;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
 
 public class Tag {
 
-    public Tag(){
-
+    public Tag() {
+        this.name = "";
     }
 
     /**
      *
      * @param name String
      */
-    public Tag(String name) {
+    public Tag(@NotNull String name) {
         this.name = name;
     }
 
@@ -38,11 +40,11 @@ public class Tag {
         return Objects.hash(name);
     }
 
-    public String getName() {
+    public @NotNull String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NotNull String name) {
         this.name = name;
     }
 
@@ -51,5 +53,5 @@ public class Tag {
         return "Tag{" + "name='" + name + '\'' + '}';
     }
 
-    private String name;
+    private @NotNull String name;
 }

@@ -120,7 +120,8 @@ public class Cart {
     /**
      * Method to return the quantity of a product in the cart.
      *
-     * @param productId an Integer representing the product id to get the quantity, must be not null.
+     * @param productId an Integer representing the product id to get the quantity,
+     *                 must be not null.
      * @return The quantity of the product if it is in the cart, 0 otherwise.
      */
     @NotNull

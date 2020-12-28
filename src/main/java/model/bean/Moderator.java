@@ -1,12 +1,13 @@
 package model.bean;
 
+import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import java.util.Objects;
 
 public class Moderator extends User {
 
     public Moderator() {
+        this.contractTime = "";
     }
 
     // constructor by a User instance
@@ -31,7 +32,7 @@ public class Moderator extends User {
         this.contractTime = contractTime;
     }
 
-    public @Nullable String getContractTime() {
+    public @NotNull String getContractTime() {
         return this.contractTime;
     }
 
@@ -46,6 +47,6 @@ public class Moderator extends User {
                 + '}';
     }
 
-    @Nullable
+    @NotNull
     private String contractTime;
 }

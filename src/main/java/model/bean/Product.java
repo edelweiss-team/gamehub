@@ -3,14 +3,22 @@ package model.bean;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class Product {
 
     /**
      *
      */
-    public Product(){
-
+    public Product() {
+        name = "";
+        description = "";
+        image = "";
+        quantity = 0;
+        price = 0;
+        tags = new HashMap<>();
+        categories = new HashMap<>();
     }
 
     /**
@@ -23,8 +31,9 @@ public abstract class Product {
      * @param tags Collection<Tag></Tag>
      * @param quantity int
      */
-    public Product(int id, String name, double price, String description, String image,
-                   Collection<Category> categories, Collection<Tag> tags, int quantity) {
+    public Product(int id, @NotNull String name, double price, @NotNull String description,
+                   @NotNull String image, @NotNull Collection<Category> categories,
+                   @NotNull Collection<Tag> tags, int quantity) {
         this.description = description;
         this.id = id;
         this.image = image;
@@ -65,7 +74,7 @@ public abstract class Product {
      *
      * @return String this.name
      */
-    public String getName() {
+    public @NotNull String getName() {
         return name;
     }
 
@@ -73,7 +82,7 @@ public abstract class Product {
      *
      * @param name String
      */
-    public void setName(String name) {
+    public void setName(@NotNull String name) {
         this.name = name;
     }
 
@@ -81,7 +90,7 @@ public abstract class Product {
      *
      * @return String this.description
      */
-    public String getDescription() {
+    public @NotNull String getDescription() {
         return description;
     }
 
@@ -89,7 +98,7 @@ public abstract class Product {
      *
      * @param description String
      */
-    public void setDescription(String description) {
+    public void setDescription(@NotNull String description) {
         this.description = description;
     }
 
@@ -97,7 +106,7 @@ public abstract class Product {
      *
      * @return String image
      */
-    public String getImage() {
+    public @NotNull String getImage() {
         return image;
     }
 
@@ -105,7 +114,7 @@ public abstract class Product {
      *
      * @param image String, path of the image
      */
-    public void setImage(String image) {
+    public void setImage(@NotNull String image) {
         this.image = image;
     }
 
@@ -129,19 +138,19 @@ public abstract class Product {
         this.price = price;
     }
 
-    public Category hasCategory(String categoryName) {
+    public @Nullable Category hasCategory(@NotNull String categoryName) {
         return this.categories.get(categoryName);
     }
 
-    public Tag hasTag(String tagName) {
+    public @Nullable Tag hasTag(@NotNull String tagName) {
         return this.tags.get(tagName);
     }
 
-    public void addCategory(Category c) {
+    public void addCategory(@NotNull Category c) {
         this.categories.put(c.getName(), c);
     }
 
-    public Category removeCategory(Category c) {
+    public @Nullable Category removeCategory(@NotNull Category c) {
         Category toRemove = this.categories.get(c.getName());
         if (toRemove != null) {
             this.categories.remove(c.getName());
@@ -149,11 +158,11 @@ public abstract class Product {
         return toRemove;
     }
 
-    public void addTag(Tag t) {
+    public void addTag(@NotNull Tag t) {
         this.tags.put(t.getName(), t);
     }
 
-    public Tag removeTag(Tag t) {
+    public @Nullable Tag removeTag(@NotNull Tag t) {
         Tag toRemove = this.tags.get(t.getName());
         if (toRemove != null) {
             this.tags.remove(t.getName());
@@ -161,7 +170,7 @@ public abstract class Product {
         return toRemove;
     }
 
-    public Collection<Category> getCategories() {
+    public @NotNull Collection<Category> getCategories() {
         return categories.values();
     }
 
@@ -173,6 +182,7 @@ public abstract class Product {
         }
     }
 
+    @NotNull
     public Collection<Tag> getTags() {
         return tags.values();
     }
@@ -214,11 +224,16 @@ public abstract class Product {
     }
 
     private int id;
+    @NotNull
     private String name;
+    @NotNull
     private String description;
+    @NotNull
     private String image;
     private int quantity;
     private double price;
+    @NotNull
     private HashMap<String, Category> categories;
+    @NotNull
     private HashMap<String, Tag> tags;
 }
