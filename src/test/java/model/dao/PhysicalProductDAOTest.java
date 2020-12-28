@@ -382,15 +382,15 @@ class PhysicalProductDAOTest {
 
     @Test
     void doUpdateProductNotValid() {
+        PhysicalProduct p = new PhysicalProduct(7, "NuovoProdottoTesting", 23.56,
+                "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
+                200, "sizetest", 20.05);
         assertThrows(RuntimeException.class, () -> {
-            PhysicalProduct p = new PhysicalProduct(7, "NuovoProdottoTesting", 23.56,
-                    "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
-                    200, "sizetest", 20.05);
             dao.doSave(p);
             p.setName(null);
             dao.doUpdate(p);
-            dao.doDelete(p.getId());
         });
+        dao.doDelete(p.getId());
     }
 
     @Test
