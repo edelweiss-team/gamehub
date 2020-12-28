@@ -70,16 +70,19 @@ public class ModeratorDAO {
     }
 
     public boolean doDeleteByUsername(@NotNull String username) {
-
         // checks if the 'user' external-key exists in DB.
         if (udao.doRetrieveByUsername(username) != null) {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement st = cn.prepareStatement("DELETE FROM moderator WHERE user=?;");
                 st.setString(1, username);
-                st.executeUpdate();
-                st.close();
-                cn.close();
+
+                if (st.executeUpdate() != 1) {
+                    st.close();
+                    cn.close();
+                    throw new RuntimeException("can't delete");
+                }
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
