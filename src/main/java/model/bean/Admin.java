@@ -11,6 +11,9 @@ import org.jetbrains.annotations.NotNull;
  */
 public class Admin extends Moderator {
 
+    /**
+     * Constructs a new Admin with empty fields.
+     */
     public Admin() {
 
     }
@@ -20,7 +23,7 @@ public class Admin extends Moderator {
      * This admin is by default treated not as a super-admin.
      * Neither of the params should be null.
      *
-     * @param u the user correspondig to the admin
+     * @param u the user corresponding to the admin
      * @param contractTime the contract expiration date
      */
     public Admin(@NotNull User u, @NotNull String contractTime) {
@@ -32,7 +35,7 @@ public class Admin extends Moderator {
      * Constructs a new Admin starting from a user, and the contractTime.
      * Neither of the params should be null.
      *
-     * @param u the user correspondig to the admin
+     * @param u the user corresponding to the admin
      * @param contractTime the contract expiration date
      * @param isSuperAdmin a boolean indicating if an admin is a super-admin
      */
@@ -64,9 +67,10 @@ public class Admin extends Moderator {
     public Admin(@NotNull String username, @NotNull String password, @NotNull String name,
                  @NotNull String surname, @NotNull String address, @NotNull String city,
                  @NotNull String country, @NotNull String birthDate, @NotNull String mail,
-                 char sex, @NotNull String telephone, @NotNull String contractTime, boolean isSuperAdmin) {
-        super(username, password, name, surname, address, city, country, birthDate,
-                mail, sex, telephone, contractTime);
+                 char sex, @NotNull String telephone, @NotNull String contractTime,
+                 boolean isSuperAdmin) {
+        super(username, password, name, surname, address, city, country, birthDate, mail,
+                sex, telephone, contractTime);
         this.isSuperAdmin = isSuperAdmin;
     }
 
@@ -103,7 +107,7 @@ public class Admin extends Moderator {
     /**
      * Determines whatever or not the Admin is a super-admin.
      *
-     * @return true iff the admin is a superadmin and false otherwise.
+     * @return true iff the admin is a super-admin, false otherwise.
      */
     public boolean isSuperAdmin() {
         return isSuperAdmin;
