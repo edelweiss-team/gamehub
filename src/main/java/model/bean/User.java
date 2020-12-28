@@ -184,10 +184,6 @@ public class User {
         return Objects.equals(username, user.username);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(username);
-    }
 
     @NotNull
     private String username;

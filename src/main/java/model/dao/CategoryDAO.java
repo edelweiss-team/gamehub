@@ -18,7 +18,7 @@ public class CategoryDAO {
             Connection cn = ConPool.getConnection();
             Statement st = cn.createStatement();
             Category category = null;
-            PreparedStatement ps = cn.prepareStatement("SELECT * FROM Category C WHERE C.name=?;");
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM category C WHERE C.name=?;");
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -35,7 +35,7 @@ public class CategoryDAO {
     public void doDeleteByName(@NotNull String name) {
         try {
             Connection cn = ConPool.getConnection();
-            PreparedStatement st = cn.prepareStatement("DELETE FROM Category WHERE name=?;");
+            PreparedStatement st = cn.prepareStatement("DELETE FROM category WHERE name=?;");
             st.setString(1, name);
             if (st.executeUpdate() != 1) {
                 throw new RuntimeException();
@@ -51,7 +51,7 @@ public class CategoryDAO {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement ps = cn.prepareStatement(
-                    "INSERT INTO Category (name, description, image) VALUES (?,?, ?);");
+                    "INSERT INTO category (name, description, image) VALUES (?,?, ?);");
             ps.setString(1, c.getName());
             ps.setString(2, c.getDescription());
             ps.setString(3, c.getImage());
@@ -69,7 +69,7 @@ public class CategoryDAO {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement ps = cn.prepareStatement(
-                    "update Category set name=?, description=?, image=? where name=?");
+                    "update category set name=?, description=?, image=? where name=?");
             ps.setString(1, c.getName());
             ps.setString(2, c.getDescription());
             ps.setString(3, c.getImage());
@@ -88,7 +88,7 @@ public class CategoryDAO {
         Connection cn = ConPool.getConnection();
         Statement st = cn.createStatement();
         ArrayList<Category> categories = new ArrayList<>();
-        ResultSet rs = st.executeQuery("SELECT * FROM Category;");
+        ResultSet rs = st.executeQuery("SELECT * FROM category;");
         while (rs.next()) {
             Category category = new Category(rs.getString(1), rs.getString(2),
                     rs.getString(3));
@@ -103,7 +103,7 @@ public class CategoryDAO {
                                                                  int limit) throws SQLException {
         Connection cn = ConPool.getConnection();
         ArrayList<Category> categories = new ArrayList<>();
-        PreparedStatement ps = cn.prepareStatement("SELECT * FROM Category where name like ? limit ? offset ?;");
+        PreparedStatement ps = cn.prepareStatement("SELECT * FROM category where name like ? limit ? offset ?;");
         String likeString = "%" + name + "%";
         ps.setString(1, likeString);
         ps.setInt(2, limit);

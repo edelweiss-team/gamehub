@@ -1,38 +1,45 @@
 package model.bean;
 
-import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
 
 public class Moderator extends User {
+
 
     public Moderator() {
         this.contractTime = "";
     }
 
-    // constructor by a User instance
-    public Moderator(User u, @NotNull String contractTime) {
-        super(Objects.requireNonNull(u.getUsername()), Objects.requireNonNull(u.getName()),
-                Objects.requireNonNull(u.getSurname()), Objects.requireNonNull(u.getAddress()),
-                Objects.requireNonNull(u.getCity()), Objects.requireNonNull(u.getCountry()),
-                Objects.requireNonNull(u.getBirthDate()), Objects.requireNonNull(u.getMail()), u.getSex(),
-                Objects.requireNonNull(u.getTelephone()));
+    // constructor by a 'User' instance
+    public Moderator(User u, String contractTime) {
+        super(u.getUsername(), u.getName(), u.getSurname(), u.getAddress(),
+                u.getCity(), u.getCountry(), u.getBirthDate(), u.getMail(), u.getSex(),
+                u.getTelephone());
         this.contractTime = contractTime;
         this.setPasswordHash(Objects.requireNonNull(u.getPasswordHash()));
     }
 
     // constructor by parameters
-    public Moderator(@NotNull String username, @NotNull String password, @NotNull String name,
-                     @NotNull String surname, @NotNull String address, @NotNull String city,
-                     @NotNull String country, @NotNull String birthDate, @NotNull String mail,
-                     char sex, @NotNull String telephone, @NotNull String contractTime) {
+    public Moderator(String username, String password, String name, String surname, String address,
+                     String city, String country, String birthDate, String mail, char sex,
+                     String telephone, String contractTime) {
 
         super(username, password, name, surname, address, city, country, birthDate, mail, sex,
                 telephone);
         this.contractTime = contractTime;
     }
 
-    public @NotNull String getContractTime() {
+
+    // constructor by a 'Moderator' instance.
+    public Moderator(Moderator m) {
+        super(m.getUsername(), m.getName(), m.getSurname(), m.getAddress(),
+                m.getCity(), m.getCountry(), m.getBirthDate(), m.getMail(), m.getSex(),
+                m.getTelephone());
+        this.contractTime = m.getContractTime();
+    }
+
+    public String getContractTime() {
         return this.contractTime;
     }
 
@@ -48,5 +55,15 @@ public class Moderator extends User {
     }
 
     @NotNull
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Moderator)) return false;
+        if (!super.equals(o)) return false;
+        Moderator moderator = (Moderator) o;
+        return Objects.equals(this.getContractTime(), moderator.getContractTime());
+    }
+
+
     private String contractTime;
 }
