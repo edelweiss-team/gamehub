@@ -10,9 +10,24 @@ import model.bean.Category;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ *  CategoryDAO is used to do operation inside the table 'category' of database.
+ *  CategoryDAO allow to do the CRUD operation on database (create, read, update, delete)
+ *  It's possible to add a Category, update a Category, delete a Category, read all the categories
+ *  saved into the database, read a Category given its name.
+ *
+ */
 
 public class CategoryDAO {
 
+    /**
+     * This method allow to find a Catgeory given its name.
+     *
+     * @param name a String that it's a key for a search into the database, must be not null
+     * @return a Category that corresponds to the name given from param, null otherwise
+     *
+     * @throws RuntimeException if an exception is occurred
+     */
     public @Nullable Category doRetrieveByName(@NotNull String name) {
         try {
             Connection cn = ConPool.getConnection();
@@ -32,6 +47,13 @@ public class CategoryDAO {
         }
     }
 
+    /**
+     * This method allow to remove a Category from the database.
+     *
+     * @param name an unique String that identify a Category
+     * @throws RuntimeException if an exception is occurred
+     */
+
     public void doDeleteByName(@NotNull String name) {
         try {
             Connection cn = ConPool.getConnection();
@@ -47,6 +69,12 @@ public class CategoryDAO {
         }
     }
 
+    /**
+     * This method allow to save a Category into the database.
+     *
+     * @param c the object Category to save
+     * @throws RuntimeException if an exception is occurred
+     */
     public void doSave(@NotNull Category c) {
         try {
             Connection cn = ConPool.getConnection();
@@ -65,6 +93,12 @@ public class CategoryDAO {
         }
     }
 
+    /**
+     * This method allows to update a Category into the database.
+     *
+     * @param c the object Category to update
+     * @param oldName the oldname of the category
+     */
     public void doUpdateByName(Category c, @NotNull String oldName) {
         try {
             Connection cn = ConPool.getConnection();
@@ -84,6 +118,14 @@ public class CategoryDAO {
         }
     }
 
+    /**
+     * This method allows to find all the Categories saved into the database.
+     *
+     * @return an ArrayList formed by Categories, if there are categories saved into the database
+     *         it returns the ArrayList else an empty ArrayList
+     * @throws RuntimeException if an exception is occurred
+     */
+
     public @NotNull ArrayList<Category> doRetrieveAll() throws SQLException {
         Connection cn = ConPool.getConnection();
         Statement st = cn.createStatement();
@@ -99,11 +141,23 @@ public class CategoryDAO {
         return categories;
     }
 
+    /**
+     * This method allows to find all the Categories saved into the database
+     * given a fragment of its name.
+     *
+     * @param name a fragment of the category name used to search some categories
+     * @param offset the offset from which the database search is started
+     * @param limit the max number of categories must be returned
+     * @return an ArrayList formed by Categories, if there are categories
+     *         that match the search parameter it returns the ArrayList else an empty ArrayList
+     * @throws SQLException if an exception is occurred
+     */
     public @NotNull ArrayList<Category> doRetrieveByNameFragment(@NotNull String name, int offset,
                                                                  int limit) throws SQLException {
         Connection cn = ConPool.getConnection();
         ArrayList<Category> categories = new ArrayList<>();
-        PreparedStatement ps = cn.prepareStatement("SELECT * FROM category where name like ? limit ? offset ?;");
+        PreparedStatement ps = cn.prepareStatement("SELECT * FROM category "
+                + "where name like ? limit ? offset ?;");
         String likeString = "%" + name + "%";
         ps.setString(1, likeString);
         ps.setInt(2, limit);

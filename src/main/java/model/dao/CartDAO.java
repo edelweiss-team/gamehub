@@ -5,7 +5,6 @@ import model.bean.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-
 public class CartDAO {
     @NotNull
     private final UserDAO udao = new UserDAO();
