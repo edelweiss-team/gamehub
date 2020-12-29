@@ -111,8 +111,7 @@ class CategoryDAOTest {
     @Test
     void doRetrieveAllxNone() {
         try {
-            ArrayList<Category> list =cd.doRetrieveAll();
-            assertTrue(list.isEmpty());
+            assertTrue(cd.doRetrieveAll().isEmpty());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -124,7 +123,7 @@ class CategoryDAOTest {
         cd.doSave(cat1);
         try {
             ArrayList<Category> list = cd.doRetrieveAll();
-            assertEquals(cat1, list.get(0));
+            assertTrue(list.contains(cat1));
             cd.doDeleteByName(cat1.getName());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -139,8 +138,8 @@ class CategoryDAOTest {
         cd.doSave(cat2);
         try {
             ArrayList<Category> list = cd.doRetrieveAll();
-            assertEquals(cat1, list.get(0));
-            assertEquals(cat2, list.get(1));
+            assertTrue(list.contains(cat1));
+            assertTrue(list.contains(cat2));
             cd.doDeleteByName(cat1.getName());
             cd.doDeleteByName(cat2.getName());
         } catch (SQLException throwables) {
