@@ -4,10 +4,9 @@ import java.util.Collection;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This class represents a physical product is a specialization of Product.
- * A physical product has more information than a simple product.
+ * This specialization of Product represents a physical product.
+ * A physical product has more information than a simple product such as the weight and the size.
  */
-
 public class PhysicalProduct extends Product {
 
     /**
@@ -43,7 +42,7 @@ public class PhysicalProduct extends Product {
     }
 
     /**
-     * Get the product's size.
+     * Gets the product's size.
      *
      * @return a String indicating the product's size.
      */
@@ -52,7 +51,7 @@ public class PhysicalProduct extends Product {
     }
 
     /**
-     * Set the new size of the product.
+     * Sets the new size of the product.
      *
      * @param size a String indicating the new size of the product, must be not null.
      */
@@ -61,7 +60,7 @@ public class PhysicalProduct extends Product {
     }
 
     /**
-     * Get the product's weight.
+     * Gets the product's weight.
      *
      * @return the product's weight.
      */
@@ -70,7 +69,7 @@ public class PhysicalProduct extends Product {
     }
 
     /**
-     * Set the new weight of the product.
+     * Sets the new weight of the product.
      *
      * @param weight the new weight of the product
      */

@@ -2,8 +2,6 @@ package model.bean;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 /**
  * Admin is a specialization of Moderator which represents an admin of the GameHub platform.
  * Admin it's capable of much more operations than the normal Moderator,
@@ -46,16 +44,6 @@ public class Admin extends Moderator {
         this.isSuperAdmin = isSuperAdmin;
     }
 
-    @NotNull
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Admin)) return false;
-        if (!super.equals(o)) return false;
-        Admin admin = (Admin) o;
-        return isSuperAdmin() == admin.isSuperAdmin();
-    }
-
     /**
      * Constructs a new Admin starting from the user standard attributes,
      * plus the contractTime and isSuperAdmin attributes.
@@ -85,7 +73,7 @@ public class Admin extends Moderator {
         this.isSuperAdmin = isSuperAdmin;
     }
 
-    public Admin(Moderator m, boolean isSuperAdmin) {
+    public Admin(@NotNull Moderator m, boolean isSuperAdmin) {
         super(m);
         this.isSuperAdmin = isSuperAdmin;
     }
@@ -143,6 +131,21 @@ public class Admin extends Moderator {
         return super.toString() + ", Admin{"
                 + "isSuperAdmin=" + isSuperAdmin
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Admin)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Admin admin = (Admin) o;
+        return isSuperAdmin() == admin.isSuperAdmin();
     }
 
     private boolean isSuperAdmin;
