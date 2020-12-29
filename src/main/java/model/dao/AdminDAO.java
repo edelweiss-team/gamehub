@@ -91,7 +91,7 @@ public class AdminDAO {
     }
 
     /**
-     * This method allow to remove an Admin from the database
+     * This method allow to remove an Admin from the database.
      *
      * @param username an unique String that identify an Admin
      * @return true if Admin is removed correctly, false otherwise
@@ -121,7 +121,7 @@ public class AdminDAO {
     }
 
     /**
-     * This method allows to find all the Admins saved into the database
+     * This method allows to find all the Admins saved into the database.
      *
      * @return an ArrayList formed by Admin, if there are Admins saved into the database
      * it returns the ArrayList else an empty ArrayList
@@ -162,7 +162,7 @@ public class AdminDAO {
     }
 
     /**
-     * This method allow to find an Admin given his username
+     * This method allow to find an Admin given his username.
      *
      * @param username a String that it's a key for a search into the database
      * @return an Admin that corresponds to the username given from param, null otherwise
