@@ -6,12 +6,19 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * This abstract class represents a generic product.
+ * A product is characterized by a name, a description, a quantity, a price,
+ * an image path and a list of tags and categories.
+ */
 public abstract class Product {
 
     /**
-     *
+     * Constructs a generic product, with empty fields.
+     * These fields should be initialized to be consistent.
      */
     public Product() {
+        id = 0;
         name = "";
         description = "";
         image = "";
@@ -22,8 +29,11 @@ public abstract class Product {
     }
 
     /**
+     * Constructs a generic product starting off by its id, name, price, description,
+     * image, quantity and category and tag list.
      *
-     * @param name String
+     * @param id the id of the product
+     * @param name the name of the product.
      * @param price double
      * @param description String
      * @param image String
@@ -55,70 +65,79 @@ public abstract class Product {
     }
 
     /**
+     * Gets the product id.
      *
-     * @return id int
+     * @return the id of the product.
      */
     public int getId() {
         return id;
     }
 
     /**
+     * Sets the id of the product.
      *
-     * @param id int
+     * @param id the new product id.
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
+     * Gets the name of the product.
      *
-     * @return String this.name
+     * @return the name of the product.
      */
     public @NotNull String getName() {
         return name;
     }
 
     /**
+     * Sets the product name.
      *
-     * @param name String
+     * @param name the new product name.
      */
     public void setName(@NotNull String name) {
         this.name = name;
     }
 
     /**
+     * Gets the description of the product.
      *
-     * @return String this.description
+     * @return the description of the product.
      */
     public @NotNull String getDescription() {
         return description;
     }
 
     /**
+     * Sets the product description.
      *
-     * @param description String
+     * @param description the new product description.
      */
     public void setDescription(@NotNull String description) {
         this.description = description;
     }
 
     /**
+     * Gets the path on the server of the product image.
      *
-     * @return String image
+     * @return the path of the product image on the server.
      */
     public @NotNull String getImage() {
         return image;
     }
 
     /**
+     * Sets a new path for the product image.
      *
-     * @param image String, path of the image
+     * @param image the new path of the product image.
      */
     public void setImage(@NotNull String image) {
         this.image = image;
     }
 
     /**
+     * Gets the product quantity currently available.
      *
      * @return int quantity
      */
@@ -126,30 +145,68 @@ public abstract class Product {
         return quantity;
     }
 
+    /**
+     * Sets the new product quantity.
+     *
+     * @param quantity the new product quantity.
+     */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
+    /**
+     * Gets the price of the product.
+     *
+     * @return the price of the product.
+     */
     public double getPrice() {
         return price;
     }
 
+    /**
+     * Sets the product price.
+     *
+     * @param price the new product price.
+     */
     public void setPrice(double price) {
         this.price = price;
     }
 
+    /**
+     * Establish whatever the product has the passed category or not.
+     *
+     * @param categoryName the category.
+     * @return true iff product.getCategories().contains(category), false otherwise.
+     */
     public @Nullable Category hasCategory(@NotNull String categoryName) {
         return this.categories.get(categoryName);
     }
 
+    /**
+     * Establish whatever the product has the passed tag or not.
+     *
+     * @param tagName the tag.
+     * @return true iff product.getTags().contains(tag), false otherwise.
+     */
     public @Nullable Tag hasTag(@NotNull String tagName) {
         return this.tags.get(tagName);
     }
 
+    /**
+     * Adds the passed category to the category list of the product, iff it is not already in.
+     *
+     * @param c the category to add.
+     */
     public void addCategory(@NotNull Category c) {
         this.categories.put(c.getName(), c);
     }
 
+    /**
+     * Remove the passed category to the category list of the product and returns it, if present.
+     *
+     * @param c the category to remove.
+     * @return the category, if it was removed, null otherwise.
+     */
     public @Nullable Category removeCategory(@NotNull Category c) {
         Category toRemove = this.categories.get(c.getName());
         if (toRemove != null) {
@@ -158,10 +215,21 @@ public abstract class Product {
         return toRemove;
     }
 
+    /**
+     * Adds the passed tag to the tag list of the product, iff it is not already in.
+     *
+     * @param t the tag to add.
+     */
     public void addTag(@NotNull Tag t) {
         this.tags.put(t.getName(), t);
     }
 
+    /**
+     * Remove the passed tag to the tag list of the product and returns it, if present.
+     *
+     * @param t the tag to remove.
+     * @return the tag, if it was removed, null otherwise.
+     */
     public @Nullable Tag removeTag(@NotNull Tag t) {
         Tag toRemove = this.tags.get(t.getName());
         if (toRemove != null) {
@@ -170,11 +238,21 @@ public abstract class Product {
         return toRemove;
     }
 
+    /**
+     * Gets the category list of the product.
+     *
+     * @return the category list of the product.
+     */
     public @NotNull Collection<Category> getCategories() {
         return categories.values();
     }
 
-    public void setCategories(Collection<Category> categories) {
+    /**
+     * Sets the category list of the product.
+     *
+     * @param categories the new category list of the product.
+     */
+    public void setCategories(@NotNull Collection<Category> categories) {
         //inseriamo le categorie
         this.categories = new HashMap<>();
         for (Category c : categories) {
@@ -182,12 +260,22 @@ public abstract class Product {
         }
     }
 
+    /**
+     * Gets the tag list of the product.
+     *
+     * @return the tag list of the product.
+     */
     @NotNull
     public Collection<Tag> getTags() {
         return tags.values();
     }
 
-    public void setTags(Collection<Tag> tags) {
+    /**
+     * Sets the tag list of the product.
+     *
+     * @param tags the new tag list of the product.
+     */
+    public void setTags(@NotNull Collection<Tag> tags) {
         //inseriamo i tag
         this.tags = new HashMap<>();
         for (Tag t : tags) {

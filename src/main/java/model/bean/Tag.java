@@ -44,7 +44,7 @@ public class Tag {
     }
 
     /**
-     * Get Tag's name.
+     * Get tag's name.
      *
      * @return a String indicating the name of the tag
      */
