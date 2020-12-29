@@ -6,8 +6,30 @@ import model.bean.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ *  DigitalProductDAO is used to do operation inside the table 'digitalproduct','digitalbelonging',
+ *  and 'digitalcharacteristic' of database.
+ *  DigitalProductDAO allow to do the CRUD operation on database (create, read, update, delete)
+ *  It's possible to add a Digital Product, update a Digital Product, delete a Digital Product,
+ *  read all the Digital Products, or just retrieve one Digital Product by id saved in the database.
+ *  Also, it's possible to retrieve all Categories or Tags from a Digital Product's id, or retrieve
+ *  all Digital Products giving one Tag or Category.
+ *
+ */
 
 public class DigitalProductDAO {
+
+    /**
+     * This method allows to find all the Digital Product saved into the database,
+     * using an offset and a limit.
+     *
+     * @param offset to select the starting range value of the Digital Product to retrieve
+     * @param limit to select the ending range value of the Digital Product to retrieve
+     * @return ArrayList formed by Digital Products, if these exist,
+     *         it returns the ArrayList else an empty ArrayList
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
 
     @NotNull
     public ArrayList<DigitalProduct> doRetrieveAll(int offset, int limit) {
@@ -49,6 +71,15 @@ public class DigitalProductDAO {
         }
     }
 
+    /**
+     * This method allow to find a Digital Product given its id.
+     *
+     * @param id an integer that it's a key for a search into the database
+     * @return a Digital Product that corresponds to the id given from param, null otherwise
+     *
+     * @throws RuntimeException if an exception is occurred
+     */
+
     @Nullable
     public DigitalProduct doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
@@ -88,6 +119,17 @@ public class DigitalProductDAO {
 
         }
     }
+
+    /**
+     * This method allow to save a Digital Product into the database.
+     * Then, if the object is saved correctly, inserts into digitalbelonging table the id of the
+     * saved Digital Product and its Categories. Finally, inserts into digitalcharacteristic table
+     * the id of the saved Digital Product and its tags
+     *
+     * @param p the Digital Product object to save. It cannot be null
+     * @return the Digital Product that has been saved in database
+     * @throws RuntimeException if an exception is occurred
+     */
 
     @Nullable
     public DigitalProduct doSave(@NotNull DigitalProduct p) {
@@ -144,6 +186,13 @@ public class DigitalProductDAO {
         }
     }
 
+    /**
+     * This method allow to remove a Digital Product from the database.
+     *
+     * @param id an integer that it's a key for a search into the database
+     * @throws RuntimeException if an exception is occurred
+     */
+
     public void doDelete(int id) {
 
         try {
@@ -159,7 +208,16 @@ public class DigitalProductDAO {
         
     }
 
-    //Restituisce tutte le catgeorie di un prodotto
+    /**
+     * This method allows to find all the Categories of a Digital Product saved into the database.
+     *
+     * @param id an integer that it's a key for a search into the database
+     * @return an ArrayList formed by Categories, if there are categories saved into the database
+     *          related to the Digital Product id given by param
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
+
     @NotNull
     public ArrayList<Category> doRetrieveAllProdCatById(int id) {
         try (Connection con = ConPool.getConnection()) {
@@ -187,8 +245,16 @@ public class DigitalProductDAO {
         }
     }
 
+    /**
+     * This method allows to find all the Tags of a Digital Product saved into the database.
+     *
+     * @param id an integer that it's a key for a search into the database
+     * @return an ArrayList formed by Tags, if there are tags saved into the database
+     *          related to the Digital Product's id given by param
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
 
-    //Restituisce tutti i tag di un prodotto
     @NotNull
     public ArrayList<Tag> doRetrieveAllProdTagById(int id) {
         try (Connection con = ConPool.getConnection()) {
@@ -215,6 +281,18 @@ public class DigitalProductDAO {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * This method allows to find all the Digital Products of a Category, saved into the database.
+     *
+     * @param categoryName String that it's a key for a search into the database. It cannot be null
+     * @param offset to select the starting range value of the Digital Product to retrieve
+     * @param limit to select the ending range value of the Digital Product to retrieve
+     * @return an ArrayList formed by Digital Products saved into the database
+     *          related to the Category name given by param
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
 
     @NotNull
     public ArrayList<DigitalProduct> doRetrieveAllByCategory(
@@ -262,6 +340,15 @@ public class DigitalProductDAO {
         }
     }
 
+    /**
+     * This method allows to update a Digital Product into the database, if it exists.
+     * Then, if updated, updates also every relations in
+     * digitalbelonging and digitalcharacteristic tables.
+     *
+     * @param p the Digital Product object to update. It cannot be null
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
 
     public void doUpdate(@NotNull DigitalProduct p) {
 
@@ -314,6 +401,24 @@ public class DigitalProductDAO {
 
         }
     }
+
+    /**
+     * This method allows to find all the Digital Product saved into the database,
+     * using the following parameters.
+     *
+     * @param name String name of a Digital Product. It cannot be null
+     * @param desc String description of a Digital Product. It cannot be null
+     * @param price Double price value of a Digital Product. It cannot be null
+     * @param softHouse String Software House name of a Digital Product. It cannot be null
+     * @param nameTag String tag name of a Digital Product. It cannot be null
+     * @param nameCategory String category name of a Digital Product. It cannot be null
+     * @param offset to select the starting range value of the Digital Product to retrieve
+     * @param limit to select the ending range value of the Digital Product to retrieve
+     * @return an ArrayList formed by Digital Products, if there are digital product saved
+     *          into the database, it returns the ArrayList else an empty ArrayList
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
 
     @NotNull
     public ArrayList<DigitalProduct> doRetrieveByAllFragment(
