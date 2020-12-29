@@ -5,6 +5,13 @@ import model.bean.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ *  CartDAO is used to do operation inside the table 'cart', 'digitalcontaining'
+ *  and 'physicalcontaining' of database.
+ *  CartDAO allow to do the CRUD operation on database (create, read, update, delete)
+ *  It's possible to store a Cart, update a Cart, delete a Cart, read a Cart given its owner.
+ */
+
 public class CartDAO {
     @NotNull
     private final UserDAO udao = new UserDAO();
@@ -13,6 +20,11 @@ public class CartDAO {
     @NotNull
     private final PhysicalProductDAO pcd = new PhysicalProductDAO();
 
+    /**
+     * This method allows to save or update a Cart into the database.
+     *
+     * @param c the object Admin to save or update, must be not null
+     */
     public void doSaveOrUpdate(@NotNull Cart c) {
         if (c.getUser() != null) {
             try {
@@ -67,6 +79,12 @@ public class CartDAO {
         }
     }
 
+    /**
+     * This method allows to get a Cart starting from its owner's username.
+     *
+     * @param username the owner of the searched cart, must be not null
+     * @return if exists a Cart that is owned by the username given from param, null otherwise
+     */
     @Nullable
     public Cart doRetrieveByUsername(@NotNull String username) {
         try {
@@ -107,6 +125,13 @@ public class CartDAO {
         }
     }
 
+    /**
+     * This method allows to add product in a cart stored into the database.
+     *
+     * @param c the cart that needs to be modified, must be not null
+     * @param p the product thaht need to be add to the cart, must be not null
+     * @return the product if it was successfully added, otherwise null
+     */
     @Nullable
     public Product doAddProduct(@NotNull Cart c, @NotNull Product p) {
         try {
@@ -139,6 +164,13 @@ public class CartDAO {
         }
     }
 
+    /**
+     * This method allows to remove a product from a cart stored into the database.
+     *
+     * @param c the cart that needs to be modified, must be not null
+     * @param p the product thaht need to be removed from the cart, must be not null
+     * @return the product if it was successfully removed, otherwise null
+     */
     @Nullable
     public Product doRemoveProduct(@NotNull Cart c, @NotNull Product p) {
         try {
@@ -188,6 +220,11 @@ public class CartDAO {
         }
     }
 
+    /**
+     * This method allows to empty a cart store into the database.
+     *
+     * @param c the cart that needs to be emptied, must be not null
+     */
     public void doRemoveAllUserCartProducts(@NotNull Cart c) {
         if (c.getUser() != null) {
             try {
