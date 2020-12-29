@@ -9,7 +9,24 @@ import model.bean.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ *  UserDAO is used to do operation inside the table 'user' of database.
+ *  UserDAO allow to do the CRUD operation on database (create, read, update, delete)
+ *  It's possible to add an User, update an User, delete an User, read all the users
+ *  saved into the database, read an User given his username and password, username
+ *  or mail only.
+ *
+ */
+
 public class UserDAO {
+
+    /**
+     * This method allow to update an User into database.
+     *
+     * @param u the object User to update. It cannot be null
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
 
     public void doUpdate(@NotNull User u) {
 
@@ -42,6 +59,14 @@ public class UserDAO {
 
     }
 
+    /**
+     * This method allow to save an User into the database.
+     *
+     * @param u the object User to save. It cannot be null
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
+
     public void doSave(@NotNull User u) {
         try {
             Connection cn = ConPool.getConnection();
@@ -66,6 +91,20 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * This method allow to find an User given his username and password.
+     *
+     * @param username a String that it's a key for a search into the database.
+     *                 It cannot be null
+     * @param password a String that it's a key for a search into the database
+     *                 It cannot be null
+     * @return an User that corresponds to the username and password given from
+     *          param, null otherwise
+     *
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
 
     @Nullable
     public User doRetrieveByUsernamePassword(@NotNull String username, @NotNull String password) {
@@ -100,6 +139,16 @@ public class UserDAO {
         }
     }
 
+    /**
+     * This method allow to find an User given his username.
+     *
+     * @param username a String that it's a key for a search into the database.
+     *                 It cannot be null
+     * @return an User that corresponds to the username given from param, null otherwise
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
+
     @Nullable
     public User doRetrieveByUsername(@NotNull String username) {
         try {
@@ -130,6 +179,16 @@ public class UserDAO {
             return null;
         }
     }
+
+    /**
+     * This method allow to find an User given his mail.
+     *
+     * @param mail a String that it's a unique key for a search into the database.
+     *                 It cannot be null
+     * @return an User that corresponds to the mail given from param, null otherwise
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
 
     @Nullable
     public User doRetrieveByMail(@NotNull String mail) {
@@ -163,6 +222,14 @@ public class UserDAO {
         }
     }
 
+    /**
+     * This method allow to remove an User from the database.
+     *
+     * @param username an unique String that identify an User. It cannot be null
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
+
     public void doDeleteFromUsername(@NotNull String username) {
         try {
             Connection cn = ConPool.getConnection();
@@ -177,6 +244,15 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * This method allows to find all the Users saved into the database.
+     *
+     * @return an ArrayList formed by Users, if there are Users saved into the database
+     *              it returns the ArrayList else an empty ArrayList
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
 
     @NotNull
     public ArrayList<User> doRetrieveAll() {
@@ -209,6 +285,20 @@ public class UserDAO {
             return new ArrayList<>();
         }
     }
+
+    /**
+     * This method allow to find an User given his username,
+     * using an offset and a limit.
+     *
+     * @param usernameFragment a String that it's a key for a search into the database.
+     *                         It cannot be null
+     * @param offset to select the starting range value of the Digital Product to retrieve
+     * @param limit to select the ending range value of the Digital Product to retrieve
+     * @return an User that corresponds to the username given from param, null otherwise
+     *
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
 
     @NotNull
     public ArrayList<User> doRetrieveByUsernameFragment(@NotNull

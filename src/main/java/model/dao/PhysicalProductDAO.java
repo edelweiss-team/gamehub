@@ -7,8 +7,30 @@ import model.bean.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ *  PhysicalProductDAO is used to do operation inside 'physicalproduct','physicalbelonging',
+ *  and 'physicalcharacteristic' tables of the database.
+ *  PhysicalProductDAO allow to do the CRUD operation on database (create, read, update, delete)
+ *  It's possible to add a Physical Product, update a Physical Product, delete a Physical Product,
+ *  read all the Physical Products, or just retrieve one Physical Product by id saved in database.
+ *  Also, it's possible to retrieve all Categories or Tags from a Physical Product's id, or retrieve
+ *  all Physical Products giving one Tag or Category.
+ *
+ */
 
 public class PhysicalProductDAO {
+
+    /**
+     * This method allows to find all the Physical Product saved into the database,
+     * using an offset and a limit.
+     *
+     * @param offset to select the starting range value of the Physical Product to retrieve
+     * @param limit to select the ending range value of the Physical Product to retrieve
+     * @return ArrayList formed by Physical Products, if these exist,
+     *         it returns the ArrayList else an empty ArrayList
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
 
     @NotNull
     public ArrayList<PhysicalProduct> doRetrieveAll(int offset, int limit) {
@@ -47,6 +69,15 @@ public class PhysicalProductDAO {
         }
     }
 
+    /**
+     * This method allow to find a Physical Product given its id.
+     *
+     * @param id an integer that it's a key for a search into the database
+     * @return a Physical Product that corresponds to the id given from param, null otherwise
+     *
+     * @throws RuntimeException if an exception is occurred
+     */
+
     @Nullable
     public PhysicalProduct doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
@@ -75,6 +106,17 @@ public class PhysicalProductDAO {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * This method allow to save a Physical Product into the database.
+     * Then, if the object is saved correctly, inserts into physicalbelonging table the id of the
+     * saved Physical Product and its Categories. Finally, inserts into physicalcharacteristic table
+     * the id of the saved Physical Product and its tags
+     *
+     * @param p the Physical Product object to save. It cannot be null
+     * @return the Physical Product that has been saved in database
+     * @throws RuntimeException if an exception is occurred
+     */
 
     @Nullable
     public PhysicalProduct doSave(@NotNull PhysicalProduct p) {
@@ -127,6 +169,13 @@ public class PhysicalProductDAO {
         }
     }
 
+    /**
+     * This method allow to remove a Physical Product from the database.
+     *
+     * @param id an integer that it's a key for a search into the database
+     * @throws RuntimeException if an exception is occurred
+     */
+
     public void doDelete(int id) {
 
         try {
@@ -142,7 +191,16 @@ public class PhysicalProductDAO {
 
     }
 
-    //Restituisce tutte le catgeorie di un prodotto
+    /**
+     * This method allows to find all the Categories of a Physical Product saved into the database.
+     *
+     * @param id an integer that it's a key for a search into the database
+     * @return an ArrayList formed by Categories, if there are categories saved into the database
+     *          related to the Physical Product id given by param
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
+
     @NotNull
     public ArrayList<Category> doRetrieveAllProdCatById(int id) {
         try (Connection con = ConPool.getConnection()) {
@@ -171,8 +229,16 @@ public class PhysicalProductDAO {
         }
     }
 
+    /**
+     * This method allows to find all the Tags of a Physical Product saved into the database.
+     *
+     * @param id an integer that it's a key for a search into the database
+     * @return an ArrayList formed by Tags, if there are tags saved into the database
+     *          related to the Physical Product's id given by param
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
 
-    //Restituisce tutti i tag di un prodotto
     @NotNull
     public ArrayList<Tag> doRetrieveAllProdTagById(int id) {
         try (Connection con = ConPool.getConnection()) {
@@ -200,6 +266,18 @@ public class PhysicalProductDAO {
 
         }
     }
+
+    /**
+     * This method allows to find all the Physical Products of a Category, saved into the database.
+     *
+     * @param categoryName String that it's a key for a search into the database. It cannot be null
+     * @param offset to select the starting range value of the Physical Product to retrieve
+     * @param limit to select the ending range value of the Physical Product to retrieve
+     * @return an ArrayList formed by Physical Products saved into the database
+     *          related to the Category name given by param
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
 
     @NotNull
     public ArrayList<PhysicalProduct> doRetrieveAllByCategory(
@@ -243,6 +321,16 @@ public class PhysicalProductDAO {
         }
 
     }
+
+    /**
+     * This method allows to update a Physical Product into the database, if it exists.
+     * Then, if updated, updates also every relations in
+     * physicalbelonging and physicalcharacteristic tables.
+     *
+     * @param p the Physical Product object to update. It cannot be null
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
 
     public void doUpdate(@NotNull PhysicalProduct p) {
 
@@ -295,6 +383,23 @@ public class PhysicalProductDAO {
 
         }
     }
+
+    /**
+     * This method allows to find all the Physical Product saved into the database,
+     * using the following parameters.
+     *
+     * @param name String name of a Physical Product. It cannot be null
+     * @param desc String description of a Physical Product. It cannot be null
+     * @param price Double price value of a Physical Product. It cannot be null
+     * @param nameTag String tag name of a Physical Product. It cannot be null
+     * @param nameCategory String category name of a Physical Product. It cannot be null
+     * @param offset to select the starting range value of the Physical Product to retrieve
+     * @param limit to select the ending range value of the Physical Product to retrieve
+     * @return an ArrayList formed by Physical Products, if there are Physical product saved
+     *          into the database, it returns the ArrayList else an empty ArrayList
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
 
     @NotNull
     public ArrayList<PhysicalProduct> doRetrieveByAllFragment(
