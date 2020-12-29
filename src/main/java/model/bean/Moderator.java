@@ -6,7 +6,9 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Moderator is a specialization of User which represents a moderator of the GameHub platform.
  * Moderator it's capable of much more operations than the normal User.
+ * This class extends User.
  */
+
 public class Moderator extends User {
 
     /**
