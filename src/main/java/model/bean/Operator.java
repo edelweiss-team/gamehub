@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 public class Operator extends User {
 
     /**
-     * Constructs a new Moderator with empty fields.
+     * Constructs a new Operator with empty fields.
      */
     public Operator() {
         this.contractTime = "";
@@ -20,13 +20,13 @@ public class Operator extends User {
     }
 
     /**
-     * Constructs a new Moderator starting from a user,
+     * Constructs a new Operator starting from a user,
      * the contractTime, and the curriculum .
      * None of the params should be null.
      *
-     * @param u the user corresponding to the moderator
+     * @param u the user corresponding to the operator
      * @param contractTime the contract expiration date
-     * @param cv the curriculum vitae of the moderator
+     * @param cv the curriculum vitae of the operator
      */
     public Operator(User u, @NotNull String contractTime, @NotNull String cv) {
         super(u.getUsername(), u.getName(), u.getSurname(), u.getAddress(),
@@ -42,19 +42,19 @@ public class Operator extends User {
      * plus the contractTime and the curriculum.
      * None of the params should be null.
      *
-     * @param username the admin's username
-     * @param password the admin's password
-     * @param name the admin's name
-     * @param surname the admin's surname
-     * @param address the admin's address
-     * @param city the city of residence of the admin
-     * @param country the country of the admin
-     * @param birthDate the admin's birth date
-     * @param mail the admin's mail
-     * @param sex specifies the sex of the Admin with one letter (M,F)
-     * @param telephone password is the password that the Admin uses to Log in the site
+     * @param username the operator's username
+     * @param password the operator's password
+     * @param name the operator's name
+     * @param surname the operator's surname
+     * @param address the operator's address
+     * @param city the city of residence of the operator
+     * @param country the country of the operator
+     * @param birthDate the operator's birth date
+     * @param mail the operator's mail
+     * @param sex specifies the sex of the Operator with one letter (M,F)
+     * @param telephone password is the password that the Operator uses to Log in the site
      * @param contractTime the contract expiration date
-     * @param cv the curriculum vitae of the moderator
+     * @param cv the curriculum vitae of the operator
      */
     public Operator(@NotNull String username, @NotNull String password, @NotNull String name,
                     @NotNull String surname, @NotNull String address, @NotNull String city,
