@@ -341,6 +341,64 @@ public class DigitalProductDAO {
     }
 
     /**
+     * This method allows to find all the Digital Products of a Tag, saved into the database.
+     *
+     * @param tagName String that it's a key for a search into the database. It cannot be null
+     * @param offset to select the starting range value of the Digital Product to retrieve
+     * @param limit to select the ending range value of the Digital Product to retrieve
+     * @return an ArrayList formed by Digital Products saved into the database
+     *          related to the Tag name given by param
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
+
+    @NotNull
+    public ArrayList<DigitalProduct> doRetrieveAllByTag(
+            @NotNull String tagName, int offset, int limit) {
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("select id, name, price,"
+                    + " description, image, platform,"
+                    + "releaseDate, requiredAge, softwareHouse, publisher, quantity "
+                    + "from digitalcharacteristic, digitalproduct "
+                    + "where digitalcharacteristic.digitalProduct = digitalproduct.id "
+                    + "and digitalcharacteristic.tag = ? LIMIT ?, ?;");
+
+            ps.setString(1, tagName);
+            ps.setInt(2, offset);
+            ps.setInt(3, limit);
+            ResultSet rs = ps.executeQuery();
+
+            ArrayList<DigitalProduct> prodotti = new ArrayList<>();
+            while (rs.next()) {
+                DigitalProduct p = new DigitalProduct();
+                p.setId(rs.getInt(1));
+                p.setName(rs.getString(2));
+                p.setPrice(rs.getDouble(3));
+                p.setDescription(rs.getString(4));
+                p.setImage(rs.getString(5));
+                p.setPlatform(rs.getString(6));
+                p.setReleaseDate(rs.getString(7));
+                p.setRequiredAge(rs.getInt(8));
+                p.setSoftwareHouse(rs.getString(9));
+                p.setPublisher(rs.getString(10));
+                p.setQuantity(rs.getInt(11));
+
+
+                p.setCategories(doRetrieveAllProdCatById(p.getId()));
+                p.setTags(doRetrieveAllProdTagById(p.getId()));
+
+                prodotti.add(p);
+            }
+
+            return prodotti;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * This method allows to update a Digital Product into the database, if it exists.
      * Then, if updated, updates also every relations in
      * digitalbelonging and digitalcharacteristic tables.
@@ -439,7 +497,7 @@ public class DigitalProductDAO {
                     + " group by dp.id, dp.description, dp.image, dp.name, dp.platform, "
                     + "          dp.price, dp.publisher, dp.quantity, dp.releaseDate,"
                     + " dp.requiredAge, dp.softwareHouse "
-                    + "LIMIT ?,?; ");
+                    + "ORDER BY dp.id desc LIMIT ?,?; ");
 
             ps.setString(1, "%" + name.toLowerCase() + "%");
             ps.setString(2, "%" + desc.toLowerCase() + "%");

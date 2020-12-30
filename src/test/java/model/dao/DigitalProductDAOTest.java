@@ -474,4 +474,73 @@ class DigitalProductDAOTest {
         });
     }
 
+    @Test
+    void doRetrieveAllByTagOneProduct() {
+        DigitalProduct p = new DigitalProduct(7, "NuovoProdottoTesting", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
+                "xbox", "1999-05-05", 18, "testing", "testingpub");
+
+        Tag t1= new Tag("TagTest1");
+        p.addTag(t1);
+        tagdao.doSave(t1);
+
+        DigitalProduct dp = dao.doSave(p);
+
+        ArrayList<DigitalProduct> dg;
+        dg = dao.doRetrieveAllByTag("TagTest1",0,100);
+
+        assertTrue(dg.get(0).equals(dp));
+
+        dao.doDelete(dp.getId());
+        tagdao.doDelete(t1.getName());
+
+    }
+
+    @Test
+    void doRetrieveAllByTagMoreProduct() {
+        DigitalProduct p = new DigitalProduct(7, "NuovoProdottoTesting", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
+                "xbox", "1999-05-05", 18, "testing", "testingpub");
+
+        Tag t1= new Tag("TagTest1");
+        p.addTag(t1);
+        tagdao.doSave(t1);
+
+        DigitalProduct p2 = new DigitalProduct(7, "NuovoProdottoTesting2", 23.56, "testing2", "imagetesting2", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
+                "xbox2", "1999-02-05", 18, "testing2", "testingpub2");
+        p2.addTag(t1);
+
+        DigitalProduct dp = dao.doSave(p);
+        DigitalProduct dp2 = dao.doSave(p2);
+
+        ArrayList<DigitalProduct> dg;
+        dg = dao.doRetrieveAllByTag("TagTest1",0,100);
+
+        assertTrue(dg.contains(dp) && dg.contains(dp2));
+
+        dao.doDelete(dp.getId());
+        dao.doDelete(dp2.getId());
+        tagdao.doDelete(t1.getName());
+
+    }
+
+    @Test
+    void doRetrieveAllByTagNoProduct() {
+        Tag t1= new Tag("TagTest1");
+        tagdao.doSave(t1);
+
+        ArrayList<DigitalProduct> dg;
+        dg = dao.doRetrieveAllByTag("TagTest1",0,100);
+
+        assertTrue(dg.size()==0);
+
+        tagdao.doDelete(t1.getName());
+    }
+
+    @Test
+    void doRetrieveByTagNotValid() {
+        assertThrows(RuntimeException.class, () -> {
+            ArrayList<DigitalProduct> dg;
+            dg = dao.doRetrieveAllByTag("TagTest1",-9,100);
+        });
+    }
+
 }
