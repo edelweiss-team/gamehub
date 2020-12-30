@@ -267,6 +267,7 @@ ol {
 	background: #ffb320;
 	padding: 8px 28px;
 	border-radius: 30px;
+	transform: translateY(2px);
 }
 
 .user-panel a {
@@ -275,8 +276,9 @@ ol {
 }
 
 .main-menu {
-	float: right;
-	margin-right: 170px;
+	position: relative;
+	display: inline-block;
+	margin-left: 19%;
 }
 
 .main-menu ul {
