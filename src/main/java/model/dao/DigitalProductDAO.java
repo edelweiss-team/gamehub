@@ -472,16 +472,10 @@ public class DigitalProductDAO {
                 p.setTags(doRetrieveAllProdTagById(p.getId()));
 
                 prodotti.add(p);
-
             }
-
             return prodotti;
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
-
         }
-
     }
-
 }
