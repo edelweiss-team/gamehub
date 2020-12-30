@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/owl.carousel.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/animate.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css"/>
 
 
     <!--[if lt IE 9]>
@@ -37,11 +38,11 @@
 <header class="header-section">
     <div class="container">
         <!-- logo -->
-        <a class="site-logo" href="Home.jsp">
+        <a class="site-logo" href="index.html">
             <img src="${pageContext.request.contextPath}/img/logo.png" alt="">
         </a>
         <div class="user-panel">
-            <a href="#">Login</a>  /  <a href="#">Register</a>
+            <a href="login.html">Login</a>  /  <a href="signup.html">Sign up</a>
         </div>
         <!-- responsive -->
         <div class="nav-switch">
@@ -50,12 +51,19 @@
         <!-- site menu -->
         <nav class="main-menu">
             <ul>
-                <li><a href="Home.jsp">Home</a></li>
-                <li><a href="review.html">Shop</a></li>
-                <li><a href="categories.html">Community</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="community.html">Community</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
+        <div id="cartContainer">
+            <form action="show-cart">
+                <button id="cart" class="cart" type="submit" name="showCart" value="showCart">
+                    <i class="fa fa-shopping-cart"></i>
+                </button>
+            </form>
+        </div>
     </div>
 </header>
 <!-- Header section end -->
