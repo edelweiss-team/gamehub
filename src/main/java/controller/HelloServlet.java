@@ -17,7 +17,7 @@ import javax.servlet.annotation.*;
 public class HelloServlet extends HttpServlet {
     private String message;
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         this.doGet(request, response);
     }
 
