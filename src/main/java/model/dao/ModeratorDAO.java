@@ -61,7 +61,7 @@ public class ModeratorDAO {
     /**
      * This method allow to update a Moderator into database.
      *
-     * @param m the object Admin to update
+     * @param m the object Moderator to update
      * @return true if Moderator is updated correctly, false otherwise
      * @throws RuntimeException if an exception is occurred
      */

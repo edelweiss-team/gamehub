@@ -129,7 +129,7 @@ public class CartDAO {
      * This method allows to add product in a cart stored into the database.
      *
      * @param c the cart that needs to be modified, must be not null
-     * @param p the product thaht need to be add to the cart, must be not null
+     * @param p the product that need to be add to the cart, must be not null
      * @return the product if it was successfully added, otherwise null
      */
     @Nullable
@@ -168,7 +168,7 @@ public class CartDAO {
      * This method allows to remove a product from a cart stored into the database.
      *
      * @param c the cart that needs to be modified, must be not null
-     * @param p the product thaht need to be removed from the cart, must be not null
+     * @param p the product that need to be removed from the cart, must be not null
      * @return the product if it was successfully removed, otherwise null
      */
     @Nullable

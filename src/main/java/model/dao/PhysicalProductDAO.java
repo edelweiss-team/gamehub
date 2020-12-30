@@ -452,13 +452,8 @@ public class PhysicalProductDAO {
             }
 
             return prodotti;
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
-
         }
-
     }
-
-
 }
