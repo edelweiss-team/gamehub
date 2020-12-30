@@ -10,12 +10,28 @@ import model.bean.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * ModeratorAO is used to do operation inside the table 'moderator' of database.
+ * ModeratorDAO allow to do the CRUD operation on database (create, read, update, delete)
+ * It's possible to add a Moderator, update a Moderator,
+ * delete a Moderator , read all the moderators
+ * saved into the database, read a Moderator given his username.
+ * To use ModeratorDAO it's essential to instance a UserDAO because as said in Moderator that
+ * class extends User.
+ */
 
 public class ModeratorDAO {
 
     @NotNull
     private final UserDAO udao = new UserDAO();
 
+    /**
+     * This method allows to save a Moderator into the database.
+     *
+     * @param m the object Moderator to save
+     * @return true if Moderator is saved correctly, false otherwise
+     * @throws RuntimeException if an exception is occurred
+     */
     public boolean doSave(@NotNull Moderator m) {
         String username = m.getUsername();
 
@@ -23,7 +39,8 @@ public class ModeratorDAO {
         if (udao.doRetrieveByUsername(username) != null) {
             try {
                 Connection cn = ConPool.getConnection();
-                PreparedStatement st = cn.prepareStatement("INSERT INTO moderator(user, contractTime)"
+                PreparedStatement st = cn.prepareStatement("INSERT INTO "
+                        + "moderator(user, contractTime)"
                         + " VALUES (?,?);");
                 st.setString(1, username);
                 st.setString(2, m.getContractTime());
@@ -41,6 +58,13 @@ public class ModeratorDAO {
         return false;
     }
 
+    /**
+     * This method allow to update a Moderator into database.
+     *
+     * @param m the object Moderator to update
+     * @return true if Moderator is updated correctly, false otherwise
+     * @throws RuntimeException if an exception is occurred
+     */
     public boolean doUpdate(@NotNull Moderator m) {
         String username = m.getUsername();
 
@@ -69,6 +93,13 @@ public class ModeratorDAO {
         return false;
     }
 
+    /**
+     * This method allow to remove a Moderator from the database.
+     *
+     * @param username an unique String that identify a Moderator
+     * @return true if Moderator is removed correctly, false otherwise
+     * @throws RuntimeException if an exception is occurred
+     */
     public boolean doDeleteByUsername(@NotNull String username) {
         // checks if the 'user' external-key exists in DB.
         if (udao.doRetrieveByUsername(username) != null) {
@@ -92,6 +123,14 @@ public class ModeratorDAO {
 
         return false;
     }
+
+    /**
+     * This method allows to find all the Moderators saved into the database.
+     *
+     * @return an ArrayList formed by Moderators, if there are Moderators saved into the database
+     * it returns the ArrayList else an empty ArrayList
+     * @throws RuntimeException if an exception is occurred
+     */
 
     @NotNull
     public ArrayList<Moderator> doRetrieveAll() {
@@ -127,6 +166,14 @@ public class ModeratorDAO {
         return moderators;
     }
 
+    /**
+     * This method allow to find a Moderator given his username.
+     *
+     * @param username a String that it's a key for a search into the database
+     * @return a Moderator that corresponds to the username given from param, null otherwise
+     *
+     * @throws RuntimeException if an exception is occurred
+     */
     @Nullable
     public Moderator doRetrieveByUsername(@NotNull String username) {
         User user;
@@ -135,7 +182,8 @@ public class ModeratorDAO {
         if ((user = udao.doRetrieveByUsername(username)) != null) {
             try {
                 Connection cn = ConPool.getConnection();
-                PreparedStatement st = cn.prepareStatement("SELECT * FROM moderator WHERE moderator.user=?;");
+                PreparedStatement st = cn.prepareStatement("SELECT * FROM moderator "
+                        + "WHERE moderator.user=?;");
                 st.setString(1, username);
                 ResultSet rs = st.executeQuery();
 

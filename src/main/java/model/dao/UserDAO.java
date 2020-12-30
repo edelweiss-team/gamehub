@@ -292,8 +292,8 @@ public class UserDAO {
      *
      * @param usernameFragment a String that it's a key for a search into the database.
      *                         It cannot be null
-     * @param offset to select the starting range value of the Digital Product to retrieve
-     * @param limit to select the ending range value of the Digital Product to retrieve
+     * @param offset to select the starting range value of the User to retrieve
+     * @param limit to select the ending range value of the User to retrieve
      * @return an User that corresponds to the username given from param, null otherwise
      *
      * @throws RuntimeException if an exception is occurred

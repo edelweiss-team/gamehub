@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 public class CategoryDAO {
 
     /**
-     * This method allow to find a Catgeory given its name.
+     * This method allow to find a Category given its name.
      *
      * @param name a String that it's a key for a search into the database, must be not null
      * @return a Category that corresponds to the name given from param, null otherwise

@@ -24,7 +24,7 @@ public class AdminDAO {
     private final ModeratorDAO mdao = new ModeratorDAO();
 
     /**
-     * This method allow to save an Admin into the database.
+     * This method allows to save an Admin into the database.
      *
      * @param a the object Admin to save
      * @return true if Admin is saved correctly, false otherwise
