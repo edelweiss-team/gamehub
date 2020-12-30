@@ -323,6 +323,61 @@ public class PhysicalProductDAO {
     }
 
     /**
+     * This method allows to find all the Physical Products of a Tag, saved into the database.
+     *
+     * @param tagName String that it's a key for a search into the database. It cannot be null
+     * @param offset to select the starting range value of the Physical Product to retrieve
+     * @param limit to select the ending range value of the Physical Product to retrieve
+     * @return an ArrayList formed by Physical Products saved into the database
+     *          related to the Tag name given by param
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
+
+    @NotNull
+    public ArrayList<PhysicalProduct> doRetrieveAllByTag(
+            @NotNull String tagName, int offset, int limit) {
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("select id, name, price, "
+                    + "description, image, weight, size, quantity "
+                    + "from physicalcharacteristic, physicalproduct "
+                    + "where physicalcharacteristic.physicalProduct = physicalproduct.id "
+                    + "and physicalcharacteristic.tag = ? LIMIT ?, ?;");
+
+            ps.setString(1, tagName);
+            ps.setInt(2, offset);
+            ps.setInt(3, limit);
+            ResultSet rs = ps.executeQuery();
+
+            ArrayList<PhysicalProduct> prodotti = new ArrayList<>();
+            while (rs.next()) {
+                PhysicalProduct p = new PhysicalProduct();
+                p.setId(rs.getInt(1));
+                p.setName(rs.getString(2));
+                p.setPrice(rs.getDouble(3));
+                p.setDescription(rs.getString(4));
+                p.setImage(rs.getString(5));
+                p.setWeight(rs.getDouble(6));
+                p.setSize(rs.getString(7));
+                p.setQuantity(rs.getInt(8));
+
+                p.setCategories(doRetrieveAllProdCatById(p.getId()));
+                p.setTags(doRetrieveAllProdTagById(p.getId()));
+
+                prodotti.add(p);
+
+            }
+
+            return prodotti;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    /**
      * This method allows to update a Physical Product into the database, if it exists.
      * Then, if updated, updates also every relations in
      * physicalbelonging and physicalcharacteristic tables.
@@ -419,7 +474,7 @@ public class PhysicalProductDAO {
                             + "       and LOWER(dc.tag) LIKE ? and LOWER(db.category) LIKE ?"
                             + " group by  dp.id, dp.name, dp.price, dp.description, "
                             + "dp.image, dp.weight, dp.size, dp.quantity "
-                            + "LIMIT ?,?; ");
+                            + "ORDER BY dp.id desc LIMIT ?,?; ");
 
             ps.setString(1, "%" + name.toLowerCase() + "%");
             ps.setString(2, "%" + desc.toLowerCase() + "%");

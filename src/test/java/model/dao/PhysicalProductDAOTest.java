@@ -471,5 +471,76 @@ class PhysicalProductDAOTest {
         });
     }
 
+    @Test
+    void doRetrieveAllByTagOneProduct() {
+        PhysicalProduct p = new PhysicalProduct(7, "NuovoProdottoTesting", 23.56,
+                "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
+                200, "sizetest", 20.05);
+
+        Tag t1= new Tag("TagTest1");
+        p.addTag(t1);
+        tagdao.doSave(t1);
+
+        PhysicalProduct dp = dao.doSave(p);
+
+        ArrayList<PhysicalProduct> dg;
+        dg = dao.doRetrieveAllByTag("TagTest1",0,100);
+
+        assertTrue(dg.get(0).equals(dp));
+
+        dao.doDelete(dp.getId());
+        tagdao.doDelete(t1.getName());
+
+    }
+
+    @Test
+    void doRetrieveAllByTagMoreProduct() {
+        PhysicalProduct p = new PhysicalProduct(7, "NuovoProdottoTesting", 23.56,
+                "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
+                200, "sizetest", 20.05);
+
+        Tag t1= new Tag("TagTest1");
+        p.addTag(t1);
+        tagdao.doSave(t1);
+
+        PhysicalProduct p2 = new PhysicalProduct(7, "NuovoProdottoTesting2", 23.56,
+                "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
+                200, "sizetest2", 20.05);
+        p2.addTag(t1);
+
+        PhysicalProduct dp = dao.doSave(p);
+        PhysicalProduct dp2 = dao.doSave(p2);
+
+        ArrayList<PhysicalProduct> dg;
+        dg = dao.doRetrieveAllByTag("TagTest1",0,100);
+
+        assertTrue(dg.contains(dp) && dg.contains(dp2));
+
+        dao.doDelete(dp.getId());
+        dao.doDelete(dp2.getId());
+        tagdao.doDelete(t1.getName());
+
+    }
+
+    @Test
+    void doRetrieveAllByTagNoProduct() {
+        Tag t1= new Tag("TagTest1");
+        tagdao.doSave(t1);
+
+        ArrayList<PhysicalProduct> dg;
+        dg = dao.doRetrieveAllByTag("TagTest1",0,100);
+
+        assertTrue(dg.size()==0);
+
+        tagdao.doDelete(t1.getName());
+    }
+
+    @Test
+    void doRetrieveByTagNotValid() {
+        assertThrows(RuntimeException.class, () -> {
+            ArrayList<PhysicalProduct> dg;
+            dg = dao.doRetrieveAllByTag("TagTest1",-9,100);
+        });
+    }
 
 }
