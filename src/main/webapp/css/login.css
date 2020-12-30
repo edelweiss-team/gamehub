@@ -1,0 +1,242 @@
+/*Login form inizio*/
+body.login{
+    margin: 0;
+    padding: 0;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    background: url("../img/backgroundLogin.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.login-header{
+    float: left;
+    font-size: 200%;
+    border-bottom: 6px solid #ffb320;
+    margin-bottom: 7%;
+    padding: 7px 0;
+    color: #ffffff;
+    margin-left: 38%;
+}
+
+.login-fieldset{
+    position: relative;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    background: rgba(48, 48, 48, .5);
+    width: 34%;
+}
+
+.login-textbox{
+    width: 83%;
+    overflow: hidden;
+    font-size: 20px;
+    padding: 8px 0;
+    margin: 8px 0;
+    border-bottom: 1px solid #ffb320;
+    margin-left: 9%;
+}
+
+.login-textbox i{
+    width: 26px;
+    float: left;
+    text-align: center;
+    color: white;
+}
+
+.login-textbox input{
+    border: none;
+    outline: none;
+    background: none;
+    color: white;
+    font-size: 100%;
+    float: left;
+}
+
+.btn, #fromSignInToSignUp{
+    width: 100%;
+    background: none;
+    border: 2px solid #ffb320;
+    color: white;
+    padding: 5px;
+    font-size: 112%;
+    cursor: pointer;
+    margin: 12px 0;
+}
+
+#fromSignInToSignUp{
+    width: 30%;
+    font-size: 90%;
+    display: inline;
+    float: left;
+    margin-left: 35%;
+}
+
+.btn:hover, #fromSignInToSignUp:hover{
+    border: 2px solid #ffb320;
+    background: rgba(48, 48, 48, .9);
+}
+
+.login-fieldset i.showPasswordBtn{
+    float: right;
+}
+
+span.Error{
+    color: #c75450;
+    display: none;
+}
+
+span.Error.toShow{
+    display: inline;
+    margin-left: 7%;
+}
+
+.login-p{
+    text-align: center;
+}
+
+#submitLoginButtonContainer{
+    margin : 0;
+    padding:  0;
+    border : 0;
+    width: 70%;
+    margin-left: 15%;
+}
+
+#submitLoginButtonContainer > input[disabled]{ /*serve a far sì che il contenitore possa reagire agli eventi del mouse*/
+    pointer-events: none;
+}
+
+div#spacer {
+    margin-bottom: 13%;
+}
+
+/*Media query Login form inizio*/
+@media screen and (min-width: 1550px){
+    .login-fieldset{
+        width: 15%;
+    }
+}
+
+@media screen and (min-width: 1491px) {
+    .login-fieldset{
+        width: 30%;
+        top: 38%;
+    }
+
+    .login-textbox input{
+        width: 75%;
+    }
+}
+
+@media screen and (min-width: 1301px) and (max-width: 1490px){
+    .login-fieldset{
+        width: 22.5%;
+        top: 30%;
+    }
+
+    .login-textbox input{
+        width: 75%;
+    }
+}
+
+@media screen and (min-width: 991px) and (max-width: 1300px){
+    .login-fieldset{
+        width: 25.5%;
+        top: 30%;
+    }
+
+    .login-textbox input{
+        width: 67%;
+    }
+}
+
+@media screen and (min-width: 821px) and (max-width: 990px){
+    .login-fieldset{
+        width: 30%;
+        top: 30%;
+    }
+
+    .login-textbox input{
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 721px) and (max-width: 820px){
+    .login-fieldset{
+        width: 35%;
+        top: 30%;
+    }
+
+    .login-textbox input{
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 601px) and (max-width: 720px){
+    .login-fieldset{
+        width: 40%;
+        top: 260px;
+    }
+
+    .login-textbox input{
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 551px) and (max-width: 600px){
+    .login-fieldset{
+        width: 45%;
+        top: 240px;
+    }
+
+    .login-textbox input{
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 451px) and (max-width: 550px){
+    .login-fieldset{
+        width: 53.5%;
+        top: 240px;
+    }
+
+    .login-textbox input{
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 401px) and (max-width: 450px){
+    .login-fieldset{
+        width: 60%;
+        top: 240px;
+    }
+
+    .login-textbox input{
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 351px) and (max-width: 400px){
+    .login-fieldset{
+        width: 70%;
+        top: 240px;
+    }
+
+    .login-textbox input{
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 350px){
+    .login-fieldset{
+        top: 240px;
+        width: 75%;
+    }
+
+    .login-textbox input{
+        width: 70%;
+    }
+}
+/*Media query Login form fine*/
+/*Login form fine*/
