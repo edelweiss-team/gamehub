@@ -11,6 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OperatorDAOTest {
 
+    private final @NotNull UserDAO ud = new UserDAO();
+
     private final @NotNull OperatorDAO od = new OperatorDAO();
 
     @Test
@@ -114,6 +116,37 @@ class OperatorDAOTest {
         od.doSave(o);
         assertThrows(RuntimeException.class, ()->od.doSave(o));
         od.doDeleteByUsername(u.getUsername());
+    }
+
+    @Test
+    void doPromoteOk() {
+        User u = new User("username","password", "Name", "Surname", "Address", "City", "Country", "2020-11-16", "Mail", 'M', "1111111111");
+        ud.doSave(u);
+        Operator o = new Operator(u, "1999-11-11", "cv");
+        od.doPromote(o);
+        Operator o2 = od.doRetrieveByUsername("username");
+        if(o != null)
+            assertTrue(o.getUsername().equals(o2.getUsername()) && o.getPasswordHash().equals(o2.getPasswordHash()) &&
+                    o.getName().equals(o2.getName()) && o.getSurname().equals(o2.getSurname())
+                    && o.getAddress().equals(o2.getAddress()) && o.getCity().equals(o2.getCity())
+                    && o.getCountry().equals(o2.getCountry()) && o.getBirthDate().equals(o2.getBirthDate())
+                    && o.getMail().equals(o2.getMail()) && o.getSex() == o2.getSex()
+                    && o.getTelephone().equals(o2.getTelephone())
+                    && o.getContractTime().equals(o2.getContractTime()) && o.getCv().equals(o2.getCv()));
+        else
+            fail();
+        od.doDeleteByUsername(o.getUsername());
+    }
+
+    @Test
+    void doPromoteNotOk() {
+        User u = new User("username","password", "Name", "Surname", "Address", "City", "Country", "2020-11-16", "Mail", 'M', "1111111111");
+        ud.doSave(u);
+        Operator o = new Operator(u, "1999-11-11", "cv");
+        od.doPromote(o);
+        Operator o2 = new Operator(u, "1999-11-11", "cv");
+        assertThrows(RuntimeException.class, ()->od.doPromote(o2));
+        od.doDeleteByUsername(o.getUsername());
     }
 
     @Test
