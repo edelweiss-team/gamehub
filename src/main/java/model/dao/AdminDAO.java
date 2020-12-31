@@ -7,17 +7,14 @@ import model.bean.Moderator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-
 /**
  *  AdminDAO is used to do operation inside the table 'admin' of database.
  *  AdminDAO allow to do the CRUD operation on database (create, read, update, delete)
- *  It's possible to add an Admin, update an Admin, delete an Admin, read all the admins
- *  saved into the database, read an Admin given his username.
- *  To use AdminDAO it's essential to instance a ModeratorDAO because as said in Admin that
- *  class extends Moderator.
+ *  This class allows plenty of operations, such as adding an Admin, update an Admin,
+ *  deleting an Admin, retrieving all the admins saved into the database,
+ *  retrieving an Admin given his username.
  *
  */
-
 public class AdminDAO {
 
     @NotNull
@@ -26,7 +23,7 @@ public class AdminDAO {
     /**
      * This method allows to save an Admin into the database.
      *
-     * @param a the object Admin to save
+     * @param a the Admin object to save
      * @return true if Admin is saved correctly, false otherwise
      * @throws RuntimeException if an exception is occurred
      */
@@ -57,7 +54,7 @@ public class AdminDAO {
     }
 
     /**
-     * This method allow to update an Admin into database.
+     * This method allow to update an Admin saved in the database.
      *
      * @param a the object Admin to update
      * @return true if Admin is updated correctly, false otherwise
@@ -123,8 +120,7 @@ public class AdminDAO {
     /**
      * This method allows to find all the Admins saved into the database.
      *
-     * @return an ArrayList formed by Admin, if there are Admins saved into the database
-     * it returns the ArrayList else an empty ArrayList
+     * @return an ArrayList formed by Admin, if there are Admins saved into the database.
      * @throws RuntimeException if an exception is occurred
      */
 
