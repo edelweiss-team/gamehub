@@ -4,15 +4,15 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Operator is a specialization of User which represents a operator of the GameHub platform.
- * Moderator it's capable of much more operations than the normal User.
+ * Operator is a specialization of {@link User} which represents a operator of the GameHub platform.
+ * Moderator it's capable of much more operations than the normal {@link User}.
  * such as confirming orders.
  */
 
 public class Operator extends User {
 
     /**
-     * Constructs a new Operator with empty fields.
+     * Constructs a new {@link Operator} with empty fields.
      */
     public Operator() {
         this.contractTime = "";
@@ -20,11 +20,11 @@ public class Operator extends User {
     }
 
     /**
-     * Constructs a new Operator starting from a user,
+     * Constructs a new {@link Operator} starting from a {@link User},
      * the contractTime, and the curriculum .
      * None of the params should be null.
      *
-     * @param u the user corresponding to the operator
+     * @param u the {@link User} corresponding to the operator
      * @param contractTime the contract expiration date
      * @param cv the curriculum vitae of the operator
      */
@@ -38,7 +38,7 @@ public class Operator extends User {
     }
 
     /**
-     * Constructs a new Operator starting from the user standard attributes,
+     * Constructs a new {@link Operator} starting from the user standard attributes,
      * plus the contractTime and the curriculum.
      * None of the params should be null.
      *

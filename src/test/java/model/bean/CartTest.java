@@ -54,7 +54,7 @@ class CartTest {
                 "Descrizione", "path immagine ", new ArrayList<>(), new ArrayList<>(),
                 15, "grandezza", 5);
         c.addProduct(toAddProduct, 2);
-        assertEquals(c.getQuantitySingleProduct(toAddProduct.getId()), 2);
+        assertEquals(c.getQuantitySingleProduct(toAddProduct.getId(), toAddProduct.getClass()), 2);
     }
 
     @Test
@@ -70,7 +70,7 @@ class CartTest {
                 "Descrizione", "path immagine ", new ArrayList<>(), new ArrayList<>(),
                 15, "grandezza", 5);
         c.addProduct(toAddProduct, 2);
-        assertEquals(c.getQuantitySingleProduct(53), 0);
+        assertEquals(c.getQuantitySingleProduct(53, toAddProduct.getClass()), 0);
     }
 
     @Test
@@ -81,7 +81,7 @@ class CartTest {
                 15, "grandezza", 5);
         Cart testCart = new Cart(testUser);
         testCart.addProduct(toAddProduct, 10);
-        assertTrue(testCart.contains(toAddProduct.getId()));
+        assertTrue(testCart.contains(toAddProduct.getId(), toAddProduct.getClass()));
     }
 
     @Test
@@ -93,7 +93,7 @@ class CartTest {
         Cart testCart = new Cart(testUser);
         testCart.addProduct(toAddProduct, 10);
         testCart.addProduct(toAddProduct,4);
-        assertEquals(14, testCart.getQuantitySingleProduct(toAddProduct.getId()));
+        assertEquals(14, testCart.getQuantitySingleProduct(toAddProduct.getId(), toAddProduct.getClass()));
     }
 
 
@@ -164,7 +164,7 @@ class CartTest {
             Cart testCart = new Cart(testUser);
             testCart.addProduct(toAddProduct,9);
             testCart.removeProduct(toAddProduct, 7);
-            assertEquals(testCart.getQuantitySingleProduct(toAddProduct.getId()),2);
+            assertEquals(testCart.getQuantitySingleProduct(toAddProduct.getId(), toAddProduct.getClass()),2);
     }
 
     @Test
@@ -177,8 +177,8 @@ class CartTest {
         testCart.removeProduct(toAddProduct, 9);
         //assert verificano che è stato tolto da entrambe le liste
         assertAll(
-            () -> assertFalse(testCart.contains(toAddProduct.getId())),
-            () -> assertEquals(0, testCart.getQuantitySingleProduct(toAddProduct.getId()))
+            () -> assertFalse(testCart.contains(toAddProduct.getId(), toAddProduct.getClass())),
+            () -> assertEquals(0, testCart.getQuantitySingleProduct(toAddProduct.getId(), toAddProduct.getClass()))
         );
     }
 

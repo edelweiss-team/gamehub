@@ -4,13 +4,13 @@ import java.util.Collection;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This specialization of Product represents a physical product.
+ * This specialization of {@link Product} represents a physical product.
  * A physical product has more information than a simple product such as the weight and the size.
  */
 public class PhysicalProduct extends Product {
 
     /**
-     * Constructs a new DigitalProduct starting from the product standard attributes,
+     * Constructs a new {@link PhysicalProduct} starting from the product standard attributes,
      * plus the size, weight.
      *
      * @param id the product's id.
@@ -34,7 +34,7 @@ public class PhysicalProduct extends Product {
     }
 
     /**
-     * Constructs a new DigitalProduct with empty fields.
+     * Constructs a new {@link PhysicalProduct} with empty fields.
      */
     public PhysicalProduct() {
         this.size = "0x0x0";
