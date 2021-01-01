@@ -175,15 +175,15 @@ public class Order {
                     + "deve avere una quantità maggiore di zero ");
         }
 
-        products.put(product.getId(), product);
+        products.put(product.getClass().getSimpleName() + product.getId(), product);
 
         Integer oldQuantity;
-        oldQuantity = productsQuantity.get(product.getId());
+        oldQuantity = productsQuantity.get(product.getClass().getSimpleName() + product.getId());
 
         if (oldQuantity == null) {
-            productsQuantity.put(product.getId(), quantity);
+            productsQuantity.put(product.getClass().getSimpleName() + product.getId(), quantity);
         } else {
-            productsQuantity.put(product.getId(), oldQuantity + quantity);
+            productsQuantity.put(product.getClass().getSimpleName() + product.getId(), oldQuantity + quantity);
         }
 
         this.totPrice += product.getPrice() * quantity;
@@ -203,7 +203,7 @@ public class Order {
      */
     public void removeProduct(@NotNull Product product, @NotNull Integer quantity) {
 
-        if (!products.containsKey(product.getId())) {
+        if (!products.containsKey(product.getClass().getSimpleName() + product.getId())) {
             throw new IllegalArgumentException("Il prodotto che si vuole rimuovere non "
                     + "esiste all'interno del carrello");
         }
@@ -213,19 +213,19 @@ public class Order {
                     + "rimuovere non è valida");
         }
 
-        if (quantity > productsQuantity.get(product.getId())) {
+        if (quantity > productsQuantity.get(product.getClass().getSimpleName() + product.getId())) {
             throw new IllegalArgumentException("Non ci sono abbastanza prodotti da rimuovere");
         }
 
         Integer oldQuantity;
-        oldQuantity = productsQuantity.get(product.getId());
+        oldQuantity = productsQuantity.get(product.getClass().getSimpleName() + product.getId());
         int newQuantity = oldQuantity - quantity;
 
         if (newQuantity > 0) {
-            productsQuantity.put(product.getId(), newQuantity);
+            productsQuantity.put(product.getClass().getSimpleName() + product.getId(), newQuantity);
         } else {
-            productsQuantity.remove(product.getId());
-            products.remove(product.getId());
+            productsQuantity.remove(product.getClass().getSimpleName() + product.getId());
+            products.remove(product.getClass().getSimpleName() + product.getId());
         }
     }
 
@@ -234,32 +234,39 @@ public class Order {
      *
      * @param productId an Integer representing the product id to get the quantity,
      *                 must be not null.
-     * @return The quantity of the product if it is in the order, 0 otherwise.
+     * @param prodClass the class of the product.
+     * @return The quantity of the product if it is in the cart, 0 otherwise.
      */
     @NotNull
-    public Integer getQuantitySingleProduct(@NotNull Integer productId) {
-        return productsQuantity.get(productId) != null ? productsQuantity.get(productId) : 0;
+    public Integer getQuantitySingleProduct(
+            @NotNull Integer productId, @NotNull Class<? extends Product> prodClass) {
+        return (productsQuantity.get(prodClass.getSimpleName() + productId) != null)
+                ? productsQuantity.get(prodClass.getSimpleName() + productId) : 0;
     }
 
     /**
      * Determines if a product is contained in the order.
      *
-     * @param productId the id of the searched product, must be not null.
-     * @return true if the searched product is contained in the order, false otherwise.
+     * @param prodClass the class of the product.
+     * @return true if the searched product is contained in the cart, false otherwise.
      */
-    public boolean contains(@NotNull Integer productId) {
-        return products.containsKey(productId);
+    public boolean contains(
+            @NotNull Integer productId, @NotNull Class<? extends Product> prodClass) {
+        return products.containsKey(prodClass.getSimpleName() + productId);
     }
+
 
     /**
      * Get a product from the order starting from its id.
      *
      * @param productId the id of the desired product, must be not null.
-     * @return the product if the searched product is contained in the order, null otherwise.
+     * @param prodClass the class of the product.
+     * @return the product if the searched product is contained in the cart, null otherwise.
      */
-    @NotNull
-    public Product getProduct(@NotNull Integer productId) {
-        return products.get(productId);
+    @Nullable
+    public Product getProduct(
+            @NotNull Integer productId, @NotNull Class<? extends Product> prodClass) {
+        return products.get(prodClass.getSimpleName() + productId);
     }
 
     /**
@@ -282,7 +289,7 @@ public class Order {
     private Operator operator;
     private int numberOfItems;
     @NotNull
-    private final HashMap<Integer, Product> products;
+    private final HashMap<String, Product> products;
     @NotNull
-    private final HashMap<Integer, Integer> productsQuantity;
+    private final HashMap<String, Integer> productsQuantity;
 }

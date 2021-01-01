@@ -12,11 +12,11 @@ import org.jetbrains.annotations.Nullable;
 public class Cart {
 
     /**
-     * Constructs a new Cart starting from a user.
+     * Constructs a new {@link Cart} starting from a user.
      * This cart is by default empty.
      * TotalPrice and numberOfItems are 0.
      *
-     * @param user the user who the cart belongs.
+     * @param user the {@link User} who the cart belongs.
      */
     public Cart(@Nullable User user) {
         totalPrice = 0;
@@ -27,7 +27,7 @@ public class Cart {
     }
 
     /**
-     * Constructs a new Cart without starting from a user.
+     * Constructs a new {@link Cart} without starting from a user.
      * This cart is by default empty.
      * TotalPrice and numberOfItems are 0.
      *
@@ -41,9 +41,9 @@ public class Cart {
     }
 
     /**
-     *Determines the user who the cart belongs.
+     *Determines the {@link User} who the cart belongs.
      *
-     * @return the owner of the cart if it exist, null otherwise.
+     * @return the {@link User} owner of the cart if it exist, null otherwise.
      */
     @Nullable
     public User getUser() {
@@ -51,7 +51,7 @@ public class Cart {
     }
 
     /**
-     * Set the user who owns the cart .
+     * Set the {@link User} who owns the cart .
      *
      * @param user who owns the cart.
      */
@@ -60,7 +60,7 @@ public class Cart {
     }
 
     /**
-     * Dtermines the number of items in the cart.
+     * Determines the number of items in the cart.
      *
      * @return an int indicating the number of items in the cart.
      */
@@ -97,14 +97,14 @@ public class Cart {
     }
 
     /**
-     * Allows to add a new product to the cart,
-     * starting from the product to be added and its quantity.
-     * If the product is already in the cart, its quantity will simply be updated
+     * Allows to add a new {@link Product} to the cart,
+     * starting from the {@link Product} to be added and its quantity.
+     * If the {@link Product} is already in the cart, its quantity will simply be updated
      * The new total quantity will be added to the old one.
      * The old price will be updated.
      *
-     * @param product the product that should be added to the cart.
-     * @param quantity the quantity of the product
+     * @param product the {@link Product} that should be added to the cart.
+     * @param quantity the quantity of the {@link Product}
      *                 that should be added to the cart, must be greater than 1.
      */
     public void addProduct(@Nullable Product product, @Nullable Integer quantity) {
@@ -118,15 +118,16 @@ public class Cart {
                     + "deve avere una quantità maggiore di zero ");
         }
 
-        products.put(product.getId(), product);
+        products.put(product.getClass().getSimpleName() + product.getId(), product);
 
         Integer oldQuantity;
-        oldQuantity = productsQuantity.get(product.getId());
+        oldQuantity = productsQuantity.get(product.getClass().getSimpleName() + product.getId());
 
         if (oldQuantity == null) {
-            productsQuantity.put(product.getId(), quantity);
+            productsQuantity.put(product.getClass().getSimpleName() + product.getId(), quantity);
         } else {
-            productsQuantity.put(product.getId(), oldQuantity + quantity);
+            productsQuantity.put(product.getClass().getSimpleName()
+                             + product.getId(), oldQuantity + quantity);
         }
 
         this.totalPrice += product.getPrice() * quantity;
@@ -135,15 +136,15 @@ public class Cart {
 
 
     /**
-     * Allows to remove a product from the cart,
-     * starting from the product to be removed and its quantity.
+     * Allows to remove a {@link Product} from the cart,
+     * starting from the {@link Product} to be removed and its quantity.
      * The new quantity will be subtracted from the old one.
      * The old price will be updated.
      *
-     * @param product the product that should be added to the cart
-     * @param quantity the quantity of the product that should be added to the cart,
+     * @param product the {@link Product} that should be added to the cart
+     * @param quantity the quantity of the {@link Product} that should be added to the cart,
      *                 must be greater than 1 and less than or equal to the quantity
-     *                 already contained in the cart for that product.
+     *                 already contained in the cart for that {@link Product}.
      */
     public void removeProduct(@Nullable Product product, @Nullable Integer quantity) {
 
@@ -152,7 +153,7 @@ public class Cart {
                     + "può essere rimosso dal carrello ");
         }
 
-        if (!products.containsKey(product.getId())) {
+        if (!products.containsKey(product.getClass().getSimpleName() + product.getId())) {
             throw new IllegalArgumentException("Il prodotto che si vuole rimuovere non "
                     + "esiste all'interno del carrello");
         }
@@ -162,19 +163,19 @@ public class Cart {
                     + "rimuovere non è valida");
         }
 
-        if (quantity > productsQuantity.get(product.getId())) {
+        if (quantity > productsQuantity.get(product.getClass().getSimpleName() + product.getId())) {
             throw new IllegalArgumentException("Non ci sono abbastanza prodotti da rimuovere");
         }
 
         Integer oldQuantity;
-        oldQuantity = productsQuantity.get(product.getId());
+        oldQuantity = productsQuantity.get(product.getClass().getSimpleName() + product.getId());
         int newQuantity = oldQuantity - quantity;
 
         if (newQuantity > 0) {
-            productsQuantity.put(product.getId(), newQuantity);
+            productsQuantity.put(product.getClass().getSimpleName() + product.getId(), newQuantity);
         } else {
-            productsQuantity.remove(product.getId());
-            products.remove(product.getId());
+            productsQuantity.remove(product.getClass().getSimpleName() + product.getId());
+            products.remove(product.getClass().getSimpleName() + product.getId());
         }
 
         this.totalPrice -= product.getPrice() * quantity;
@@ -183,36 +184,43 @@ public class Cart {
     }
 
     /**
-     * Method to return the quantity of a product in the cart.
+     * Method to return the quantity of a {@link Product} in the cart.
      *
-     * @param productId an Integer representing the product id to get the quantity,
+     * @param productId an Integer representing the {@link Product} id to get the quantity,
      *                 must be not null.
-     * @return The quantity of the product if it is in the cart, 0 otherwise.
+     * @param prodClass the {@link Class} of the {@link Product}.
+     * @return The quantity of the {@link Product} if it is in the cart, 0 otherwise.
      */
     @NotNull
-    public Integer getQuantitySingleProduct(@NotNull Integer productId) {
-        return (productsQuantity.get(productId) != null) ? productsQuantity.get(productId) : 0;
+    public Integer getQuantitySingleProduct(
+            @NotNull Integer productId, @NotNull Class<? extends Product> prodClass) {
+        return (productsQuantity.get(prodClass.getSimpleName() + productId) != null)
+                ? productsQuantity.get(prodClass.getSimpleName() + productId) : 0;
     }
 
     /**
-     * Determines if a product is contained in the cart.
+     * Determines if a {@link Product} is contained in the cart.
      *
-     * @param productId the id of the searched product, must be not null.
-     * @return true if the searched product is contained in the cart, false otherwise.
+     * @param productId the id of the searched {@link Product}, must be not null.
+     * @param prodClass the class of the {@link Product}.
+     * @return true if the searched {@link Product} is contained in the cart, false otherwise.
      */
-    public boolean contains(@NotNull Integer productId) {
-        return products.containsKey(productId);
+    public boolean contains(
+            @NotNull Integer productId, @NotNull Class<? extends Product> prodClass) {
+        return products.containsKey(prodClass.getSimpleName() + productId);
     }
 
     /**
-     * Get a product from the cart starting from its id.
+     * Get a {@link Product} from the cart starting given its id and its class.
      *
-     * @param productId the id of the desired product, must be not null.
-     * @return the product if the searched product is contained in the cart, null otherwise.
+     * @param productId the id of the desired {@link Product}, must be not null.
+     * @param prodClass the class of the {@link Product}.
+     * @return the {@link Product} if the searched {@link Product} is contained in the cart, null otherwise.
      */
     @Nullable
-    public Product getProduct(@NotNull Integer productId) {
-        return products.get(productId);
+    public Product getProduct(
+            @NotNull Integer productId, @NotNull Class<? extends Product> prodClass) {
+        return products.get(prodClass.getSimpleName() + productId);
     }
 
     /**
@@ -230,9 +238,7 @@ public class Cart {
     private double totalPrice;
     private int numberOfItems;
     @NotNull
-    private final LinkedHashMap<Integer, Product> products;
+    private final LinkedHashMap<String, Product> products;
     @NotNull
-    private final LinkedHashMap<Integer, Integer> productsQuantity;
-
-
+    private final LinkedHashMap<String, Integer> productsQuantity;
 }

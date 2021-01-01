@@ -34,12 +34,12 @@ public abstract class Product {
      *
      * @param id the id of the product
      * @param name the name of the product.
-     * @param price double
-     * @param description String
-     * @param image String
-     * @param categories Collection<Category></Category>
-     * @param tags Collection<Tag></Tag>
-     * @param quantity int
+     * @param price the price of the product
+     * @param description the description of the product
+     * @param image the image path of the product
+     * @param categories the category list of the product
+     * @param tags the tag list of the product
+     * @param quantity the quantity of the product
      */
     public Product(int id, @NotNull String name, double price, @NotNull String description,
                    @NotNull String image, @NotNull Collection<Category> categories,

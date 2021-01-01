@@ -152,7 +152,7 @@ class CartDAOTest {
         cd.doSaveOrUpdate(c);
         Cart c2 = cd.doRetrieveByUsername(u.getUsername());
         assert c2 != null;
-        c2.removeProduct(p,c2.getQuantitySingleProduct(p.getId()));
+        c2.removeProduct(p,c2.getQuantitySingleProduct(p.getId(), p.getClass()));
         cd.doSaveOrUpdate(c2);
         c=cd.doRetrieveByUsername(u.getUsername());
         assert c != null;
@@ -187,8 +187,8 @@ class CartDAOTest {
         cd.doSaveOrUpdate(c);
         Cart c2 = cd.doRetrieveByUsername(u.getUsername());
         assert c2 != null;
-        c2.removeProduct(p1,c2.getQuantitySingleProduct(p1.getId()));
-        c2.removeProduct(p2,c2.getQuantitySingleProduct(p2.getId()));
+        c2.removeProduct(p1,c2.getQuantitySingleProduct(p1.getId(), p1.getClass()));
+        c2.removeProduct(p2,c2.getQuantitySingleProduct(p2.getId(), p2.getClass()));
         cd.doSaveOrUpdate(c2);
         c=cd.doRetrieveByUsername(u.getUsername());
         assert c != null;
@@ -217,7 +217,7 @@ class CartDAOTest {
         cd.doSaveOrUpdate(c);
         Cart c2 = cd.doRetrieveByUsername(u.getUsername());
         assert c2 != null;
-        c2.removeProduct(p,c2.getQuantitySingleProduct(p.getId()));
+        c2.removeProduct(p,c2.getQuantitySingleProduct(p.getId(), p.getClass()));
         cd.doSaveOrUpdate(c2);
         c=cd.doRetrieveByUsername(u.getUsername());
         assert c != null;
@@ -250,8 +250,8 @@ class CartDAOTest {
         cd.doSaveOrUpdate(c);
         Cart c2 = cd.doRetrieveByUsername(u.getUsername());
         assert c2 != null;
-        c2.removeProduct(p1,c2.getQuantitySingleProduct(p1.getId()));
-        c2.removeProduct(p2,c2.getQuantitySingleProduct(p2.getId()));
+        c2.removeProduct(p1,c2.getQuantitySingleProduct(p1.getId(), p1.getClass()));
+        c2.removeProduct(p2,c2.getQuantitySingleProduct(p2.getId(), p2.getClass()));
         cd.doSaveOrUpdate(c2);
         c=cd.doRetrieveByUsername(u.getUsername());
         assert c != null;
@@ -356,7 +356,8 @@ class CartDAOTest {
 
         Cart c2 = cd.doRetrieveByUsername(u.getUsername());
         assert c2 != null;
-        assertEquals(c.getQuantitySingleProduct(p1.getId()), c.getQuantitySingleProduct(p1.getId()));
+        assertEquals(c.getQuantitySingleProduct(p1.getId(), p1.getClass()), c.getQuantitySingleProduct(p1.getId(),
+                p1.getClass()));
 
         us.doDeleteFromUsername(u.getUsername());
         digDAO.doDelete(p1.getId());
@@ -391,7 +392,8 @@ class CartDAOTest {
 
         Cart c2 = cd.doRetrieveByUsername(u.getUsername());
         assert c2 != null;
-        assertEquals(c.getQuantitySingleProduct(p1.getId()), c.getQuantitySingleProduct(p1.getId()));
+        assertEquals(c.getQuantitySingleProduct(p1.getId(), p1.getClass()), c.getQuantitySingleProduct(p1.getId(),
+                p1.getClass()));
 
         us.doDeleteFromUsername(u.getUsername());
         phyDAO.doDelete(p1.getId());
@@ -488,7 +490,8 @@ class CartDAOTest {
 
         Cart c2 = cd.doRetrieveByUsername(u.getUsername());
         assert c2 != null;
-        assertEquals(c.getQuantitySingleProduct(p1.getId()), c.getQuantitySingleProduct(p1.getId()));
+        assertEquals(c.getQuantitySingleProduct(p1.getId(), p1.getClass()), c.getQuantitySingleProduct(p1.getId(),
+                p1.getClass()));
 
         us.doDeleteFromUsername(u.getUsername());
         digDAO.doDelete(p1.getId());
@@ -523,7 +526,8 @@ class CartDAOTest {
 
         Cart c2 = cd.doRetrieveByUsername(u.getUsername());
         assert c2 != null;
-        assertEquals(c.getQuantitySingleProduct(p1.getId()), c.getQuantitySingleProduct(p1.getId()));
+        assertEquals(c.getQuantitySingleProduct(p1.getId(), p1.getClass()), c.getQuantitySingleProduct(p1.getId(),
+                p1.getClass()));
 
         us.doDeleteFromUsername(u.getUsername());
         phyDAO.doDelete(p1.getId());

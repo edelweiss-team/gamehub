@@ -38,7 +38,7 @@ class OrderTest {
                 "path immagine ", new ArrayList<>(), new ArrayList<>(), 15, "grandezza", 5);
         Order testOrder = new Order(57, testUser, testOperator, "21-12-2020");
         testOrder.addProduct(toAddProduct, 10);
-        assertTrue(testOrder.contains(toAddProduct.getId()));
+        assertTrue(testOrder.contains(toAddProduct.getId(), toAddProduct.getClass()));
     }
 
     @Test
@@ -50,7 +50,7 @@ class OrderTest {
         Order testOrder = new Order(57, testUser, testOperator, "21-12-2020");
         testOrder.addProduct(toAddProduct, 10);
         testOrder.addProduct(toAddProduct,4);
-        assertEquals(14, testOrder.getQuantitySingleProduct(toAddProduct.getId()));
+        assertEquals(14, testOrder.getQuantitySingleProduct(toAddProduct.getId(), toAddProduct.getClass()));
     }
 
     /*@Test
@@ -124,7 +124,7 @@ class OrderTest {
         Order testOrder = new Order(57, testUser, testOperator, "21-12-2020");
         testOrder.addProduct(toAddProduct,9);
         testOrder.removeProduct(toAddProduct, 7);
-        assertEquals(testOrder.getQuantitySingleProduct(toAddProduct.getId()),2);
+        assertEquals(testOrder.getQuantitySingleProduct(toAddProduct.getId(), toAddProduct.getClass()),2);
     }
 
     @Test
@@ -138,8 +138,8 @@ class OrderTest {
         testOrder.removeProduct(toAddProduct, 9);
         //assert verificano che è stato tolto da entrambe le liste
         assertAll(
-                () -> assertFalse(testOrder.contains(toAddProduct.getId())),
-                () -> assertEquals(0, testOrder.getQuantitySingleProduct(toAddProduct.getId()))
+                () -> assertFalse(testOrder.contains(toAddProduct.getId(), toAddProduct.getClass())),
+                () -> assertEquals(0, testOrder.getQuantitySingleProduct(toAddProduct.getId(), toAddProduct.getClass()))
         );
     }
 
@@ -156,7 +156,7 @@ class OrderTest {
                 "Descrizione", "path immagine ", new ArrayList<>(), new ArrayList<>(),
                 15, "grandezza", 5);
         o.addProduct(toAddProduct, 2);
-        assertEquals(o.getQuantitySingleProduct(toAddProduct.getId()), 2);
+        assertEquals(o.getQuantitySingleProduct(toAddProduct.getId(), toAddProduct.getClass()), 2);
     }
 
     @Test
@@ -172,7 +172,7 @@ class OrderTest {
                 "Descrizione", "path immagine ", new ArrayList<>(), new ArrayList<>(),
                 15, "grandezza", 5);
         o.addProduct(toAddProduct, 2);
-        assertEquals(o.getQuantitySingleProduct(53), 0);
+        assertEquals(o.getQuantitySingleProduct(53, toAddProduct.getClass()), 0);
     }
 
 }

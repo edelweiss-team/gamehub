@@ -3,7 +3,7 @@ package model.bean;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Admin is a specialization of Moderator which represents an admin of the GameHub platform.
+ * Admin is a specialization of {@link Moderator} which represents an admin of the GameHub platform.
  * Admin it's capable of much more operations than the normal Moderator,
  * such the administration of the e-commerce.
  * An admin can also be a super-admin,
@@ -12,18 +12,18 @@ import org.jetbrains.annotations.NotNull;
 public class Admin extends Moderator {
 
     /**
-     * Constructs a new Admin with empty fields.
+     * Constructs a new {@link Admin} with empty fields.
      */
     public Admin() {
 
     }
 
     /**
-     * Constructs a new Admin starting from a user, and the contractTime.
+     * Constructs a new {@link Admin} starting from a user, and the contractTime.
      * This admin is by default treated not as a super-admin.
      * Neither of the params should be null.
      *
-     * @param u the user corresponding to the admin
+     * @param u the {@link User} corresponding to the admin
      * @param contractTime the contract expiration date
      */
     public Admin(@NotNull User u, @NotNull String contractTime) {
@@ -32,10 +32,10 @@ public class Admin extends Moderator {
     }
 
     /**
-     * Constructs a new Admin starting from a user, and the contractTime.
+     * Constructs a new {@link Admin} starting from a user, and the contractTime.
      * Neither of the params should be null.
      *
-     * @param u the user corresponding to the admin
+     * @param u the {@link User} corresponding to the admin
      * @param contractTime the contract expiration date
      * @param isSuperAdmin a boolean indicating if an admin is a super-admin
      */
@@ -45,7 +45,7 @@ public class Admin extends Moderator {
     }
 
     /**
-     * Constructs a new Admin starting from the user standard attributes,
+     * Constructs a new {@link Admin} starting from the user standard attributes,
      * plus the contractTime and isSuperAdmin attributes.
      * Neither of the params should be null.
      *
@@ -79,7 +79,7 @@ public class Admin extends Moderator {
     }
 
     /**
-     * Constructs a new Admin starting from the user standard attributes,
+     * Constructs a new {@link Admin} starting from the user standard attributes,
      * plus the contractTime attribute.
      * This admin is by default treated not as a super-admin.
      * Neither of the params should be null.

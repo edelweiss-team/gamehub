@@ -2,15 +2,15 @@ package model.bean;
 
 import java.util.Collection;
 import org.jetbrains.annotations.NotNull;
+
 /**
- * This class represents a digital product is a specialization of Product.
+ * This class represents a digital product is a specialization of {@link Product}.
  * A digital product has more information than a simple product.
  */
-
 public class DigitalProduct extends Product {
 
     /**
-     * Constructs a new DigitalProduct with empty fields.
+     * Constructs a new {@link DigitalProduct} with empty fields.
      */
     public DigitalProduct() {
         this.platform = "";
@@ -20,14 +20,14 @@ public class DigitalProduct extends Product {
     }
 
     /**
-     * Constructs a new DigitalProduct starting from the product standard attributes,
+     * Constructs a new {@link DigitalProduct} starting from the product standard attributes,
      * plus the platform, releaseDate, requiredAge, softwareHouse, publisher attributes.
      * Parameters must be not null.
      *
      * @param id the product's id.
      * @param name the product's name.
      * @param price the product's price.
-     * @param description the product's descrption.
+     * @param description the product's description.
      * @param image a String indicating the path of the product's image.
      * @param categories a list indicating the categories to which the product belongs.
      * @param tags a list indicating the tags to which the product belongs.

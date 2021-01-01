@@ -4,9 +4,8 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Moderator is a specialization of User which represents a moderator of the GameHub platform.
- * Moderator it's capable of much more operations than the normal User.
- * This class extends User.
+ * Moderator is a specialization of {@link User} which represents a moderator
+ * of the GameHub platform. A Moderator it's capable of much more operations than the normal User.
  */
 
 public class Moderator extends User {
@@ -19,10 +18,10 @@ public class Moderator extends User {
     }
 
     /**
-     * Constructs a new Moderator starting from a user, and the contractTime.
+     * Constructs a new {@link Moderator} starting from a {@link User}, and the contractTime.
      * Neither of the params should be null.
      *
-     * @param u the user corresponding to the moderator
+     * @param u the {@link User} corresponding to the moderator
      * @param contractTime the contract expiration date
      */
     public Moderator(@NotNull User u, @NotNull String contractTime) {
@@ -34,21 +33,21 @@ public class Moderator extends User {
     }
 
     /**
-     * Constructs a new Moderator starting from the user standard attributes,
+     * Constructs a new {@link Moderator} starting from the user standard attributes,
      * plus the contractTime.
      * Neither of the params should be null.
      *
-     * @param username the admin's username
-     * @param password the admin's password
-     * @param name the admin's name
-     * @param surname the admin's surname
-     * @param address the admin's address
-     * @param city the city of residence of the admin
-     * @param country the country of the admin
-     * @param birthDate the admin's birth date
-     * @param mail the admin's mail
-     * @param sex specifies the sex of the Admin with one letter (M,F)
-     * @param telephone password is the password that the Admin uses to Log in the site
+     * @param username the moderator's username
+     * @param password the moderator's password
+     * @param name the moderator's name
+     * @param surname the moderator's surname
+     * @param address the moderator's address
+     * @param city the city of residence of the moderator
+     * @param country the country of the moderator
+     * @param birthDate the moderator's birth date
+     * @param mail the moderator's mail
+     * @param sex specifies the sex of the Moderator with one letter (M,F)
+     * @param telephone password is the password that the Moderator uses to Log in the site
      * @param contractTime the contract expiration date
      */
     public Moderator(@NotNull String username, @NotNull String password, @NotNull String name,
