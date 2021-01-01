@@ -161,7 +161,6 @@ ol {
 	font-size: 12px;
 	font-weight: 500;
 	color: #fff;
-	padding: 6px 25px;
 }
 
 .cata.new {
@@ -268,6 +267,11 @@ ol {
 	padding: 8px 28px;
 	border-radius: 30px;
 	transform: translateY(2px);
+	cursor: pointer;
+}
+
+.user-panel:hover {
+	background: #ff641e;
 }
 
 .user-panel a {
@@ -535,6 +539,10 @@ ol {
 	border: 1px solid #d6dee7;
 	border-top: none;
 	position: relative;
+	max-height: 188px;
+	min-height: 188px;
+	overflow: auto;
+	-ms-overflow-style: none;
 }
 
 .recent-game-item .rgi-content h5 {

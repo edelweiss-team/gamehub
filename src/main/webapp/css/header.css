@@ -12,6 +12,11 @@
     margin-top: 0;
     border: none;
     height: 46px;
+    cursor: pointer;
+}
+
+#cartContainer button:hover {
+    color: #ff641e;
 }
 
 #cartContainer button.current {
@@ -29,5 +34,11 @@ div#cartContainer {
     float: right;
     margin-left: 3%;
     transform: translateY(-2px);
+}
+
+@media screen and (max-width: 800px) {
+    div#cartContainer {
+        transform: translate(-45px, -12px);
+    }
 }
 /*Cart fine*/

@@ -73,7 +73,7 @@ $(window).on('load', function() {
 	    //gap: 200,
 	    delayBeforeStart: 0,
 	    direction: 'left',
-	    duplicated: true
+	    duplicated: false
 	});
 
 })(jQuery);

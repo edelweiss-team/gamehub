@@ -110,24 +110,16 @@ class CategoryDAOTest {
 
     @Test
     void doRetrieveAllxNone() {
-        try {
-            assertTrue(cd.doRetrieveAll().isEmpty());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        assertTrue(cd.doRetrieveAll().isEmpty());
     }
 
     @Test
     void doRetrieveAllxOne() {
         Category cat1 = new Category("TestxRetrieveAllxOne","test di prova1","path1");
         cd.doSave(cat1);
-        try {
-            ArrayList<Category> list = cd.doRetrieveAll();
-            assertTrue(list.contains(cat1));
-            cd.doDeleteByName(cat1.getName());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        ArrayList<Category> list = cd.doRetrieveAll();
+        assertTrue(list.contains(cat1));
+        cd.doDeleteByName(cat1.getName());
     }
 
     @Test
@@ -136,25 +128,18 @@ class CategoryDAOTest {
         Category cat2 = new Category("TestxRetrieveAllxOne2","test di prova1","path1");
         cd.doSave(cat1);
         cd.doSave(cat2);
-        try {
-            ArrayList<Category> list = cd.doRetrieveAll();
-            assertTrue(list.contains(cat1));
-            assertTrue(list.contains(cat2));
-            cd.doDeleteByName(cat1.getName());
-            cd.doDeleteByName(cat2.getName());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        ArrayList<Category> list = cd.doRetrieveAll();
+        assertTrue(list.contains(cat1));
+        assertTrue(list.contains(cat2));
+        cd.doDeleteByName(cat1.getName());
+        cd.doDeleteByName(cat2.getName());
+
     }
 
     @Test
     void doRetrieveByNameFragmentxNone() {
-        try {
-            ArrayList<Category> list = cd.doRetrieveByNameFragment("NameFragment", 0, 1000);
-            assertTrue(list.isEmpty());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        ArrayList<Category> list = cd.doRetrieveByNameFragment("NameFragment", 0, 1000);
+        assertTrue(list.isEmpty());
     }
 
     @Test
@@ -162,13 +147,10 @@ class CategoryDAOTest {
         Category cat1 = new Category("TestxRetrieveByNameFragmentxOne","test di prova1",
                 "path1");
         cd.doSave(cat1);
-        try {
-            ArrayList<Category> list = cd.doRetrieveByNameFragment("NameFragment", 0, 1000);
-            assertEquals(cat1, list.get(0));
-            cd.doDeleteByName(cat1.getName());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        ArrayList<Category> list = cd.doRetrieveByNameFragment("NameFragment", 0, 1000);
+        assertEquals(cat1, list.get(0));
+        cd.doDeleteByName(cat1.getName());
+
     }
 
     @Test
@@ -179,14 +161,10 @@ class CategoryDAOTest {
                 "","path1");
         cd.doSave(cat1);
         cd.doSave(cat2);
-        try {
-            ArrayList<Category> list = cd.doRetrieveByNameFragment("NameFragment", 0, 1000);
-            assertEquals(cat1, list.get(0));
-            assertEquals(cat2, list.get(1));
-            cd.doDeleteByName(cat1.getName());
-            cd.doDeleteByName(cat2.getName());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        ArrayList<Category> list = cd.doRetrieveByNameFragment("NameFragment", 0, 1000);
+        assertEquals(cat1, list.get(0));
+        assertEquals(cat2, list.get(1));
+        cd.doDeleteByName(cat1.getName());
+        cd.doDeleteByName(cat2.getName());
     }
 }
