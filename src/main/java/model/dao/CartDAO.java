@@ -23,7 +23,7 @@ public class CartDAO {
     /**
      * This method allows to save or update a Cart into the database.
      *
-     * @param c the object Admin to save or update, must be not null
+     * @param c the object Cart to save or update, must be not null
      */
     public void doSaveOrUpdate(@NotNull Cart c) {
         if (c.getUser() != null) {

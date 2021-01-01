@@ -9,6 +9,12 @@ import model.bean.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ *  OrderDAO is used to do operation inside the table 'order', 'digitalpurchasing'
+ *  and 'physicalpurchasing' of database.
+ *  OrderDAO allow to do the CRUD operation on database (create, read, update, delete)
+ *  It's possible to store a Order, update a Order, delete a Order, read a Order given its owner.
+ */
 
 public class OrderDAO {
 
@@ -20,6 +26,13 @@ public class OrderDAO {
     private final PhysicalProductDAO ppd = new PhysicalProductDAO();
     @NotNull
     private final OperatorDAO opd = new OperatorDAO();
+
+    /**
+     * This method allows to get a Order starting from its owner's username.
+     *
+     * @param username the owner of the searched order, must be not null
+     * @return if exists a Order that is owned by the username given from param, null otherwise
+     */
 
     @Nullable
     public ArrayList<Order> doRetrieveByUsername(@NotNull String username) {
@@ -74,6 +87,14 @@ public class OrderDAO {
         }
     }
 
+    /**
+     * This method allows to get a list of order starting from its operator.
+     *
+     * @param operatorname that approved the orders
+     * @return if exists a list of Order that is approved by the operator's username
+     * given from param, null otherwise
+     */
+
     @Nullable
     public ArrayList<Order> doRetrieveByOperator(@NotNull String operatorname) {
         try {
@@ -122,6 +143,13 @@ public class OrderDAO {
             return null;
         }
     }
+
+    /**
+     * This method allows to get a Order starting from its id.
+     *
+     * @param id the id of the searched order, must be not null
+     * @return if exists a Order with that id given from param, null otherwise
+     */
 
     @Nullable
     public Order doRetrieveById(@NotNull int id) {
@@ -177,6 +205,11 @@ public class OrderDAO {
         }
     }
 
+    /**
+     * This method allows to save an Order into the database.
+     *
+     * @param o the object Order to save, must be not null
+     */
 
     @Nullable
     public void doSave(@NotNull Order o) {
@@ -236,6 +269,14 @@ public class OrderDAO {
         }
     }
 
+    /**
+     *  This method allows to remove an order from the database.
+     *
+     * @param id the id of the searched order, must be not null
+     *
+     * @throws RuntimeException if an exception is occurred
+     */
+
     public void doDelete(@NotNull int id) {
 
         try {
@@ -250,6 +291,13 @@ public class OrderDAO {
         }
 
     }
+
+    /**
+     *  This method allow to update the operator's username of a specific order.
+     *
+     * @param id the id of the searched order, must be not null
+     * @param operator the operator's username to update
+     */
 
 
     public void doUpdateOperator(@NotNull int id, @NotNull String operator) {
