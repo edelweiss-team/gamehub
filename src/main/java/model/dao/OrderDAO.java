@@ -52,7 +52,7 @@ public class OrderDAO {
                         dp = dpd.doRetrieveById(rs2.getInt(1));
                         o.addProduct(dp, rs.getInt(3));
                     }
-                    st = cn.prepareStatement("SELECT * FROM physicalpurchasing P WHERE P.oder=?;");
+                    st = cn.prepareStatement("SELECT * FROM physicalpurchasing P WHERE P.order=?;");
                     st.setInt(1, o.getId());
                     rs2 = st.executeQuery();
                     PhysicalProduct pp = null;
