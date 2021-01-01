@@ -283,12 +283,12 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", data='" + data + '\'' +
-                ", totPrice=" + totPrice +
-                ", operator=" + this.getOperator()+
-                '}';
+        return "Order{"
+                + "id=" + id
+                + ", data='" + data + '\''
+                + ", totPrice=" + totPrice
+                + ", operator=" + this.getOperator()
+                + '}';
     }
 
     @Override
