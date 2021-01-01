@@ -204,6 +204,16 @@ public class ModeratorDAO {
         return moderator;
     }
 
+    /**
+     * This method allow to find a Moderator given his username and his password.
+     *
+     * @param username a String that it's a key for a search into the database
+     * @param password a String that it's a key for a search into the database
+     * @return a Moderator that corresponds to the username and password given from param, null otherwise
+     *
+     * @throws RuntimeException if an exception is occurred
+     */
+
     @Nullable
     public Moderator doRetrieveByUsernamePassword(
             @NotNull String username, @NotNull String password) {
