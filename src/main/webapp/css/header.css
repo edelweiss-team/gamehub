@@ -22,4 +22,12 @@
 #cartContainer button.current:hover{
     background-color: #ffb320;
 }
+
+div#cartContainer {
+    display: inline-block;
+    position: relative;
+    float: right;
+    margin-left: 3%;
+    transform: translateY(-2px);
+}
 /*Cart fine*/

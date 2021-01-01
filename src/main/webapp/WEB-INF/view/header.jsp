@@ -41,9 +41,6 @@
         <a class="site-logo" href="index.html">
             <img src="${pageContext.request.contextPath}/img/logo.png" alt="">
         </a>
-        <div class="user-panel">
-            <a href="login.html">Login</a>  /  <a href="signup.html">Sign up</a>
-        </div>
         <!-- responsive -->
         <div class="nav-switch">
             <i class="fa fa-bars"></i>
@@ -63,6 +60,9 @@
                     <i class="fa fa-shopping-cart"></i>
                 </button>
             </form>
+        </div>
+        <div class="user-panel">
+            <a href="login.html">Login</a>  /  <a href="signup.html">Sign up</a>
         </div>
     </div>
 </header>

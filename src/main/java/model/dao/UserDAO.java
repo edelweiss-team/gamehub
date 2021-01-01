@@ -97,7 +97,7 @@ public class UserDAO {
      *
      * @param username a String that it's a key for a search into the database.
      *                 It cannot be null
-     * @param password a String that it's a key for a search into the database
+     * @param password a String that it's a key for a search into the database.
      *                 It cannot be null
      * @return an User that corresponds to the username and password given from
      *          param, null otherwise
