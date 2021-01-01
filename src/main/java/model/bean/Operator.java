@@ -3,6 +3,8 @@ package model.bean;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 /**
  * Operator is a specialization of {@link User} which represents a operator of the GameHub platform.
  * Moderator it's capable of much more operations than the normal {@link User}.
@@ -113,6 +115,20 @@ public class Operator extends User {
         return super.toString() + "Operator{"
                 + "contractTime='" + contractTime + '\''
                 + ", cv='" + cv + '\'' + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Operator operator = (Operator) o;
+        return contractTime.equals(operator.contractTime) && cv.equals(operator.cv);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(contractTime, cv);
     }
 
     @NotNull
