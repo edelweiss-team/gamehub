@@ -1,0 +1,35 @@
+div#category-list.row{
+    place-content: center;
+    background: url("../img/backgroundSignUp.jpg") no-repeat center center fixed;
+    background-size: cover;
+    padding-top: 82px;
+}
+
+form#category-form {
+    margin: 0;
+    background: darkorchid;
+}
+
+button#category-button {
+    cursor: pointer;
+    padding: 6px 25px;
+    border: none;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+    background: none;
+}
+
+button#category-button:hover{
+    background: darkslateblue;
+}
+
+#category-description.rgi-content{
+    background-color:rgba(0, 0, 0, 0.7);
+}
+
+#container-category-list.page-section {
+    background-color: #212529;
+}
