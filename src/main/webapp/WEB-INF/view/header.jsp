@@ -61,9 +61,15 @@
                 </button>
             </form>
         </div>
+        <%if(session.getAttribute("loggedUser") == null){%>
         <div class="user-panel">
             <a href="login.html">Login</a>  /  <a href="signup.html">Sign up</a>
         </div>
+        <%} else{%>
+        <div class="user-panel">
+            <a href="reservedArea.html">Reserved Area</a>
+        </div>
+        <%}%>
     </div>
 </header>
 <!-- Header section end -->
