@@ -129,7 +129,7 @@ public class ModeratorDAO {
      * This method allows to find all the Moderators saved into the database.
      *
      * @return an ArrayList formed by Moderators, if there are Moderators saved into the database
-     * it returns the ArrayList else an empty ArrayList
+     *      it returns the ArrayList else an empty ArrayList
      * @throws RuntimeException if an exception is occurred
      */
 
@@ -209,7 +209,8 @@ public class ModeratorDAO {
      *
      * @param username a String that it's a key for a search into the database
      * @param password a String that it's a key for a search into the database
-     * @return a Moderator that corresponds to the username and password given from param, null otherwise
+     * @return a Moderator that corresponds to the username and password given from param,
+     *      null otherwise
      *
      * @throws RuntimeException if an exception is occurred
      */

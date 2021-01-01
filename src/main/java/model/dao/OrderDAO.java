@@ -92,7 +92,7 @@ public class OrderDAO {
      *
      * @param operatorname that approved the orders
      * @return if exists a list of Order that is approved by the operator's username
-     * given from param, null otherwise
+     *      given from param, null otherwise
      */
 
     @Nullable
