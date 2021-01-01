@@ -30,7 +30,7 @@ public abstract class Product {
 
     /**
      * Constructs a generic product starting off by its id, name, price, description,
-     * image, quantity and category and tag list.
+     * image, quantity and {@link Category} and {@link Tag} list.
      *
      * @param id the id of the product
      * @param name the name of the product.
