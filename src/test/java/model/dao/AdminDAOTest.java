@@ -163,4 +163,24 @@ class AdminDAOTest {
         // the admin won't be returned since there's no fk 'moderator' in DB.
         assertNull(aDAO.doRetrieveByUsername(a.getUsername()));
     }
+
+    @Test
+    void doRetrieveByUsernamePasswordOk() {
+        uDAO.doSave(u);
+        mDAO.doSave(m);
+        aDAO.doSave(a);
+
+        assertEquals(a, aDAO.doRetrieveByUsernamePassword(a.getUsername(), "password"));
+
+        aDAO.doDeleteByUsername(a.getUsername());
+        mDAO.doDeleteByUsername(m.getUsername());
+        uDAO.doDeleteFromUsername(u.getUsername());
+    }
+
+    @Test
+    void doRetrieveByUsernamePasswordNotOk() {
+        // the admin won't be returned since there's no fk 'moderator' in DB.
+        assertNull(aDAO.doRetrieveByUsernamePassword(a.getUsername(), "password"));
+    }
+
 }

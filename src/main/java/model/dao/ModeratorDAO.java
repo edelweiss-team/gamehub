@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.bean.Moderator;
+import model.bean.Operator;
 import model.bean.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -202,4 +203,27 @@ public class ModeratorDAO {
 
         return moderator;
     }
+
+    @Nullable
+    public Moderator doRetrieveByUsernamePassword(
+            @NotNull String username, @NotNull String password) {
+        try {
+            UserDAO ud = new UserDAO();
+            User u = ud.doRetrieveByUsernamePassword(username, password);
+            Moderator m = null;
+            Connection cn = ConPool.getConnection();
+            PreparedStatement st = cn.prepareStatement("SELECT M.user, contractTime"
+                    + " FROM moderator M WHERE M.user = ?;");
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                m = new Moderator(u, rs.getString("contractTime"));
+            }
+            cn.close();
+            return m;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
 }
