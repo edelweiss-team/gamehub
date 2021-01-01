@@ -15,8 +15,10 @@ import org.jetbrains.annotations.NotNull;
 @WebServlet("/login-servlet")
 public class LoginServlet extends HttpServlet {
 
-    public static final @NotNull String PASSWORD_REGEX = "^[^\\s]{8,30}$", USERNAME_REGEX = "^[A-Za-z0-9]{6,20}$";
-    public static final int USERNAME_MAX_LENGTH = 20, USERNAME_MIN_LENGTH = 6;
+    public static final @NotNull String PASSWORD_REGEX = "^[^\\s]{8,30}$";
+    public static final @NotNull String USERNAME_REGEX = "^[A-Za-z0-9]{6,20}$";
+    public static final int USERNAME_MAX_LENGTH = 20;
+    public static final int USERNAME_MIN_LENGTH = 6;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
