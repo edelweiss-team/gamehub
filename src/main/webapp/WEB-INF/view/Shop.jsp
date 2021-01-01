@@ -39,8 +39,7 @@
 <section class="recent-game-section spad set-bg" data-setbg="${pageContext.request.contextPath}/img/recent-game-bg.png">
     <div class="container">
         <div class="section-title">
-            <div class="cata new">new</div>
-            <h2>Recent Games</h2>
+            <h2>${categoryName}</h2>
         </div>
         <div class="row">
             <c:forEach begin="0" end="3" varStatus="loop">

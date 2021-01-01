@@ -29,7 +29,7 @@ public class ShowCategoryPageServlet extends HttpServlet {
         List<Category> categories = null;
 
         CategoryDAO cd = new CategoryDAO();
-        categories = cd.doRetrieveByNameFragment("",OFFSET,LIMIT);
+        categories = cd.doRetrieveAll();
         req.setAttribute("categories", categories);
         rd.forward(req, resp);
     }

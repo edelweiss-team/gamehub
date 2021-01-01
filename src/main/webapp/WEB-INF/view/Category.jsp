@@ -59,37 +59,63 @@
     <div class="container">
         <div class="row" id="category-list">
             <div class="col-lg-8">
-                <div class="row">
+                <div class="row" id="category-container">
                     <c:choose>
-                        <c:when test="${categories !='null'}">
+                        <c:when test="${categories.size()>0}">
+                            <c:set var="count" value="0" scope="page"/>
                             <c:forEach items="${categories}" var="category">
-                                <div class="col-md-6">
-                                    <div class="recent-game-item">
-                                        <div class="rgi-thumb set-bg" data-setbg="img/recent-game/1.jpg">
-                                            <div class="cata new">
-                                                <form action="shop.html" method="get" id="category-form">
-                                                    <button type="submit" id="category-button" name="categoryName" value="${category.getName()}">
-                                                            ${category.getName()}
-                                                    </button>
-                                                </form>
+                                <c:if test="${count<8}">
+                                    <div class="col-md-6">
+                                        <div class="recent-game-item">
+                                            <div class="rgi-thumb set-bg" data-setbg="img/${category.getImage()}"}>
+                                                <div class="cata new">
+                                                    <form action="shop.html" method="get" id="category-form">
+                                                        <button type="submit" id="category-button" name="categoryName" value="${category.getName()}">
+                                                                ${category.getName()}
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="rgi-content" id="category-description">
+                                                <h6 style="color: whitesmoke" >${category.getDescription()}</h6>
                                             </div>
                                         </div>
-                                        <div class="rgi-content" id="category-description">
-                                            <h6 style="color: whitesmoke" >${category.getDescription()}</h6>
-                                        </div>
                                     </div>
-                                </div>
+                                </c:if>
+                                <c:set var="count" value="${count+1}" scope="page"></c:set>
                             </c:forEach>
                         </c:when>
                         <c:otherwise>
-                            <p style="text-align: center">Categories not available</p>
+                            <div style="align-items: center">
+                                <h6>CATEGORIES NOT AVIABLE</h6>
+                            </div>
                         </c:otherwise>
                     </c:choose>
                 </div>
-                <div class="site-pagination">
-                    <span class="active">01.</span>
-                    <a href="#">02.</a>
-                    <a href="#">03.</a>
+                <div class="pagination site-pagination">
+                    <span id="previousPage" class="visible">&laquo;</span>
+                    <span id="ellipseSx">...</span>
+                    <c:set var="maxPage" value="${Math.ceil(categories.size()/8)}"/>
+                    <c:forEach var="i" begin="1" end="${maxPage}">
+                        <c:if test="${i == 1}">
+                            <span class="current visible pageNumBtn" id="page${i}">${i}</span>
+                        </c:if>
+                        <c:if test="${i != 1}">
+                            <c:if test="${i <= 8}">
+                                <span class="pageNumBtn visible" id="page${i}">${i}</span>
+                            </c:if>
+                            <c:if test="${i > 8}">
+                                <span class="pageNumBtn" id="page${i}">${i}</span>
+                            </c:if>
+                        </c:if>
+                    </c:forEach>
+                    <c:if test="${maxPage > 8}">
+                        <span id="ellipseDx" class="visible">...</span>
+                    </c:if>
+                    <c:if test="${maxPage <= 8}">
+                        <span id="ellipseDx">...</span>
+                    </c:if>
+                    <span id="nextPage" class="visible">&raquo;</span>
                 </div>
             </div>
         </div>
@@ -98,6 +124,8 @@
 <!-- Page section end -->
 
 <%@include file="footer.jsp"%> <!--footer-->
+<script>var maxPage = ${(maxPage > 0)?(maxPage):(1)}; //mantiena l'indice dell'ultima pagina</script>
+<script src="${pageContext.request.contextPath}/js/categories-page.js"></script>
 
 </body>
 </html>
