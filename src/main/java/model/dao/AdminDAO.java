@@ -196,6 +196,16 @@ public class AdminDAO {
         return a;
     }
 
+    /**
+     * This method allow to find an Admin given his username and his password.
+     *
+     * @param username a String that it's a key for a search into the database
+     * @param password a String that it's a key for a search into the database
+     * @return an Admin that corresponds to the username and password given from param, null otherwise
+     *
+     * @throws RuntimeException if an exception is occurred
+     */
+
     @Nullable
     public Admin doRetrieveByUsernamePassword(
             @NotNull String username, @NotNull String password) {

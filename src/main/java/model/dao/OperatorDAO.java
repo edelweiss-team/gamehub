@@ -120,10 +120,8 @@ public class OperatorDAO {
             Operator o = null;
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("SELECT O.user, contractTime, "
-                    + "cv FROM operator O, user U WHERE O.user = U.username AND O.user = ? "
-                    + "AND U.password = SHA1(?);");
+                    + "cv FROM operator O, user U WHERE O.user = ?;");
             st.setString(1, username);
-            st.setString(2, password);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 o = new Operator(u, rs.getString("contractTime"), rs.getString("cv"));
