@@ -33,3 +33,60 @@ button#category-button:hover{
 #container-category-list.page-section {
     background-color: #212529;
 }
+
+/*pagination inizio*/
+.pagination {
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.pagination span {
+    display: none;
+    float: left;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pagination span.visible {
+    display: unset;
+}
+
+.pagination span.current {
+    background-color: forestgreen;
+    color: white;
+}
+
+.catList .categoryPage{
+    display: none;
+}
+
+.catList .categoryPage.visible{
+    display: block;
+}
+
+@media (hover: hover) and (any-hover: hover){ /*se ci troviamo su desktop, attiviamo l'effetto hover*/
+    .pagination span:hover {
+        background-color: #404040;
+    }
+
+    .pagination span:active {
+        background-color: #505050;
+    }
+
+    .pagination span.current:hover{
+        background-color: green;
+    }
+}
+
+@media screen and (hover: none) and (any-hover: none) {/*se ci troviamo su mobile, disattiviamo l'effetto hover*/
+    .pagination span:active {
+        background-color: #404040;
+    }
+
+    .pagination span.current:active {
+        background-color: green;
+    }
+}
+
+/*pagination fine*/

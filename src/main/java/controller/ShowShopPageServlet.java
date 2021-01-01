@@ -36,7 +36,9 @@ public class ShowShopPageServlet extends HttpServlet {
         List<DigitalProduct> digProducts;
         DigitalProductDAO dpd = new DigitalProductDAO();
         digProducts = dpd.doRetrieveAllByCategory(req.getParameter("categoryName"), OFFSET, LIMIT);
+        String category = req.getParameter("categoryName");
         req.setAttribute("products", digProducts);
+        req.setAttribute("categoryName",category);
         RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/view/Shop.jsp");
         rd.forward(req, resp);
     }
