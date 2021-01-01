@@ -665,11 +665,11 @@ ol {
 
 .review-item .review-cover .score {
 	position: absolute;
-	width: 54px;
-	height: 54px;
+	width: 68px;
+	height: 68px;
 	top: -27px;
-	left: 26px;
-	padding-top: 15px;
+	left: 10px;
+	padding-top: 19px;
 	font-size: 18px;
 	font-weight: 500;
 	color: #fff;
