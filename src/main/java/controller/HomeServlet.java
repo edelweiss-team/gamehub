@@ -18,9 +18,9 @@ import model.dao.PhysicalProductDAO;
 import model.dao.TagDAO;
 
 /**
- * This class allows to inizialize the Homepage.
+ * This class allows to initialize the Homepage.
  */
-@WebServlet("/index.html")
+@WebServlet(urlPatterns = {"/index.html", "/home", "/Home", "/HOME"}, loadOnStartup = 0)
 public class HomeServlet extends HttpServlet {
 
     @Override
@@ -30,21 +30,28 @@ public class HomeServlet extends HttpServlet {
         PhysicalProductDAO fpDao = new PhysicalProductDAO();
         ArrayList<DigitalProduct> prodottiDig;
         ArrayList<PhysicalProduct> prodottiFis;
-        ArrayList<DigitalProduct> prodottiSecond;
         prodottiDig = dpDao.doRetrieveAllByTag("New", 0, 2);
         prodottiFis = fpDao.doRetrieveAllByTag("New", 0, 2);
         ArrayList<Product> nuoviProdotti = new ArrayList<>();
         nuoviProdotti.addAll(prodottiDig);
         nuoviProdotti.addAll(prodottiFis);
 
-        TagDAO tagDAO = new TagDAO();
+        TagDAO tagdao = new TagDAO();
         ArrayList<Tag> tags;
-        tags = tagDAO.doRetrieveByNameFragment("",0,100);
+        tags = tagdao.doRetrieveByNameFragment("", 0, 100);
         Random rand = new Random();
-        int n = rand.nextInt(tags.size());
+        int n;
+        if (tags.isEmpty()) {
+            n = 0;
+            tags.add(new Tag("New"));
+        } else {
+            n = rand.nextInt(tags.size());
+        }
+        ArrayList<DigitalProduct> prodottiSecond;
         Tag tag = tags.get(n);
         System.out.println(tag.getName());
-        prodottiSecond = dpDao.doRetrieveByAllFragment("","",999999.0,  "", tag.getName(),"", 0,4);
+        prodottiSecond = dpDao.doRetrieveByAllFragment("", "", 999999.0,  "",
+                tag.getName(), "", 0, 4);
 
         ArrayList<Category> categorie = null;
         try {

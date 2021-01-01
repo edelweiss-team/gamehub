@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * This class represents a Cart used to store the items in the session and,
+ * This class represents a cart used to store the items in the session and,
  * as for logged users, in the database too.
  */
 public class Cart {
@@ -60,18 +60,18 @@ public class Cart {
     }
 
     /**
-     * Determines the number of items in the cart.
+     * Determines the number of {@link Product}s in the cart.
      *
-     * @return an int indicating the number of items in the cart.
+     * @return an int indicating the number of {@link Product}s in the cart.
      */
     public int getNumberOfItems() {
         return numberOfItems;
     }
 
     /**
-     * Set the number of items in the cart.
+     * Set the number of {@link Product}s in the cart.
      *
-     * @param numberOfItems the new number of items in the cart.
+     * @param numberOfItems the new number of {@link Product}s in the cart.
      */
     public void setNumberOfItems(int numberOfItems) {
         this.numberOfItems = numberOfItems;
@@ -79,7 +79,7 @@ public class Cart {
 
     /**
      * Determines the total price of the cart,
-     * obtained from the sum of the prices of the single products.
+     * obtained from the sum of the prices of the single {@link Product}s.
      *
      * @return  a double indicating the total price of the cart.
      */
@@ -215,7 +215,8 @@ public class Cart {
      *
      * @param productId the id of the desired {@link Product}, must be not null.
      * @param prodClass the class of the {@link Product}.
-     * @return the {@link Product} if the searched {@link Product} is contained in the cart, null otherwise.
+     * @return the {@link Product} if the searched {@link Product} is contained in the cart,
+     *         null otherwise.
      */
     @Nullable
     public Product getProduct(
@@ -224,9 +225,9 @@ public class Cart {
     }
 
     /**
-     * Get all the products all the products contained in the cart.
+     * Get all the products all the {@link Product}s contained in the cart.
      *
-     * @return a collection of all products contained in the cart.
+     * @return a collection of all {@link Product}s contained in the cart.
      */
     @NotNull
     public Collection<Product> getAllProducts() {
