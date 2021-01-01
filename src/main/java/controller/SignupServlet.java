@@ -16,19 +16,27 @@ import org.jetbrains.annotations.NotNull;
 
 @WebServlet(urlPatterns = {"/signup-servlet"})
 public class SignupServlet extends HttpServlet {
-    public static final @NotNull String USERNAME_REGEX = LoginServlet.USERNAME_REGEX,
-            PASSWORD_REGEX = LoginServlet.PASSWORD_REGEX,
-            MAIL_REGEX = "^[a-zA-Z][\\w\\.!#$%&'*+/=?^_`{|}~-]+@([a-zA-Z]\\w+\\.)+[a-z]{2,5}$" ,
-            NAME_REGEX = "^(([A-Z][a-z]*([-'\\s\\.]))*([A-Z][a-z]*))$",
-            ADDRESS_REGEX = "^(((Via|Contrada|Piazza|Vicolo|Corso|Viale|Piazzale)\\s)"
-                    + "?(([A-Z]?[a-z0-9]*([-'\\.\\s]))*([A-Z]?[a-z0-9]+)))$",
-            CITY_NAME_REGEX = "^(([A-Z][a-z]*([-'\\.\\s]))*([A-Z]?[a-z]+))$",
-            TELEPHONE_REGEX = "(([+]|00)39)?((3[0-9]{2})(\\d{7}))$";
-    public static final int USERNAME_MIN = LoginServlet.USERNAME_MIN_LENGTH,
-            USERNAME_MAX = LoginServlet.USERNAME_MAX_LENGTH,
-            MAIL_MAX = 40, NAME_MIN = 2, NAME_MAX = 30, STREET_MIN = 4,
-            STREET_MAX = 50, NUMBER_MIN = 1, NUMBER_MAX = 5, CITY_MIN = 2,
-            CITY_MAX = 25;
+    public static final @NotNull String USERNAME_REGEX = LoginServlet.USERNAME_REGEX;
+    public static final @NotNull String PASSWORD_REGEX = LoginServlet.PASSWORD_REGEX;
+    public static final @NotNull String MAIL_REGEX = "^[a-zA-Z][\\w\\.!#$%&'*+/=?^_`"
+            + "{|}~-]+@([a-zA-Z]\\w+\\.)+[a-z]{2,5}$";
+    public static final @NotNull String NAME_REGEX = "^(([A-Z][a-z]*([-'\\s\\.]))*([A-Z][a-z]*))$";
+    public static final @NotNull String ADDRESS_REGEX = "^(((Via|Contrada|Piazza|Vicolo|Co"
+            + "rso|Viale|Piazzale)\\s)?(([A-Z]?[a-z0-9]*([-'\\.\\s]))*([A-Z]?[a-z0-9]+)))$";
+    public static final @NotNull String CITY_NAME_REGEX = "^(([A-Z][a-z]*([-"
+            + "'\\.\\s]))*([A-Z]?[a-z]+))$";
+    public static final @NotNull String TELEPHONE_REGEX = "(([+]|00)39)?((3[0-9]{2})(\\d{7}))$";
+    public static final int USERNAME_MIN = LoginServlet.USERNAME_MIN_LENGTH;
+    public static final int USERNAME_MAX = LoginServlet.USERNAME_MAX_LENGTH;
+    public static final int MAIL_MAX = 40;
+    public static final int NAME_MIN = 2;
+    public static final int NAME_MAX = 30;
+    public static final int STREET_MIN = 4;
+    public static final int STREET_MAX = 50;
+    public static final int NUMBER_MIN = 1;
+    public static final int NUMBER_MAX = 5;
+    public static final int CITY_MIN = 2;
+    public static final int CITY_MAX = 25;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
