@@ -64,10 +64,9 @@ function validateSignUpForm() {
         return;
     }
     if (!checkPasswordMatch() || !checkMailMatch() || !checkPassword(signUpForm["password"]) ||
-        !checkFirstNameOrLastName(signUpForm["firstName"]) || !checkFirstNameOrLastName(signUpForm["surname"]) ||
-        !checkStreet(signUpForm["street"]) || !checkNumber(signUpForm["number"]) || !checkCity(signUpForm["city"]) ||
-        !checkCAP(signUpForm["CAP"]) || !checkTelephone(signUpForm["telephone"]) ||
-        !checkProvince(signUpForm["province"])) {
+        !checkFirstNameOrLastName(signUpForm["name"]) || !checkFirstNameOrLastName(signUpForm["surname"]) ||
+        !checkAddress(signUpForm["address"]) ||  !checkCity(signUpForm["city"])
+         || !checkTelephone(signUpForm["telephone"])) {
         errorMessage.classList.add("toShow");
         return;
     }
