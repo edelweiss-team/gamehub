@@ -53,12 +53,7 @@ public class HomeServlet extends HttpServlet {
         prodottiSecond = dpDao.doRetrieveByAllFragment("", "", 999999.0,  "",
                 tag.getName(), "", 0, 4);
 
-        ArrayList<Category> categorie = null;
-        try {
-            categorie = c.doRetrieveAll();
-        } catch (SQLException throwables) {
-            //lanciare eccezioni
-        }
+        ArrayList<Category> categorie = c.doRetrieveAll();
 
         getServletContext().setAttribute("secondProducts", prodottiSecond);
         getServletContext().setAttribute("newProducts", nuoviProdotti);
