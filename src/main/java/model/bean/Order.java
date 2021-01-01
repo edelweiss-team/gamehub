@@ -2,6 +2,8 @@ package model.bean;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Objects;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -277,6 +279,29 @@ public class Order {
     @NotNull
     public Collection<Product> getAllProducts() {
         return products.values();
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", data='" + data + '\'' +
+                ", totPrice=" + totPrice +
+                ", operator=" + this.getOperator()+
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return id == order.id && data.equals(order.data) && user.equals(order.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, data, user);
     }
 
     private int id;
