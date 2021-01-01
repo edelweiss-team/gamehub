@@ -38,7 +38,7 @@
         </div>
         <div class="signup-textbox">
             <i class="fa fa-user" aria-hidden="true"></i>
-            <input type="text" name="firstName" placeholder="First Name"><br>
+            <input type="text" name="name" placeholder="First Name"><br>
         </div>
         <div class="signup-textbox">
             <i class="fa fa-user" aria-hidden="true"></i>

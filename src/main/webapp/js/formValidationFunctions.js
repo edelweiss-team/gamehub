@@ -1,10 +1,4 @@
 //global variables
-var provinceList = ["AG", "AL", "AN", "AO", "AQ", "AR", "AP", "AT", "AV", "BA", "BT", "BL", "BN", "BG", "BI", "BO",
-    "BZ", "BS", "BR", "CA", "CL", "CB", "CI", "CE", "CT", "CZ", "CH", "CO", "CS", "CR", "KR", "CN", "EN", "FM","FE",
-    "FI", "FG", "FC", "FR", "GE", "GO", "GR", "IM", "IS", "SP", "LT", "LE", "LC", "LI", "LO", "LU", "MC", "MN","MS",
-    "MT", "VS", "ME", "MI", "MO", "MB", "NA", "NO", "NU", "OG", "OT", "OR", "PD", "PA", "PR", "PV", "PG", "PU","PE",
-    "PC", "PI", "PT", "PN", "PZ", "PO", "RG", "RA", "RC", "RE", "RI", "RN", "RM", "RO", "SA", "SS", "SV", "SI","SR",
-    "SO", "TA", "TE", "TR", "TO", "TP", "TN", "TV", "TS", "UD", "VA", "VE", "VB", "VC", "VR", "VV", "VI", "VT"];
 
 //generic form validation functions
 /*
@@ -178,35 +172,6 @@ function checkEmail(emailField) {
     }
 }
 
-/*
-     //INPUT: Un campo codice fiscale fiscalCodeField in un form f
-    //OUTPUT: Se fiscalCodeField.value non matcha ^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$ o il CF è già in uso,
-              disabilitiamo il bottone submit del form e mostriamo un messaggio d'errore.
-*/
-function checkFiscalCode(fiscalCodeField) {
-    let cf = fiscalCodeField.value, pattern = new RegExp("^[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$"),
-        errorMessage = document.getElementById("errorMessage");
-    if(pattern.test(cf)){
-        let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if(this.readyState == 4 && this.status == 200 && !this.responseText.includes("<ok/>")) {
-                $("#submitBtn").prop("disabled", true);
-                $(".submitBtn").prop("disabled", true);
-                errorMessage.textContent = "Errore: il codice fiscale " + cf + " è già utilizzato!";
-                errorMessage.classList.add("toShow");
-            }
-        };
-        xhr.open("GET", "check-fiscal-code?cf=" + cf, true);
-        xhr.send();
-    }
-    else{
-        $("#submitBtn").prop("disabled", true);
-        $(".submitBtn").prop("disabled", true);
-        errorMessage.textContent = "Errore: inserisci un codice fiscale valido.";
-        errorMessage.classList.add("toShow");
-        return false;
-    }
-}
 
 /*
      //INPUT: Un campo firstName fn in un form f
@@ -220,7 +185,7 @@ function checkFirstNameOrLastName(element){
         $("#submitBtn").prop("disabled", true);
         $(".submitBtn").prop("disabled", true);
         document.getElementById("errorMessage").textContent =
-            "Errore: il nome ed il cognome possono contenere dai 2 ai 30 caratteri(lettere e separatori come \"'\")!";
+            "Errore: il nome ed il cognome possono contenere dai 2 ai 30 caratteri e devono iniziare con la lettera maiuscola!";
         return false;
     }
     return true;
@@ -233,11 +198,11 @@ function checkFirstNameOrLastName(element){
               o ^.{4,50}$,
               disabilitiamo il bottone submit del form e mostriamo un messaggio d'errore.
 */
-function checkStreet(element){
-    let street = element.value, patternLength = new RegExp("^.{4,50}$"),
+function checkAddress(element){
+    let address = element.value, patternLength = new RegExp("^.{4,50}$"),
         pattern = new RegExp(
             "^(((Via|Contrada|Piazza|Vicolo|Corso|Viale|Piazzale)\\s)?(([A-Z]?[a-z0-9]*([-'\\.\\s]))*([A-Z]?[a-z0-9]+)))$");
-    if(!patternLength.test(street) || !pattern.test(street)){
+    if(!patternLength.test(address) || !pattern.test(address)){
         $("#submitBtn").prop("disabled", true);
         $(".submitBtn").prop("disabled", true);
         document.getElementById("errorMessage").textContent =
@@ -247,24 +212,6 @@ function checkStreet(element){
     return true;
 }
 
-/*
-     //INPUT: Un campo number nb in un form f
-    //OUTPUT: Se nb.value non matcha la regex ^([0-9]+[a-zA-Z]*)$ e ^.{1,5}$, disabilitiamo il bottone submit del form e
-              mostriamo un messaggio d'errore.
-*/
-function checkNumber(element){
-    let number = element.value, pattern = new RegExp("^([0-9]+[a-zA-Z]*)$"),
-        lengthPattern = new RegExp("^.{1,5}$");
-    if(!pattern.test(number) || !lengthPattern.test(number)){
-        $("#submitBtn").prop("disabled", true);
-        $(".submitBtn").prop("disabled", true);
-        document.getElementById("errorMessage").textContent =
-            "Errore: il numero civico deve contenere da 1 a 5 caratteri, " +
-            "di cui il primo dev'essere un numero ed i restanti lettere o numeri!";
-        return false;
-    }
-    return true;
-}
 
 /*
      //INPUT: Un campo city ct in un form f
@@ -285,23 +232,6 @@ function checkCity(element){
 }
 
 /*
-     //INPUT: Un campo CAP cap in un form f
-    //OUTPUT: Se cap.value non matcha la regex ^([0-9]){5}$, disabilitiamo il
-              bottone submit del form e mostriamo un messaggio d'errore.
-*/
-function checkCAP(element){
-    let  cap = element.value, pattern = new RegExp("^([0-9]){5}$");
-    if(!pattern.test(cap)){
-        $("#submitBtn").prop("disabled", true);
-        $(".submitBtn").prop("disabled", true);
-        document.getElementById("errorMessage").textContent =
-            "Errore: il CAP deve conenere esattamente 5 cifre!";
-        return false;
-    }
-    return true;
-}
-
-/*
      //INPUT: Un campo telephone tl in un form f
     //OUTPUT: Se tl.value non matcha la regex ^(([+]|00)39)?((3[0-9]{2}))(\d{7})$, disabilitiamo il
               bottone submit del form e mostriamo un messaggio d'errore.
@@ -313,23 +243,6 @@ function checkTelephone(element){
         $(".submitBtn").prop("disabled", true);
         document.getElementById("errorMessage").textContent =
             "Errore: il telefono deve avere 10 cifre, iniziare per \"3\" ed avere eventualmente il prefisso +39 o 0039!";
-        return false;
-    }
-    return true;
-}
-
-/*
-     //INPUT: Un campo province pr in un form f
-    //OUTPUT: Se pr.value non matcha la regex ^[A-Z]{2}$ o la provincia non è tra quelle italiane valide,
-              disabilitiamo il bottone submit del form e mostriamo un messaggio d'errore.
-*/
-function checkProvince(element){
-    let  province = element.value, pattern = new RegExp("^[A-Z]{2}$");
-    if(!pattern.test(province) || provinceList.indexOf(province) === -1){
-        $("#submitBtn").prop("disabled", true);
-        $(".submitBtn").prop("disabled", true);
-        document.getElementById("errorMessage").textContent =
-            "Errore: inserire la sigla di una provincia valida(2 caratteri maiuscoli)!";
         return false;
     }
     return true;

@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import jep.Run;
 import model.bean.Category;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -126,19 +128,24 @@ public class CategoryDAO {
      * @throws RuntimeException if an exception is occurred
      */
 
-    public @NotNull ArrayList<Category> doRetrieveAll() throws SQLException {
-        Connection cn = ConPool.getConnection();
-        Statement st = cn.createStatement();
-        ArrayList<Category> categories = new ArrayList<>();
-        ResultSet rs = st.executeQuery("SELECT * FROM category;");
-        while (rs.next()) {
-            Category category = new Category(rs.getString(1), rs.getString(2),
-                    rs.getString(3));
-            categories.add(category);
+    public @NotNull ArrayList<Category> doRetrieveAll() {
+        try {
+            Connection cn = ConPool.getConnection();
+            Statement st = cn.createStatement();
+            ArrayList<Category> categories = new ArrayList<>();
+            ResultSet rs = st.executeQuery("SELECT * FROM category;");
+            while (rs.next()) {
+                Category category = new Category(rs.getString(1), rs.getString(2),
+                        rs.getString(3));
+                categories.add(category);
+            }
+            st.close();
+            cn.close();
+            return categories;
         }
-        st.close();
-        cn.close();
-        return categories;
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -150,27 +157,31 @@ public class CategoryDAO {
      * @param limit the max number of categories must be returned
      * @return an ArrayList formed by Categories, if there are categories
      *         that match the search parameter it returns the ArrayList else an empty ArrayList
-     * @throws SQLException if an exception is occurred
+     * @throws RuntimeException if an exception is occurred
      */
-    public @NotNull ArrayList<Category> doRetrieveByNameFragment(@NotNull String name, int offset,
-                                                                 int limit) throws SQLException {
-        Connection cn = ConPool.getConnection();
-        ArrayList<Category> categories = new ArrayList<>();
-        PreparedStatement ps = cn.prepareStatement("SELECT * FROM category "
-                + "where name like ? limit ? offset ?;");
-        String likeString = "%" + name + "%";
-        ps.setString(1, likeString);
-        ps.setInt(2, limit);
-        ps.setInt(3, offset);
+    public @NotNull ArrayList<Category> doRetrieveByNameFragment(@NotNull String name, int offset, int limit)  {
+        try {
+            Connection cn = ConPool.getConnection();
+            ArrayList<Category> categories = new ArrayList<>();
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM category "
+                    + "where name like ? limit ? offset ?;");
+            String likeString = "%" + name + "%";
+            ps.setString(1, likeString);
+            ps.setInt(2, limit);
+            ps.setInt(3, offset);
 
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            Category category = new Category(rs.getString(1), rs.getString(2),
-                    rs.getString(3));
-            categories.add(category);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Category category = new Category(rs.getString(1), rs.getString(2),
+                        rs.getString(3));
+                categories.add(category);
+            }
+            ps.close();
+            cn.close();
+            return categories;
         }
-        ps.close();
-        cn.close();
-        return categories;
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

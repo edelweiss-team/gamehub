@@ -1,7 +1,8 @@
 package model.bean;
 
+
+import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Operator is a specialization of {@link User} which represents a operator of the GameHub platform.
@@ -92,7 +93,8 @@ public class Operator extends User {
     /**
      * Set new contract expiration date of the Operator.
      *
-     * @param contractTime a String indicating the expiration date of the Operator, must be not null.
+     * @param contractTime a String indicating the expiration date of the Operator,
+     *      must be not null.
      */
     public void setContractTime(@NotNull String contractTime) {
         this.contractTime = contractTime;
@@ -113,6 +115,26 @@ public class Operator extends User {
         return super.toString() + "Operator{"
                 + "contractTime='" + contractTime + '\''
                 + ", cv='" + cv + '\'' + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Operator operator = (Operator) o;
+        return contractTime.equals(operator.contractTime) && cv.equals(operator.cv);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(contractTime, cv);
     }
 
     @NotNull
