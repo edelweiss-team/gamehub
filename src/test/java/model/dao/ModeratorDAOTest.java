@@ -169,4 +169,34 @@ class ModeratorDAOTest {
         m.setUsername("usernameNotInDB");
         assertNull(mDAO.doRetrieveByUsername(m.getUsername()));
     }
+
+    @Test
+    void doRetrieveByUsernamePasswordOk() {
+        // inserting user and moderator in db
+        User u = new User("gigino", "Name", "Surname", "Address",
+                "City", "Country", "2020-11-16", "giginoMail", 'M',
+                "1111111111");
+        u.setPassword("password");
+        uDAO.doSave(u);
+        Moderator m = new Moderator(u, contractTime);
+        Moderator m2;
+        mDAO.doSave(m);
+
+        m2 = mDAO.doRetrieveByUsernamePassword(m.getUsername(), "password");
+
+        assertEquals(m, m2);
+
+        // deleting user and moderator from db
+        mDAO.doDeleteByUsername(m.getUsername());
+        uDAO.doDeleteFromUsername(u.getUsername());
+
+    }
+
+    @Test
+    void doRetiveByUsernamePasswordNotOk() {
+        Moderator m = new Moderator(u, contractTime);
+        m.setUsername("usernameNotInDB");
+        assertNull(mDAO.doRetrieveByUsernamePassword(m.getUsername(), "password"));
+    }
+
 }

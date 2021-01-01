@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import model.bean.Admin;
 import model.bean.Moderator;
+import model.bean.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -193,5 +194,27 @@ public class AdminDAO {
         }
 
         return a;
+    }
+
+    @Nullable
+    public Admin doRetrieveByUsernamePassword(
+            @NotNull String username, @NotNull String password) {
+        try {
+            UserDAO ud = new UserDAO();
+            Moderator m = mdao.doRetrieveByUsernamePassword(username, password);
+            Admin a = null;
+            Connection cn = ConPool.getConnection();
+            PreparedStatement st = cn.prepareStatement("SELECT A.moderator, superAdmin"
+                    + " FROM admin A WHERE A.moderator = ?;");
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                a = new Admin(m, rs.getBoolean("superAdmin"));
+            }
+            cn.close();
+            return a;
+        } catch (SQLException e) {
+            return null;
+        }
     }
 }
