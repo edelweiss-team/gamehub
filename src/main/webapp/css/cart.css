@@ -3,7 +3,7 @@ body.cart{
     margin: 0;
     padding: 0;
     font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
-    background: url("../../../../../../../WebDeveloping/TSW/progettoTSWv0.1/web/resources/images/forest-background.jpg") no-repeat center center fixed;
+    background: url("../img/backgroundCart.jpg") no-repeat center center fixed;
     background-size: cover;
 }
 
@@ -29,9 +29,10 @@ body.cart{
 .titleText{
     float: left;
     font-size: 200%;
-    border-bottom: 6px solid forestgreen;
+    border-bottom: 6px solid darkgoldenrod;
     margin-bottom: 7%;
-    padding: 7px 0;
+    transform: translateY(-15px);
+    padding: 0;
     font-weight: bold;
     width: fit-content;
     height: fit-content;
@@ -39,7 +40,8 @@ body.cart{
 
 .cartItem {
     padding: 20px 30px;
-    height: 120px;
+    /*height: 120px;*/
+    height: fit-content;
     display: flex;
     border-bottom: 1px solid #E1E8EE;
 }
@@ -65,6 +67,7 @@ body.cart{
     border: none;
     color: #c75450;
     font-weight: bold;
+    cursor: pointer;
     font-size: 150%;
     transition: color 0.3s ease;
 }
@@ -141,6 +144,7 @@ body.cart{
 
 .substitutionText{
     text-align: center;
+    color: lightgrey;
 }
 
 .purchaseButton{
@@ -148,6 +152,7 @@ body.cart{
     border: none;
     outline: none;
     background: none;
+    cursor: pointer;
     color: lightgrey;
     font-size: 200%;
     padding: 10px;
@@ -167,7 +172,7 @@ body.cart{
     }
 
     .purchaseButton:hover{
-        background-color: forestgreen;
+        background-color: darkgoldenrod;
     }
 
     .purchaseButton:active{
@@ -181,7 +186,7 @@ body.cart{
     }
 
     .purchaseButton:active {
-        background-color: forestgreen;
+        background-color: darkgoldenrod;
     }
 }
 

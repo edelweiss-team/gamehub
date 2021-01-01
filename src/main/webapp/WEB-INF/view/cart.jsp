@@ -45,7 +45,7 @@
                                     <form action="remove-cart" class="delete-btn-form">
                                         <input type="hidden" class="productType" name="productType" value="<%=productType%>">
                                         <input type="hidden" name="removeCart" value="removeCart">
-                                        <input type="hidden" class="courseId" name="productId" value="<%=p.getId()%>">
+                                        <input type="hidden" class="productId" name="productId" value="<%=p.getId()%>">
                                         <button class="delete-btn" type="submit">&#10007;</button>
                                     </form>
                                 </div>
@@ -60,11 +60,15 @@
                                             <%=p.getName()%>
                                         </a>,
                                     </span>
+                                    <span class="quantity">Quantity: <%=cart.getQuantitySingleProduct(p.getId(), p.getClass())%></span>
                                     <span class="availableQuantity">Available: <%=p.getQuantity()%></span>
                                 </div>
                                 <div class="price">
-                                    <span>
-                                        <%=(new DecimalFormat("#.##")).format(p.getPrice()).replaceAll(",", ".")%>$
+                                    <span style="color: lightgrey">
+                                        <%=(new DecimalFormat("#.##")).format(
+                                                p.getPrice()*cart.getQuantitySingleProduct(p.getId(), p.getClass())
+                                            ).replaceAll(",", ".")
+                                        %>$
                                     </span>
                                 </div>
                             </div>

@@ -3,13 +3,12 @@ package controller;
 import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.text.*;
+import java.util.ArrayList;
 import java.util.Objects;
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
-import model.bean.Cart;
-import model.bean.Product;
-import model.bean.User;
+import model.bean.*;
 import model.dao.CartDAO;
 import model.dao.DigitalProductDAO;
 import model.dao.PhysicalProductDAO;
@@ -93,6 +92,20 @@ public class CartServlet extends HttpServlet {
                 responseJson.addProperty("newTotalPrice",
                         (new DecimalFormat("#.##")).format(cart.getTotalPrice())
                                 .replace(",", ".")); //nuovo prezzo
+                responseJson.addProperty(
+                        "newQuantity",
+                        cart.getQuantitySingleProduct(product.getId(), product.getClass())
+                );
+                responseJson.addProperty(
+                        "newProductPrice",
+                        (new DecimalFormat("#.##")).format(
+                                product.getPrice()
+                                        * cart.getQuantitySingleProduct(
+                                                product.getId(),
+                                                product.getClass()
+                                        )
+                        ).replaceAll(",", ".")
+                );
                 resp.getWriter().println(responseJson.toString());
                 resp.flushBuffer();
             }
@@ -133,6 +146,20 @@ public class CartServlet extends HttpServlet {
             responseJson.addProperty("newTotalPrice",
                     (new DecimalFormat("#.##")).format(cart.getTotalPrice())
                             .replace(",", ".")); //nuovo prezzo
+            responseJson.addProperty(
+                    "newQuantity",
+                    cart.getQuantitySingleProduct(product.getId(), product.getClass())
+            );
+            responseJson.addProperty(
+                    "newProductPrice",
+                    (new DecimalFormat("#.##")).format(
+                            product.getPrice()
+                                    * cart.getQuantitySingleProduct(
+                                    product.getId(),
+                                    product.getClass()
+                            )
+                    ).replaceAll(",", ".")
+            );
             resp.getWriter().println(responseJson.toString());
             resp.flushBuffer();
         } else if (req.getParameter("showCart") != null) {
@@ -140,6 +167,9 @@ public class CartServlet extends HttpServlet {
             req.setAttribute("sectionName", "cart");
             rd = req.getRequestDispatcher(address);
             rd.forward(req, resp);
+        } else {
+            throw new RequestParametersException("Error: wrong parameters "
+                     + "passed to the cart servlet.");
         }
     }
 }
