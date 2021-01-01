@@ -36,8 +36,8 @@ public class AdminDAO {
         if (mdao.doRetrieveByUsername(username) != null) {
             try {
                 Connection cn = ConPool.getConnection();
-                PreparedStatement st = cn.prepareStatement("INSERT INTO admin(moderator, superAdmin)"
-                                                                + " VALUES (?,?);");
+                PreparedStatement st = cn.prepareStatement("INSERT INTO "
+                        + "admin(moderator, superAdmin) VALUES (?,?);");
                 st.setString(1, username);
                 st.setBoolean(2, a.isSuperAdmin());
 
@@ -201,7 +201,8 @@ public class AdminDAO {
      *
      * @param username a String that it's a key for a search into the database
      * @param password a String that it's a key for a search into the database
-     * @return an Admin that corresponds to the username and password given from param, null otherwise
+     * @return an Admin that corresponds to the username and password given from param,
+     *      null otherwise
      *
      * @throws RuntimeException if an exception is occurred
      */

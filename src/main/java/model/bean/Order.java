@@ -3,7 +3,6 @@ package model.bean;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Objects;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -185,7 +184,8 @@ public class Order {
         if (oldQuantity == null) {
             productsQuantity.put(product.getClass().getSimpleName() + product.getId(), quantity);
         } else {
-            productsQuantity.put(product.getClass().getSimpleName() + product.getId(), oldQuantity + quantity);
+            productsQuantity.put(product.getClass().getSimpleName() + product.getId(),
+                    oldQuantity + quantity);
         }
 
         this.totPrice += product.getPrice() * quantity;
@@ -293,8 +293,12 @@ public class Order {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Order order = (Order) o;
         return id == order.id && data.equals(order.data) && user.equals(order.user);
     }

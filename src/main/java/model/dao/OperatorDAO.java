@@ -27,7 +27,6 @@ public class OperatorDAO {
      * This method allow to update an Operator into database.
      *
      * @param o the object Operator to update
-     * @return void
      * @throws RuntimeException if an exception is occurred
      */
 
@@ -55,7 +54,6 @@ public class OperatorDAO {
      * that is not signed as User.
      *
      * @param o the object Operator to save
-     * @return void
      * @throws RuntimeException if an exception is occurred
      */
 
@@ -82,15 +80,14 @@ public class OperatorDAO {
      * that already exists as user inside the database.
      *
      * @param o the object Operator to save
-     * @return void
      * @throws RuntimeException if an exception is occurred
      */
 
     public void doPromote(@NotNull Operator o) {
         try {
             Connection cn = ConPool.getConnection();
-            PreparedStatement st = cn.prepareStatement("INSERT INTO operator(contractTime, cv, user)"
-                    + "VALUES (?, ?, ?);");
+            PreparedStatement st = cn.prepareStatement("INSERT INTO "
+                    + "operator(contractTime, cv, user) VALUES (?, ?, ?);");
             st.setString(1, o.getContractTime());
             st.setString(2, o.getCv());
             st.setString(3, o.getUsername());
@@ -107,7 +104,8 @@ public class OperatorDAO {
      *
      * @param username a String that it's a key for a search into the database
      * @param password a String that it's a key for a search into the database
-     * @return an Operator that corresponds to the username and password given from param, null otherwise
+     * @return an Operator that corresponds to the username and password given from param,
+     *      null otherwise
      * @throws RuntimeException if an exception is occurred
      */
 
@@ -166,7 +164,6 @@ public class OperatorDAO {
      * This method allow to remove an Operator from the database.
      *
      * @param username an unique String that identify an Operator
-     * @return void
      * @throws RuntimeException if an exception is occurred
      */
 
@@ -192,7 +189,7 @@ public class OperatorDAO {
      * This method allows to find all the Operators saved into the database.
      *
      * @return an ArrayList formed by Operator, if there are Operators saved into the database
-     * it returns the ArrayList else an empty ArrayList
+     *      it returns the ArrayList else an empty ArrayList
      * @throws RuntimeException if an exception is occurred
      */
 
@@ -240,7 +237,7 @@ public class OperatorDAO {
      * @param offset to select the starting range value of the Operator to retrieve
      * @param limit to select the ending range value of the Operator to retrieve
      * @return an ArrayList of Operator that corresponds to the usernamefragment given from param
-     * with offset and limit, null otherwise
+     *      with offset and limit, null otherwise
      *
      * @throws RuntimeException if an exception is occurred
      *
