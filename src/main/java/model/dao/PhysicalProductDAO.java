@@ -474,7 +474,8 @@ public class PhysicalProductDAO {
                             + "       and LOWER(dc.tag) LIKE ? and LOWER(db.category) LIKE ?"
                             + " group by  dp.id, dp.name, dp.price, dp.description, "
                             + "dp.image, dp.weight, dp.size, dp.quantity "
-                            + "ORDER BY dp.id desc LIMIT ?,?; ");
+                            + "ORDER BY dp.id desc LIMIT ?,?; "
+            );
 
             ps.setString(1, "%" + name.toLowerCase() + "%");
             ps.setString(2, "%" + desc.toLowerCase() + "%");

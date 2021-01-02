@@ -49,7 +49,6 @@ public class HomeServlet extends HttpServlet {
         }
         ArrayList<DigitalProduct> prodottiSecond;
         Tag tag = tags.get(n);
-        System.out.println(tag.getName());
         prodottiSecond = dpDao.doRetrieveByAllFragment("", "", 999999.0,  "",
                 tag.getName(), "", 0, 4);
 

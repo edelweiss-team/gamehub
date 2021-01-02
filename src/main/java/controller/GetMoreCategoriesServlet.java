@@ -8,10 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import model.bean.Category;
 import model.dao.CategoryDAO;
+import net.bytebuddy.implementation.bytecode.Throw;
 
 @WebServlet(urlPatterns = {"/get-more-categories"})
 public class GetMoreCategoriesServlet extends HttpServlet {
     public static final int CATEGORIES_PER_REQUEST_DEFAULT = 8;
+    public static final int CATEGORY_NAME_LENGTH = 46;
     private static final int LIMIT_MAX = 2000000;
 
     @Override
@@ -25,11 +27,16 @@ public class GetMoreCategoriesServlet extends HttpServlet {
             throws ServletException, IOException {
         int startingIndex;
         CategoryDAO cd = new CategoryDAO();
-        JsonObject responseObject = new JsonObject();
         JsonObject categoryJson;
+        JsonObject responseObject = new JsonObject();
         JsonArray newCategories = new JsonArray();
         String searchString = (req.getParameter("search") != null)
                 ? req.getParameter("search") : "";
+
+        if (searchString.length() > CATEGORY_NAME_LENGTH) {
+            throw new RequestParametersException("Error in the parameters: "
+                     + "searchString exceeds max length of " + (CATEGORY_NAME_LENGTH - 1));
+        }
 
         int categoriesPerRequest = (req.getParameter("categoriesPerRequest") != null)
                 ? (Integer.parseInt(req.getParameter("categoriesPerRequest")))

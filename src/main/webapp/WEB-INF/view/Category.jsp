@@ -59,7 +59,7 @@
     <div class="container">
         <div class="row" id="category-list">
             <div class="row mb-5">
-                <div class="col-lg-8 mx-auto">
+                <div id="search-ctg-form-container" class="col-lg-8 mx-auto">
                     <div class="bg-transparent p-5 rounded">
                         <form id="search-form" action="show-categories">
                             <div class="p-1 bg-transparent rounded rounded-pill shadow-sm mb-4">
@@ -69,7 +69,7 @@
                                             <i class="fa fa-search"></i>
                                         </button>
                                     </div>
-                                    <input type="search" placeholder="What're you searching for?" name="search" aria-describedby="button-addon2" class="category-search form-control border-0 bg-light">
+                                    <input type="search" maxlength="45" placeholder="What're you searching for?" name="search" aria-describedby="button-addon2" class="category-search form-control border-0 bg-light">
                                 </div>
                             </div>
                         </form>
