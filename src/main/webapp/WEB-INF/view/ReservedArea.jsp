@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Roberto Esposito
@@ -7,15 +6,20 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
-    <title>Reserved Area</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reservedArea.css" type="text/css">
-</head>
-<body class="reserved-body">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
+        <title>Reserved Area</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reservedArea.css" type="text/css">
+        <%@include file="header.jsp"%>
+    </head>
+    <body class="reserved-body">
     <div class="reserved-fieldset">
+        <form action="logout" method="post">
+            <button type="submit" class="btn btn-danger" style="float: right">Logout</button>
+        </form>
         <table class="table table-dark">
             <h1 class="reserved-header">Info</h1>
             <thead>
@@ -29,11 +33,26 @@
             </thead>
             <tbody>
             <tr>
-                <td>${loggedUser.username}</td>
-                <td>${loggedUser.name}</td>
-                <td>${loggedUser.surname}</td>
-                <td>${loggedUser.birthDate}</td>
-                <td>${loggedUser.telephone}</td>
+                <td>
+                    ${loggedUser.username}
+                    <button type="button" class="btn btn-outline-warning">Modifica</button>
+                </td>
+                <td>
+                    ${loggedUser.name}
+                    <button type="button" class="btn btn-outline-warning">Modifica</button>
+                </td>
+                <td>
+                    ${loggedUser.surname}
+                    <button type="button" class="btn btn-outline-warning">Modifica</button>
+                </td>
+                <td>
+                    ${loggedUser.birthDate}
+                    <button type="button" class="btn btn-outline-warning">Modifica</button>
+                </td>
+                <td>
+                    ${loggedUser.telephone}
+                    <button type="button" class="btn btn-outline-warning">Modifica</button>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -50,9 +69,18 @@
             </thead>
             <tbody>
             <tr>
-                <td>${loggedUser.username}</td>
-                <td>${loggedUser.name}</td>
-                <td>${loggedUser.surname}</td>
+                <td>
+                    ${loggedUser.username}
+                    <button type="button" class="btn btn-outline-warning">Modifica</button>
+                </td>
+                <td>
+                    ${loggedUser.name}
+                    <button type="button" class="btn btn-outline-warning">Modifica</button>
+                </td>
+                <td>
+                    ${loggedUser.surname}
+                    <button type="button" class="btn btn-outline-warning">Modifica</button>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -62,9 +90,18 @@
             <h1>You haven't any orders</h1>
         </c:if>
         <c:if test= '${orders.size() != 0}' >
-            <c:forEach var="i" begin="0" end="${orders.length()}">
+            <c:forEach var="i" begin="0" end="${orders.size()-1}">
                 <table class="table table-dark">
-                    <h1 class="reserved-header">${orders.get(i).date} - ${orders.get(i).operator}</h1>
+                    <c:if test="${orders.get(i).operator == null}">
+                        <h1 class="reserved-header">Order: #${orders.get(i).id}</h1>
+                        <h1 class="reserved-header">Data: ${orders.get(i).data}</h1>
+                        <h1 class="reserved-header">Operator: Not signed</h1>
+                    </c:if>
+                    <c:if test="${orders.get(i).operator != null}">
+                        <h1 class="reserved-header">Order: #${orders.get(i).id}</h1>
+                        <h1 class="reserved-header">Data: ${orders.get(i).data}</h1>
+                        <h1 class="reserved-header">Operator: ${orders.get(i).operator.name}</h1>
+                    </c:if>
                     <thead>
                     <tr>
                         <th scope="col">Name</th>
@@ -73,13 +110,29 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="j" begin="0" end="${orders.get(i).products}">
-
+                        <c:forEach var="product" items="${orders.get(i).products}">
+                            <tr>
+                                <td>${product.value.name}</td>
+                                <td>${product.value.price}</td>
+                                <td>${product.value.quantity}</td>
+                            </tr>
                         </c:forEach>
                     </tbody>
                 </table>
             </c:forEach>
         </c:if>
     </div>
+    <%@include file="footer.jsp"%> <!--footer-->
+    <script>
+        function resizeFooter(){ //per evitare strani ridimensionamenti su iPadPro
+            if(window.matchMedia("screen and (min-width: 629px) and (min-height: 1010px)").matches)
+                $(".footer").css("position", "absolute").css("bottom", "0");
+            else
+                $(".footer").css("position", "").css("bottom", "");
+        }
+        resizeFooter();
+        window.onresize = ev => resizeFooter();
+    </script>
+    <script src="${pageContext.request.contextPath}/js/utility.js"></script>
 </body>
 </html>

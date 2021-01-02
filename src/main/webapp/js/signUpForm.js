@@ -75,7 +75,6 @@ function validateSignUpForm() {
     submitBtn.removeAttribute("disabled");
     checkNewUsername(signUpForm["username"]);
     checkEmail(signUpForm["mail"]);
-    checkFiscalCode(signUpForm["CF"]);
 }
 
 let addValidateFormListener;

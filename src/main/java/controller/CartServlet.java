@@ -47,6 +47,7 @@ public class CartServlet extends HttpServlet {
             if (cart == null) {
                 cart = new Cart();
                 if (loggedUser != null) {
+                    cart.setUser(loggedUser);
                     cd.doSaveOrUpdate(cart);
                 }
             }
