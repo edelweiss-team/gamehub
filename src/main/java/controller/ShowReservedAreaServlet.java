@@ -31,6 +31,7 @@ public class ShowReservedAreaServlet extends HttpServlet {
         User loggedUser = (User) req.getSession().getAttribute("loggedUser");
         OrderDAO od = new OrderDAO();
         ArrayList<Order> orderList = new ArrayList<>();
+
         if (loggedUser == null) {
             throw new RequestParametersException("Error: you are trying to enter the "
                     + "reserved area while not logged, or while not being an administrator.");

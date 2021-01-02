@@ -291,6 +291,10 @@ public class Order {
                 + '}';
     }
 
+    public HashMap<String, Product> getProducts() {
+        return products;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
