@@ -12,12 +12,14 @@ import javax.servlet.http.HttpSession;
 public class LogoutServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+            IOException {
         this.doGet(req, resp);
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+            IOException {
         HttpSession session = req.getSession();
 
         synchronized (session) {
