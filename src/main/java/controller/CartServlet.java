@@ -73,12 +73,14 @@ public class CartServlet extends HttpServlet {
             if (product == null) {
                 throw new RequestParametersException("The product with the"
                          + " requested id doesn't exist.");
-            }
-
-            if (quantity + cart.getQuantitySingleProduct(id, product.getClass())
+            } else if (quantity + cart.getQuantitySingleProduct(id, product.getClass())
                     > Objects.requireNonNull(product).getQuantity()) {
-                throw new RequestParametersException("Max quantity ("
-                        + product.getQuantity() + ") exceeded. Passed " + quantity);
+                responseJson.addProperty("type", "error");
+                responseJson.addProperty("message", "item could not be "
+                         + "added to the cart because the quantity contained in your cart "
+                         + "exceeds the available quantity in the stock!");
+                resp.getWriter().println(responseJson.toString());
+                resp.flushBuffer();
             } else {
                 synchronized (session) {
                     cart.addProduct(product, quantity);
