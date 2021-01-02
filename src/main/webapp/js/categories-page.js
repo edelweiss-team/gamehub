@@ -1,5 +1,5 @@
-function getMoreCategoriesPaging(startingIndex){
-    $.ajax("get-more-categories?categoriesPerRequest=8&startingIndex=" + startingIndex, {
+function getMoreCategoriesPaging(startingIndex, search=""){
+    $.ajax("get-more-categories?categoriesPerRequest=8&startingIndex=" + startingIndex + "&search=" + search, {
         method: "GET",
         dataType: "json",
         error: ev => alert("Request failed on category page " + startingIndex/8+ " failed."),
@@ -47,6 +47,9 @@ function getMoreCategoriesPaging(startingIndex){
 }
 
 $(document).ready(ev => {
+
+
+
     //click sulle immagini fa sì che si clicchi sul bottone
     $(".buttonform").on("click", ev => {
         $(ev.target).children("button[type=submit]").trigger("click");
@@ -89,9 +92,12 @@ $(document).ready(ev => {
         $targetPage.addClass("visible");
         $currentPage.removeClass("current");
         $targetPageBtn.addClass("current");
-//carichiamo la pagina dal server, partendo dalla prima categoria della pagina target
+
+        //ricerca categorie
+        let searchString = $("#search-form .category-search").val();
+        //carichiamo la pagina dal server, partendo dalla prima categoria della pagina target
         if(!$targetPage.hasClass("loaded"))
-            getMoreCategoriesPaging((targetIdNum - 1)*8);
+            getMoreCategoriesPaging((targetIdNum - 1)*8, searchString);
 
         //rendiamo visibili un range di 5 bottoni, a partire da quello corrente, e nascondiamo gli altri
         $(".pagination .pageNumBtn.visible").removeClass("visible");

@@ -58,13 +58,32 @@
 <section class="page-section recent-game-page spad" id="container-category-list">
     <div class="container">
         <div class="row" id="category-list">
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto">
+                    <div class="bg-transparent p-5 rounded">
+                        <form id="search-form" action="show-categories">
+                            <div class="p-1 bg-transparent rounded rounded-pill shadow-sm mb-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <button id="button-addon2" type="submit" class="btn btn-link text-warning">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                    <input type="search" placeholder="What're you searching for?" name="search" aria-describedby="button-addon2" class="category-search form-control border-0 bg-light">
+                                </div>
+                            </div>
+                        </form>
+                        <!-- End -->
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-8">
                 <div class="row" id="category-container">
                     <c:choose>
-                        <c:when test="${categories.size()>0}">
+                        <c:when test="${categories.size() > 0}">
                             <c:set var="count" value="0" scope="page"/>
                             <c:forEach items="${categories}" var="category">
-                                <c:if test="${count<8}">
+                                <c:if test="${count < 8}">
                                     <div class="col-md-6">
                                         <div class="recent-game-item">
                                             <div class="rgi-thumb set-bg" data-setbg="img/${category.getImage()}"}>
