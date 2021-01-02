@@ -1,4 +1,7 @@
-<%--
+<%@ page import="model.bean.User" %>
+<%@ page import="model.bean.Admin" %>
+<%@ page import="model.bean.Operator" %>
+<%@ page import="model.bean.Moderator" %><%--
   Created by IntelliJ IDEA.
   User: Roberto Esposito
   Date: 1/1/2021
@@ -18,8 +21,25 @@
     <body class="reserved-body">
     <div class="reserved-fieldset">
         <form action="logout" method="post">
-            <button type="submit" class="btn btn-danger" style="float: right">Logout</button>
+            <button type="submit" class="btn btn-danger" style="float: right; margin-left: 1%">Logout</button>
         </form>
+        <%if(((User)session.getAttribute("loggedUser")).getClass().equals(Admin.class) ||
+                ((User)session.getAttribute("loggedUser")).getClass().equals(Operator.class)){%>
+            <form action="" method="post">
+                <button type="submit" class="btn btn-success" style="float: right; margin-left: 1%">Operator Area</button>
+            </form>
+        <%}%>
+        <%if(((User)session.getAttribute("loggedUser")).getClass().equals(Admin.class) ||
+            ((User)session.getAttribute("loggedUser")).getClass().equals(Moderator.class)){%>
+        <form action="community.html" method="post">
+            <button type="submit" class="btn btn-success" style="float: right; margin-left: 1%">Moderator Area</button>
+        </form>
+        <%}%>
+        <%if(((User)session.getAttribute("loggedUser")).getClass().equals(Admin.class)) {%>
+            <form action="" method="post">
+                <button type="submit" class="btn btn-success" style="float: right">Admin Area</button>
+            </form>
+        <%}%>
         <table class="table table-dark">
             <h1 class="reserved-header">Info</h1>
             <thead>
