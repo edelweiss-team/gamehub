@@ -108,4 +108,11 @@ button#category-button:hover{
     color: #aaa;
     font-style: italic;
 }
+
+@media screen and (min-width: 992px){
+    #search-ctg-form-container.col-lg-8.mx-auto {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
 /*Search form*/
