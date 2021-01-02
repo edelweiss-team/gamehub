@@ -1,46 +1,68 @@
-div#category-list.row{
+div#shop-list.row{
     place-content: center;
     background: url("../img/backgroundSignUp.jpg") no-repeat center center fixed;
     background-size: cover;
     padding-top: 82px;
 }
 
-form#category-form {
+form.shop-form {
     margin: 0;
     background: darkorchid;
 }
 
-button#category-button {
+button.shop-button {
     cursor: pointer;
     padding: 6px 25px;
     border: none;
     display: inline-block;
-    text-transform: uppercase;
     font-size: 12px;
     font-weight: 500;
     color: #fff;
     background: none;
 }
 
-button#category-button:hover{
+button.shop-button:hover{
     background: darkslateblue;
 }
 
-#category-description.rgi-content{
+.shop-description.rgi-content{
     background-color:rgba(0, 0, 0, 0.7);
 }
 
-#container-category-list.page-section {
+#container-shop-list {
     background-color: #212529;
 }
 
-div#no-category-div{
+div#no-product-div{
     width: 100%;
     text-align: center;
 }
 
-#no-category-div h6{
+#no-product-div h6{
     color: whitesmoke;
+}
+
+button.shop-button-singleProduct{
+    height: 9%;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+form.shop-form-singleProduct{
+    height: auto;
+    margin: 0;
+}
+
+.shop-radio-container{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+.radio-name{
+    color: gold;
 }
 
 /*pagination inizio*/
@@ -124,4 +146,4 @@ div#no-category-div{
         max-width: 100%;
     }
 }
-/*Search form*/
+/*Search

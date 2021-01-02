@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Roberto Esposito
-  Date: 12/30/2020
-  Time: 6:11 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -12,7 +5,21 @@
 <head>
     <title>Shop</title>
     <%@include file="header.jsp"%>
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="shortcut icon"/>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/owl.carousel.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/animate.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop.css"/>
 </head>
+
 <body>
 <script>
     function resizeFooter(){ //per evitare strani ridimensionamenti su iPadPro
@@ -36,29 +43,118 @@
     </div>
 </div>
 
-<section class="recent-game-section spad set-bg" data-setbg="${pageContext.request.contextPath}/img/recent-game-bg.png">
+<section class="recent-game-section spad set-bg" id="container-shop-list">
     <div class="container">
         <div class="section-title">
-            <h2>${categoryName}</h2>
+            <h2 style="color: whitesmoke">${categoryName}</h2>
         </div>
-        <div class="row">
-            <c:forEach begin="0" end="3" varStatus="loop">
-                <div class="col-lg-3 col-md-6">
-                    <div class="review-item">
-                        <div class="review-cover set-bg" data-setbg="${pageContext.request.contextPath}/img/review/1.jpg">
-                            <div class="score yellow">9.3€</div>
+        <div class="row mb-5">
+            <div id="search-ctg-form-container" class="col-lg-8 mx-auto">
+                <div class="bg-transparent p-5 rounded">
+                    <form id="search-form" action="show-products">
+                        <div class="p-1 bg-transparent rounded rounded-pill shadow-sm mb-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button id="button-addon2" type="submit" class="btn btn-link text-warning">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                                <input type="search" maxlength="45" placeholder="What're you searching for?" name="search" aria-describedby="button-addon2" class="category-search form-control border-0 bg-light">
+                            </div>
                         </div>
-                        <div class="review-text">
-                            <h5>Assasin’’s Creed</h5>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+                        <div class="shop-radio-container">
+                            <label style="display: inline-block; width: 36%; position: relative">
+                                <input type="radio" name="productsType" value="Digital"><p class="radio-name">Digital</p>
+                            </label>
+                            <label style="display: inline-block; width: 36%; position: relative">
+                                <input type="radio" name="productsType" value="Physical"><p class="radio-name">Physical</p>
+                            </label>
                         </div>
-                    </div>
+                    </form>
+                    <!-- End -->
                 </div>
-            </c:forEach>
+            </div>
+        </div>
+        <div class="row" id="shop-list">
+            <div class="col-lg-8">
+                <div class="row" id="shop-container">
+                    <c:choose>
+                        <c:when test="${products.size()>0}">
+                            <c:set var="count" value="0" scope="page"/>
+                            <c:forEach items="${products}" var="product">
+                                <c:if test="${count<8}">
+                                    <div class="col-md-6">
+                                        <div class="recent-game-item">
+                                            <div class="rgi-thumb set-bg" data-setbg="img/${product.getImage()}"}>
+                                                <div class="cata new">
+                                                    <form action="add-cart" method="get" class="shop-form">
+                                                        <input type="hidden" name="addCart" value="true">
+                                                        <input type="hidden" name="productId" value="${product.getId()}">
+                                                        <input type="hidden" name="quantity" value="${product.getQuantity()}">
+                                                        <input type="hidden" name="productType" value="${product.getClass().getSimpleName().replaceAll("(Product)","")}">
+                                                        <button type="submit" class="shop-button addToCartBtn">
+                                                                Add To Cart
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="rgi-content shop-description">
+                                                <form action="showProduct.html" method="get" class="shop-form-singleProduct">
+                                                    <button type="submit" class="shop-button-singleProduct">
+                                                        <input type="hidden" name="productId" value="${product.getId()}">
+                                                        <input type="hidden" name="productType" value="${product.getClass().getSimpleName().replaceAll("(Product)","")}">
+                                                        <h5 style="color: whitesmoke; margin: 0;" >${product.getName()}</h5>
+                                                    </button>
+                                                </form>
+                                                <h6 style="color: whitesmoke; margin-top: 16px;">${product.getDescription()}</h6>
+                                                <p style="margin: 16px 0px 0px 0px">Remaining: ${product.getQuantity()}</p>
+                                                <p style="margin-bottom: 0">${product.getPrice()}$</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:if>
+                                <c:set var="count" value="${count+1}" scope="page"></c:set>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <div style="align-items: center" id="no-product-div">
+                                <h6>PRODUCTS NOT AVIABLE</h6>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                <div class="pagination site-pagination">
+                    <span id="previousPage" class="visible">&laquo;</span>
+                    <span id="ellipseSx">...</span>
+                    <c:set var="maxPage" value="${Math.ceil(categories.size()/8)}"/>
+                    <c:forEach var="i" begin="1" end="${maxPage}">
+                        <c:if test="${i == 1}">
+                            <span class="current visible pageNumBtn" id="page${i}">${i}</span>
+                        </c:if>
+                        <c:if test="${i != 1}">
+                            <c:if test="${i <= 8}">
+                                <span class="pageNumBtn visible" id="page${i}">${i}</span>
+                            </c:if>
+                            <c:if test="${i > 8}">
+                                <span class="pageNumBtn" id="page${i}">${i}</span>
+                            </c:if>
+                        </c:if>
+                    </c:forEach>
+                    <c:if test="${maxPage > 8}">
+                        <span id="ellipseDx" class="visible">...</span>
+                    </c:if>
+                    <c:if test="${maxPage <= 8}">
+                        <span id="ellipseDx">...</span>
+                    </c:if>
+                    <span id="nextPage" class="visible">&raquo;</span>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
 <%@include file="footer.jsp"%> <!--footer-->
+<script>var maxPage = ${(maxPage > 0)?(maxPage):(1)}; //mantiena l'indice dell'ultima pagina</script>
+<script src="${pageContext.request.contextPath}/js/shop.js"></script>
 </body>
 </html>

@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/shop.html"})
+@WebServlet(urlPatterns = {"/shop.html", "/show-products"})
 public class ShowShopPageServlet extends HttpServlet {
     private static final int LIMIT = 8;
     private static final int OFFSET = 0;
