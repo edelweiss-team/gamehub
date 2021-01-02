@@ -20,24 +20,24 @@ public class DatabasePopulator {
                 'M', "1111111111");
 
         UserDAO ud = new UserDAO();
-        /*
+
         ud.doSave(u1);
         ud.doSave(u2);
         ud.doSave(u3);
         ud.doSave(u4);
-        */
+
         Tag t1 = new Tag("Sparatutto");
         Tag t2 = new Tag("Azione");
         Tag t3 = new Tag("Avventura");
         Tag t4 = new Tag("Rompicapo");
 
         TagDAO td = new TagDAO();
-        /*
+
         td.doSave(t1);
         td.doSave(t2);
         td.doSave(t3);
         td.doSave(t4);
-        */
+
 
         Category c1 = new Category("game", "DescrizioneCategory1",
                 "immagine1");
@@ -49,12 +49,12 @@ public class DatabasePopulator {
                 "immagine4");
 
         CategoryDAO cd = new CategoryDAO();
-        /*
+
         cd.doSave(c1);
         cd.doSave(c2);
         cd.doSave(c3);
         cd.doSave(c4);
-        */
+
         DigitalProduct d1 = new DigitalProduct(1, "GiocoDigitale1", 12.3,
                 "DescrizioneDigitale1", "immagine1", new ArrayList<>(),
                 new ArrayList<>(), 1, "ps4", "1999-12-12", 10,
@@ -81,12 +81,12 @@ public class DatabasePopulator {
         d4.addTag(t4);
 
         DigitalProductDAO dp = new DigitalProductDAO();
-        /*
+
         dp.doSave(d1);
         dp.doSave(d2);
         dp.doSave(d3);
         dp.doSave(d4);
-        */
+
         PhysicalProduct p1 = new PhysicalProduct(1,"GiocoFisico1", 12.1,
                 "DescrizioneFisico1", "imamgine1", new ArrayList<>(),
                 new ArrayList<>(), 1, "12x12x12", 12.1);
@@ -105,12 +105,12 @@ public class DatabasePopulator {
         p4.addCategory(c4);
 
         PhysicalProductDAO pd = new PhysicalProductDAO();
-        /*
+
         pd.doSave(p1);
         pd.doSave(p2);
         pd.doSave(p3);
         pd.doSave(p4);
-        */
+
         Order o1 = new Order(1, u1, null, "2000-10-10");
         Order o2 = new Order(2, u1, null, "2020-2-2");
         o1.addProduct(p1, 2);
@@ -120,10 +120,10 @@ public class DatabasePopulator {
         o2.addProduct(d4, 1);
 
         OrderDAO od = new OrderDAO();
-        /*
+
         od.doSave(o1);
         od.doSave(o2);
-        */
+
         Operator o = new Operator(u2, "2020-11-12", "Ciao");
 
         OperatorDAO opd = new OperatorDAO();
@@ -132,6 +132,18 @@ public class DatabasePopulator {
 
         o1.setOperator(o);
         od.doUpdateOperator(o1.getId(), o.getUsername());
+
+        Moderator m = new Moderator(u3, "2020-11-12");
+
+        ModeratorDAO md = new ModeratorDAO();
+
+        md.doSave(m);
+
+        Admin a = new Admin(m, true);
+
+        AdminDAO ad = new AdminDAO();
+
+        ad.doSave(a);
     }
 }
 
