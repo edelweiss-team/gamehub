@@ -65,7 +65,7 @@ public class ShowShopPageServlet extends HttpServlet {
         ArrayList<Product> productList = new ArrayList<>();
         int maxPage;
 
-        if(productType.equalsIgnoreCase("Digital")) {
+        if (productType.equalsIgnoreCase("Digital")) {
             productList = new ArrayList<>(dpd.doRetrieveByAllFragment(searchString,
                     description, price, "", tag, category, 0,
                     PRODUCTS_PER_REQUEST_DEFAULT));
@@ -73,8 +73,7 @@ public class ShowShopPageServlet extends HttpServlet {
                     description, price, "", tag, category, 0,
                     LIMIT_MAX);
             maxPage = (int) Math.ceil(full.size() / (double) PRODUCTS_PER_REQUEST_DEFAULT);
-        }
-        else{
+        } else {
             productList = new ArrayList<>(ppd.doRetrieveByAllFragment(searchString,
                     description, price, tag, category, 0,
                     PRODUCTS_PER_REQUEST_DEFAULT));
