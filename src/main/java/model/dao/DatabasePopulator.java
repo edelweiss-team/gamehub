@@ -32,7 +32,6 @@ public class DatabasePopulator {
         Tag t4 = new Tag("Rompicapo");
 
         TagDAO td = new TagDAO();
-
         td.doSave(t1);
         td.doSave(t2);
         td.doSave(t3);
