@@ -90,7 +90,7 @@
             <tbody>
             <tr>
                 <td>
-                    ${loggedUser.username}
+                    ${loggedUser.address}
                     <button type="button" class="btn btn-outline-warning">Modifica</button>
                 </td>
                 <td>
