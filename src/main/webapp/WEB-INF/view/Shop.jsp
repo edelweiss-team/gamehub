@@ -53,7 +53,7 @@
             <div id="search-ctg-form-container" class="col-lg-8 mx-auto">
                 <div class="bg-transparent p-5 rounded">
                     <form id="search-form" action="show-products">
-                        <input type="hidden" name="categoryName" value="${categoryName}">
+                        <input type="hidden" class="categoryNameInput" name="categoryName" value="${categoryName}">
                         <div class="p-1 bg-transparent rounded rounded-pill shadow-sm mb-4">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -143,7 +143,7 @@
                                                     </button>
                                                 </form>
                                                 <h6 style="color: whitesmoke; margin-top: 16px;">${product.getDescription()}</h6>
-                                                <p style="margin: 16px 0px 0px 0px">Remaining: ${product.getQuantity()}</p>
+                                                <p style="margin: 16px 0 0 0">Remaining: ${product.getQuantity()}</p>
                                                 <p style="margin-bottom: 0">${product.getPrice()}$</p>
                                             </div>
                                         </div>
