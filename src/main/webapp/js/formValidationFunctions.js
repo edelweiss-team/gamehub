@@ -231,6 +231,18 @@ function checkCity(element){
     return true;
 }
 
+function checkCountry(element){
+    let country = element.value, pattern = new RegExp("^(([A-Z][a-z]*([-'\\.\\s]))*([A-Z]?[a-z]+))$");
+    if(!pattern.test(country) || country.length < 3 || country.length > 25){
+        $("#submitBtn").prop("disabled", true);
+        $(".submitBtn").prop("disabled", true);
+        document.getElementById("errorMessage").textContent =
+            "Errore: il nome del paese deve contenere dai 2 ai 25 caratteri(lettere e separatori come \"'\")";
+        return false;
+    }
+    return true;
+}
+
 /*
      //INPUT: Un campo telephone tl in un form f
     //OUTPUT: Se tl.value non matcha la regex ^(([+]|00)39)?((3[0-9]{2}))(\d{7})$, disabilitiamo il
