@@ -99,10 +99,10 @@
                         </div>
                         <div class="shop-radio-container">
                             <label style="display: inline-block; width: 36%; position: relative">
-                                <input type="radio" name="productsType" value="Digital" checked="checked"><p class="radio-name">Digital</p>
+                                <input type="radio" name="productType" value="Digital"><p class="radio-name" id="radio1">Digital</p>
                             </label>
                             <label style="display: inline-block; width: 36%; position: relative">
-                                <input type="radio" name="productsType" value="Physical"><p class="radio-name">Physical</p>
+                                <input type="radio" name="productType" value="Physical"><p class="radio-name" id="radio2">Physical</p>
                             </label>
                         </div>
                     </form>
@@ -161,7 +161,6 @@
                 <div class="pagination site-pagination">
                     <span id="previousPage" class="visible">&laquo;</span>
                     <span id="ellipseSx">...</span>
-                    <c:set var="maxPage" value="${Math.ceil(products.size()/8)}"/>
                     <c:forEach var="i" begin="1" end="${maxPage}">
                         <c:if test="${i == 1}">
                             <span class="current visible pageNumBtn" id="page${i}">${i}</span>
@@ -193,10 +192,17 @@
     var maxPage = ${(maxPage > 0)?(maxPage):(1)}; //mantiena l'indice dell'ultima pagina
     const SEARCH = '<%=(request.getParameter("search") != null) ? request.getParameter("search") : ""%>';
     const DESCRIPTION = '<%=(request.getParameter("description") != null) ? request.getParameter("description") : ""%>';
-    const PRICE = <%=(request.getParameter("price") != null) ? request.getParameter("price") : Integer.MAX_VALUE - 200%>;
+    const PRICE = <%=(request.getParameter("price") != null && request.getParameter("price").length()>0) ? request.getParameter("price") : 2000000%>;
     const TAG = '<%=(request.getParameter("tag") != null) ? request.getParameter("tag") : ""%>';
     const TYPE = '<%=(request.getParameter("productType") != null) ? request.getParameter("productType") : "Digital"%>';
     const CTG = '${categoryName}';
+    $(document).ready(ev => {
+        //selezioniamo il radiobutton Digital or Physical
+        if(TYPE.toLowerCase()=="Digital")
+            $("#radio1").click();
+        else
+            $("#radio2").click();
+    });
 </script>
 <script src="${pageContext.request.contextPath}/js/shop.js"></script>
 <script src="${pageContext.request.contextPath}/js/searchBarAsync.js"></script>
