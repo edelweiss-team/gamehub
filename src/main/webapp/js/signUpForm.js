@@ -66,7 +66,7 @@ function validateSignUpForm() {
     if (!checkPasswordMatch() || !checkMailMatch() || !checkPassword(signUpForm["password"]) ||
         !checkFirstNameOrLastName(signUpForm["name"]) || !checkFirstNameOrLastName(signUpForm["surname"]) ||
         !checkAddress(signUpForm["address"]) ||  !checkCity(signUpForm["city"])
-         || !checkTelephone(signUpForm["telephone"]) || !checkCountry(signUpForm["country"])) {
+         || !checkTelephone(signUpForm["telephone"]) || !checkCountry(signUpForm["country"]) || !checkSex(signUpForm["sex"])) {
         errorMessage.classList.add("toShow");
         return;
     }
