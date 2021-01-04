@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Locale;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,7 +41,7 @@ public class SignupServlet extends HttpServlet {
     public static final int COUNTRY_MAX = 25;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+    public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
         this.doGet(req, resp);
@@ -67,8 +68,8 @@ public class SignupServlet extends HttpServlet {
             req.setAttribute("showCredentialError", "Errore: credenziali di registrazione vuote");
             address = "/WEB-INF/view/Signup.jsp";
         } else {
-            if (req.getParameter("sex").length() > 1 || req.getParameter("sex").charAt(0) != 'M'
-                || req.getParameter("sex").charAt(0) != 'F') {
+            if (req.getParameter("sex").length() > 1 || (req.getParameter("sex").toLowerCase().charAt(0) != 'm'
+                && req.getParameter("sex").toLowerCase().charAt(0) != 'f')) {
                 req.setAttribute("showCredentialError", "Erorre: il sesso è lungo più di un carattere oppure contiene un"
                         + "carattere diverso da M o F");
                 address = "/WEB-INF/view/Signup.jsp";
