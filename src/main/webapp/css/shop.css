@@ -65,6 +65,14 @@ form.shop-form-singleProduct{
     color: gold;
 }
 
+button#button-addon5 {
+    padding-right: 8px;
+}
+
+button#button-addon4 {
+    margin-right: 5px;
+}
+
 /*pagination inizio*/
 .pagination {
     display: inline-block;
