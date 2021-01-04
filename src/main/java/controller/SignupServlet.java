@@ -64,10 +64,16 @@ public class SignupServlet extends HttpServlet {
                 || req.getParameter("birthdate") == null
                 || req.getParameter("mail") == null
                 || req.getParameter("telephone") == null
-                || req.getParameter("sex") == null) {
+                || req.getParameter("sex") == null
+                || req.getParameter("repeatPassword") == null) {
             req.setAttribute("showCredentialError", "Errore: credenziali di registrazione vuote");
             address = "/WEB-INF/view/Signup.jsp";
         } else {
+            if(!req.getParameter("repeatPassword").equals(req.getParameter("password"))) {
+                req.setAttribute("showCredentialError", "Erorre: le password inserite "
+                        + "non corrispondono");
+                address = "/WEB-INF/view/Signup.jsp";
+            }
             if (req.getParameter("sex").length() > 1
                     || (req.getParameter("sex").toLowerCase().charAt(0) != 'm'
                 && req.getParameter("sex").toLowerCase().charAt(0) != 'f')) {
