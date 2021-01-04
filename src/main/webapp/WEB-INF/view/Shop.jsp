@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/animate.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/searchBarTagsAsync.css"/>
 </head>
 
 <body>
@@ -52,6 +53,7 @@
             <div id="search-ctg-form-container" class="col-lg-8 mx-auto">
                 <div class="bg-transparent p-5 rounded">
                     <form id="search-form" action="show-products">
+                        <input type="hidden" class="categoryNameInput" name="categoryName" value="${categoryName}">
                         <div class="p-1 bg-transparent rounded rounded-pill shadow-sm mb-4">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -59,15 +61,49 @@
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </div>
-                                <input type="search" maxlength="45" placeholder="What're you searching for?" name="search" aria-describedby="button-addon2" class="category-search form-control border-0 bg-light">
+                                <input type="search" maxlength="45" placeholder="Product name" name="search" aria-describedby="button-addon2" class="product-name-search form-control border-0 bg-light">
+                            </div>
+                        </div>
+                        <div class="p-1 bg-transparent rounded rounded-pill shadow-sm mb-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button id="button-addon3" type="submit" class="btn btn-link text-warning">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                                <input type="search" maxlength="250" placeholder="Description" name="description" aria-describedby="button-addon3" class="description-search form-control border-0 bg-light">
+                            </div>
+                        </div>
+                        <div class="p-1 bg-transparent rounded rounded-pill shadow-sm mb-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button id="button-addon4" type="submit" class="btn btn-link text-warning">
+                                        <i class="fa fa-dollar"></i>
+                                    </button>
+                                </div>
+                                <input type="number" maxlength="9" placeholder="Price" name="price" pattern="^\d*(\.\d{0,2})?$" step=".01" aria-describedby="button-addon4" class="price-search form-control border-0 bg-light">
+                            </div>
+                        </div>
+                        <div class="p-1 bg-transparent rounded rounded-pill shadow-sm mb-4">
+                            <div id="searchbarContainer" class="searchBarTags input-group">
+                                <div class="input-group-prepend">
+                                    <button id="button-addon5" type="submit" class="searchBarTags btn btn-link text-warning">
+                                        <i class="fa fa-tags"></i>
+                                    </button>
+                                </div>
+                                <input type="search" maxlength="45" placeholder="Tag" name="tag" aria-describedby="button-addon5" autocomplete="off" aria-autocomplete="none" autocapitalize="off" spellcheck="false" class="searchBarTags tag-search form-control border-0 bg-light">
+                                <div class="async-results-container">
+                                    <div class="async-results-list"></div>
+                                    <span class="moreResultsButton"><i class="fa fa-angle-down"></i></span>
+                                </div>
                             </div>
                         </div>
                         <div class="shop-radio-container">
                             <label style="display: inline-block; width: 36%; position: relative">
-                                <input type="radio" name="productsType" value="Digital"><p class="radio-name">Digital</p>
+                                <input type="radio" name="productType" value="Digital"><p class="radio-name" id="radio1">Digital</p>
                             </label>
                             <label style="display: inline-block; width: 36%; position: relative">
-                                <input type="radio" name="productsType" value="Physical"><p class="radio-name">Physical</p>
+                                <input type="radio" name="productType" value="Physical"><p class="radio-name" id="radio2">Physical</p>
                             </label>
                         </div>
                     </form>
@@ -107,7 +143,7 @@
                                                     </button>
                                                 </form>
                                                 <h6 style="color: whitesmoke; margin-top: 16px;">${product.getDescription()}</h6>
-                                                <p style="margin: 16px 0px 0px 0px">Remaining: ${product.getQuantity()}</p>
+                                                <p style="margin: 16px 0 0 0">Remaining: ${product.getQuantity()}</p>
                                                 <p style="margin-bottom: 0">${product.getPrice()}$</p>
                                             </div>
                                         </div>
@@ -126,7 +162,6 @@
                 <div class="pagination site-pagination">
                     <span id="previousPage" class="visible">&laquo;</span>
                     <span id="ellipseSx">...</span>
-                    <c:set var="maxPage" value="${Math.ceil(categories.size()/8)}"/>
                     <c:forEach var="i" begin="1" end="${maxPage}">
                         <c:if test="${i == 1}">
                             <span class="current visible pageNumBtn" id="page${i}">${i}</span>
@@ -154,7 +189,23 @@
 </section>
 
 <%@include file="footer.jsp"%> <!--footer-->
-<script>var maxPage = ${(maxPage > 0)?(maxPage):(1)}; //mantiena l'indice dell'ultima pagina</script>
+<script>
+    var maxPage = ${(maxPage > 0)?(maxPage):(1)}; //mantiena l'indice dell'ultima pagina
+    const SEARCH = '<%=(request.getParameter("search") != null) ? request.getParameter("search") : ""%>';
+    const DESCRIPTION = '<%=(request.getParameter("description") != null) ? request.getParameter("description") : ""%>';
+    const PRICE = <%=(request.getParameter("price") != null && request.getParameter("price").length()>0) ? request.getParameter("price") : 2000000%>;
+    const TAG = '<%=(request.getParameter("tag") != null) ? request.getParameter("tag") : ""%>';
+    const TYPE = '<%=(request.getParameter("productType") != null) ? request.getParameter("productType") : "Digital"%>';
+    const CTG = '${categoryName}';
+    $(document).ready(ev => {
+        //selezioniamo il radiobutton Digital or Physical
+        if(TYPE.toLowerCase()=="digital")
+            $("#radio1").click();
+        else
+            $("#radio2").click();
+    });
+</script>
 <script src="${pageContext.request.contextPath}/js/shop.js"></script>
+<script src="${pageContext.request.contextPath}/js/searchBarAsync.js"></script>
 </body>
 </html>

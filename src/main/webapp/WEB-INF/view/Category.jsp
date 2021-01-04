@@ -143,6 +143,7 @@
 <!-- Page section end -->
 
 <%@include file="footer.jsp"%> <!--footer-->
+<script>const SEARCH = '<%=(request.getParameter("search") != null) ? request.getParameter("search") : ""%>';</script>
 <script>var maxPage = ${(maxPage > 0)?(maxPage):(1)}; //mantiena l'indice dell'ultima pagina</script>
 <script src="${pageContext.request.contextPath}/js/categories-page.js"></script>
 

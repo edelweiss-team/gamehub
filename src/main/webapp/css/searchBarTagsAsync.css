@@ -1,0 +1,172 @@
+/*Dropdown Menu inizio*/
+.dropdown{
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content ul{
+    list-style-type: none;
+}
+
+.dropdown-content {
+    position: absolute;
+    color: lightgrey;
+    display: none;
+    text-align: center;
+    background-color: #222222;
+    opacity: 100%;
+    z-index: 999; /* serve a far apparire il contentuto in sovraimpressione */
+    padding: 10% 0 0 0;
+    margin: 0;
+    font-size: 90%;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); /*ombreggiatura*/
+    min-width: 170%;
+    transition: display 0.3s;
+}
+
+#userAreaDropdown .dropdown-content{
+    min-width: 120%;
+}
+
+.dropdown-content li{
+    display: block;
+    float: left;
+    text-align: center;
+    width: 100%;
+    height: 30%;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-content button{
+    text-align: left;
+    display: block;
+    color: lightgray;
+    font-size: 100%;
+    background-color: #222222;
+    margin: 0;
+    width: 100%;
+    border-left-color: forestgreen;
+    border-width: 0 0 0 5px;
+    transition: background-color 0.3s;
+    height: 40px; /*evnetualmente responsive con media query*/
+}
+
+.dropdown-content a{
+    transition: background-color 0.3s;
+}
+
+.dropdown:hover .dropdown-content, #reservedArea:hover .dropdown-content, .dropdown-content.toShow{
+    display: block;
+    z-index: 9999;
+}
+
+.dropdown-content a:hover{
+    background-color: #404040;
+}
+
+.moreCategoriesButton {
+    width: 100%;
+    display: inline-block;
+    height: 25px;
+    padding-top: 1px;
+    font-size: 150%;
+    cursor: pointer;
+}
+
+.scroll-dropdown-content {
+    overflow: auto;
+    max-height: 245px;
+    -ms-overflow-style: none; /*Nascondi la scrollbar in edge e explorer */
+}
+
+.scroll-dropdown-content::-webkit-scrollbar{ /*Nascondi la scrollbar in edge*/
+    display: none;
+}
+/*Dropdown Menu fine*/
+
+/* Async search results styling inizio */
+.async-results-container{
+    display: none;
+    position: absolute;
+    background-color: #222222;
+    color: lightgrey;
+    min-height: 30px;
+    width: 60%;
+    z-index: 11;
+    top: 50px;
+    transform: translateX(42.7%);
+}
+
+.async-results-list{
+    -ms-overflow-style: none;
+    max-height: 245px;
+    overflow: auto;
+}
+
+.async-results-list::-webkit-scrollbar{ /*Nascondi la scrollbar in chrome*/
+    display: none;
+}
+
+.async-results-container.visible{
+    display: block;
+}
+
+.async-result {
+    text-align: left;
+    overflow: auto;
+    word-wrap: break-word; /*fa sì che quando il testo è troppo lungo si vada a capo*/
+    max-height: inherit;
+    cursor: pointer;
+    border-left-color: goldenrod;
+    border-width: 0 0 0 5px;
+    padding: 5px;
+    border-style: solid;
+
+}
+
+input.searchBarTags.tag-search.form-control.border-0.bg-light {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+span.async-results-link {
+    outline: none;
+    color: lightgrey;
+    text-decoration: none;
+    float: left;
+    width: 100%;
+}
+
+span.async-results-link:hover {
+    background-color: unset;
+    color: goldenrod;
+}
+
+.moreResultsButton{
+    width: 100%;
+    display: inline-block;
+    height: 25px;
+    padding-top: 1px;
+    font-size: 150%;
+    cursor: pointer;
+    text-align: center;
+}
+
+@media screen and (hover: hover) and (any-hover: hover) {
+    .async-result:hover, .moreResultsButton:hover {
+        background-color: #404040;
+    }
+
+    .async-result:active, .moreResultsButton:active {
+        background-color: #505050;
+    }
+}
+
+@media screen and (hover: none) and (any-hover: none) {
+    .async-result:active, .moreResultsButton:active {
+        background-color: #404040;
+    }
+}
+/* Async search results styling fine */
+/*Search Bar Style fine*/

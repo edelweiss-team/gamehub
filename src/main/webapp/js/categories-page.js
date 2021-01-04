@@ -94,7 +94,7 @@ $(document).ready(ev => {
         $targetPageBtn.addClass("current");
 
         //ricerca categorie
-        let searchString = $("#search-form .category-search").val();
+        let searchString = SEARCH;
         //carichiamo la pagina dal server, partendo dalla prima categoria della pagina target
         if(!$targetPage.hasClass("loaded"))
             getMoreCategoriesPaging((targetIdNum - 1)*8, searchString);
