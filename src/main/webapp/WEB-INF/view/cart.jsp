@@ -50,13 +50,13 @@
                                     </form>
                                 </div>
                                 <div class="imageContainer">
-                                    <a href="show-product?productId=<%=p.getId()%>&productType=<%=productType%>" target="_blank">
+                                    <a href="showProduct.html?productId=<%=p.getId()%>&productType=<%=productType%>" target="_blank">
                                         <img alt="No image, sorry :(" src="${pageContext.request.contextPath}/img/<%=p.getImage()%>">
                                     </a>
                                 </div>
                                 <div class="genericInfo">
                                     <span class="name">
-                                        <a href="show-product?productId=<%=p.getId()%>&productType=<%=productType%>" target="_blank">
+                                        <a href="showProduct.html?productId=<%=p.getId()%>&productType=<%=productType%>" target="_blank">
                                             <%=p.getName()%>
                                         </a>,
                                     </span>
