@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.Arrays;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -86,7 +85,8 @@ public class SignupServlet extends HttpServlet {
                     || u.getSurname().length() < NAME_MIN || u.getSurname().length() > NAME_MAX
                     || u.getAddress().length() > STREET_MAX || u.getAddress().length() < STREET_MIN
                     || u.getCity().length() < CITY_MIN || u.getCity().length() > CITY_MAX
-                    || u.getCountry().length() < COUNTRY_MIN || u.getCountry().length() > COUNTRY_MAX) {
+                    || u.getCountry().length() < COUNTRY_MIN
+                    || u.getCountry().length() > COUNTRY_MAX) {
                 req.setAttribute("showCredentialError",
                         "Errore: credenziali di registrazione errate.");
                 req.setAttribute("sectionName", "login");

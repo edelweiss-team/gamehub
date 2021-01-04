@@ -82,7 +82,7 @@ function addEmptyCheckToTextFields(formName){
 */
 function checkPassword(element){
     let password = element.value, pattern = new RegExp("^([^\\s]){8,30}$"),
-        errorMessage = document.getElementById("errorMessage");;
+        errorMessage = document.getElementById("errorMessage");
     if(!pattern.test(password)){
         $("#submitBtn").prop("disabled", true);
         $(".submitBtn").prop("disabled", true);

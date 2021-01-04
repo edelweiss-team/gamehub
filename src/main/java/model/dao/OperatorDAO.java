@@ -33,7 +33,7 @@ public class OperatorDAO {
     public void doUpdate(@NotNull Operator o) {
         try {
             UserDAO ud = new UserDAO();
-            ud.doUpdate(o);
+            ud.doUpdate(o, o.getUsername());
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("UPDATE operator SET contractTime = ?, "
                     + "cv = ? WHERE operator.user = ?;");
@@ -115,6 +115,9 @@ public class OperatorDAO {
         try {
             UserDAO ud = new UserDAO();
             User u = ud.doRetrieveByUsernamePassword(username, password);
+            if(u == null) {
+                return null;
+            }
             Operator o = null;
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("SELECT O.user, contractTime, "

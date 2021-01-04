@@ -159,8 +159,9 @@ class UserDAOTest {
         u.setBirthDate("1999-08-10");
         u.setMail("nuovaMail");
         u.setSex('F');
+        u.setSex('F');
         u.setTelephone("2222222222");
-        ud.doUpdate(u);
+        ud.doUpdate(u, oldUsername);
         u = ud.doRetrieveByUsername(u.getUsername());
         if(u != null)
             assertFalse(u.getUsername().equals(oldUsername) && u.getPasswordHash().equals(oldPassword) &&
@@ -177,7 +178,7 @@ class UserDAOTest {
     @Test
     void doUpdateNotOk() {
         User u = new User("'limit","NotWork", "NotWork", "NotWork", "NotWork", "NotWork", "NotWork", "2020-11-16", "NotWork", 'M', "1111111111");
-        assertThrows(RuntimeException.class, ()->ud.doUpdate(u));
+        assertThrows(RuntimeException.class, ()->ud.doUpdate(u, "notexists"));
     }
 
     @Test

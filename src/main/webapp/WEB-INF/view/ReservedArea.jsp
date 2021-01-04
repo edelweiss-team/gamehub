@@ -51,27 +51,29 @@
                 <th scope="col">Telephone</th>
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td>
+            <tbody class="info-table-body">
+            <tr class="info-table-body-row" id="1tr">
+                <td class="can-be-editable editable-username">
                     ${loggedUser.username}
-                    <button type="button" class="btn btn-outline-warning">Modifica</button>
                 </td>
-                <td>
+                <td class="can-be-editable editable-name">
                     ${loggedUser.name}
-                    <button type="button" class="btn btn-outline-warning">Modifica</button>
                 </td>
-                <td>
+                <td class="can-be-editable editable-surname">
                     ${loggedUser.surname}
-                    <button type="button" class="btn btn-outline-warning">Modifica</button>
                 </td>
-                <td>
+                <td class="can-be-editable editable-birthDate">
                     ${loggedUser.birthDate}
-                    <button type="button" class="btn btn-outline-warning">Modifica</button>
                 </td>
-                <td>
+                <td class="can-be-editable editable-telephone">
                     ${loggedUser.telephone}
-                    <button type="button" class="btn btn-outline-warning">Modifica</button>
+                </td>
+                <td class="form-container">
+                    <form class="changeUserForm" name="changeUserForm" method="post" action="changeUser">
+                        <input type="hidden" value="${loggedUser.username}" name="changeUser" class="changeUserOldUsername">
+                        <input type="submit" value="Modifica" class=" btn btn-outline-warning changeUserReservedAreaButton" id="1">
+                        <span class="errorUserMessage" style="color: #c75450; display: none"></span>
+                    </form>
                 </td>
             </tr>
             </tbody>
@@ -79,27 +81,48 @@
     </div>
     <div class="reserved-fieldset">
         <table class="table table-dark">
-            <h1 class="reserved-header">Residence</h1>
+            <h1 class="reserved-header">Other info</h1>
             <thead>
             <tr>
+                <th scope="col">Password</th>
+                <th scope="col">Mail</th>
+                <th scope="col">Sex</th>
                 <th scope="col">Address</th>
                 <th scope="col">City</th>
                 <th scope="col">Country</th>
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td>
+            <tbody class="info-table-body">
+            <tr class="info-table-body-row" id="2tr">
+                <td class="editable-password">
+                    *******
+                </td>
+                <form class="changeUserForm" name="changeUserForm" id="changeUserForm" method="post" action="changeUser">
+                    <input type="hidden" value="${loggedUser.username}" name="changeUser" class="changeUserOldUsername">
+                    <input id="passwordBtn" type="submit" value="Modifica" class="btn btn-outline-warning changePasswordReservedArea">
+                    <span class="errorPasswordMessage" style="color: #c75450; display: none"></span>
+                </form>
+                <td class="can-be-editable editable-mail">
+                    ${loggedUser.mail}
+                </td>
+                <td class="can-be-editable editable-sex">
+                    ${loggedUser.sex}
+                </td>
+                <td class="can-be-editable editable-address">
                     ${loggedUser.address}
-                    <button type="button" class="btn btn-outline-warning">Modifica</button>
                 </td>
-                <td>
-                    ${loggedUser.name}
-                    <button type="button" class="btn btn-outline-warning">Modifica</button>
+                <td class="can-be-editable editable-city">
+                    ${loggedUser.city}
                 </td>
-                <td>
-                    ${loggedUser.surname}
-                    <button type="button" class="btn btn-outline-warning">Modifica</button>
+                <td class="can-be-editable editable-country">
+                    ${loggedUser.country}
+                </td>
+                <td class="form-container">
+                    <form class="changeUserForm" name="changeUserForm" method="post" action="changeUser">
+                        <input type="hidden" value="${loggedUser.username}" name="changeUser" class="changeUserOldUsername">
+                        <input type="submit" value="Modifica" class="btn btn-outline-warning changeUserReservedAreaButton" id="2">
+                        <span class="errorUserMessage" style="color: #c75450; display: none"></span>
+                    </form>
                 </td>
             </tr>
             </tbody>
@@ -154,5 +177,6 @@
         window.onresize = ev => resizeFooter();
     </script>
     <script src="${pageContext.request.contextPath}/js/utility.js"></script>
+    <script src="${pageContext.request.contextPath}/js/updateReservedArea.js"></script>
 </body>
 </html>
