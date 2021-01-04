@@ -218,26 +218,29 @@ public class ModeratorDAO {
     @Nullable
     public Moderator doRetrieveByUsernamePassword(
             @NotNull String username, @NotNull String password) {
+        Moderator moderator = null;
+
         try {
-            UserDAO ud = new UserDAO();
-            User u = ud.doRetrieveByUsernamePassword(username, password);
-            if(u == null) {
-                return null;
+            User u = udao.doRetrieveByUsernamePassword(username, password);
+
+            if(u != null) {
+                Connection cn = ConPool.getConnection();
+                PreparedStatement st = cn.prepareStatement("SELECT M.user, contractTime"
+                        + " FROM moderator M WHERE M.user = ?;");
+                st.setString(1, username);
+                ResultSet rs = st.executeQuery();
+
+                if (rs.next()) {
+                    moderator = new Moderator(u, rs.getString("contractTime"));
+                }
+
+                cn.close();
             }
-            Moderator m = null;
-            Connection cn = ConPool.getConnection();
-            PreparedStatement st = cn.prepareStatement("SELECT M.user, contractTime"
-                    + " FROM moderator M WHERE M.user = ?;");
-            st.setString(1, username);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                m = new Moderator(u, rs.getString("contractTime"));
-            }
-            cn.close();
-            return m;
         } catch (SQLException e) {
-            return null;
+            throw new RuntimeException("can't retrieve moderator by uname and password");
         }
+
+        return moderator;
     }
 
 }

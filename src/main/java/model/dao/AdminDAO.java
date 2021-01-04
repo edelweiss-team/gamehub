@@ -145,8 +145,10 @@ public class AdminDAO {
 
                 moderator = mdao.doRetrieveByUsername(username);
 
-                a = new Admin(moderator, isSuperAdmin);
-                admins.add(a);
+                if (moderator != null) {
+                    a = new Admin(moderator, isSuperAdmin);
+                    admins.add(a);
+                }
             }
             rs.close();
             st.close();
@@ -210,25 +212,29 @@ public class AdminDAO {
     @Nullable
     public Admin doRetrieveByUsernamePassword(
             @NotNull String username, @NotNull String password) {
+        Admin a = null;
+
         try {
-            UserDAO ud = new UserDAO();
             Moderator m = mdao.doRetrieveByUsernamePassword(username, password);
-            if(m == null) {
-                return null;
+
+            if(m != null) {
+                Connection cn = ConPool.getConnection();
+
+                PreparedStatement st = cn.prepareStatement("SELECT A.moderator, superAdmin"
+                        + " FROM admin A WHERE A.moderator = ?;");
+                st.setString(1, username);
+
+                ResultSet rs = st.executeQuery();
+
+                if (rs.next()) {
+                    a = new Admin(m, rs.getBoolean("superAdmin"));
+                }
+                cn.close();
             }
-            Admin a = null;
-            Connection cn = ConPool.getConnection();
-            PreparedStatement st = cn.prepareStatement("SELECT A.moderator, superAdmin"
-                    + " FROM admin A WHERE A.moderator = ?;");
-            st.setString(1, username);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                a = new Admin(m, rs.getBoolean("superAdmin"));
-            }
-            cn.close();
-            return a;
         } catch (SQLException e) {
-            return null;
+            throw new RuntimeException("can't retrieve admin by uname and password");
         }
+
+        return a;
     }
 }
