@@ -26,7 +26,7 @@ public class ShowProductServlet extends HttpServlet {
         PhysicalProductDAO pdao = new PhysicalProductDAO();
         Product product;
 
-        int idProdcut = Integer.parseInt(req.getParameter("idProduct"));
+        int idProdcut = Integer.parseInt(req.getParameter("productId"));
         String productType = req.getParameter("productType");
 
         if (productType.equalsIgnoreCase("digital")) {
