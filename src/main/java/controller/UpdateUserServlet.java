@@ -68,7 +68,7 @@ public class UpdateUserServlet extends HttpServlet {
         HttpSession session = req.getSession();
 
         if (username != null && name != null && surname != null && birthdate != null
-               && telephone != null && password != null) {
+               && telephone != null) {
             username = username.trim();
             name = name.trim();
             surname = surname.trim();
@@ -79,7 +79,6 @@ public class UpdateUserServlet extends HttpServlet {
             address = address.trim();
             city = city.trim();
             country = country.trim();
-            password = password.trim();
             tableTriggered = tableTriggered.trim();
             if (username.length() >= USERNAME_MIN
                     && username.length() <= USERNAME_MAX
@@ -90,8 +89,7 @@ public class UpdateUserServlet extends HttpServlet {
                     && username.matches(USERNAME_REGEX)
                     && name.matches(NAME_REGEX)
                     && surname.matches(NAME_REGEX)
-                    && telephone.matches(TELEPHONE_REGEX)
-                    && password.matches(PASSWORD_REGEX)) {
+                    && telephone.matches(TELEPHONE_REGEX)) {
 
                 String oldUsername = req.getParameter("old-username");
                 oldUsername = oldUsername.trim();
@@ -116,7 +114,10 @@ public class UpdateUserServlet extends HttpServlet {
                     responseUser.addProperty("country", u.getCountry());
                 } else {
                     if (password != null) {
-                        u.setPassword(password);
+                        password = password.trim();
+                        if(password.matches(PASSWORD_REGEX)) {
+                            u.setPassword(password);
+                        }
                     }
                     u.setMail(mail);
                     u.setSex(sex.charAt(0));
