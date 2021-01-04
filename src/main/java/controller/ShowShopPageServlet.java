@@ -1,23 +1,20 @@
 package controller;
 
 import java.io.IOException;
-import model.bean.DigitalProduct;
-import model.bean.PhysicalProduct;
-import model.bean.Product;
-import model.dao.DigitalProductDAO;
-import model.dao.PhysicalProductDAO;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import model.bean.DigitalProduct;
+import model.bean.PhysicalProduct;
+import model.bean.Product;
+import model.dao.DigitalProductDAO;
+import model.dao.PhysicalProductDAO;
 
 import static controller.GetMoreProductsServlet.PRODUCTS_PER_REQUEST_DEFAULT;
 
@@ -54,7 +51,7 @@ public class ShowShopPageServlet extends HttpServlet {
                 ? req.getParameter("categoryName") : "";
         double price;
         try {
-            price = (req.getParameter("price") !=  null && req.getParameter("price").length()>0)
+            price = (req.getParameter("price") !=  null && req.getParameter("price").length() > 0)
                     ? Double.parseDouble(req.getParameter("price")) : LIMIT_MAX;
         } catch (NumberFormatException e) {
             throw new RequestParametersException("Error in the parameters, price "
@@ -83,7 +80,7 @@ public class ShowShopPageServlet extends HttpServlet {
             maxPage = (int) Math.ceil(full.size() / (double) PRODUCTS_PER_REQUEST_DEFAULT);
         }
         req.setAttribute("products", productList);
-        req.setAttribute("categoryName",category);
+        req.setAttribute("categoryName", category);
         req.setAttribute("maxPage", maxPage);
 
         RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/view/Shop.jsp");
