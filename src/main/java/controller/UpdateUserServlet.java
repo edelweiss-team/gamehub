@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import model.bean.User;
 import model.dao.UserDAO;
 import org.jetbrains.annotations.NotNull;
@@ -115,7 +114,7 @@ public class UpdateUserServlet extends HttpServlet {
                 } else {
                     if (password != null) {
                         password = password.trim();
-                        if(password.matches(PASSWORD_REGEX)) {
+                        if (password.matches(PASSWORD_REGEX)) {
                             u.setPassword(password);
                         }
                     }

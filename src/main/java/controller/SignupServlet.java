@@ -68,9 +68,11 @@ public class SignupServlet extends HttpServlet {
             req.setAttribute("showCredentialError", "Errore: credenziali di registrazione vuote");
             address = "/WEB-INF/view/Signup.jsp";
         } else {
-            if (req.getParameter("sex").length() > 1 || (req.getParameter("sex").toLowerCase().charAt(0) != 'm'
+            if (req.getParameter("sex").length() > 1
+                    || (req.getParameter("sex").toLowerCase().charAt(0) != 'm'
                 && req.getParameter("sex").toLowerCase().charAt(0) != 'f')) {
-                req.setAttribute("showCredentialError", "Erorre: il sesso è lungo più di un carattere oppure contiene un"
+                req.setAttribute("showCredentialError", "Erorre: il sesso è lungo più di un "
+                        + "carattere oppure contiene un"
                         + "carattere diverso da M o F");
                 address = "/WEB-INF/view/Signup.jsp";
             } else {
@@ -83,15 +85,18 @@ public class SignupServlet extends HttpServlet {
                 if (!u.getUsername().matches(USERNAME_REGEX)
                         || !req.getParameter("password").matches(PASSWORD_REGEX)
                         || !u.getMail().matches(MAIL_REGEX) || !u.getName().matches(NAME_REGEX)
-                        || !u.getSurname().matches(NAME_REGEX) || !u.getCity().matches(CITY_NAME_REGEX)
+                        || !u.getSurname().matches(NAME_REGEX)
+                        || !u.getCity().matches(CITY_NAME_REGEX)
                         || !u.getAddress().matches(ADDRESS_REGEX)
                         || !u.getTelephone().matches(TELEPHONE_REGEX)
                         || !u.getCountry().matches(COUNTRY_NAME_REGEX)
-                        || u.getMail().length() > MAIL_MAX || u.getUsername().length() < USERNAME_MIN
+                        || u.getMail().length() > MAIL_MAX
+                        || u.getUsername().length() < USERNAME_MIN
                         || u.getUsername().length() > USERNAME_MAX || u.getMail().length() > 40
                         || u.getName().length() > NAME_MAX || u.getName().length() < NAME_MIN
                         || u.getSurname().length() < NAME_MIN || u.getSurname().length() > NAME_MAX
-                        || u.getAddress().length() > STREET_MAX || u.getAddress().length() < STREET_MIN
+                        || u.getAddress().length() > STREET_MAX
+                        || u.getAddress().length() < STREET_MIN
                         || u.getCity().length() < CITY_MIN || u.getCity().length() > CITY_MAX
                         || u.getCountry().length() < COUNTRY_MIN
                         || u.getCountry().length() > COUNTRY_MAX) {
