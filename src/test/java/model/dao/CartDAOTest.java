@@ -6,7 +6,6 @@ import model.bean.PhysicalProduct;
 import model.bean.User;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
