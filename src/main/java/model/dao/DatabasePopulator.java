@@ -8,16 +8,16 @@ public class DatabasePopulator {
 
         User u1 = new User("username1","password", "Name", "Surname",
                 "Address", "City", "Country", "2020-11-16", "Mail1",
-                'M', "1111111111");
+                'M', "3313456754");
         User u2 = new User("username2","password", "Name", "Surname",
                 "Address", "City", "Country", "2020-11-16", "Mail2",
-                'M', "1111111111");
+                'M', "3313456754");
         User u3 = new User("username3","password", "Name", "Surname",
                 "Address", "City", "Country", "2020-11-16", "Mail3",
-                'M', "1111111111");
+                'M', "3313456754");
         User u4 = new User("username4","password", "Name", "Surname",
                 "Address", "City", "Country", "2020-11-16", "Mail4",
-                'M', "1111111111");
+                'M', "3313456754");
 
         UserDAO ud = new UserDAO();
 

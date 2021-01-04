@@ -34,3 +34,7 @@
 form {
     display: inline;
 }
+
+.errorPasswordMessage.toShow{
+    display: block;
+}

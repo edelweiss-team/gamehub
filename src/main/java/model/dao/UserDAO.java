@@ -28,25 +28,26 @@ public class UserDAO {
      *
      */
 
-    public void doUpdate(@NotNull User u) {
+    public void doUpdate(@NotNull User u, @NotNull String oldUsername) {
 
         Connection cn = null;
         try {
             cn = ConPool.getConnection();
-            PreparedStatement st = cn.prepareStatement("UPDATE user set password=?,"
+            PreparedStatement st = cn.prepareStatement("UPDATE user set username=?, password=?,"
                     + " name=?, surname=?, address=?, city=?, country=?, birthDate=?,"
                     + " mail=?, sex=?, telephone=? WHERE username=?;");
-            st.setString(1, u.getPasswordHash());
-            st.setString(2, u.getName());
-            st.setString(3, u.getSurname());
-            st.setString(4, u.getAddress());
-            st.setString(5, u.getCity());
-            st.setString(6, u.getCountry());
-            st.setString(7, u.getBirthDate());
-            st.setString(8, u.getMail());
-            st.setString(9, Character.toString(u.getSex()));
-            st.setString(10, u.getTelephone());
-            st.setString(11, u.getUsername());
+            st.setString(1, u.getUsername());
+            st.setString(2, u.getPasswordHash());
+            st.setString(3, u.getName());
+            st.setString(4, u.getSurname());
+            st.setString(5, u.getAddress());
+            st.setString(6, u.getCity());
+            st.setString(7, u.getCountry());
+            st.setString(8, u.getBirthDate());
+            st.setString(9, u.getMail());
+            st.setString(10, Character.toString(u.getSex()));
+            st.setString(11, u.getTelephone());
+            st.setString(12, oldUsername);
             if (st.executeUpdate() != 1) {
                 throw new RuntimeException();
             }

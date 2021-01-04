@@ -213,6 +213,9 @@ public class AdminDAO {
         try {
             UserDAO ud = new UserDAO();
             Moderator m = mdao.doRetrieveByUsernamePassword(username, password);
+            if(m == null) {
+                return null;
+            }
             Admin a = null;
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("SELECT A.moderator, superAdmin"

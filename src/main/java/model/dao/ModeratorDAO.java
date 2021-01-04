@@ -221,6 +221,9 @@ public class ModeratorDAO {
         try {
             UserDAO ud = new UserDAO();
             User u = ud.doRetrieveByUsernamePassword(username, password);
+            if(u == null) {
+                return null;
+            }
             Moderator m = null;
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("SELECT M.user, contractTime"
