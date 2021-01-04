@@ -260,23 +260,14 @@ function checkTelephone(element){
     return true;
 }
 
-/*
-     //INPUT: Una stringa testuale teacherName ed una numerica maxPrice
-    //OUTPUT: Se teacherName non è vuota e non matcha ^(([A-Z][a-z]*([-'\.\s]?))*([A-Z][a-z]*))$ e ^.{2,30}$, oppure
-              maxPrice non è vuota e non matcha ^(\d)+(\.(\d)+)?$, allora mostriamo un messaggio d'errore
-              e ritorniamo false, altrimenti ritorniamo true.
-*/
-function checkTeacherNameAndMaxPrice(teacherName= undefined, maxPrice){
-    let nameRegex = new RegExp("^(([A-Z][a-z]*([-'\\s\\.]))*([A-Z][a-z]*))$"),
-        priceRegex = new RegExp("^(\\d)+([\\.,](\\d)+)?$"); //regex per un numero double
-    if(teacherName != undefined) {
-        if(teacherName != "" && (teacherName.length < 2 || teacherName.length > 30 || !nameRegex.test(teacherName))) {
-            $("#errorMessage").text("Error: teacher name must be from 2 to 30 characters (letters e separators)");
-            return false;
-        }
-    }
-    if(maxPrice != "" && !priceRegex.test(maxPrice)) {
-        $("#errorMessage").text("Error: max price must be a valid number.");
+function checkSex(element){
+    let sex = element.value;
+
+    if((sex.toLowerCase() != 'm' && sex.toLowerCase() != 'f') || sex.length > 1 ) {
+        $("#submitBtn").prop("disabled", true);
+        $(".submitBtn").prop("disabled", true);
+        document.getElementById("errorMessage").textContent =
+            "Errore il sesso deve essere 'm' oppure 'f' maiuscolo o minuscolo e bisogna inserire solo un carattere";
         return false;
     }
     return true;
