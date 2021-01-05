@@ -153,6 +153,10 @@ public class DigitalProduct extends Product {
                 + '}';
     }
 
+    public String getType()  {
+        return this.type;
+    }
+
     @NotNull
     private String platform;
     @NotNull
@@ -162,4 +166,5 @@ public class DigitalProduct extends Product {
     private String softwareHouse;
     @NotNull
     private String publisher;
+    private String type = "DigitalProduct";
 }

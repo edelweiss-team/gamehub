@@ -1,5 +1,8 @@
 package model.dao;
 
+
+
+
 import java.sql.*;
 import java.util.ArrayList;
 import model.bean.*;
@@ -30,6 +33,7 @@ public class OrderDAO {
      * @param username the owner of the searched order, must be not null
      * @return if exists a Order that is owned by the username given from param, null otherwise
      */
+
     @Nullable
     public ArrayList<Order> doRetrieveByUsername(@NotNull String username) {
         try {
@@ -372,5 +376,9 @@ public class OrderDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+
     }
+
+
 }

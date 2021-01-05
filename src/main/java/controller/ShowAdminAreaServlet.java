@@ -15,8 +15,8 @@ import model.dao.OrderDAO;
 
 
 
-@WebServlet(urlPatterns = {"/operatorArea.html"})
-public class ShowOperatorAreaServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/adminArea.html"})
+public class ShowAdminAreaServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -29,7 +29,6 @@ public class ShowOperatorAreaServlet extends HttpServlet {
             throws ServletException, IOException {
 
         User loggedUser = (User) req.getSession().getAttribute("loggedUser");
-        OrderDAO od = new OrderDAO();
         ArrayList<Order> ordersList = new ArrayList<>();
 
         if (loggedUser == null) {
@@ -37,12 +36,7 @@ public class ShowOperatorAreaServlet extends HttpServlet {
                     + "operator area while not logged.");
         }
 
-        if (od.doRetrieveNonApproved(0, 3) != null) {
-            ordersList = od.doRetrieveNonApproved(0, 3);
-        }
-
-        req.setAttribute("orders", ordersList);
-        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/view/OperatorArea.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/view/AdminArea.jsp");
         rd.forward(req, resp);
     }
 }

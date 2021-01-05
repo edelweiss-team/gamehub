@@ -1,4 +1,4 @@
-.reserved-body{
+.admin-body{
     background-color: #303030;
     color: lightgray;
     font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
@@ -7,7 +7,7 @@
     background-size: cover;
 }
 
-.reserved-fieldset{
+.admin-fieldset{
     margin-left: 10%;
     margin-right: 5%;
     margin-top: 2%;
@@ -20,26 +20,17 @@
     overflow: auto;
 }
 
-.reserved-header{
+.admin-header{
     width: fit-content;
     font-size: 200%;
     border-bottom: 4px solid #ffb320;
     margin-bottom: 3%;
 }
 
-.reserved-fieldset h1 {
+.admin-fieldset h1 {
     color: white;
 }
 
 form {
     display: inline;
-}
-
-.errorPasswordMessage.toShow{
-    display: block;
-}
-
-input#passwordBtn {
-    float: left;
-    margin-bottom: 1%;
 }
