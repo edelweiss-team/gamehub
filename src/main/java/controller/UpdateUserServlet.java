@@ -65,7 +65,13 @@ public class UpdateUserServlet extends HttpServlet {
         String password = req.getParameter("editable-password");
         String tableTriggered = req.getParameter("table-triggered");
         HttpSession session = req.getSession();
+        User loggedUser = (User) session.getAttribute("loggedUser");
 
+        if (loggedUser == null) {
+            throw new RequestParametersException(
+                    "Error: you can't update your user data being not logged!"
+            );
+        }
         if (username != null && name != null && surname != null && birthdate != null
                && telephone != null) {
             username = username.trim();
@@ -90,13 +96,17 @@ public class UpdateUserServlet extends HttpServlet {
                     && surname.matches(NAME_REGEX)
                     && telephone.matches(TELEPHONE_REGEX)) {
 
-                String oldUsername = req.getParameter("old-username");
+                String oldUsername = loggedUser.getUsername();
                 oldUsername = oldUsername.trim();
                 JsonObject responseUser = new JsonObject();
                 JsonObject responseJson = new JsonObject();
                 User u1 = ud.doRetrieveByUsername(username);
                 u = ud.doRetrieveByUsername(oldUsername);
-                if (u1 != null && !u1.equals(u)) {
+                if (u == null) {
+                    throw new RequestParametersException(
+                            "Error: the user '" + oldUsername + "' doesn't exist!"
+                    );
+                } else if (u1 != null && !u1.equals(u)) {
                     responseJson.addProperty("type", "error");
                     responseJson.addProperty("message", "User with "
                             + u1.getUsername() + " already exists!");
@@ -133,7 +143,9 @@ public class UpdateUserServlet extends HttpServlet {
                         session.setAttribute("loggedUser", u);
                     }
                     responseJson.addProperty("type", "success");
-                    responseJson.addProperty("message", "Update completed successfully!");
+                    responseJson.addProperty(
+                            "message", "Update completed successfully!"
+                    );
                     responseUser.addProperty("username", u.getUsername());
                     responseUser.addProperty("name", u.getName());
                     responseUser.addProperty("surname", u.getSurname());
