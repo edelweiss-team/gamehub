@@ -1,8 +1,5 @@
 package model.dao;
 
-
-
-
 import java.sql.*;
 import java.util.ArrayList;
 import model.bean.*;
@@ -10,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- *  OrderDAO is used to do operation inside the table 'order', 'digitalpurchasing'
+ *  OrderDAO is used to do operations inside the table 'order', 'digitalpurchasing'
  *  and 'physicalpurchasing' of database.
  *  OrderDAO allow to do the CRUD operation on database (create, read, update, delete)
  *  It's possible to store a Order, update a Order, delete a Order, read a Order given its owner.
@@ -33,7 +30,6 @@ public class OrderDAO {
      * @param username the owner of the searched order, must be not null
      * @return if exists a Order that is owned by the username given from param, null otherwise
      */
-
     @Nullable
     public ArrayList<Order> doRetrieveByUsername(@NotNull String username) {
         try {
@@ -88,25 +84,86 @@ public class OrderDAO {
     }
 
     /**
-     * This method allows to get a list of order starting from its operator.
+     * Gets a list of the non-approved orders in the database.
      *
-     * @param operatorname that approved the orders
-     * @return if exists a list of Order that is approved by the operator's username
-     *      given from param, null otherwise
+     * @param limit max number of results in the list
+     * @param offset the starting index of the result list
+     * @return a list of all the non-approved orders of the database.
      */
-
     @Nullable
-    public ArrayList<Order> doRetrieveByOperator(@NotNull String operatorname) {
+    public ArrayList<Order> doRetrieveNonApproved(int offset, int limit) {
         try {
             Connection cn =  ConPool.getConnection();
             PreparedStatement st;
-            Operator op = opd.doRetrieveByUsername(operatorname);
+            Order o = null;
+            User u = null;
+            ArrayList<Order> orders = new ArrayList<>();
+            st = cn.prepareStatement(
+                    "SELECT * FROM `order` O WHERE O.operator IS NULL limit ? offset ?;"
+            );
+            st.setInt(1, limit);
+            st.setInt(2, offset);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                o = new Order();
+                o.setOperator(null);
+                o.setId(rs.getInt(2));
+                o.setTotPrice(rs.getDouble(3));
+                o.setNumberOfItems(rs.getInt(4));
+                o.setData(rs.getString(5));
+                u = ud.doRetrieveByUsername(rs.getString(1));
+                o.setUser(u);
+                st = cn.prepareStatement(
+                        "SELECT * FROM digitalpurchasing D WHERE D.order=?;"
+                );
+                st.setInt(1, o.getId());
+                ResultSet rs2 = st.executeQuery();
+                DigitalProduct dp = null;
+                while (rs2.next()) {
+                    dp = dpd.doRetrieveById(rs2.getInt(1));
+                    o.addProduct(dp, rs.getInt(3));
+                }
+                st = cn.prepareStatement(
+                        "SELECT * FROM physicalpurchasing P WHERE P.order=?;"
+                );
+                st.setInt(1, o.getId());
+                rs2 = st.executeQuery();
+                PhysicalProduct pp = null;
+                while (rs2.next()) {
+                    pp = ppd.doRetrieveById(rs2.getInt(1));
+                    o.addProduct(pp, rs.getInt(3));
+                }
+                orders.add(o);
+            }
+            st.close();
+            cn.close();
+
+            return orders;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    /**
+     * This method allows to get a list of order starting from its operator.
+     *
+     * @param operatorUsername that approved the orders
+     * @return if exists a list of Order that is approved by the operator's username
+     *      given from param, null otherwise
+     */
+    @Nullable
+    public ArrayList<Order> doRetrieveByOperator(@NotNull String operatorUsername) {
+        try {
+            Connection cn =  ConPool.getConnection();
+            PreparedStatement st;
+            Operator op = opd.doRetrieveByUsername(operatorUsername);
             Order o = null;
             User u = null;
             ArrayList<Order> orders = new ArrayList<>();
             if (op != null) {
                 st = cn.prepareStatement("SELECT * FROM `order` O WHERE O.operator=?;");
-                st.setString(1, operatorname);
+                st.setString(1, operatorUsername);
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {
                     o = new Order();
@@ -117,7 +174,9 @@ public class OrderDAO {
                     o.setData(rs.getString(5));
                     u = ud.doRetrieveByUsername(rs.getString(1));
                     o.setUser(u);
-                    st = cn.prepareStatement("SELECT * FROM digitalpurchasing D WHERE D.order=?;");
+                    st = cn.prepareStatement(
+                            "SELECT * FROM digitalpurchasing D WHERE D.order=?;"
+                    );
                     st.setInt(1, o.getId());
                     ResultSet rs2 = st.executeQuery();
                     DigitalProduct dp = null;
@@ -125,7 +184,9 @@ public class OrderDAO {
                         dp = dpd.doRetrieveById(rs2.getInt(1));
                         o.addProduct(dp, rs.getInt(3));
                     }
-                    st = cn.prepareStatement("SELECT * FROM physicalpurchasing P WHERE P.order=?;");
+                    st = cn.prepareStatement(
+                            "SELECT * FROM physicalpurchasing P WHERE P.order=?;"
+                    );
                     st.setInt(1, o.getId());
                     rs2 = st.executeQuery();
                     PhysicalProduct pp = null;
@@ -147,12 +208,11 @@ public class OrderDAO {
     /**
      * This method allows to get a Order starting from its id.
      *
-     * @param id the id of the searched order, must be not null
+     * @param id the id of the searched order
      * @return if exists a Order with that id given from param, null otherwise
      */
-
     @Nullable
-    public Order doRetrieveById(@NotNull int id) {
+    public Order doRetrieveById(int id) {
         try {
             Connection cn =  ConPool.getConnection();
             PreparedStatement st;
@@ -194,7 +254,6 @@ public class OrderDAO {
                     o.addProduct(pp, rs.getInt(3));
                 }
 
-
             }
             st.close();
             cn.close();
@@ -210,8 +269,6 @@ public class OrderDAO {
      *
      * @param o the object Order to save, must be not null
      */
-
-    @Nullable
     public void doSave(@NotNull Order o) {
         try {
             Connection cn = ConPool.getConnection();
@@ -276,8 +333,7 @@ public class OrderDAO {
      *
      * @throws RuntimeException if an exception is occurred
      */
-
-    public void doDelete(@NotNull int id) {
+    public void doDelete(int id) {
 
         try {
             Connection cn = ConPool.getConnection();
@@ -295,16 +351,16 @@ public class OrderDAO {
     /**
      *  This method allow to update the operator's username of a specific order.
      *
-     * @param id the id of the searched order, must be not null
+     * @param id the id of the searched order
      * @param operator the operator's username to update
      */
-
-
-    public void doUpdateOperator(@NotNull int id, @NotNull String operator) {
+    public void doUpdateOperator(int id, @NotNull String operator) {
 
         try {
             Connection cn = ConPool.getConnection();
-            PreparedStatement st = cn.prepareStatement("update `order`set operator =? WHERE id=?;");
+            PreparedStatement st = cn.prepareStatement(
+                    "update `order`set operator =? WHERE id=?;"
+            );
             st.setString(1, operator);
             st.setInt(2, id);
             if (st.executeUpdate() != 1) {
@@ -316,9 +372,5 @@ public class OrderDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
-
-
 }
