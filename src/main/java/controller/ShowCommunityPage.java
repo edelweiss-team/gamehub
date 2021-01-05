@@ -22,7 +22,6 @@ public class ShowCommunityPage extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/view/Community.jsp");
-
         rd.forward(req, resp);
     }
 }

@@ -40,6 +40,12 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = req.getSession();
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+
+        if (session.getAttribute("loggedUser") != null) {
+            throw new RequestParametersException(
+                    "Error: you can't login because you're already logged!"
+            );
+        }
         if (req.getParameter("login") != null) {
             if (req.getParameter("username").length() < USERNAME_MIN_LENGTH
                     || req.getParameter("username").length() > USERNAME_MAX_LENGTH

@@ -22,7 +22,11 @@ public class ShowLoginPageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/view/Login.jsp");
-
+        if (req.getSession().getAttribute("loggedUser") != null) {
+            throw new RequestParametersException(
+                    "Error: you can't login because you're already logged!"
+            );
+        }
         rd.forward(req, resp);
     }
 }

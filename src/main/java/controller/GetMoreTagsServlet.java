@@ -1,15 +1,16 @@
 package controller;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import model.bean.Tag;
-import model.dao.TagDAO;
+import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
+import model.bean.Tag;
+import model.dao.TagDAO;
 
 @WebServlet(urlPatterns = {"/get-more-tags"})
 public class GetMoreTagsServlet extends HttpServlet {
@@ -36,10 +37,12 @@ public class GetMoreTagsServlet extends HttpServlet {
             throw new RequestParametersException("Error in the parameters, "
                     + "tags number must be an integer");
         }
+
         TagDAO ud = new TagDAO();
         ArrayList<Tag> tagList;
-        ArrayList<Tag> tagListFull = ud.doRetrieveByNameFragment("", 0,
-                20000000);;
+        ArrayList<Tag> tagListFull = ud.doRetrieveByNameFragment(
+                "", 0, 20000000
+        );
         if (req.getParameter("search").equals("")) {
             tagList = ud.doRetrieveByNameFragment("%", startingIndex, tagsPerRequest);
         } else {
@@ -50,7 +53,6 @@ public class GetMoreTagsServlet extends HttpServlet {
         }
 
         JsonObject responseObject = new JsonObject();
-
         for (int i = 0; i < tagsPerRequest && i < tagList.size(); i++) {
             tag = new JsonObject();
             tag.addProperty("name", tagList.get(i).getName());
