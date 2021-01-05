@@ -28,7 +28,6 @@ public class GetMoreCategoriesServlet extends HttpServlet {
         int startingIndex;
         CategoryDAO cd = new CategoryDAO();
         JsonObject categoryJson;
-        JsonObject responseObject = new JsonObject();
         JsonArray newCategories = new JsonArray();
         String searchString = (req.getParameter("search") != null)
                 ? req.getParameter("search") : "";
@@ -60,6 +59,8 @@ public class GetMoreCategoriesServlet extends HttpServlet {
             categoryJson.addProperty("description", categoryList.get(i).getDescription());
             newCategories.add(categoryJson);
         }
+
+        JsonObject responseObject = new JsonObject();
         responseObject.add("newCategories", newCategories);
         responseObject.addProperty("newMaxPages",
                 Math.max(Math.ceil(categoryListFull.size() / (double) categoriesPerRequest), 1));

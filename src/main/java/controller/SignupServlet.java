@@ -54,6 +54,11 @@ public class SignupServlet extends HttpServlet {
         String address = ".";
         UserDAO ud = new UserDAO();
         HttpSession session = req.getSession();
+        if (req.getSession().getAttribute("loggedUser") != null) {
+            throw new RequestParametersException(
+                    "Error: you can't signup because you're already logged!"
+            );
+        }
         if (req.getParameter("username") == null
                 || req.getParameter("password") == null
                 || req.getParameter("name") == null

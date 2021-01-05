@@ -2,19 +2,16 @@ package controller;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import model.bean.DigitalProduct;
-import model.bean.Product;
-import model.dao.DigitalProductDAO;
-import model.bean.PhysicalProduct;
-import model.dao.PhysicalProductDAO;
-
+import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
+import model.bean.Product;
+import model.dao.DigitalProductDAO;
+import model.dao.PhysicalProductDAO;
 
 @WebServlet(urlPatterns = {"/get-more-products"})
 public class GetMoreProductsServlet extends HttpServlet {
@@ -24,7 +21,7 @@ public class GetMoreProductsServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-
+        this.doGet(req, resp);
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -32,13 +29,11 @@ public class GetMoreProductsServlet extends HttpServlet {
         int startingIndex;
         DigitalProductDAO dpd = new DigitalProductDAO();
         PhysicalProductDAO ppd = new PhysicalProductDAO();
-
         JsonObject productJson;
-        JsonObject responseObject = new JsonObject();
         JsonArray newProducts = new JsonArray();
+
         String searchString = (req.getParameter("search") != null)
                 ? req.getParameter("search") : "";
-
         String productType = (req.getParameter("productType") != null)
                 ? req.getParameter("productType") : "Digital";
         String description = (req.getParameter("description") != null)
@@ -47,9 +42,11 @@ public class GetMoreProductsServlet extends HttpServlet {
                 ? req.getParameter("tag") : "";
         String category = (req.getParameter("category") != null)
                 ? req.getParameter("category") : "";
+
         double price;
         try {
-            price = (req.getParameter("price") !=  null && req.getParameter("price").length()>0)
+            price = (req.getParameter("price") !=  null
+                    && req.getParameter("price").length() > 0)
                     ? Double.parseDouble(req.getParameter("price")) : LIMIT_MAX;
         } catch (NumberFormatException e) {
             throw new RequestParametersException("Error in the parameters, price "
@@ -67,18 +64,19 @@ public class GetMoreProductsServlet extends HttpServlet {
                     + "number must be an integer, "
                     + req.getParameter("startingIndex") + " is not an integer.");
         }
+
         ArrayList<Product> productList = new ArrayList<>();
-        
-        if(productType.equalsIgnoreCase("Digital")) {
+        if (productType.equalsIgnoreCase("Digital")) {
             productList = new ArrayList<>(dpd.doRetrieveByAllFragment(searchString,
                     description, price, "", tag, category, startingIndex,
                     PRODUCTS_PER_REQUEST_DEFAULT));
-        }
-        else{
+        } else {
             productList = new ArrayList<>(ppd.doRetrieveByAllFragment(searchString,
                     description, price, tag, category, startingIndex,
                     PRODUCTS_PER_REQUEST_DEFAULT));
         }
+
+        //risposta json
         for (int i = 0; i < productList.size() && i < productsPerRequest; i++) {
             productJson = new JsonObject();
             productJson.addProperty("name", productList.get(i).getName());
@@ -89,13 +87,16 @@ public class GetMoreProductsServlet extends HttpServlet {
             productJson.addProperty("price", productList.get(i).getPrice());
             productJson.addProperty(
                     "productType",
-                    productList.get(i).getClass().getSimpleName().replaceAll("Product", "")
+                    productList.get(i).getClass().getSimpleName().replaceAll(
+                            "Product", ""
+                    )
             );
             newProducts.add(productJson);
         }
+
+        JsonObject responseObject = new JsonObject();
         responseObject.add("newProducts", newProducts);
         resp.getWriter().println(responseObject);
         resp.flushBuffer();
-
     }
 }

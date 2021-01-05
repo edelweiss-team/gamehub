@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.*;
-import java.sql.SQLException;
 import java.util.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,14 +17,13 @@ import model.dao.PhysicalProductDAO;
 import model.dao.TagDAO;
 
 /**
- * This class allows to initialize the Homepage.
+ * This servlet allows to initialize the Homepage.
  */
 @WebServlet(urlPatterns = {"/index.html", "/home", "/Home", "/HOME"}, loadOnStartup = 0)
 public class HomeServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        CategoryDAO c = new CategoryDAO();
         DigitalProductDAO dpDao = new DigitalProductDAO();
         PhysicalProductDAO fpDao = new PhysicalProductDAO();
         ArrayList<DigitalProduct> prodottiDig;
@@ -49,9 +47,12 @@ public class HomeServlet extends HttpServlet {
         }
         ArrayList<DigitalProduct> prodottiSecond;
         Tag tag = tags.get(n);
-        prodottiSecond = dpDao.doRetrieveByAllFragment("", "", 999999.0,  "",
-                tag.getName(), "", 0, 4);
+        prodottiSecond = dpDao.doRetrieveByAllFragment(
+                "", "", 999999.0,  "", tag.getName(), "",
+                0, 4
+        );
 
+        CategoryDAO c = new CategoryDAO();
         ArrayList<Category> categorie = c.doRetrieveAll();
 
         getServletContext().setAttribute("secondProducts", prodottiSecond);
