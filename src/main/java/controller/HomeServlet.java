@@ -28,6 +28,7 @@ public class HomeServlet extends HttpServlet {
         PhysicalProductDAO fpDao = new PhysicalProductDAO();
         ArrayList<DigitalProduct> prodottiDig;
         ArrayList<PhysicalProduct> prodottiFis;
+
         prodottiDig = dpDao.doRetrieveAllByTag("New", 0, 2);
         prodottiFis = fpDao.doRetrieveAllByTag("New", 0, 2);
         ArrayList<Product> nuoviProdotti = new ArrayList<>();
