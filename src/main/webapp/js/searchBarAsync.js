@@ -60,7 +60,7 @@ $(document).ready(function () {
                 resultsNumber += tagList.length;
                 for(let tag of tagList){
                     $searchResultDiv.append(
-                        "<p class='async-result' onclick='event.preventDefault(); setTagSearchContent("+tag.name+");'>" +
+                        "<p class='async-result' onclick='setTagSearchContent(\""+tag.name+"\")'>" +
                         "   <span class='async-results-link'>"
                                 + tag.name +
                         "   </span>" +
