@@ -85,8 +85,12 @@ public class PhysicalProduct extends Product {
                 + '}';
     }
 
+    public String getType() {
+        return this.type;
+    }
+
     @NotNull
     private String size;
     private double weight;
-
+    private String type = "PhysicalProduct";
 }

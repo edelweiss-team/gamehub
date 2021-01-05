@@ -36,7 +36,7 @@
         </form>
         <%}%>
         <%if(((User)session.getAttribute("loggedUser")).getClass().equals(Admin.class)) {%>
-            <form action="" method="post">
+            <form action="adminArea.html" method="post">
                 <button type="submit" class="btn btn-success" style="float: right">Admin Area</button>
             </form>
         <%}%>

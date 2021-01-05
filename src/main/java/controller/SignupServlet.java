@@ -50,7 +50,7 @@ public class SignupServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        RequestDispatcher rd;
+
         String address = ".";
         UserDAO ud = new UserDAO();
         HttpSession session = req.getSession();
@@ -73,62 +73,61 @@ public class SignupServlet extends HttpServlet {
                 || req.getParameter("repeatPassword") == null) {
             req.setAttribute("showCredentialError", "Errore: credenziali di registrazione vuote");
             address = "/WEB-INF/view/Signup.jsp";
-        } else {
-            if(!req.getParameter("repeatPassword").equals(req.getParameter("password"))) {
-                req.setAttribute("showCredentialError", "Erorre: le password inserite "
-                        + "non corrispondono");
-                address = "/WEB-INF/view/Signup.jsp";
-            }
-            if (req.getParameter("sex").length() > 1
-                    || (req.getParameter("sex").toLowerCase().charAt(0) != 'm'
+        } else if (!req.getParameter("repeatPassword").equals(req.getParameter("password"))) {
+            req.setAttribute("showCredentialError", "Erorre: le password inserite "
+                    + "non corrispondono");
+            address = "/WEB-INF/view/Signup.jsp";
+        }
+        if (req.getParameter("sex").length() > 1
+                || (req.getParameter("sex").toLowerCase().charAt(0) != 'm'
                 && req.getParameter("sex").toLowerCase().charAt(0) != 'f')) {
-                req.setAttribute("showCredentialError", "Erorre: il sesso è lungo più di un "
-                        + "carattere oppure contiene un"
-                        + "carattere diverso da M o F");
+            req.setAttribute("showCredentialError", "Erorre: il sesso è lungo più di un "
+                    + "carattere oppure contiene un"
+                    + "carattere diverso da M o F");
+            address = "/WEB-INF/view/Signup.jsp";
+        } else {
+            User u = new User(req.getParameter("username"), req.getParameter("password"),
+                    req.getParameter("name"), req.getParameter("surname"),
+                    req.getParameter("address"), req.getParameter("city"),
+                    req.getParameter("country"), req.getParameter("birthdate"),
+                    req.getParameter("mail"), req.getParameter("sex").charAt(0),
+                    req.getParameter("telephone"));
+            if (!u.getUsername().matches(USERNAME_REGEX)
+                    || !req.getParameter("password").matches(PASSWORD_REGEX)
+                    || !u.getMail().matches(MAIL_REGEX) || !u.getName().matches(NAME_REGEX)
+                    || !u.getSurname().matches(NAME_REGEX)
+                    || !u.getCity().matches(CITY_NAME_REGEX)
+                    || !u.getAddress().matches(ADDRESS_REGEX)
+                    || !u.getTelephone().matches(TELEPHONE_REGEX)
+                    || !u.getCountry().matches(COUNTRY_NAME_REGEX)
+                    || u.getMail().length() > MAIL_MAX
+                    || u.getUsername().length() < USERNAME_MIN
+                    || u.getUsername().length() > USERNAME_MAX || u.getMail().length() > 40
+                    || u.getName().length() > NAME_MAX || u.getName().length() < NAME_MIN
+                    || u.getSurname().length() < NAME_MIN || u.getSurname().length() > NAME_MAX
+                    || u.getAddress().length() > STREET_MAX
+                    || u.getAddress().length() < STREET_MIN
+                    || u.getCity().length() < CITY_MIN || u.getCity().length() > CITY_MAX
+                    || u.getCountry().length() < COUNTRY_MIN
+                    || u.getCountry().length() > COUNTRY_MAX) {
+                req.setAttribute("showCredentialError",
+                        "Errore: credenziali di registrazione errate.");
+                req.setAttribute("sectionName", "login");
                 address = "/WEB-INF/view/Signup.jsp";
             } else {
-                User u = new User(req.getParameter("username"), req.getParameter("password"),
-                        req.getParameter("name"), req.getParameter("surname"),
-                        req.getParameter("address"), req.getParameter("city"),
-                        req.getParameter("country"), req.getParameter("birthdate"),
-                        req.getParameter("mail"), req.getParameter("sex").charAt(0),
-                        req.getParameter("telephone"));
-                if (!u.getUsername().matches(USERNAME_REGEX)
-                        || !req.getParameter("password").matches(PASSWORD_REGEX)
-                        || !u.getMail().matches(MAIL_REGEX) || !u.getName().matches(NAME_REGEX)
-                        || !u.getSurname().matches(NAME_REGEX)
-                        || !u.getCity().matches(CITY_NAME_REGEX)
-                        || !u.getAddress().matches(ADDRESS_REGEX)
-                        || !u.getTelephone().matches(TELEPHONE_REGEX)
-                        || !u.getCountry().matches(COUNTRY_NAME_REGEX)
-                        || u.getMail().length() > MAIL_MAX
-                        || u.getUsername().length() < USERNAME_MIN
-                        || u.getUsername().length() > USERNAME_MAX || u.getMail().length() > 40
-                        || u.getName().length() > NAME_MAX || u.getName().length() < NAME_MIN
-                        || u.getSurname().length() < NAME_MIN || u.getSurname().length() > NAME_MAX
-                        || u.getAddress().length() > STREET_MAX
-                        || u.getAddress().length() < STREET_MIN
-                        || u.getCity().length() < CITY_MIN || u.getCity().length() > CITY_MAX
-                        || u.getCountry().length() < COUNTRY_MIN
-                        || u.getCountry().length() > COUNTRY_MAX) {
-                    req.setAttribute("showCredentialError",
-                            "Errore: credenziali di registrazione errate.");
-                    req.setAttribute("sectionName", "login");
+                try {
+                    ud.doSave(u);
+                } catch (Exception e) {
+                    req.setAttribute("showCredentialError", "Errore: utente già esistente.");
                     address = "/WEB-INF/view/Signup.jsp";
-                } else {
-                    try {
-                        ud.doSave(u);
-                    } catch (Exception e) {
-                        req.setAttribute("showCredentialError", "Errore: utente già esistente.");
-                        address = "/WEB-INF/view/Signup.jsp";
-                    }
-                    synchronized (session) {
-                        session = req.getSession();
-                        session.setAttribute("loggedUser", u);
-                    }
+                }
+                synchronized (session) {
+                    session = req.getSession();
+                    session.setAttribute("loggedUser", u);
                 }
             }
         }
+        RequestDispatcher rd;
         rd = req.getRequestDispatcher(address);
         rd.forward(req, resp);
     }

@@ -36,7 +36,7 @@
     </form>
     <%}%>
     <%if(((User)session.getAttribute("loggedUser")).getClass().equals(Admin.class)) {%>
-    <form action="" method="post">
+    <form action="adminArea.html" method="post">
         <button type="submit" class="btn btn-success" style="float: right">Admin Area</button>
     </form>
     <%}%>
@@ -48,22 +48,50 @@
     <c:if test= '${orders.size() != 0}' >
         <c:forEach var="i" begin="0" end="${orders.size()-1}">
             <table class="table table-dark">
-                <h1 class="reserved-header">Order: #${orders.get(i).id}</h1>
-                <h1 class="reserved-header">Data: ${orders.get(i).data}</h1>
+                <h1 class="operator-header">Order: #${orders.get(i).id}</h1>
+                <h1 class="operator-header">Data: ${orders.get(i).data}</h1>
                 <thead>
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Price</th>
                     <th scope="col">Quantity</th>
-                    <c:if test ='${orders.operator != null}'>
+                    <c:if test ='${orders.get(i).operator != null}'>
                         <th scope="col">Approved</th>
                     </c:if>
-                    <c:if test ='${orders.operator == null}'>
+                    <c:if test ='${orders.get(i).operator == null}'>
                         <th scope="col">
-                            <form name='approveOrderForm' class='approveOrderForm' method='post' action='approveOrder-servlet'>
-                                <input type='hidden' value='${orders.get(i).id}' name='approveOrder' class='approveOrder'>
-                                <input type='submit' value='✗' class='approveOrderButton'>
-                            </form>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                Approve
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Inserisci il codice di attivazione</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form name="approveOrderForm" class="approveOrderForm" method="post" action="approveOrder-servlet">
+                                            <div class="modal-body">
+                                                <c:forEach var="product" items="${orders.get(i).products}">
+                                                    <c:if test="${product.value.type == 'DigitalProduct'}">
+                                                        <input type="text" placeholder="Inserisci qui il codice di attivazione">
+                                                    </c:if>
+                                                </c:forEach>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <input type='hidden' value='${orders.get(i).id}' name='approveOrder' class='approveOrder'>
+                                                <button type="submit" class="btn btn-primary">Approva</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </th>
                     </c:if>
                 </tr>
@@ -96,6 +124,10 @@
     window.onresize = ev => resizeFooter();
 </script>
 <script src="${pageContext.request.contextPath}/js/utility.js"></script>
-<script src="${pageContext.request.contextPath}/js/updateReservedArea.js"></script>
+<script>
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+</script>
 </body>
 </html>
