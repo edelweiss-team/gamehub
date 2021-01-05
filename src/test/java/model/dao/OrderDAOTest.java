@@ -16,8 +16,6 @@ class OrderDAOTest {
     private @NotNull final UserDAO us = new UserDAO();
     private @NotNull final OperatorDAO op = new OperatorDAO();
 
-
-
     @Test
     void doRetrieveByUsernameValid() {
         User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
@@ -28,7 +26,7 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
@@ -49,7 +47,7 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
@@ -70,7 +68,7 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
@@ -91,7 +89,7 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
@@ -113,7 +111,7 @@ class OrderDAOTest {
         Order prova2 = new Order(71,u,o,"2020-11-11");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         prova2.addProduct(p2,3);
@@ -153,7 +151,7 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         DigitalProduct d2 = new DigitalProduct(7, "NuovoProdottoTesting2", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
                 "xbox", "1999-05-05", 18, "testing", "testingpub");
@@ -181,11 +179,11 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         PhysicalProduct p3 = new PhysicalProduct(6, "NuovoProdottoTesting3", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p3 = py.doSave(p3);
         DigitalProduct d2 = new DigitalProduct(7, "NuovoProdottoTesting2", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
                 "xbox", "1999-05-05", 18, "testing", "testingpub");
@@ -222,7 +220,7 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
@@ -243,7 +241,7 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
@@ -264,7 +262,7 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
@@ -285,7 +283,7 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
@@ -307,7 +305,7 @@ class OrderDAOTest {
         Order prova2 = new Order(71,u,o,"2020-11-11");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         prova2.addProduct(p2,6);
@@ -348,7 +346,7 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         DigitalProduct d2 = new DigitalProduct(7, "NuovoProdottoTesting2", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
                 "xbox", "1999-05-05", 18, "testing", "testingpub");
@@ -378,11 +376,11 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         PhysicalProduct p3 = new PhysicalProduct(6, "NuovoProdottoTesting3", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p3 = py.doSave(p3);
         DigitalProduct d2 = new DigitalProduct(7, "NuovoProdottoTesting2", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
                 "xbox", "1999-05-05", 18, "testing", "testingpub");
@@ -410,6 +408,154 @@ class OrderDAOTest {
     }
 
     @Test
+    void doRetrieveNonApprovedXNone() {
+        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+                'M', "3351212121");
+        us.doSave(u);
+        Order prova = new Order(70,u,null,"2020-12-12");
+        PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
+                "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
+                250, "0x0x0", 20.05);
+        p2 = py.doSave(p2);
+        prova.addProduct(p2,5);
+        or.doSave(prova);
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveNonApproved(0, 0);
+        assertTrue(prova2.isEmpty());
+        us.doDeleteFromUsername("gigino");
+        py.doDelete(p2.getId());
+        or.doDelete(prova.getId());
+    }
+
+    @Test
+    void doRetrieveNonApprovedXOne() {
+        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+                'M', "3351212121");
+        us.doSave(u);
+        Order prova = new Order(70,u,null,"2020-12-12");
+        PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
+                "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
+                250, "0x0x0", 20.05);
+        p2 = py.doSave(p2);
+        prova.addProduct(p2,5);
+        or.doSave(prova);
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveNonApproved(0, 1);
+        assertTrue(prova2.contains(prova));
+        us.doDeleteFromUsername("gigino");
+        py.doDelete(p2.getId());
+        or.doDelete(prova.getId());
+    }
+
+    @Test
+    void doRetrieveNonApprovedXAll() {
+        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+                'M', "3351212121");
+        us.doSave(u);
+        Order prova = new Order(70,u,null,"2020-12-12");
+        Order prova2 = new Order(71,u,null,"2020-11-11");
+        PhysicalProduct p2 = new PhysicalProduct(1000, "NuovoProdottoTesting2", 23.56,
+                "testing2", "imagetest2", new ArrayList<>() , new ArrayList<>(),
+                250, "0x0x0", 20.05);
+        p2 = py.doSave(p2);
+        prova.addProduct(p2,5);
+        prova2.addProduct(p2,6);
+        or.doSave(prova);
+        or.doSave(prova2);
+        @Nullable ArrayList<Order> prova3 = or.doRetrieveNonApproved(0, 10);
+        assertTrue(prova3.contains(prova));
+        assertTrue(prova3.contains(prova2));
+        us.doDeleteFromUsername("gigino");
+        py.doDelete(p2.getId());
+        or.doDelete(prova.getId());
+        or.doDelete(prova2.getId());
+    }
+
+    @Test
+    void doRetrieveNonApprovedProductNone() {
+        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+                'M', "3351212121");
+        us.doSave(u);
+        Order prova = new Order(70,u,null,"2020-12-12");
+        or.doSave(prova);
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveNonApproved(0, 10);
+        Order p = prova2.get(0);
+        assertTrue(p.getAllProducts().isEmpty());
+        us.doDeleteFromUsername("gigino");
+        or.doDelete(prova.getId());
+    }
+
+    @Test
+    void doRetrieveNonApprovedProductXOne() {
+        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+                'M', "3351212121");
+        us.doSave(u);
+        Order prova = new Order(70,u,null,"2020-12-12");
+        PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
+                "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
+                250, "0x0x0", 20.05);
+        p2 = py.doSave(p2);
+        DigitalProduct d2 = new DigitalProduct(7, "NuovoProdottoTesting2", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
+                "xbox", "1999-05-05", 18, "testing", "testingpub");
+        d2 = dy.doSave(d2);
+        prova.addProduct(d2,4);
+        prova.addProduct(p2,5);
+        or.doSave(prova);
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveNonApproved(0, 10);
+        Order p = prova2.get(0);
+        assertTrue(p.getAllProducts().contains(p2));
+        assertTrue(p.getAllProducts().contains(d2));
+        us.doDeleteFromUsername("gigino");
+        py.doDelete(p2.getId());
+        dy.doDelete(d2.getId());
+        or.doDelete(prova.getId());
+    }
+
+
+    @Test
+    void doRetrieveNonApprovedProductXAll() {
+        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+                'M', "3351212121");
+        (new UserDAO()).doSave(u);
+        Order prova = new Order(70,u,null,"2020-12-12");
+        PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
+                "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
+                250, "0x0x0", 20.05);
+        p2 = py.doSave(p2);
+        PhysicalProduct p3 = new PhysicalProduct(6, "NuovoProdottoTesting3", 23.56,
+                "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
+                250, "0x0x0", 20.05);
+        p3 = py.doSave(p3);
+        DigitalProduct d2 = new DigitalProduct(7, "NuovoProdottoTesting2", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
+                "xbox", "1999-05-05", 18, "testing", "testingpub");
+        d2 = dy.doSave(d2);
+        DigitalProduct d3 = new DigitalProduct(7, "NuovoProdottoTesting3", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
+                "xbox", "1999-05-05", 18, "testing", "testingpub");
+        d3 = dy.doSave(d3);
+        prova.addProduct(d2,4);
+        prova.addProduct(p2,5);
+        prova.addProduct(d3,4);
+        prova.addProduct(p3,5);
+        or.doSave(prova);
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveNonApproved(0, 100);
+        Order p = prova2.get(0);
+        assertTrue(p.getAllProducts().contains(p2));
+        assertTrue(p.getAllProducts().contains(d2));
+        assertTrue(p.getAllProducts().contains(p3));
+        assertTrue(p.getAllProducts().contains(d3));
+        us.doDeleteFromUsername("gigino");
+        py.doDelete(p2.getId());
+        dy.doDelete(d2.getId());
+        py.doDelete(p3.getId());
+        dy.doDelete(d3.getId());
+        or.doDelete(prova.getId());
+    }
+
+    @Test
     void doRetrieveByIdOk() {
         User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
                 "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
@@ -419,7 +565,7 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
@@ -490,7 +636,7 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         DigitalProduct d2 = new DigitalProduct(7, "NuovoProdottoTesting2", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
                 "xbox", "1999-05-05", 18, "testing", "testingpub");
@@ -520,11 +666,11 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         PhysicalProduct p3 = new PhysicalProduct(6, "NuovoProdottoTesting3", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p3 = py.doSave(p3);
         DigitalProduct d2 = new DigitalProduct(7, "NuovoProdottoTesting2", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
                 "xbox", "1999-05-05", 18, "testing", "testingpub");
@@ -633,11 +779,11 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p2 = py.doSave(p2);
         PhysicalProduct p3 = new PhysicalProduct(7, "NuovoProdottoTesting3", 23.56,
                 "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
-                250, "sizetest2", 20.05);
+                250, "0x0x0", 20.05);
         p3 = py.doSave(p3);
         DigitalProduct d2 = new DigitalProduct(8, "NuovoProdottoTesting2", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
                 "xbox", "1999-05-05", 18, "testing", "testingpub");
