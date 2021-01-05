@@ -77,8 +77,7 @@ public class SignupServlet extends HttpServlet {
             req.setAttribute("showCredentialError", "Erorre: le password inserite "
                     + "non corrispondono");
             address = "/WEB-INF/view/Signup.jsp";
-        }
-        if (req.getParameter("sex").length() > 1
+        } else if (req.getParameter("sex").length() > 1
                 || (req.getParameter("sex").toLowerCase().charAt(0) != 'm'
                 && req.getParameter("sex").toLowerCase().charAt(0) != 'f')) {
             req.setAttribute("showCredentialError", "Erorre: il sesso è lungo più di un "
