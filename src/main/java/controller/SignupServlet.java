@@ -73,19 +73,15 @@ public class SignupServlet extends HttpServlet {
                 || req.getParameter("repeatPassword") == null) {
             req.setAttribute("showCredentialError", "Errore: credenziali di registrazione vuote");
             address = "/WEB-INF/view/Signup.jsp";
-        } else if (!req.getParameter("repeatPassword").equals(req.getParameter("password"))) {
-            req.setAttribute("showCredentialError", "Erorre: le password inserite "
-                    + "non corrispondono");
-            address = "/WEB-INF/view/Signup.jsp";
-        }
-        if (req.getParameter("sex").length() > 1
-                || (req.getParameter("sex").toLowerCase().charAt(0) != 'm'
-                && req.getParameter("sex").toLowerCase().charAt(0) != 'f')) {
-            req.setAttribute("showCredentialError", "Erorre: il sesso è lungo più di un "
-                    + "carattere oppure contiene un"
-                    + "carattere diverso da M o F");
-            address = "/WEB-INF/view/Signup.jsp";
         } else {
+            if (req.getParameter("sex").length() > 1
+                    || (req.getParameter("sex").toLowerCase().charAt(0) != 'm'
+                    && req.getParameter("sex").toLowerCase().charAt(0) != 'f')) {
+                req.setAttribute("showCredentialError", "Erorre: il sesso è lungo più di un "
+                        + "carattere oppure contiene un"
+                        + "carattere diverso da M o F");
+                address = "/WEB-INF/view/Signup.jsp";
+            }
             User u = new User(req.getParameter("username"), req.getParameter("password"),
                     req.getParameter("name"), req.getParameter("surname"),
                     req.getParameter("address"), req.getParameter("city"),
@@ -109,7 +105,8 @@ public class SignupServlet extends HttpServlet {
                     || u.getAddress().length() < STREET_MIN
                     || u.getCity().length() < CITY_MIN || u.getCity().length() > CITY_MAX
                     || u.getCountry().length() < COUNTRY_MIN
-                    || u.getCountry().length() > COUNTRY_MAX) {
+                    || u.getCountry().length() > COUNTRY_MAX
+                    || !req.getParameter("repeatPassword").equals(req.getParameter("password"))) {
                 req.setAttribute("showCredentialError",
                         "Errore: credenziali di registrazione errate.");
                 req.setAttribute("sectionName", "login");
