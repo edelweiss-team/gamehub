@@ -1,0 +1,69 @@
+.checkoutFormContainer.container {
+    max-width: 960px;
+    color: lightgrey;
+}
+
+body.checkout {
+    background-color: #343a40;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #fff;
+    background-color: #495057;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-control:focus {
+    color: #fff;
+    background-color: #495057;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.cartList li.list-group-item.d-flex.justify-content-between.lh-condensed,
+.cartList li.list-group-item.d-flex.justify-content-between.bg-light{
+    background-color: #333333;
+    color: lightgray;
+}
+
+.cartList li div h6 {
+    color: lightgrey;
+}
+
+li.totalCart.list-group-item.d-flex.justify-content-between.bg-dark {
+    background-color: #333333!important;
+}
+
+.btn-primary.checkoutBtn {
+    color: #fff;
+    background-color: darkgoldenrod;
+    border-color: darkgoldenrod;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: goldenrod;
+    border-color: goldenrod;
+}
+
+h4.mb-3, h4.mb-3 span.text-muted, h2.checkoutTitle {
+    color: goldenrod!important;
+}
+
+input#country {
+    color: lightgrey;
+}
+
+.lh-condensed {
+    line-height: 1.25;
+}
