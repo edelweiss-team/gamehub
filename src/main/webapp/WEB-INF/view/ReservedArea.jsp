@@ -1,7 +1,5 @@
-<%@ page import="model.bean.User" %>
-<%@ page import="model.bean.Admin" %>
-<%@ page import="model.bean.Operator" %>
-<%@ page import="model.bean.Moderator" %><%--
+<%@ page import="model.bean.*" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: Roberto Esposito
   Date: 1/1/2021
@@ -153,13 +151,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="product" items="${orders.get(i).products}">
-                            <tr>
-                                <td>${product.value.name}</td>
-                                <td>${product.value.price}</td>
-                                <td>${product.value.quantity}</td>
-                            </tr>
-                        </c:forEach>
+                        <% ArrayList<Order> orders = (ArrayList<Order>) request.getAttribute("orders");
+                            for (int i = 0; i < orders.size(); i++) {
+                                out.println(orders.get(i));
+                            }
+                        %>
                     </tbody>
                 </table>
             </c:forEach>

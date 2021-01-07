@@ -98,18 +98,15 @@ public class SignupServlet extends HttpServlet {
                 || req.getParameter("mail") == null
                 || req.getParameter("telephone") == null
                 || req.getParameter("sex") == null
-                || req.getParameter("repeatPassword") == null) {
-            req.setAttribute("showCredentialError", "Errore: credenziali di registrazione vuote");
+                || req.getParameter("repeatPassword") == null
+                || req.getParameter("sex").length() > 1
+                || (req.getParameter("sex").toLowerCase().charAt(0) != 'm'
+                && req.getParameter("sex").toLowerCase().charAt(0) != 'f')) {
+            req.setAttribute("showCredentialError", "Errore: credenziali di registrazione vuote"
+                    + "oppure il sesso non rispetto la lunghezza di un carattere o e' diverso da "
+                    + "m oppure f");
             address = "/WEB-INF/view/Signup.jsp";
         } else {
-            if (req.getParameter("sex").length() > 1
-                    || (req.getParameter("sex").toLowerCase().charAt(0) != 'm'
-                    && req.getParameter("sex").toLowerCase().charAt(0) != 'f')) {
-                req.setAttribute("showCredentialError", "Erorre: il sesso è lungo più di un "
-                        + "carattere oppure contiene un"
-                        + "carattere diverso da M o F");
-                address = "/WEB-INF/view/Signup.jsp";
-            }
             User u = new User(req.getParameter("username"), req.getParameter("password"),
                     req.getParameter("name"), req.getParameter("surname"),
                     req.getParameter("address"), req.getParameter("city"),
