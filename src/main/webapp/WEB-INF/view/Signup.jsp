@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
@@ -42,6 +44,7 @@
         </div>
         <div class="signup-textbox">
             <i class="fa fa-user" aria-hidden="true"></i>
+            <i class="fa fa-user" aria-hidden="true"></i>
             <input type="text" name="surname" placeholder="Last Name"><br>
         </div>
         <div class="signup-textbox">
@@ -58,7 +61,17 @@
         </div>
         <div class="signup-textbox">
             <i class="fa fa-globe" aria-hidden="true"></i>
-            <input type="text" name="country" placeholder="Country"><br>
+            <c:set var="countryString" value='${countries.get(0)}' scope="page"/>
+            <c:forEach items="${countries}" var="country">
+                <c:set var="countryString" value='${countryString.concat("|").concat(country)}'/>
+            </c:forEach>
+            <input list="countries" pattern="^(${countryString})$" name="country" placeholder="Country">
+            <datalist id="countries">
+                <c:forEach items="${countries}" var="country">
+                    <option value="${country}">${country}</option>
+                </c:forEach>
+            </datalist><br>
+            <!--<input type="text" name="country" placeholder="Country"><br>-->
         </div>
         <div class="signup-textbox">
             <i class="fa fa-phone" aria-hidden="true"></i>

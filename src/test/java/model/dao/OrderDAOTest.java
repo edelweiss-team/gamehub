@@ -606,7 +606,7 @@ class OrderDAOTest {
         Order prova = new Order(70,u,o,"2020-12-12");
         or.doSave(prova);
         Order p = or.doRetrieveById(70);
-        assertTrue(p.getOperator().equals(o));
+        assertEquals(p.getOperator(), o);
         us.doDeleteFromUsername("gigino");
         or.doDelete(prova.getId());
     }
@@ -805,6 +805,168 @@ class OrderDAOTest {
         py.doDelete(p3.getId());
         dy.doDelete(d3.getId());
 
+    }
+
+    @Test
+    void doSaveProductNoneNoIdOperator() {
+        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+                'M', "3351212121");
+        Operator o = new Operator(u, "2022-12-12", "curriculum");
+        op.doSave(o);
+        Order prova = new Order(0,u,o,"2020-12-12");
+        or.doSave(prova);
+        Order prova2 = or.doRetrieveByUsername("gigino").get(0);
+        assertIterableEquals(prova.getAllProducts(),prova2.getAllProducts());
+        us.doDeleteFromUsername("gigino");
+        or.doDelete(prova.getId());
+    }
+
+    @Test
+    void doSaveProductNoneNoId() {
+        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+                'M', "3351212121");
+        us.doSave(u);
+        Operator o = null;
+        Order prova = new Order(0,u,o,"2020-12-12");
+        or.doSave(prova);
+        Order prova2 = or.doRetrieveByUsername("gigino").get(0);
+        assertIterableEquals(prova.getAllProducts(),prova2.getAllProducts());
+        us.doDeleteFromUsername("gigino");
+        or.doDelete(prova.getId());
+    }
+
+    @Test
+    void doSaveProductOneNoId() {
+        DigitalProduct p = new DigitalProduct(
+                1, "p0", 11, "desc0", "path0", new ArrayList<>(),
+                new ArrayList<>(), 1,"Nintendo Switch","2021-10-10",
+                8,"GameFreak","Nintendo");
+        dy.doSave(p);
+        PhysicalProduct p1 = new PhysicalProduct(
+                1, "p1", 11, "desc0", "path0", new ArrayList<>(),
+                new ArrayList<>(), 1,"50x20x40",8);
+        py.doSave(p1);
+        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+                'M', "3351212121");
+        us.doSave(u);
+        Operator o = null;
+        Order prova = new Order(0,u,o,"2020-12-12");
+        prova.addProduct(p,5);
+        prova.addProduct(p1,6);
+        or.doSave(prova);
+        Order prova2 = or.doRetrieveByUsername("gigino").get(0);
+        assertIterableEquals(prova.getAllProducts(),prova2.getAllProducts());
+        us.doDeleteFromUsername("gigino");
+        or.doDelete(prova.getId());
+        py.doDelete(p1.getId());
+        dy.doDelete(p.getId());
+
+    }
+
+    @Test
+    void doSaveProductOneNoIdOperator() {
+        DigitalProduct p = new DigitalProduct(
+                1, "p0", 11, "desc0", "path0", new ArrayList<>(),
+                new ArrayList<>(), 1,"Nintendo Switch","2021-10-10",
+                8,"GameFreak","Nintendo");
+        dy.doSave(p);
+        PhysicalProduct p1 = new PhysicalProduct(
+                1, "p1", 11, "desc0", "path0", new ArrayList<>(),
+                new ArrayList<>(), 1,"50x20x40",8);
+        py.doSave(p1);
+        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+                'M', "3351212121");
+        Operator o = new Operator(u, "2022-12-12", "curriculum");
+        op.doSave(o);
+        Order prova = new Order(0,u,o,"2020-12-12");
+        prova.addProduct(p,5);
+        prova.addProduct(p1,6);
+        or.doSave(prova);
+        Order prova2 = or.doRetrieveByUsername("gigino").get(0);
+        assertIterableEquals(prova.getAllProducts(),prova2.getAllProducts());
+        us.doDeleteFromUsername("gigino");
+        or.doDelete(prova.getId());
+        py.doDelete(p1.getId());
+        dy.doDelete(p.getId());
+
+    }
+
+    @Test
+    void doSaveProductAllNoId() {
+        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+                'M', "3351212121");
+        Operator o = null;
+        us.doSave(u);
+        Order prova = new Order(0, u, o,"2020-12-12");
+        PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
+                "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
+                250, "0x0x0", 20.05);
+        p2 = py.doSave(p2);
+        PhysicalProduct p3 = new PhysicalProduct(7, "NuovoProdottoTesting3", 23.56,
+                "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
+                250, "0x0x0", 20.05);
+        p3 = py.doSave(p3);
+        DigitalProduct d2 = new DigitalProduct(8, "NuovoProdottoTesting2", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
+                "xbox", "1999-05-05", 18, "testing", "testingpub");
+        d2 = dy.doSave(d2);
+        DigitalProduct d3 = new DigitalProduct(9, "NuovoProdottoTesting3", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
+                "xbox", "1999-05-05", 18, "testing", "testingpub");
+        d3 = dy.doSave(d3);
+        prova.addProduct(d2,4);
+        prova.addProduct(p2,5);
+        prova.addProduct(d3,4);
+        prova.addProduct(p3,5);
+        or.doSave(prova);
+        Order prova2 = or.doRetrieveByUsername("gigino").get(0);
+        assertIterableEquals(prova.getAllProducts(),prova2.getAllProducts());
+        us.doDeleteFromUsername("gigino");
+        or.doDelete(prova.getId());
+        py.doDelete(p2.getId());
+        dy.doDelete(d2.getId());
+        py.doDelete(p3.getId());
+        dy.doDelete(d3.getId());
+    }
+
+    @Test
+    void doSaveProductAllNoIdOperator() {
+        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+                'M', "3351212121");
+        Operator o = new Operator(u,"2022-11-11", "cvv");
+        op.doSave(o);
+        Order prova = new Order(0, u, o,"2020-12-12");
+        PhysicalProduct p2 = new PhysicalProduct(6, "NuovoProdottoTesting2", 23.56,
+                "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
+                250, "0x0x0", 20.05);
+        p2 = py.doSave(p2);
+        PhysicalProduct p3 = new PhysicalProduct(7, "NuovoProdottoTesting3", 23.56,
+                "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
+                250, "0x0x0", 20.05);
+        p3 = py.doSave(p3);
+        DigitalProduct d2 = new DigitalProduct(8, "NuovoProdottoTesting2", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
+                "xbox", "1999-05-05", 18, "testing", "testingpub");
+        d2 = dy.doSave(d2);
+        DigitalProduct d3 = new DigitalProduct(9, "NuovoProdottoTesting3", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
+                "xbox", "1999-05-05", 18, "testing", "testingpub");
+        d3 = dy.doSave(d3);
+        prova.addProduct(d2,4);
+        prova.addProduct(p2,5);
+        prova.addProduct(d3,4);
+        prova.addProduct(p3,5);
+        or.doSave(prova);
+        Order prova2 = or.doRetrieveByUsername("gigino").get(0);
+        assertIterableEquals(prova.getAllProducts(),prova2.getAllProducts());
+        us.doDeleteFromUsername("gigino");
+        or.doDelete(prova.getId());
+        py.doDelete(p2.getId());
+        dy.doDelete(d2.getId());
+        py.doDelete(p3.getId());
+        dy.doDelete(d3.getId());
     }
 
     @Test

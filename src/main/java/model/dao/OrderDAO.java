@@ -271,34 +271,68 @@ public class OrderDAO {
     /**
      * This method allows to save an Order into the database.
      *
-     * @param o the object Order to save, must be not null
+     * @param o the object Order to save, must be not null. If order.getId()=-1, then the order
+     *          will have auto incremented key.
+     * @return the order that has been saved
+     * @throws RuntimeException if the an error has occurred during the transaction.
      */
-    public void doSave(@NotNull Order o) {
+    @NotNull
+    public Order doSave(@NotNull Order o) {
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement st;
             if (o.getOperator() != null) {
-                st = cn.prepareStatement("INSERT INTO `order`( user, id,"
-                        + " totalprice, numberOfProduct, date, operator)"
-                        + " values (?,?,?,?,?,?);");
-                st.setString(1, o.getUser().getUsername());
-                st.setInt(2, o.getId());
-                st.setDouble(3, o.getTotPrice());
-                st.setInt(4, o.getNumberOfItems());
-                st.setString(5, o.getData());
-                st.setString(6, o.getOperator().getUsername());
+                if (o.getId() < 1) {
+                    st = cn.prepareStatement(
+                            "INSERT INTO `order` (user, totalPrice, "
+                            + "numberOfProduct, date, operator) values (?,?,?,?,?);",
+                            Statement.RETURN_GENERATED_KEYS
+                    );
+                    st.setString(1, o.getUser().getUsername());
+                    st.setDouble(2, o.getTotPrice());
+                    st.setInt(3, o.getNumberOfItems());
+                    st.setString(4, o.getData());
+                    st.setString(5, o.getOperator().getUsername());
+                } else {
+                    st = cn.prepareStatement("INSERT INTO `order`( user, id,"
+                            + " totalprice, numberOfProduct, date, operator)"
+                            + " values (?,?,?,?,?,?);");
+                    st.setString(1, o.getUser().getUsername());
+                    st.setInt(2, o.getId());
+                    st.setDouble(3, o.getTotPrice());
+                    st.setInt(4, o.getNumberOfItems());
+                    st.setString(5, o.getData());
+                    st.setString(6, o.getOperator().getUsername());
+                }
             } else {
-                st = cn.prepareStatement("INSERT INTO `order`( user, id,"
-                        + " totalprice, numberOfProduct, date)"
-                        + " values (?,?,?,?,?);");
-                st.setString(1, o.getUser().getUsername());
-                st.setInt(2, o.getId());
-                st.setDouble(3, o.getTotPrice());
-                st.setInt(4, o.getNumberOfItems());
-                st.setString(5, o.getData());
+                if (o.getId() < 1) {
+                    st = cn.prepareStatement(
+                            "INSERT INTO `order` (user, totalPrice, "
+                                    + "numberOfProduct, date) values (?,?,?,?);",
+                            Statement.RETURN_GENERATED_KEYS
+                    );
+                    st.setString(1, o.getUser().getUsername());
+                    st.setDouble(2, o.getTotPrice());
+                    st.setInt(3, o.getNumberOfItems());
+                    st.setString(4, o.getData());
+                } else {
+                    st = cn.prepareStatement("INSERT INTO `order`( user, id,"
+                            + " totalprice, numberOfProduct, date)"
+                            + " values (?,?,?,?,?);");
+                    st.setString(1, o.getUser().getUsername());
+                    st.setInt(2, o.getId());
+                    st.setDouble(3, o.getTotPrice());
+                    st.setInt(4, o.getNumberOfItems());
+                    st.setString(5, o.getData());
+                }
             }
 
             st.executeUpdate();
+            if (o.getId() < 1) {
+                ResultSet rs = st.getGeneratedKeys();
+                rs.next();
+                o.setId(rs.getInt(1));
+            }
             for (Product p : o.getAllProducts()) {
                 if (p instanceof DigitalProduct) {
                     st = cn.prepareStatement(
@@ -325,6 +359,7 @@ public class OrderDAO {
             }
             st.close();
             cn.close();
+            return o;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
