@@ -104,6 +104,7 @@ public class User {
         }
     }
 
+
     /**
      * Gets the username of the user.
      *

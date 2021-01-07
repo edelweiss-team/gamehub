@@ -85,3 +85,6 @@ hs_err_pid*
 
 #ConPool
 ConPool.java
+
+#SetupTesting
+SetupTesting.java
