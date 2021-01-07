@@ -74,7 +74,7 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("loggedUser", u);
                 }
                 address = req.getHeader("referer");
-                if (address.contains("Login") || address.trim().isEmpty()) {
+                if (address.contains("login") || address.trim().isEmpty()) {
                     address = ".";
                     rd = req.getRequestDispatcher(address);
                     rd.forward(req, resp);
