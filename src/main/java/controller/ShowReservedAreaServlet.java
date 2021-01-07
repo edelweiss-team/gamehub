@@ -39,7 +39,9 @@ public class ShowReservedAreaServlet extends HttpServlet {
         if (od.doRetrieveByUsername(loggedUser.getUsername()) != null) {
             orderList = od.doRetrieveByUsername(loggedUser.getUsername());
         }
+
         req.setAttribute("orders", orderList);
+        req.setAttribute("countries", SignupServlet.COUNTRY_LIST);
         RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/view/ReservedArea.jsp");
         rd.forward(req, resp);
     }
