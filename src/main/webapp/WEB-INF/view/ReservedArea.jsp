@@ -69,7 +69,7 @@
                 <td class="form-container">
                     <form class="changeUserForm" name="changeUserForm" method="post" action="changeUser">
                         <input type="hidden" value="${loggedUser.username}" name="changeUser" class="changeUserOldUsername">
-                        <input type="submit" value="Modifica" class=" btn btn-outline-warning changeUserReservedAreaButton" id="1">
+                        <input type="submit" value="Edit" class=" btn btn-outline-warning changeUserReservedAreaButton" id="1">
                         <span class="errorUserMessage" style="color: #c75450; display: none"></span>
                     </form>
                 </td>
@@ -97,7 +97,7 @@
                 </td>
                 <form class="changeUserForm" name="changeUserForm" id="changeUserForm" method="post" action="changeUser">
                     <input type="hidden" value="${loggedUser.username}" name="changeUser" class="changeUserOldUsername">
-                    <input id="passwordBtn" type="submit" value="Modifica" class="btn btn-outline-warning changePasswordReservedArea">
+                    <input id="passwordBtn" type="submit" value="Edit" class="btn btn-outline-warning changePasswordReservedArea">
                     <span class="errorPasswordMessage" style="color: #c75450; display: none"></span>
                 </form>
                 <td class="can-be-editable editable-mail">
@@ -118,7 +118,7 @@
                 <td class="form-container">
                     <form class="changeUserForm" name="changeUserForm" method="post" action="changeUser">
                         <input type="hidden" value="${loggedUser.username}" name="changeUser" class="changeUserOldUsername">
-                        <input type="submit" value="Modifica" class="btn btn-outline-warning changeUserReservedAreaButton" id="2">
+                        <input type="submit" value="Edit" class="btn btn-outline-warning changeUserReservedAreaButton" id="2">
                         <span class="errorUserMessage" style="color: #c75450; display: none"></span>
                     </form>
                 </td>
@@ -135,13 +135,17 @@
                 <table class="table table-dark">
                     <c:if test="${orders.get(i).operator == null}">
                         <h1 class="reserved-header">Order: #${orders.get(i).id}</h1>
-                        <h1 class="reserved-header">Data: ${orders.get(i).data}</h1>
-                        <h1 class="reserved-header">Operator: Not signed</h1>
+                        <h1 class="reserved-header">Date: ${orders.get(i).data}</h1>
+                        <h1 class="reserved-header">
+                            Status: Waiting for approval... <i style="color: goldenrod;" class="fa fa-spinner"></i>
+                        </h1>
                     </c:if>
                     <c:if test="${orders.get(i).operator != null}">
                         <h1 class="reserved-header">Order: #${orders.get(i).id}</h1>
-                        <h1 class="reserved-header">Data: ${orders.get(i).data}</h1>
-                        <h1 class="reserved-header">Operator: ${orders.get(i).operator.name}</h1>
+                        <h1 class="reserved-header">Date: ${orders.get(i).data}</h1>
+                        <h1 class="reserved-header">
+                            Status: Approved! <i style="color: green;" class="fa fa-check-circle"></i>
+                        </h1>
                     </c:if>
                     <thead>
                     <tr>
@@ -151,11 +155,19 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <% ArrayList<Order> orders = (ArrayList<Order>) request.getAttribute("orders");
-                            for (int i = 0; i < orders.size(); i++) {
-                                out.println(orders.get(i));
-                            }
-                        %>
+                        <c:forEach items="${orders.get(i).getAllProducts()}" var="product">
+                            <tr>
+                                <td>
+                                    ${product.name}
+                                </td>
+                                <td>
+                                    ${product.price}
+                                </td>
+                                <td>
+                                    ${orders.get(i).getQuantitySingleProduct(product.id, product.getClass())}
+                                </td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </c:forEach>
