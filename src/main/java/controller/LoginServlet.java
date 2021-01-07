@@ -21,7 +21,7 @@ public class LoginServlet extends HttpServlet {
     public static final int USERNAME_MIN_LENGTH = 6;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+    public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         this.doGet(req, resp);
     }
@@ -74,7 +74,7 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("loggedUser", u);
                 }
                 address = req.getHeader("referer");
-                if (address.contains("login") || address.trim().isEmpty()) {
+                if (address.contains("Login") || address.trim().isEmpty()) {
                     address = ".";
                     rd = req.getRequestDispatcher(address);
                     rd.forward(req, resp);
@@ -84,7 +84,7 @@ public class LoginServlet extends HttpServlet {
             } else {
                 req.setAttribute("showCredentialError", "Errore: username o password errate");
                 address = req.getHeader("referer");
-                if (address.contains("login") || address.trim().isEmpty()) {
+                if (address.contains("Login") || address.trim().isEmpty()) {
                     rd = req.getRequestDispatcher("/WEB-INF/view/Login.jsp");
                     rd.forward(req, resp);
                 } else {
