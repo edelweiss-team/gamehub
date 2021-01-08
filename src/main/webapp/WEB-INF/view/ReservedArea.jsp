@@ -136,6 +136,7 @@
                     <c:if test="${orders.get(i).operator == null}">
                         <h1 class="reserved-header">Order: #${orders.get(i).id}</h1>
                         <h1 class="reserved-header">Date: ${orders.get(i).data}</h1>
+                        <h1 class="reserved-header">Total: ${orders.get(i).totPrice}</h1>
                         <h1 class="reserved-header">
                             Status: Waiting for approval... <i style="color: goldenrod;" class="fa fa-spinner"></i>
                         </h1>
@@ -143,6 +144,7 @@
                     <c:if test="${orders.get(i).operator != null}">
                         <h1 class="reserved-header">Order: #${orders.get(i).id}</h1>
                         <h1 class="reserved-header">Date: ${orders.get(i).data}</h1>
+                        <h1 class="reserved-header">Total: ${orders.get(i).totPrice}</h1>
                         <h1 class="reserved-header">
                             Status: Approved! <i style="color: green;" class="fa fa-check-circle"></i>
                         </h1>
@@ -161,7 +163,12 @@
                                     ${product.name}
                                 </td>
                                 <td>
-                                    ${product.price}
+                                    <c:if test="${orders.get(i).getQuantitySingleProduct(product.id, product.getClass()) > 1}">
+                                        <span>${product.price}$ (total: ${orders.get(i).getQuantitySingleProduct(product.id, product.getClass())*product.price}$)</span>
+                                    </c:if>
+                                    <c:if test="${orders.get(i).getQuantitySingleProduct(product.id, product.getClass()) <= 1}">
+                                        <span>${product.price}$</span>
+                                    </c:if>
                                 </td>
                                 <td>
                                     ${orders.get(i).getQuantitySingleProduct(product.id, product.getClass())}
