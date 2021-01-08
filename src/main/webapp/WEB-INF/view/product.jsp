@@ -1,35 +1,43 @@
-<%@ page import="model.bean.DigitalProduct" %>
-<%@ page import="model.bean.Product" %>
 <%@ page import="java.util.HashMap" %>
-<%@ page import="model.bean.PhysicalProduct" %>
 <%@ page import="java.util.Set" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.bean.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<% Product product = (Product) request.getAttribute("product");
-
+<%
+    Product product = (Product) request.getAttribute("product");
    String productType = (String) request.getAttribute("productType");
-   HashMap<String, String> additionalInformations = new HashMap<>();
+
+   HashMap<String, String> additionalInformations;
 
    if (productType.equalsIgnoreCase("digital")) {
        DigitalProduct dp = (DigitalProduct) product;
-
-       additionalInformations.put("Piattaforma", dp.getPlatform());
-       additionalInformations.put("Data di rilascio", dp.getReleaseDate());
-       additionalInformations.put("Publisher", dp.getPublisher());
-       additionalInformations.put("Software house", dp.getSoftwareHouse());
-       additionalInformations.put("PEGI", "" + dp.getRequiredAge());
+       additionalInformations = dp.getAdditionalInformations();
    }
    else {
        PhysicalProduct fp = (PhysicalProduct) product;
-
-       additionalInformations.put("Dimensioni", fp.getSize());
-       additionalInformations.put("Peso", "" + fp.getWeight());
+       additionalInformations = fp.getAdditionalInformations();
    }
 
+   // formatting price
+   String price;
+
+   if ((product.getPrice() - (int) product.getPrice()) == 0) {
+       price = "" + (int) product.getPrice() + " €";
+   }
+   else {
+       price = ""  + product.getPrice() + " €";
+   }
+
+   // formatting quantity
    String quantity = "Esaurito";
 
    if (product.getQuantity() != 0)
        quantity = "" + product.getQuantity();
+
+    ArrayList<Tag> tags = new ArrayList<>(product.getTags());
+    ArrayList<Category> categories = new ArrayList<>(product.getCategories());
+
 %>
 
 <!DOCTYPE html>
@@ -65,41 +73,60 @@
     window.onresize = ev => resizeFooter();
 </script>
 
-<-- inizio codice vecchio ///////////////////////////////////////////////////////////////////////////////////////// --!>
-<div id="img">
-    <img src="${prodotto.image}">
-</div>
 
-<div>
-    <h1><%=product.getName()%></h1>
-    <br>
-    <h4><%=product.getDescription()%></h4>
+<section class="page-section single-blog-page spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="blog-thumb set-bg" data-setbg="img/recent-game/big.jpg">
+                    <div class="rgi-extra"></div>
+                </div>
+            </div>
+            <!-- sidebar -->
+            <div class="col-lg-4 col-md-7 sidebar pt-5 pt-lg-0">
+                <!-- widget -->
+                <div class="widget-item">
+                    <h3 class="widget-title"><%=product.getName()%></h3>
+                    <% for (Tag t : tags) { %>
+                        <span class="badge bg-danger"><%=t.getName()%></span>
+                    <%}%>
+                    <h5 class="widget-title" style="color: #e0a800"><%=price%></h5>
+                    <div class="latest-blog">
+                        <p><%=product.getDescription()%></p>
+                        <form>
+                            <div class="form-group" style="display: inline">
+                                <label for="ProductQuantity">Quantità:</label>
+                                <input class="form-control" id="ProductQuantity" aria-describedby="quantityHelp" placeholder="1">
+                                <small id="quantityHelp" class="form-text text-muted">Max: <%=quantity%>.</small>
+                            </div>
+                            <button class="site-btn btn-sm">Add to Cart</button>
+                        </form>
 
-    <b>Disponibilità:</b> <%=quantity%> <br>
-    <b>Prezzo:</b> <%=product.getPrice()%>€<br>
-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <table style="width: auto;" class="table table-striped">
+            <thead>
+            <tr>
+                <% for (String information : additionalInformations.keySet()) { %>
+                    <th scope="col"><%=information%></th>
+                <%}%>
 
-<form action="AddProductToCart" method="post" name="myForm" onsubmit="return disable(<%=product.getQuantity()%>)">
-    <b>Quantita:</b>
-    <select name="quantita">
-        <%for (int i=1 ; i<product.getQuantity()+1; i++) {%>
-        <option value="<%=i%>"><%=i%></option>
-        <%}%>
-    </select><br>
-    <input type="text" hidden="hidden" name="idProdotto" value="<%=product.getId()%>">
-    <input type="submit" name="aggCar" id="aggCar" value="Aggiungi al carrello">
-</form>
-<-- fine codice vecchio /////////////////////////////////////////////////////////////////////////////////////////// --!>
-
-
-<-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! --!>
-
-<%
-    Set<String> additionalInformations_ = additionalInformations.keySet();
-
-    for (String information : additionalInformations_) { %>
-        <p><%=information%>:</p> <p><%=additionalInformations.get(information)%></p>
-    <%}%>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <% for (int i=0; i<(additionalInformations.keySet()).size(); i++) { %>
+                        <td> <%=additionalInformations.get((new ArrayList<>((additionalInformations.keySet()))).get(i))%> </td>
+                    <%}%>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
 
 <%@include file="footer.jsp"%> <!--footer-->
 

@@ -1,6 +1,8 @@
 package model.bean;
 
 import java.util.Collection;
+import java.util.HashMap;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -155,6 +157,18 @@ public class DigitalProduct extends Product {
 
     public String getType()  {
         return this.type;
+    }
+
+    public HashMap<String, String> getAdditionalInformations() {
+        HashMap<String, String> additionalInformations = new HashMap<>();
+
+        additionalInformations.put("Piattaforma", getPlatform());
+        additionalInformations.put("Data di rilascio", getReleaseDate());
+        additionalInformations.put("Publisher", getPublisher());
+        additionalInformations.put("Software house", getSoftwareHouse());
+        additionalInformations.put("PEGI", "" + getRequiredAge());
+
+        return additionalInformations;
     }
 
     @NotNull
