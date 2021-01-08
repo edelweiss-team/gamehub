@@ -41,61 +41,63 @@
                     </ul>
                 </div>
                 <div class="col-md-8 order-md-1">
-                    <h4 class="mb-3">Billing address</h4>
+                    <c:if test="${empty loggedUser}">
+                        <h4 class="mb-3">Billing address</h4>
+                    </c:if>
                     <form class="needs-validation" action="proceed-checkout" method="post" novalidate="">
                         <!--Campi se l'utente non è loggato-->
                         <c:if test="${empty loggedUser}">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="firstName">First name</label>
-                                <input maxlength="30" type="text" pattern="^(([A-Z][a-z]*([-'\s\.]))*([A-Z][a-z]*))$" class="form-control" id="firstName" name="firstName" placeholder="Your name..." value="" required="">
-                                <div class="invalid-feedback"> Valid first name is required. </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName">First name</label>
+                                    <input maxlength="30" type="text" pattern="^(([A-Z][a-z]*([-'\s\.]))*([A-Z][a-z]*))$" class="form-control" id="firstName" name="firstName" placeholder="Your name..." value="" required="">
+                                    <div class="invalid-feedback"> Valid first name is required. </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName">Last name</label>
+                                    <input maxlength="30" type="text" pattern="^(([A-Z][a-z]*([-'\s\.]))*([A-Z][a-z]*))$" class="form-control" id="lastName" name="lastName" placeholder="Your surname..." value="" required="">
+                                    <div class="invalid-feedback"> Valid last name is required. </div>
+                                </div>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="lastName">Last name</label>
-                                <input maxlength="30" type="text" pattern="^(([A-Z][a-z]*([-'\s\.]))*([A-Z][a-z]*))$" class="form-control" id="lastName" name="lastName" placeholder="Your surname..." value="" required="">
-                                <div class="invalid-feedback"> Valid last name is required. </div>
+                            <div class="mb-3">
+                                <label for="mail">E-mail</label>
+                                <div class="input-group">
+                                    <input maxlength="40" type="email" class="form-control" id="mail" name="mail" placeholder="you@example.com" required="">
+                                    <div class="invalid-feedback" style="width: 100%;">Your email is required.</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="mail">E-mail</label>
-                            <div class="input-group">
-                                <input maxlength="40" type="email" class="form-control" id="mail" name="mail" placeholder="you@example.com" required="">
-                                <div class="invalid-feedback" style="width: 100%;">Your email is required.</div>
+                            <div class="mb-3">
+                                <label for="address">Address</label>
+                                <input maxlength="150" type="text" pattern="^(((Via|Contrada|Piazza|Vicolo|Corso|Viale|Piazzale)\s)?(([A-Z]?[a-z0-9]*([-'\.\s]))*([A-Z]?[a-z0-9]+)))$" class="form-control" id="address" name="address" placeholder="1234 Main St" required="">
+                                <div class="invalid-feedback"> Please enter your shipping address. </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="address">Address</label>
-                            <input maxlength="150" type="text" pattern="^(((Via|Contrada|Piazza|Vicolo|Corso|Viale|Piazzale)\s)?(([A-Z]?[a-z0-9]*([-'\.\s]))*([A-Z]?[a-z0-9]+)))$" class="form-control" id="address" name="address" placeholder="1234 Main St" required="">
-                            <div class="invalid-feedback"> Please enter your shipping address. </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-5 mb-3">
-                                <label for="country">Country</label>
-                                <c:set var="countryString" value='${countries.get(0)}' scope="page"/>
-                                <c:forEach items="${countries}" var="country">
-                                    <c:set var="countryString" value='${countryString.concat("|").concat(country)}'/>
-                                </c:forEach>
-                                <input maxlength="2" placeholder="Your country..." pattern="^(${countryString})$" class="custom-select d-block w-100 bg-dark" list="countries" id="country" name="country" required="">
-                                <datalist id="countries">
+                            <div class="row">
+                                <div class="col-md-5 mb-3">
+                                    <label for="country">Country</label>
+                                    <c:set var="countryString" value='${countries.get(0)}' scope="page"/>
                                     <c:forEach items="${countries}" var="country">
-                                        <option value="${country}">${country}</option>
+                                        <c:set var="countryString" value='${countryString.concat("|").concat(country)}'/>
                                     </c:forEach>
-                                </datalist><br>
-                                <div class="invalid-feedback"> Please select a valid country. </div>
+                                    <input maxlength="2" placeholder="Your country..." pattern="^(${countryString})$" class="custom-select d-block w-100 bg-dark" list="countries" id="country" name="country" required="">
+                                    <datalist id="countries">
+                                        <c:forEach items="${countries}" var="country">
+                                            <option value="${country}">${country}</option>
+                                        </c:forEach>
+                                    </datalist><br>
+                                    <div class="invalid-feedback"> Please select a valid country. </div>
+                                </div>
+                                <div class="col-md-5 mb-3">
+                                    <label for="city">City</label>
+                                    <input pattern="^(([A-Z][a-z]*([-'\.\s]))*([A-Z]?[a-z]+))$" type="text" class="form-control" id="city" name="city" placeholder="Your city..." required="">
+                                    <div class="invalid-feedback"> Please enter your city. </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="telephone">Telephone</label>
+                                    <input name="telephone" pattern="^[(([+]|00)39)?((3[0-9]{2})(\d{7}))]$" type="text" class="form-control" id="telephone" placeholder="Your number..." required="">
+                                    <div class="invalid-feedback"> Telephone required, please enter a valid telephone. </div>
+                                </div>
                             </div>
-                            <div class="col-md-5 mb-3">
-                                <label for="city">City</label>
-                                <input pattern="^(([A-Z][a-z]*([-'\.\s]))*([A-Z]?[a-z]+))$" type="text" class="form-control" id="city" name="city" placeholder="Your city..." required="">
-                                <div class="invalid-feedback"> Please enter your city. </div>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="telephone">Telephone</label>
-                                <input name="telephone" pattern="^[(([+]|00)39)?((3[0-9]{2})(\d{7}))]$" type="text" class="form-control" id="telephone" placeholder="Your number..." required="">
-                                <div class="invalid-feedback"> Telephone required, please enter a valid telephone. </div>
-                            </div>
-                        </div>
-                        <!--Fine Campi se l'utente non è loggato-->
+                            <!--Fine Campi se l'utente non è loggato-->
                         </c:if>
                         <hr class="mb-4">
                         <hr class="mb-4">
