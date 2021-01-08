@@ -6,12 +6,12 @@ var changeUserListener = ev =>{
     var $updateContent = $target.closest(".info-table-body-row").find(".form-container");
     var fd = new FormData();
 
-    if($target.val() == "Modifica") {
+    if($target.val() == "Edit") {
         $editableContent.prop("contenteditable", true);
         $target.val("Submit");
     } else {
         $editableContent.removeAttr("contenteditable");
-        $target.val("Modifica");
+        $target.val("Edit");
 
         fd.append("editable-username", $(".editable-username").text());
         fd.append("editable-name", $(".editable-name").text());
@@ -81,12 +81,12 @@ var validatePasswordListener = ev =>{
     var $updateContent = $target.closest(".info-table-body-row").find(".changeUserForm");
     var fd = new FormData();
 
-    if($target.val() == "Modifica") {
+    if($target.val() == "Edit") {
         $editableContent.prop("contenteditable", true);
         $target.val("Submit");
     } else {
         $editableContent.removeAttr("contenteditable");
-        $target.val("Modifica");
+        $target.val("Edit");
 
         fd.append("editable-password", $(".editable-password").text());
         fd.append("editable-username", $(".editable-username").text());
@@ -111,7 +111,7 @@ var validatePasswordListener = ev =>{
             processData: false,
             cache: false,
             error: ev => alert("Request failed on Reserved Area page."),
-            success: repsonseObject =>{
+            success: responseObject =>{
                 let msg, type;
                 msg = responseObject.message;
                 type = responseObject.type;

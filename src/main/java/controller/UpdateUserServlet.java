@@ -102,14 +102,44 @@ public class UpdateUserServlet extends HttpServlet {
                 JsonObject responseJson = new JsonObject();
                 User u1 = ud.doRetrieveByUsername(username);
                 u = ud.doRetrieveByUsername(oldUsername);
+                User u2 = ud.doRetrieveByMail(mail);
                 if (u == null) {
                     throw new RequestParametersException(
                             "Error: the user '" + oldUsername + "' doesn't exist!"
                     );
+                } else if (!SignupServlet.COUNTRIES.containsKey(country)) {
+                    responseJson.addProperty("type", "error");
+                    responseJson.addProperty("message", "Country not valid");
+                    responseUser.addProperty("username", u.getUsername());
+                    responseUser.addProperty("name", u.getName());
+                    responseUser.addProperty("surname", u.getSurname());
+                    responseUser.addProperty("birthDate", u.getBirthDate());
+                    responseUser.addProperty("telephone", u.getTelephone());
+                    responseUser.addProperty("password", u.getPasswordHash());
+                    responseUser.addProperty("mail", u.getMail());
+                    responseUser.addProperty("sex", u.getSex());
+                    responseUser.addProperty("address", u.getAddress());
+                    responseUser.addProperty("city", u.getCity());
+                    responseUser.addProperty("country", u.getCountry());
                 } else if (u1 != null && !u1.equals(u)) {
                     responseJson.addProperty("type", "error");
                     responseJson.addProperty("message", "User with "
                             + u1.getUsername() + " already exists!");
+                    responseUser.addProperty("username", u.getUsername());
+                    responseUser.addProperty("name", u.getName());
+                    responseUser.addProperty("surname", u.getSurname());
+                    responseUser.addProperty("birthDate", u.getBirthDate());
+                    responseUser.addProperty("telephone", u.getTelephone());
+                    responseUser.addProperty("password", u.getPasswordHash());
+                    responseUser.addProperty("mail", u.getMail());
+                    responseUser.addProperty("sex", u.getSex());
+                    responseUser.addProperty("address", u.getAddress());
+                    responseUser.addProperty("city", u.getCity());
+                    responseUser.addProperty("country", u.getCountry());
+                } else if (u2 != null && !u2.equals(u)) {
+                    responseJson.addProperty("type", "error");
+                    responseJson.addProperty("message", "User with "
+                            + u2.getMail() + " already exists!");
                     responseUser.addProperty("username", u.getUsername());
                     responseUser.addProperty("name", u.getName());
                     responseUser.addProperty("surname", u.getSurname());
