@@ -35,7 +35,6 @@ public class LoginServlet extends HttpServlet {
         OperatorDAO od = new OperatorDAO();
         ModeratorDAO md = new ModeratorDAO();
         AdminDAO ad = new AdminDAO();
-        CartDAO cd = new CartDAO();
         User u;
         HttpSession session = req.getSession();
         String username = req.getParameter("username");
@@ -53,43 +52,40 @@ public class LoginServlet extends HttpServlet {
                     || !req.getParameter("password").matches(PASSWORD_REGEX)) {
                 u = null;
             } else {
-                u = ad.doRetrieveByUsernamePassword(req.getParameter("username"),
-                        req.getParameter("password"));
+                u = ad.doRetrieveByUsernamePassword(
+                        req.getParameter("username"), req.getParameter("password")
+                );
                 if (u == null) {
-                    u = md.doRetrieveByUsernamePassword(req.getParameter("username"),
-                            req.getParameter("password"));
+                    u = md.doRetrieveByUsernamePassword(
+                            req.getParameter("username"), req.getParameter("password")
+                    );
                     if (u == null) {
-                        u = od.doRetrieveByUsernamePassword(req.getParameter("username"),
-                                req.getParameter("password"));
+                        u = od.doRetrieveByUsernamePassword(
+                                req.getParameter("username"), req.getParameter("password")
+                        );
                         if (u == null) {
-                            u = ud.doRetrieveByUsernamePassword(req.getParameter("username"),
-                                    req.getParameter("password"));
+                            u = ud.doRetrieveByUsernamePassword(
+                                    req.getParameter("username"), req.getParameter("password")
+                            );
                         }
                     }
                 }
             }
             if (u != null) {
                 synchronized (session) {
-                    session = req.getSession(true);
+                    session.invalidate();
+                    session = req.getSession();
                     session.setAttribute("loggedUser", u);
                 }
-                address = req.getHeader("referer");
-                if (address.contains("login") || address.trim().isEmpty()) {
-                    address = ".";
-                    rd = req.getRequestDispatcher(address);
-                    rd.forward(req, resp);
-                } else {
-                    resp.sendRedirect(address);
-                }
+                address = ".";
+
+                rd = req.getRequestDispatcher(address);
+                rd.forward(req, resp);
             } else {
                 req.setAttribute("showCredentialError", "Errore: username o password errate");
-                address = req.getHeader("referer");
-                if (address.contains("Login") || address.trim().isEmpty()) {
-                    rd = req.getRequestDispatcher("/WEB-INF/view/Login.jsp");
-                    rd.forward(req, resp);
-                } else {
-                    resp.sendRedirect(address);
-                }
+                address = "/WEB-INF/view/Login.jsp";
+                rd = req.getRequestDispatcher(address);
+                rd.forward(req, resp);
             }
         } else {
             throw new RequestParametersException("Error: you passed the wrong "

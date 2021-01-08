@@ -12,9 +12,6 @@ import model.bean.Order;
 import model.bean.User;
 import model.dao.OrderDAO;
 
-
-
-
 @WebServlet(urlPatterns = {"/reservedArea.html"})
 public class ShowReservedAreaServlet extends HttpServlet {
 
