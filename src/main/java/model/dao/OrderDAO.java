@@ -126,7 +126,7 @@ public class OrderDAO {
                 DigitalProduct dp = null;
                 while (rs2.next()) {
                     dp = dpd.doRetrieveById(rs2.getInt(1));
-                    o.addProduct(dp, rs.getInt(3));
+                    o.addProduct(dp, rs2.getInt(3));
                 }
                 st = cn.prepareStatement(
                         "SELECT * FROM physicalpurchasing P WHERE P.order=?;"
@@ -186,7 +186,7 @@ public class OrderDAO {
                     DigitalProduct dp = null;
                     while (rs2.next()) {
                         dp = dpd.doRetrieveById(rs2.getInt(1));
-                        o.addProduct(dp, rs.getInt(3));
+                        o.addProduct(dp, rs2.getInt(3));
                     }
                     st = cn.prepareStatement(
                             "SELECT * FROM physicalpurchasing P WHERE P.order=?;"
@@ -247,7 +247,7 @@ public class OrderDAO {
                 DigitalProduct dp = null;
                 while (rs2.next()) {
                     dp = dpd.doRetrieveById(rs2.getInt(1));
-                    o.addProduct(dp, rs.getInt(3));
+                    o.addProduct(dp, rs2.getInt(3));
                 }
                 st = cn.prepareStatement("SELECT * FROM physicalpurchasing P WHERE P.order=?;");
                 st.setInt(1, o.getId());
