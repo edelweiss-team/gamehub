@@ -1,11 +1,4 @@
 <%@ page import="model.bean.*" %>
-<%@ page import="java.util.ArrayList" %><%--
-  Created by IntelliJ IDEA.
-  User: Roberto Esposito
-  Date: 1/1/2021
-  Time: 3:23 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -136,7 +129,7 @@
                     <c:if test="${orders.get(i).operator == null}">
                         <h1 class="reserved-header">Order: #${orders.get(i).id}</h1>
                         <h1 class="reserved-header">Date: ${orders.get(i).data}</h1>
-                        <h1 class="reserved-header">Total: ${orders.get(i).totPrice}</h1>
+                        <h1 class="reserved-header">Total: ${orders.get(i).totPrice}$</h1>
                         <h1 class="reserved-header">
                             Status: Waiting for approval... <i style="color: goldenrod;" class="fa fa-spinner"></i>
                         </h1>
@@ -144,7 +137,7 @@
                     <c:if test="${orders.get(i).operator != null}">
                         <h1 class="reserved-header">Order: #${orders.get(i).id}</h1>
                         <h1 class="reserved-header">Date: ${orders.get(i).data}</h1>
-                        <h1 class="reserved-header">Total: ${orders.get(i).totPrice}</h1>
+                        <h1 class="reserved-header">Total: ${orders.get(i).totPrice}$</h1>
                         <h1 class="reserved-header">
                             Status: Approved! <i style="color: green;" class="fa fa-check-circle"></i>
                         </h1>
