@@ -148,6 +148,7 @@ public class CartDAO {
                 ps.setString(2, u.getUsername());
                 ps.setInt(3, c.getQuantitySingleProduct(p.getId(), p.getClass()));
                 ps.setInt(4, c.getQuantitySingleProduct(p.getId(), p.getClass()));
+                ps.executeUpdate();
             } else if (p instanceof PhysicalProduct) {
                 ps = cn.prepareStatement("INSERT INTO physicalcontaining values "
                         + "(?, ?, ?) on duplicate key update quantity=?;");
@@ -196,6 +197,7 @@ public class CartDAO {
                 ps.setString(2, u.getUsername());
                 ps.setInt(3, c.getQuantitySingleProduct(p.getId(), p.getClass()));
                 ps.setInt(4, c.getQuantitySingleProduct(p.getId(), p.getClass()));
+                ps.executeUpdate();
             } else if (p instanceof PhysicalProduct) {
                 ps = cn.prepareStatement(
                         "DELETE FROM physicalcontaining where cart=? AND physicalProduct=?;"
