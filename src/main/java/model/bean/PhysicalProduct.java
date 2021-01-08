@@ -1,6 +1,8 @@
 package model.bean;
 
 import java.util.Collection;
+import java.util.HashMap;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -87,6 +89,15 @@ public class PhysicalProduct extends Product {
 
     public String getType() {
         return this.type;
+    }
+
+    public HashMap<String, String> getAdditionalInformations() {
+        HashMap<String, String> additionalInformations = new HashMap<>();
+
+        additionalInformations.put("Dimensioni", getSize() + " cm");
+        additionalInformations.put("Peso", "" + getWeight() + " kg");
+
+        return additionalInformations;
     }
 
     @NotNull
