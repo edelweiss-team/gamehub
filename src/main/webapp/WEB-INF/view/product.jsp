@@ -74,7 +74,7 @@
 </script>
 
 
-<section class="page-section single-blog-page spad">
+<section class="page-section single-blog-page spad" style="background: #212529">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
@@ -86,18 +86,18 @@
             <div class="col-lg-4 col-md-7 sidebar pt-5 pt-lg-0">
                 <!-- widget -->
                 <div class="widget-item">
-                    <h3 class="widget-title"><%=product.getName()%></h3>
+                    <h3 class="widget-title" style="color: gold; word-break: break-word"><%=product.getName()%></h3>
                     <% for (Tag t : tags) { %>
                         <span class="badge bg-danger"><%=t.getName()%></span>
                     <%}%>
                     <h5 class="widget-title" style="color: #e0a800"><%=price%></h5>
                     <div class="latest-blog">
-                        <p><%=product.getDescription()%></p>
+                        <p style="color: whitesmoke; word-break: break-word"><%=product.getDescription()%></p>
                         <form>
                             <div class="form-group" style="display: inline">
                                 <label for="ProductQuantity">Quantità:</label>
                                 <input class="form-control" id="ProductQuantity" aria-describedby="quantityHelp" placeholder="1">
-                                <small id="quantityHelp" class="form-text text-muted">Max: <%=quantity%>.</small>
+                                <small id="quantityHelp" class="form-text text-muted" style="color: darkgray!important">Max: <%=quantity%>.</small>
                             </div>
                             <button class="site-btn btn-sm">Add to Cart</button>
                         </form>
@@ -108,11 +108,11 @@
         </div>
     </div>
     <div class="container">
-        <table style="width: auto;" class="table table-striped">
+        <table style="width: auto; color: white; border: 1px solid gold" class="table table-striped">
             <thead>
             <tr>
                 <% for (String information : additionalInformations.keySet()) { %>
-                    <th scope="col"><%=information%></th>
+                    <th scope="col" style="border-bottom: 2px solid gold; border-top: 1px solid gold"><%=information%></th>
                 <%}%>
 
             </tr>
