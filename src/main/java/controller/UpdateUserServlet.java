@@ -42,13 +42,13 @@ public class UpdateUserServlet extends HttpServlet {
     public static final int COUNTRY_MAX = 25;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
         this.doGet(req, resp);
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
         UserDAO ud = new UserDAO();
         User u;
