@@ -1,5 +1,6 @@
-package model.controller;
+package controller;
 
+import controller.CheckMailServlet;
 import controller.LogoutServlet;
 import controller.RequestParametersException;
 import model.bean.User;
@@ -14,10 +15,9 @@ import org.springframework.mock.web.MockHttpSession;
 import javax.servlet.ServletException;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class ShowAdminAreaServletTest {
+public class LogoutServletTest {
 
     private LogoutServlet servlet;
     private MockHttpServletRequest request;
@@ -56,5 +56,7 @@ public class ShowAdminAreaServletTest {
         request.setSession(session);
         assertDoesNotThrow(() -> servlet.doPost(request, response));
     }
+
+
 
 }

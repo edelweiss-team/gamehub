@@ -186,7 +186,7 @@ public abstract class Product {
      * Establish whatever the product has the passed tag or not.
      *
      * @param tagName the tag.
-     * @return true iff product.getTags().contains(tag), false otherwise.
+     * @return the tag iff product.getTags().contains(tag), null otherwise.
      */
     public @Nullable Tag hasTag(@NotNull String tagName) {
         return this.tags.get(tagName);

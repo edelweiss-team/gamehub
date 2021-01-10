@@ -53,8 +53,10 @@ public class TagDAO {
     public Tag doRetrieveByName(@NotNull String name) {
         try {
             Connection cn = ConPool.getConnection();
-            PreparedStatement st = cn.prepareStatement("SELECT * FROM tag T WHERE T.name=?;");
-            st.setString(1, name);
+            PreparedStatement st = cn.prepareStatement(
+                    "SELECT * FROM tag T WHERE lower(T.name)=?;"
+            );
+            st.setString(1, name.toLowerCase());
             ResultSet rs = st.executeQuery();
             Tag tag = null;
             if (rs.next()) {

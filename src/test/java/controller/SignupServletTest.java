@@ -1,4 +1,4 @@
-package model.controller;
+package controller;
 
 import com.mysql.cj.Session;
 import controller.SignupServlet;
