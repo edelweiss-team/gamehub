@@ -1,7 +1,8 @@
 package model.dao;
 
-import model.bean.*;
 import java.util.ArrayList;
+import model.bean.*;
+
 
 public class DatabasePopulator {
     public static void main(String[] args) {

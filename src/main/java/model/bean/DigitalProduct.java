@@ -155,10 +155,7 @@ public class DigitalProduct extends Product {
                 + '}';
     }
 
-    public String getType()  {
-        return this.type;
-    }
-
+    @NotNull
     public HashMap<String, String> getAdditionalInformations() {
         HashMap<String, String> additionalInformations = new HashMap<>();
 
@@ -180,5 +177,4 @@ public class DigitalProduct extends Product {
     private String softwareHouse;
     @NotNull
     private String publisher;
-    private String type = "DigitalProduct";
 }

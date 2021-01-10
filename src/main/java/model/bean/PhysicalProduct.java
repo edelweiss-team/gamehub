@@ -2,7 +2,6 @@ package model.bean;
 
 import java.util.Collection;
 import java.util.HashMap;
-
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -87,10 +86,7 @@ public class PhysicalProduct extends Product {
                 + '}';
     }
 
-    public String getType() {
-        return this.type;
-    }
-
+    @NotNull
     public HashMap<String, String> getAdditionalInformations() {
         HashMap<String, String> additionalInformations = new HashMap<>();
 
@@ -103,5 +99,4 @@ public class PhysicalProduct extends Product {
     @NotNull
     private String size;
     private double weight;
-    private String type = "PhysicalProduct";
 }

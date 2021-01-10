@@ -1,10 +1,11 @@
-package model.controller;
+package controller;
 
 import controller.CheckMailServlet;
 import controller.CheckUsernameServlet;
 import model.bean.User;
 import model.dao.UserDAO;
 import org.apache.log4j.BasicConfigurator;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -18,9 +19,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CheckUsernameServletTest {
 
-    private CheckUsernameServlet servlet;
-    private MockHttpServletRequest request;
-    private MockHttpServletResponse response;
+    private @NotNull CheckUsernameServlet servlet;
+    private @NotNull MockHttpServletRequest request;
+    private @NotNull MockHttpServletResponse response;
 
     @BeforeEach
     public void setUp() {

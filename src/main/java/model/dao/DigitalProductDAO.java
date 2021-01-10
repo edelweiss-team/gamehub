@@ -2,6 +2,8 @@ package model.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
+
 import model.bean.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -535,5 +537,72 @@ public class DigitalProductDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * This method allows to find all the saved {@link DigitalProduct}s having at
+     * least one of the tags in the given list.
+     *
+     * @param tags List of product tags for filtering products
+     * @param offset to select the starting range value of the Physical Product to retrieve
+     * @param limit to select the ending range value of the Physical Product to retrieve
+     * @return an ArrayList formed by Physical Products saved into the database
+     *          that have at least one of the give tags
+     * @throws RuntimeException if an exception is occurred
+     *
+     */
+
+    @NotNull
+    public ArrayList<DigitalProduct> doRetrieveAllByTags(@NotNull List<Tag> tags, int offset,
+                                                          int limit) {
+        if (tags.size() == 0) {
+            throw new IllegalArgumentException("Error: tag list cannot be empty!");
+        }
+        try (Connection con = ConPool.getConnection()) {
+            String stmtString = "select distinct dp.id, dp.name, dp.price, dp.description, "
+                    + "dp.image, dp.platform, dp.releaseDate, dp.requiredAge, dp.softwareHouse, "
+                    + "dp.publisher, dp.quantity "
+                    + "from digitalcharacteristic dc, digitalproduct dp "
+                    + "where dc.digitalProduct = dp.id "
+                    + "and (dc.tag='" + tags.get(0).getName() + "'";
+            PreparedStatement ps;
+
+            for (int i = 1; i < tags.size(); i++) {
+                stmtString += " OR dc.tag='" + tags.get(i).getName() + "'";
+            }
+            stmtString += ") LIMIT ?, ?;";
+            ps = con.prepareStatement(stmtString);
+            ps.setInt(1, offset);
+            ps.setInt(2, limit);
+            ResultSet rs = ps.executeQuery();
+
+            ArrayList<DigitalProduct> prodotti = new ArrayList<>();
+            while (rs.next()) {
+                DigitalProduct p = new DigitalProduct();
+                p.setId(rs.getInt(1));
+                p.setName(rs.getString(2));
+                p.setPrice(rs.getDouble(3));
+                p.setDescription(rs.getString(4));
+                p.setImage(rs.getString(5));
+                p.setPlatform(rs.getString(6));
+                p.setReleaseDate(rs.getString(7));
+                p.setRequiredAge(rs.getInt(8));
+                p.setSoftwareHouse(rs.getString(9));
+                p.setPublisher(rs.getString(10));
+                p.setQuantity(rs.getInt(11));
+
+
+                p.setCategories(doRetrieveAllProdCatById(p.getId()));
+                p.setTags(doRetrieveAllProdTagById(p.getId()));
+
+                prodotti.add(p);
+            }
+
+            return prodotti;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
