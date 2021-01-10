@@ -6,7 +6,6 @@ import java.util.List;
 import model.bean.Product;
 import model.bean.Tag;
 import model.bean.User;
-import model.dao.UserDAO;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,9 +29,9 @@ public class RecommendedProductList {
     public void setVote(@NotNull Boolean vote) {
         this.vote = vote;
         //chiamiamo il bridge per registrare il voto
-        //synchronized (BRIDGE) {
+        synchronized (BRIDGE) {
             BRIDGE.registerVote(user, vote);
-        //}
+        }
     }
 
     @NotNull
