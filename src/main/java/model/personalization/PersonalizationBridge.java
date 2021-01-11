@@ -8,15 +8,44 @@ import model.bean.User;
 import model.dao.TagDAO;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * This singleton class represents a bridge between the machine learning model and the java
+ * application. Note that this class follows the Singleton design pattern, so just a single instance
+ * of it can exist at the same time, and the access to the method is synchronized to deny their
+ * access to more than one user at once.
+ */
 public class PersonalizationBridge {
 
     private static final @NotNull JepConfig JEP_CONFIG = new JepConfig();
 
+    //aggiungiamo le include paths per permettere di includere i moduli locali
     static {
         JEP_CONFIG.addIncludePaths("./");
     }
 
-    public PersonalizationBridge() {
+    /**
+     * Inner class to follow the Bill Pugh singleton implementation approach.
+     * This is initialized only when getInstance() is called, granting thread-safety.
+     */
+    private static class PersonalizationBridgeHelper {
+        @NotNull
+        private static final PersonalizationBridge INSTANCE = new PersonalizationBridge();
+    }
+
+    /**
+     * This method gets the instance of {@link PersonalizationBridge} singleton.
+     *
+     * @return the instance of {@link PersonalizationBridge}
+     */
+    @NotNull
+    public static PersonalizationBridge getInstance() {
+        return PersonalizationBridgeHelper.INSTANCE;
+    }
+
+    /**
+     * Construct a new PersonalizationBridge singleton.
+     */
+    private PersonalizationBridge() {
         this.dsd = new DatasetSampleDAO();
     }
 
@@ -63,6 +92,7 @@ public class PersonalizationBridge {
         //creiamo l'istanza dell'interprete
         try (Interpreter interp = JEP_CONFIG.createSubInterpreter()) {
             //prendiamoci i tag dallo script python, che chiamerà il modello di machine learning
+            //tramite il metodo predict()
             interp.exec("from samplePrediction import predict");
             ArrayList<String> tagNames = interp.getValue("predict()", ArrayList.class);
             interp.close();
