@@ -121,6 +121,20 @@ public class UpdateUserServlet extends HttpServlet {
                     responseUser.addProperty("address", u.getAddress());
                     responseUser.addProperty("city", u.getCity());
                     responseUser.addProperty("country", u.getCountry());
+                } else if (!SignupServlet.MAIL_REGEX.matches(mail)) {
+                    responseJson.addProperty("type", "error");
+                    responseJson.addProperty("message", "Mail not valid");
+                    responseUser.addProperty("username", u.getUsername());
+                    responseUser.addProperty("name", u.getName());
+                    responseUser.addProperty("surname", u.getSurname());
+                    responseUser.addProperty("birthDate", u.getBirthDate());
+                    responseUser.addProperty("telephone", u.getTelephone());
+                    responseUser.addProperty("password", u.getPasswordHash());
+                    responseUser.addProperty("mail", u.getMail());
+                    responseUser.addProperty("sex", u.getSex());
+                    responseUser.addProperty("address", u.getAddress());
+                    responseUser.addProperty("city", u.getCity());
+                    responseUser.addProperty("country", u.getCountry());
                 } else if (u1 != null && !u1.equals(u)) {
                     responseJson.addProperty("type", "error");
                     responseJson.addProperty("message", "User with "

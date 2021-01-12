@@ -37,8 +37,8 @@ public class ShowOperatorAreaServlet extends HttpServlet {
                     + "operator area while not logged.");
         }
 
-        if (od.doRetrieveNonApproved(0, 3) != null) {
-            ordersList = od.doRetrieveNonApproved(0, 3);
+        if (od.doRetrieveNonApproved(0, 100) != null) {
+            ordersList = od.doRetrieveNonApproved(0, 100);
         }
 
         req.setAttribute("orders", ordersList);
