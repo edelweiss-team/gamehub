@@ -1,7 +1,8 @@
 <%@ page import="model.bean.User" %>
 <%@ page import="model.bean.Admin" %>
 <%@ page import="model.bean.Operator" %>
-<%@ page import="model.bean.Moderator" %><%--
+<%@ page import="model.bean.Moderator" %>
+<%@ page import="model.bean.DigitalProduct" %><%--
   Created by IntelliJ IDEA.
   User: Roberto Esposito
   Date: 1/1/2021
@@ -61,34 +62,32 @@
                     <c:if test ='${orders.get(i).operator == null}'>
                         <th scope="col">
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                Approve
-                            </button>
+                            <a href="#myModal${orders.get(i).id}" role="button" class="btn btn-success" data-toggle="modal">Approve</a>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
+                            <div id="myModal${orders.get(i).id}" class="modal fade" tabindex="-1">
+                                <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Inserisci il codice di attivazione</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
+                                            <h5 class="modal-title">Confirmation</h5>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
-                                        <form name="approveOrderForm" class="approveOrderForm" method="post" action="approveOrder-servlet">
-                                            <div class="modal-body">
-                                                <c:forEach var="product" items="${orders.get(i).products}">
-                                                    <c:if test="${product.value.type == 'DigitalProduct'}">
-                                                        <input type="text" placeholder="Inserisci qui il codice di attivazione">
-                                                    </c:if>
-                                                </c:forEach>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <input type='hidden' value='${orders.get(i).id}' name='approveOrder' class='approveOrder'>
-                                                <button type="submit" class="btn btn-primary">Approva</button>
-                                            </div>
-                                        </form>
+                                        <div class="modal-body">
+                                            <form name="approveOrderForm" class="approveOrderForm" method="post" action="approveOrder-servlet">
+                                                <div class="modal-body">
+                                                    <c:forEach var="product" items="${orders.get(i).getAllProducts()}">
+                                                        <c:if test="${product.getClass().getSimpleName() == 'DigitalProduct'}">
+                                                            <input type="text" placeholder="Inserisci qui il codice di attivazione">
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <input type='hidden' value='${orders.get(i).id}' name='approveOrder' class='approveOrder'>
+                                                    <button type="submit" class="btn btn-primary">Approva</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -97,11 +96,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="product" items="${orders.get(i).products}">
+                <c:forEach var="product" items="${orders.get(i).getAllProducts()}">
                     <tr>
-                        <td>${product.value.name}</td>
-                        <td>${product.value.price}</td>
-                        <td>${product.value.quantity}</td>
+                        <td>${product.name}</td>
+                        <td>${product.price}</td>
+                        <td>${orders.get(i).getQuantitySingleProduct(product.id, product.getClass())}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
