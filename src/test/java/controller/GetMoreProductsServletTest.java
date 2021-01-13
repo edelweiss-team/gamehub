@@ -56,7 +56,7 @@ class GetMoreProductsServletTest {
     @Test
     public void GetMoreProductsWithFiltersPhysical() throws ServletException, IOException{
         request.addParameter("search","GiocoFisico1");
-        request.addParameter("productType","Digital");
+        request.addParameter("productType","Physical");
         request.addParameter("description","Sono un bel gioco, acquistami!");
         request.addParameter("tag","New");
         request.addParameter("price","24.44");
@@ -70,6 +70,12 @@ class GetMoreProductsServletTest {
     @Test
     public void GetMoreProductsPriceNotOk() throws ServletException, IOException{
         request.addParameter("price","14.14alkhjh)?");
+        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
+    }
+
+    @Test
+    public void GetMoreProductsPriceVoid() throws ServletException, IOException{
+        request.addParameter("price","");
         assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
     }
 
