@@ -23,3 +23,71 @@
 form {
     display: inline;
 }
+
+.manage-header-user{
+    border-bottom: 4px solid #ffb320;
+    margin-left: 30%;
+    margin-top: 10%;
+    color: white;
+    width: fit-content;
+}
+
+.table-div{
+    -ms-overflow-style: none;
+    overflow: auto;
+    float: none;
+    text-align: center;
+    text-align: -moz-center;
+    text-align: -webkit-center;
+}
+
+.table-div::-webkit-scrollbar{
+    display: none;
+}
+
+.content-table{
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 400px;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.content-table thead tr{
+    background-color: #ffb320;
+    color: white;
+    text-align: left;
+    font-weight: bold;
+
+}
+
+.content-table th, .content-table td{
+    padding: 12px 15px;
+}
+
+.content-table tbody tr{
+    border-bottom: 1px solid #292929;
+}
+
+.content-table tbody tr:nth-of-type(even){
+    background-color: #292929;
+}
+
+.content-table tbody tr:last-of-type{
+    border-bottom: 2px solid #ffb320;
+}
+
+.paginationUsers{
+    display: inline-block;
+}
+
+.paginationUsers span {
+    display: none;
+    cursor: pointer;
+}
+
+.paginationUsers span.visible {
+    display: unset;
+}
