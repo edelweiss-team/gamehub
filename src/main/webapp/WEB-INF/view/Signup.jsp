@@ -35,10 +35,6 @@
             <input type="text" class="mailInput" name="mail" placeholder="E-mail"><br>
         </div>
         <div class="signup-textbox">
-            <i class="fa fa-envelope" aria-hidden="true"></i>
-            <input type="text" class="mailInput" name="repeatmail" placeholder="Confirm E-mail"><br>
-        </div>
-        <div class="signup-textbox">
             <i class="fa fa-user" aria-hidden="true"></i>
             <input type="text" name="name" placeholder="First Name"><br>
         </div>

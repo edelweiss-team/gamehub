@@ -32,24 +32,6 @@ function checkPasswordMatch(){
     return true;
 }
 
-/*
-    //INPUT: Un form f con due campi mail mf0, mf1
-    //OUTPUT: Controlla se il pf0.value = pf1.value. Se sono diversi, allora disabilitiamo il bottone submit,
-              e settiamo il messaggio d'errore.
-*/
-function checkMailMatch(){
-    let mailFields = document.querySelectorAll("form .mailInput"),
-        errorMessage = document.getElementById("errorMessage"),
-        msg ="Errore: le mail inserite non corrispondono!";
-    if(mailFields[0].value != mailFields[1].value) {
-        errorMessage.textContent = msg;
-        errorMessage.classList.add("toShow");
-        document.getElementById("submitBtn").setAttribute("disabled", "disabled");
-        return false;
-    }
-    return true;
-}
-
 function validateSignUpForm() {
     let signUpForm = document.forms["signUpForm"], errorMessage = document.getElementById("errorMessage"),
         flag = checkFormTextFieldsLength("signUpForm"),
@@ -63,7 +45,7 @@ function validateSignUpForm() {
         document.getElementById("submitBtn").setAttribute("disabled", "disabled");
         return;
     }
-    if (!checkPasswordMatch() || !checkMailMatch() || !checkPassword(signUpForm["password"]) ||
+    if (!checkPasswordMatch() || !checkPassword(signUpForm["password"]) ||
         !checkFirstNameOrLastName(signUpForm["name"]) || !checkFirstNameOrLastName(signUpForm["surname"]) ||
         !checkAddress(signUpForm["address"]) ||  !checkCity(signUpForm["city"])
          || !checkTelephone(signUpForm["telephone"]) || !checkCountry(signUpForm["country"]) || !checkSex(signUpForm["sex"])) {
