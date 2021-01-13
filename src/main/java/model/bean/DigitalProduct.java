@@ -155,6 +155,12 @@ public class DigitalProduct extends Product {
                 + '}';
     }
 
+    /**
+     *  Gets the digital produtc's additional informations (platform, release date, publisher, software house and PEGI).
+     *
+     * @return hashmap where keys are the informations and keys are their respective values.
+     */
+
     @NotNull
     public HashMap<String, String> getAdditionalInformations() {
         HashMap<String, String> additionalInformations = new HashMap<>();

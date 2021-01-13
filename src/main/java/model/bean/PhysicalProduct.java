@@ -86,12 +86,17 @@ public class PhysicalProduct extends Product {
                 + '}';
     }
 
+    /**
+     *  Gets the physical produtc's additional informations (weight and size).
+     *
+     * @return hashmap where keys are the informations and keys are their respective values.
+     */
     @NotNull
     public HashMap<String, String> getAdditionalInformations() {
         HashMap<String, String> additionalInformations = new HashMap<>();
 
-        additionalInformations.put("Dimensioni", getSize() + " cm");
-        additionalInformations.put("Peso", "" + getWeight() + " kg");
+        additionalInformations.put("size", getSize() + " cm");
+        additionalInformations.put("weight", "" + getWeight() + " kg");
 
         return additionalInformations;
     }
