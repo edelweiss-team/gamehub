@@ -218,9 +218,11 @@
         resizeFooter();
         window.onresize = ev => resizeFooter();
     </script>
+    <script>var maxPageCategories = ${(maxPageCategories > 0)?(maxPageCategories):(1)}; //mantiena l'indice dell'ultima pagina</script>
     <script>var maxPageUsers = ${(maxPageUsers > 0)?(maxPageUsers):(1)}; //mantiena l'indice dell'ultima pagina</script>
     <script src="${pageContext.request.contextPath}/js/adminArea.js"></script>
     <script src="${pageContext.request.contextPath}/js/utility.js"></script>
     <script src="${pageContext.request.contextPath}/js/usersAdmin.js"></script>
+    <script src="${pageContext.request.contextPath}/js/categoriesAdmin.js"></script>
 </body>
 </html>
