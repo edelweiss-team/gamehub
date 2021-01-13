@@ -51,7 +51,7 @@ public class ShowShopPageServlet extends HttpServlet {
                 ? req.getParameter("categoryName") : "";
         double price;
         try {
-            price = (req.getParameter("price") !=  null && req.getParameter("price").length() > 0)
+            price = (req.getParameter("price") !=  null)
                     ? Double.parseDouble(req.getParameter("price")) : LIMIT_MAX;
         } catch (NumberFormatException e) {
             throw new RequestParametersException("Error in the parameters, price "

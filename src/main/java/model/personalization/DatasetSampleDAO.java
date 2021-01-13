@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
  * learning model used to segment a classify the users.
  */
 public class DatasetSampleDAO {
-    public static final @NotNull String BUFFER = "buffer.csv";
+    public static final @NotNull String BUFFER = "personalization/buffer.csv";
 
     /**
      * This method buffers all user samples in a given range.

@@ -1,6 +1,7 @@
 package controller;
 
 import org.apache.log4j.BasicConfigurator;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -13,9 +14,9 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShowCategoryPageServletTest {
-    private ShowCategoryPageServlet servlet;
-    private MockHttpServletRequest request;
-    private MockHttpServletResponse response;
+    private @NotNull ShowCategoryPageServlet servlet;
+    private @NotNull MockHttpServletRequest request;
+    private @NotNull MockHttpServletResponse response;
 
     @BeforeEach
     void setUp() {

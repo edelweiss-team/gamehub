@@ -6,6 +6,7 @@ import java.util.List;
 import model.bean.Product;
 import model.bean.Tag;
 import model.bean.User;
+import model.dao.UserDAO;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -101,6 +102,14 @@ public class RecommendedProductList {
                 + ", vote=" + vote
                 + '}';
     }
+
+    /*public static void main(String[] args) {
+        RecommendedProductList rpl = new RecommendedProductList(
+                (new UserDAO()).doRetrieveByUsername("username1")
+        );
+        rpl.getList().forEach(p -> System.out.println(p));
+        //rpl.setVote(true);
+    }*/
 
     @NotNull
     private final List<Product> products;

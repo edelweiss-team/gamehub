@@ -72,12 +72,12 @@
                                             <h5 class="modal-title">Confirmation</h5>
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
-                                        <div class="modal-body">
+                                        <div class="modal-body bg-dark">
                                             <form name="approveOrderForm" class="approveOrderForm" method="post" action="approveOrder-servlet">
                                                 <div class="modal-body">
                                                     <c:forEach var="product" items="${orders.get(i).getAllProducts()}">
                                                         <c:if test="${product.getClass().getSimpleName() == 'DigitalProduct'}">
-                                                            <input type="text" placeholder="Inserisci qui il codice di attivazione">
+                                                            <input type="text" placeholder="Activation code(separate with ',' if there are more copies)..." name="activation-code${product.id}"><br>
                                                         </c:if>
                                                     </c:forEach>
                                                 </div>
