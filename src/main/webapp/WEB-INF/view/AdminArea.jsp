@@ -63,33 +63,34 @@
                     </c:forEach>
                     </tbody>
                 </table>
+                <div class='paginationUsers'>
+                    <span id='previousPageUsers' class='visible'>&laquo;</span>
+                    <span id='ellipseSxUsers'>...</span>
+                    <c:set var='maxPageUsers' value='${Math.ceil(usersLength/4)}'/>
+                    <c:forEach var='i' begin='1' end='${maxPageUsers}'>
+                        <c:if test='${i == 1}'>
+                            <span class='current visible pageNumBtnUserAdmin' id='pageUsers${i}'>${i}</span>
+                        </c:if>
+                        <c:if test='${i != 1}'>
+                            <c:if test='${i <= 4}'>
+                                <span class='pageNumBtnUserAdmin visible' id='pageUsers${i}'>${i}</span>
+                            </c:if>
+                            <c:if test='${i > 4}'>
+                                <span class='pageNumBtnUserAdmin' id='pageUsers${i}'>${i}</span>
+                            </c:if>
+                        </c:if>
+                    </c:forEach>
+                    <c:if test='${maxPageUsers > 4}'>
+                        <span id='ellipseDxUsers' class='visible'>...</span>
+                    </c:if>
+                    <c:if test='${maxPageUsers <= 4}'>
+                        <span id='ellipseDxUsers'>...</span>
+                    </c:if>
+                    <span id='nextPageUsers' class='visible'>&raquo;</span>
+                </div>
             </div>
         </div>
-        <div class='paginationUsers'>
-            <span id='previousPageUsers' class='visible'>&laquo;</span>
-            <span id='ellipseSxUsers'>...</span>
-            <c:set var='maxPageUsers' value='${Math.ceil(usersLength/4)}'/>
-            <c:forEach var='i' begin='1' end='${maxPageUsers}'>
-                <c:if test='${i == 1}'>
-                    <span class='current visible pageNumBtnUserAdmin' id='pageUsers${i}'>${i}</span>
-                </c:if>
-                <c:if test='${i != 1}'>
-                    <c:if test='${i <= 4}'>
-                        <span class='pageNumBtnUserAdmin visible' id='pageUsers${i}'>${i}</span>
-                    </c:if>
-                    <c:if test='${i > 4}'>
-                        <span class='pageNumBtnUserAdmin' id='pageUsers${i}'>${i}</span>
-                    </c:if>
-                </c:if>
-            </c:forEach>
-            <c:if test='${maxPageUsers > 4}'>
-                <span id='ellipseDxUsers' class='visible'>...</span>
-            </c:if>
-            <c:if test='${maxPageUsers <= 4}'>
-                <span id='ellipseDxUsers'>...</span>
-            </c:if>
-            <span id='nextPageUsers' class='visible'>&raquo;</span>
-        </div>
+
     </div>
 
     <div id="products-div" style="display: none">

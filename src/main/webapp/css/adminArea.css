@@ -20,6 +20,10 @@
     overflow: auto;
 }
 
+.admin-fieldset h3{
+    color: white;
+}
+
 form {
     display: inline;
 }
