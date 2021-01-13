@@ -11,7 +11,10 @@ import javax.servlet.http.HttpSession;
 import model.bean.User;
 import model.dao.*;
 import org.jetbrains.annotations.NotNull;
-
+/**
+ * This Servlet allows the user to login.
+ * When a user logs in the request is processed by this servlet.
+ */
 @WebServlet("/login-servlet")
 public class LoginServlet extends HttpServlet {
 
@@ -20,12 +23,29 @@ public class LoginServlet extends HttpServlet {
     public static final int USERNAME_MAX_LENGTH = 20;
     public static final int USERNAME_MIN_LENGTH = 6;
 
+    /**
+     * This method calls the doGet method.
+     *
+     * @param req the HttpServletRequest
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         this.doGet(req, resp);
     }
 
+    /**
+     * This method process the login it controls if a user is logged.
+     * If all the parameters are valid then the user is inserted into the session
+     *
+     * @param req the HttpServletRequest
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
