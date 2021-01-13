@@ -19,9 +19,9 @@ import org.jetbrains.annotations.NotNull;
 public class ManageCategoryServlet extends HttpServlet {
 
     public static final int CATEGORY_MAX_LENGTH = 20;
-    public static final int CATEGORY_MIN_LENGTH = 6;
+    public static final int CATEGORY_MIN_LENGTH = 3;
     public static final int DESCRIPTION_CATEGORY_MIN_LENGTH = 3;
-    public static final int DESCRIPTION_CATEGORY_MAX_LENGTH = 3;
+    public static final int DESCRIPTION_CATEGORY_MAX_LENGTH = 1000;
     public static final @NotNull String NAME_REGEX = "^(([A-Za-z][a-z0-9]*"
             + "([-'\\s\\.]))*([A-Za-z0-9][A-Za-z0-9]*))$";
 
@@ -38,7 +38,7 @@ public class ManageCategoryServlet extends HttpServlet {
         Category c;
         JsonObject responseObject = new JsonObject();
         String operation = req.getParameter("manage_category");
-
+        String nome = req.getParameter("removeCategory");
         if (operation != null) {
             if (operation.equals("remove_category")) {
                 if (req.getParameter("removeCategory") != null) {
@@ -84,7 +84,8 @@ public class ManageCategoryServlet extends HttpServlet {
                             InputStream is = category_image.getInputStream();
                             BufferedInputStream bin = new BufferedInputStream(is);
                             FileOutputStream fos = new FileOutputStream(
-                                    new File("C:\\apache-tomcat-9.0.31\\webapps\\studium\\resources\\images\\categoryImages"
+                                    new File("C:\\apache-tomcat-9.0.31\\webapps\\studium\\"
+                                            + "resources\\images\\categoryImages"
                                             + File.separator,
                                             categoryName.toLowerCase().replace(" ",
                                                     "-") + "-Image.jpg"));
@@ -171,13 +172,16 @@ public class ManageCategoryServlet extends HttpServlet {
                         InputStream is = category_image.getInputStream();
                         BufferedInputStream bin = new BufferedInputStream(is);
                         FileOutputStream fos = new FileOutputStream(
-                                new File("C:\\apache-tomcat-9.0.31\\webapps\\studium\\resources\\images\\categoryImages"
+                                new File("C:\\apache-tomcat-9.0.31\\webapps\\studium\\"
+                                        + "resources\\images\\categoryImages"
                                         + File.separator,
                                         categoryName.toLowerCase().replace(" ", "-")
                                                 + "-Image.jpg"));
                         FileOutputStream fos2 =
-                                new FileOutputStream(new File("C:\\Users\\Roberto Esposito\\Desktop\\tsw"
-                                        + "\\progettoTSWv0.1\\web\\resources\\images\\categoryImages"
+                                new FileOutputStream(new File("C:\\Users\\Roberto Esposito"
+                                        + "\\Desktop\\tsw"
+                                        + "\\progettoTSWv0.1\\web\\resources\\images\\"
+                                        + "categoryImages"
                                         + File.separator,
                                         categoryName.toLowerCase().replace(" ", "-")
                                                 + "-Image.jpg"));
