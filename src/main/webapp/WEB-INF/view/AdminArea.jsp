@@ -122,7 +122,7 @@
             </form>
         </div>
         <div class='admin-fieldset'>
-            <h3>Delete category</h3>
+            <h3>Update category</h3>
             <div class="table-div categories-table-div">
                 <table border='1' id='categories-table' class='content-table'>
                     <thead>
@@ -224,5 +224,6 @@
     <script src="${pageContext.request.contextPath}/js/utility.js"></script>
     <script src="${pageContext.request.contextPath}/js/usersAdmin.js"></script>
     <script src="${pageContext.request.contextPath}/js/categoriesAdmin.js"></script>
+    <script src="${pageContext.request.contextPath}/js/adminForms.js"></script>
 </body>
 </html>
