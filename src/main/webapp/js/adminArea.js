@@ -2,6 +2,7 @@ function switchSectionOfPage(x) {
     let users = document.getElementById("users-div");
     let products = document.getElementById("products-div");
     let categories = document.getElementById("categories-div");
+    let tags = document.getElementById("tags-div");
     let operators = document.getElementById("operators-div");
     let moderators = document.getElementById("moderators-div");
     let admins = document.getElementById("admins-div");
@@ -10,6 +11,7 @@ function switchSectionOfPage(x) {
         users.style.display = "block";
         products.style.display = "none";
         categories.style.display = "none";
+        tags.style.display = "none";
         operators.style.display = "none";
         moderators.style.display = "none";
         admins.style.display = "none";
@@ -18,6 +20,7 @@ function switchSectionOfPage(x) {
         users.style.display = "none";
         products.style.display = "block";
         categories.style.display = "none";
+        tags.style.display = "none";
         operators.style.display = "none";
         moderators.style.display = "none";
         admins.style.display = "none";
@@ -26,6 +29,16 @@ function switchSectionOfPage(x) {
         users.style.display = "none";
         products.style.display = "none";
         categories.style.display = "block";
+        tags.style.display = "none";
+        operators.style.display = "none";
+        moderators.style.display = "none";
+        admins.style.display = "none";
+    }
+    if(x.id == "tag"){
+        users.style.display = "none";
+        products.style.display = "none";
+        categories.style.display = "none";
+        tags.style.display = "block";
         operators.style.display = "none";
         moderators.style.display = "none";
         admins.style.display = "none";
@@ -34,6 +47,7 @@ function switchSectionOfPage(x) {
         users.style.display = "none";
         products.style.display = "none";
         categories.style.display = "none";
+        tags.style.display = "none";
         operators.style.display = "block";
         moderators.style.display = "none";
         admins.style.display = "none";
@@ -42,6 +56,7 @@ function switchSectionOfPage(x) {
         users.style.display = "none";
         products.style.display = "none";
         categories.style.display = "none";
+        tags.style.display = "none";
         operators.style.display = "none";
         moderators.style.display = "block";
         admins.style.display = "none";
@@ -50,6 +65,7 @@ function switchSectionOfPage(x) {
         users.style.display = "none";
         products.style.display = "none";
         categories.style.display = "none";
+        tags.style.display = "none";
         operators.style.display = "none";
         moderators.style.display = "none";
         admins.style.display = "block";

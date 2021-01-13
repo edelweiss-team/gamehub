@@ -24,6 +24,7 @@
         <button id="admin" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Admins</button>
         <button id="moderator" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Moderators</button>
         <button id="operator" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Operators</button>
+        <button id="tag" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Tags</button>
         <button id="category" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Categories</button>
         <button id="product" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Products</button>
         <button id="user" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Users</button>
@@ -98,7 +99,100 @@
     </div>
 
     <div id="categories-div" style="display: none">
-        <p>Categories</p>
+        <h1 class='manage-header-category'>Manage categories</h1>
+        <div class='admin-fieldset'>
+            <h3>Add category</h3>
+            <form id='addCategoryForm' name='addCategoryForm' action='manage-category' method='post' enctype='multipart/form-data'>
+                <div class='admin-textbox'>
+                    <input type='text' id='categoryName' class='admin-textbox' name='categoryName' placeholder='Category name'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='file' id='image_path' name='image_path'>
+                </div>
+                <div class='admin-textbox-textarea'>
+                    <textarea id='description_category' placeholder="Description" name='description_category'></textarea>
+                </div>
+                <div class='admin-textbox' style='border: none'>
+                    <span id='errorMessageAddCategory' class='Error'></span><br>
+                </div>
+                <div id='submitAdminButtonContainerAddCategory'>
+                    <input type='submit' class='btnAdmin submitBtn' disabled>
+                    <input type="hidden" name="manage_category" value="add_category">
+                </div>
+            </form>
+        </div>
+        <div class='admin-fieldset'>
+            <h3>Delete category</h3>
+            <div class="table-div categories-table-div">
+                <table border='1' id='categories-table' class='content-table'>
+                    <thead>
+                    <tr class='categories-table-header'>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Image Path</th>
+                        <th>Change</th>
+                        <th>Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody class='categories-table-body'>
+                    <c:forEach items='${firstCategories}' var='category'>
+                        <tr id="${category.name}CategoryRow" class='categories-table-body-row'>
+                            <td class='can-be-editable editable-name'>  ${category.name}  </td>
+                            <td class='can-be-editable editable-description'>  ${category.description}  </td>
+                            <td class='can-be-editable editable-imagePath'>
+                                <input type='file' name='fileCategory' style='display: none'>
+                                <span>${category.image}</span>
+                            </td>
+                            <td class='form-container'>
+                                <form class='changeCategoryForm' name='changeCategoryForm' method='post' action='manage-category'>
+                                    <input type='hidden' value='${category.name}' name='changeCategory' class='changeCategoryOldName'>
+                                    <input type="hidden" name="manage_category" value="update_category">
+                                    <input type='submit' value='📝' class='changeCategoryAdminButton'>
+                                    <span class="errorCategoryMessage" style="color: #c75450; display: none"></span>
+                                </form>
+                            </td>
+                            <td class='form-container'>
+                                <form class='removeCategoryForm' name='removeCategoryForm' method='post' action='manage-category'>
+                                    <input type='hidden' value='${category.name}' name='removeCategory' class='removeCategoryOldName'>
+                                    <input type="hidden" name="manage_category" value="remove_category">
+                                    <input type='submit' value='✗' class='removeCategoryAdminButton'>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class='paginationCategories'>
+                <span id='previousPageCategories' class='visible'>&laquo;</span>
+                <span id='ellipseSxCategories'>...</span>
+                <c:set var='maxPageCategories' value='${Math.ceil(categoriesLength/4)}'/>
+                <c:forEach var='i' begin='1' end='${maxPageCategories}'>
+                    <c:if test='${i == 1}'>
+                        <span class='current visible pageNumBtnCategoryAdmin' id='pageCategories${i}'>${i}</span>
+                    </c:if>
+                    <c:if test='${i != 1}'>
+                        <c:if test='${i <= 4}'>
+                            <span class='pageNumBtnCategoryAdmin visible' id='pageCategories${i}'>${i}</span>
+                        </c:if>
+                        <c:if test='${i > 4}'>
+                            <span class='pageNumBtnCategoryAdmin' id='pageCategories${i}'>${i}</span>
+                        </c:if>
+                    </c:if>
+                </c:forEach>
+                <c:if test='${maxPageCategories > 4}'>
+                    <span id='ellipseDxCategories' class='visible'>...</span>
+                </c:if>
+                <c:if test='${maxPageCategories <= 4}'>
+                    <span id='ellipseDxCategories'>...</span>
+                </c:if>
+                <span id='nextPageCategories' class='visible'>&raquo;</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="tags-div" style="display: none">
+        <p>Tags</p>
     </div>
 
     <div id="operators-div" style="display: none">

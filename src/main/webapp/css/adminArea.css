@@ -28,12 +28,46 @@ form {
     display: inline;
 }
 
-.manage-header-user{
+.manage-header-user, .manage-header-product, .manage-header-operator, .manage-header-moderator, .manage-header-category, .manage-header-tag{
     border-bottom: 4px solid #ffb320;
     margin-left: 30%;
     margin-top: 10%;
     color: white;
     width: fit-content;
+}
+
+
+.admin-textbox{
+    width: 45%;
+    overflow: hidden;
+    font-size: 20px;
+    padding: 8px 0;
+    margin: 8px 0;
+    border-bottom: 1px solid #ffb320;
+    margin-left: 27%;
+    /*background-color: #c75450;*/
+}
+
+.admin-textbox input, textarea{
+    border: none;
+    outline: none;
+    background: none;
+    color: white;
+    font-size: 18px;
+    width: 95%;
+    float: left;
+    margin: 0 10px;
+    text-align: center;
+}
+
+.admin-fieldset{
+    width: 75%;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 3%;
+    margin-right: 0;
+    background: rgba(48, 48, 48, 0.5) radial-gradient(black, transparent);
+    padding: 2%;
 }
 
 .table-div{
@@ -48,6 +82,36 @@ form {
 .table-div::-webkit-scrollbar{
     display: none;
 }
+
+.btnAdmin{
+    width: 25%;
+    background: none;
+    border: 2px solid #ffb320;
+    color: white;
+    font-size: 112%;
+    cursor: pointer;
+}
+
+.btnAdmin:hover{
+    background-color: #404040;
+}
+
+#description, #curriculum, #description_category{
+    width: 80%;
+    height: 30%;
+    resize: none;
+    margin-left: 10%;
+    text-align: left;
+    border: #ffb320 1px solid;
+    margin-top: 1%;
+    margin-bottom: 2%;
+}
+
+#curriculum-label, #description-label{
+    margin-right: 20px;
+}
+
+
 
 .content-table{
     border-collapse: collapse;
@@ -83,15 +147,50 @@ form {
     border-bottom: 2px solid #ffb320;
 }
 
-.paginationUsers{
+#submitAdminButtonContainerRemoveUser > input[disabled],
+#submitAdminButtonContainerAddCourse > input[disabled],
+#submitAdminButtonContainerRemoveCourse > input[disabled],
+#submitAdminButtonContainerAddCategory > input[disabled],
+#submitAdminButtonContainerRemoveCategory > input[disabled],
+#submitAdminButtonContainerAddTeacher > input[disabled],
+#submitAdminButtonContainerAddAdmin > input[disabled],
+#submitAdminButtonContainerRemoveAdmin > input[disabled]{
+    pointer-events: none;
+}
+
+.paginationUsers, .paginationOperators, .paginationCategories, .paginationProducts, .paginationTags, .paginationModerators{
     display: inline-block;
 }
 
-.paginationUsers span {
+.paginationUsers span, .paginationOperators span, .paginationCategories span, .paginationProducts span, .paginationTags span, .paginationModerators span {
     display: none;
     cursor: pointer;
 }
 
-.paginationUsers span.visible {
+.paginationUsers span.visible, .paginationOperators span.visible, .paginationCategories span.visible, .paginationProducts span.visible, .paginationTags span.visible, .paginationModerators span.visible {
     display: unset;
+}
+
+.removeAdminAdminButton, .removeUserAdminButton, .removeOperatorAdminButton, .removeCategoryAdminButton,
+.removeProductAdminButton, .removeTagAdminButton, .removeModeratorAdminButton{
+    background: none;
+    outline: none;
+    border: none;
+    color: #c75450;
+    font-weight: bold;
+    font-size: 150%;
+    border-radius: 2px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.changeCategoryAdminButton, .changeProductAdminButton{
+    border: none;
+    outline: none;
+    background-color: inherit;
+    color: lightgrey;
+    padding: 4px 6px;
+    cursor: pointer;
+    border-radius: 2px;
+    font-size: 180%;
 }
