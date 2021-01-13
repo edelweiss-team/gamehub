@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    Product product = (Product) request.getAttribute("product");
+   Product product = (Product) request.getAttribute("product");
    String productType = (String) request.getAttribute("productType");
 
    HashMap<String, String> additionalInformations;
@@ -95,11 +95,13 @@
                         <p style="color: whitesmoke; word-break: break-word"><%=product.getDescription()%></p>
                         <form>
                             <div class="form-group" style="display: inline">
-                                <label for="ProductQuantity">Quantità:</label>
-                                <input class="form-control" id="ProductQuantity" aria-describedby="quantityHelp" placeholder="1">
+                                <input type="hidden" name="productId" value="${product.id}">
+                                <input type="hidden" name="productType" value="${product.getClass().getSimpleName().replaceAll("(Product)","")}">
+                                <label for="ProductQuantity">Quantity:</label>
+                                <input class="form-control" id="ProductQuantity" max="${product.quantity}" type="number" name="productQuantity" aria-describedby="quantityHelp" placeholder="1">
                                 <small id="quantityHelp" class="form-text text-muted" style="color: darkgray!important">Max: <%=quantity%>.</small>
                             </div>
-                            <button class="site-btn btn-sm">Add to Cart</button>
+                            <button class="addToCartBtn site-btn btn-sm">Add to Cart</button>
                         </form>
 
                     </div>
@@ -132,6 +134,7 @@
 
 <!--====== Javascripts & Jquery ======-->
 <script src="${pageContext.request.contextPath}/js/shop.js"></script>
+<script src="${pageContext.request.contextPath}/js/singleProduct.js"></script>
 <script src="${pageContext.request.contextPath}/js/searchBarAsync.js"></script>
 </body>
 </html>

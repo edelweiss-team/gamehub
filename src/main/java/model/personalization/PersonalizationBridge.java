@@ -20,7 +20,7 @@ public class PersonalizationBridge {
 
     //aggiungiamo le include paths per permettere di includere i moduli locali
     static {
-        JEP_CONFIG.addIncludePaths("./");
+        JEP_CONFIG.addIncludePaths("./personalization/");
     }
 
     /**
@@ -61,7 +61,7 @@ public class PersonalizationBridge {
         dsd.doBufferByUsername(u.getUsername()); //scriviamo sul file il campione
 
         try (Interpreter interp = JEP_CONFIG.createSubInterpreter()) {
-            //passiamo il voto da registrare allo script pyhton
+            //passiamo il voto da registrare allo script python
             interp.exec("from samplePrediction import registerVote");
             interp.set("vote", vote);
             Boolean success = interp.getValue("registerVote(vote)", Boolean.class);

@@ -20,7 +20,6 @@ class ShowShopPageServletTest {
     void setUp() {
         servlet = new ShowShopPageServlet();
         request = new MockHttpServletRequest();
-        request.addParameter("categoryName","Azione");
         response = new MockHttpServletResponse();
         BasicConfigurator.configure();
     }
@@ -28,6 +27,7 @@ class ShowShopPageServletTest {
     @Test
     public void showShopWithoutFiltering() throws ServletException, IOException{
         request.addParameter("productType","Physical");
+        request.addParameter("categoryName","Azione");
         servlet.doPost(request, response);
         assertEquals("/WEB-INF/view/Shop.jsp", response.getForwardedUrl());
     }
@@ -39,6 +39,7 @@ class ShowShopPageServletTest {
         request.addParameter("description","Sono un bel gioco, acquistami!");
         request.addParameter("tag","New");
         request.addParameter("price","24.44");
+        request.addParameter("categoryName","Azione");;
         servlet.doPost(request, response);
         assertEquals("/WEB-INF/view/Shop.jsp", response.getForwardedUrl());
     }
@@ -46,7 +47,13 @@ class ShowShopPageServletTest {
     @Test
     public void showShopPriceNotOk() throws ServletException, IOException{
         request.addParameter("price","14.14alkhjh)?");
-        servlet.doPost(request, response);
-        assertThrows(NumberFormatException.class, ()->servlet.doPost(request, response));
+        request.addParameter("categoryName","Azione");
+        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
+    }
+
+    @Test
+    public void showShopPriceNotOkEmpty() throws ServletException, IOException{
+        request.addParameter("price","");
+        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
     }
 }
