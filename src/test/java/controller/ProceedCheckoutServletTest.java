@@ -77,6 +77,24 @@ public class ProceedCheckoutServletTest {
     }
 
     @Test
+    public void countryNotLogged() throws ServletException, IOException {
+
+        request.addParameter("firstName", "Gerardo");
+        request.addParameter("lastName", "Brescia");
+        request.addParameter("mail","Gerardo@gmail.com");
+        request.addParameter("address","Via Castello");
+        request.addParameter("city","Fisciano");
+        request.addParameter("telephone", "3328985488");
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-number", "4916551444956962");
+        request.addParameter("cc-cvv", "347");
+        request.addParameter("paymentMethod", "creditCard");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+
+    }
+
+    @Test
     public void nameNotValidNotLogged() throws ServletException, IOException {
 
         request.addParameter("firstName", "Gerardo1");
@@ -823,6 +841,80 @@ public class ProceedCheckoutServletTest {
 
     }
 
+    @Test
+    public void expirationNullOkLogged() throws ServletException, IOException {
+        session.setAttribute("loggedUser", u2);
+        cart = new Cart(u2);
+        session.setAttribute("cart", cart);
+        cart.addProduct(p,1);
+        request.setSession(session);
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-number", "4916551444956962");
+        request.addParameter("cc-cvv", "347");
+        request.addParameter("paymentMethod", "creditCard");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+
+    }
+
+    @Test
+    public void ccnameNullOkLogged() throws ServletException, IOException {
+        session.setAttribute("loggedUser", u2);
+        cart = new Cart(u2);
+        session.setAttribute("cart", cart);
+        cart.addProduct(p,1);
+        request.setSession(session);
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-number", "4916551444956962");
+        request.addParameter("cc-cvv", "347");
+        request.addParameter("paymentMethod", "creditCard");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+
+    }
+
+    @Test
+    public void numberNullOkLogged() throws ServletException, IOException {
+        session.setAttribute("loggedUser", u2);
+        cart = new Cart(u2);
+        session.setAttribute("cart", cart);
+        cart.addProduct(p,1);
+        request.setSession(session);
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-cvv", "347");
+        request.addParameter("paymentMethod", "creditCard");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+
+    }
+
+    @Test
+    public void cvvNullOkLogged() throws ServletException, IOException {
+        session.setAttribute("loggedUser", u2);
+        cart = new Cart(u2);
+        session.setAttribute("cart", cart);
+        cart.addProduct(p,1);
+        request.setSession(session);
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-number", "4916551444956962");
+        request.addParameter("paymentMethod", "creditCard");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+
+    }
+
+    @Test
+    public void paymentNullOkLogged() throws ServletException, IOException {
+        session.setAttribute("loggedUser", u2);
+        cart = new Cart(u2);
+        session.setAttribute("cart", cart);
+        cart.addProduct(p,1);
+        request.setSession(session);
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-number", "4916551444956962");
+        request.addParameter("cc-cvv", "347");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+
+    }
 
     @Test
     public void cartEmptyLogged() throws ServletException, IOException {
@@ -830,6 +922,20 @@ public class ProceedCheckoutServletTest {
         cart = new Cart(u2);
         session.setAttribute("cart", cart);
         request.setSession(session);
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-number", "4916551444956962");
+        request.addParameter("cc-cvv", "347");
+        request.addParameter("paymentMethod", "creditCard");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+
+    }
+
+    @Test
+    public void cartNullLogged() throws ServletException, IOException {
+        MockHttpSession session2 = new MockHttpSession();
+        session2.setAttribute("loggedUser", u2);
+        request.setSession(session2);
         request.addParameter("cc-expiration", "12/31");
         request.addParameter("cc-name", "Nomecarta");
         request.addParameter("cc-number", "4916551444956962");
