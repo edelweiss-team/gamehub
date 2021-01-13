@@ -79,3 +79,4 @@ function setSwitchSectionOfPageListener(){
 }
 
 setSwitchSectionOfPageListener();
+
