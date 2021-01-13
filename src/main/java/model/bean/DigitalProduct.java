@@ -165,10 +165,10 @@ public class DigitalProduct extends Product {
     public HashMap<String, String> getAdditionalInformations() {
         HashMap<String, String> additionalInformations = new HashMap<>();
 
-        additionalInformations.put("Piattaforma", getPlatform());
-        additionalInformations.put("Data di rilascio", getReleaseDate());
-        additionalInformations.put("Publisher", getPublisher());
-        additionalInformations.put("Software house", getSoftwareHouse());
+        additionalInformations.put("Platform", getPlatform());
+        additionalInformations.put("release date", getReleaseDate());
+        additionalInformations.put("publisher", getPublisher());
+        additionalInformations.put("software house", getSoftwareHouse());
         additionalInformations.put("PEGI", "" + getRequiredAge());
 
         return additionalInformations;

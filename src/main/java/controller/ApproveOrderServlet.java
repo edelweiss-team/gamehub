@@ -36,7 +36,7 @@ public class ApproveOrderServlet extends HttpServlet {
         User operator;
         RequestDispatcher rd;
         String address;
-        ArrayList<Order> orderList = new ArrayList<>();
+        ArrayList<Order> orderList;
 
         try {
             id = Integer.parseInt(idString);
@@ -69,8 +69,10 @@ public class ApproveOrderServlet extends HttpServlet {
 
             try {
                 EmailUtility.sendEmail(
-                        "smtp.gmail.com", "" + 587,
-                        "atatbj.22@gmail.com", "Billjobs22", o.getUser().getMail(),
+                        "smtp.gmail.com",
+                        "587",
+                        "atatbj.22@gmail.com",
+                        "Billjobs22", o.getUser().getMail(),
                         "Order #" + o.getId() + " Confirmed",
                         "The order #" + o.getId()
                                 + " has been confirmed!" + activationCode[0]

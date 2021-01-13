@@ -27,15 +27,15 @@ public class ShowProductServlet extends HttpServlet {
         PhysicalProductDAO pdao = new PhysicalProductDAO();
         Product product;
 
-        int idProdcut = Integer.parseInt(req.getParameter("productId"));
+        int idProduct = Integer.parseInt(req.getParameter("productId"));
         String productType = req.getParameter("productType");
 
         if (productType == null) {
             throw new RequestParametersException("Error: product type cannot be null!");
         } else if (productType.equalsIgnoreCase("digital")) {
-            product = ddao.doRetrieveById(idProdcut);
+            product = ddao.doRetrieveById(idProduct);
         } else if (productType.equalsIgnoreCase("physical")) {
-            product = pdao.doRetrieveById(idProdcut);
+            product = pdao.doRetrieveById(idProduct);
         } else {
             throw new RequestParametersException("Error: product type '" + productType
                     + "' doesn't exist!");
@@ -43,7 +43,7 @@ public class ShowProductServlet extends HttpServlet {
 
         if (product == null) {
             throw new RequestParametersException("Error: " + productType + " product '"
-                    + idProdcut + "' doesn't exist!");
+                    + idProduct + "' doesn't exist!");
         }
 
         // aggiungiamo questa stringa in quanto nella view
