@@ -76,7 +76,10 @@ class GetMoreProductsServletTest {
     @Test
     public void GetMoreProductsPriceVoid() throws ServletException, IOException{
         request.addParameter("price","");
-        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
+        request.addParameter("productsPerRequest","8");
+        request.addParameter("startingIndex","1");
+        servlet.doPost(request, response);
+        assertTrue( !response.getContentAsString().isEmpty());
     }
 
     @Test
