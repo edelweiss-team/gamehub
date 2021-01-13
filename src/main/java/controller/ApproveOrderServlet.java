@@ -17,15 +17,33 @@ import model.bean.*;
 import model.dao.OperatorDAO;
 import model.dao.OrderDAO;
 import model.dao.UserDAO;
-
+/**
+ * This Servlet allows the operator to confirm an order.
+ * When a user approves an order, the request is processed by this servlet.
+ */
 @WebServlet(urlPatterns = {"/approveOrder-servlet"})
 public class ApproveOrderServlet extends HttpServlet {
-
+    /**
+     *This method calls the doGet method.
+     *
+     * @param req the HttpServletRequest from the client
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         this.doGet(req, resp);
     }
 
+    /**
+     *This method process the request to approve an order.
+     *
+     * @param req the HttpServletRequest from the client
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
 
