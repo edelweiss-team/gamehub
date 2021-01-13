@@ -95,6 +95,116 @@ public class ProceedCheckoutServletTest {
 
     }
 
+    @Test
+    public void nameNullNotLogged() throws ServletException, IOException {
+
+        request.addParameter("lastName", "Brescia");
+        request.addParameter("mail","Gerardo@gmail.com");
+        request.addParameter("address","Via Castello");
+        request.addParameter("city","Fisciano");
+        request.addParameter("telephone", "3328985488");
+        request.addParameter("country", "FR");
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-number", "4916551444956962");
+        request.addParameter("cc-cvv", "347");
+        request.addParameter("paymentMethod", "creditCard");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+
+    }
+
+    @Test
+    public void surnnameNullNotLogged() throws ServletException, IOException {
+
+        request.addParameter("firstName", "Gerardo");
+        request.addParameter("mail","Gerardo@gmail.com");
+        request.addParameter("address","Via Castello");
+        request.addParameter("city","Fisciano");
+        request.addParameter("telephone", "3328985488");
+        request.addParameter("country", "FR");
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-number", "4916551444956962");
+        request.addParameter("cc-cvv", "347");
+        request.addParameter("paymentMethod", "creditCard");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+
+    }
+
+    @Test
+    public void telephoneNullNotLogged() throws ServletException, IOException {
+
+        request.addParameter("firstName", "Gerardo");
+        request.addParameter("lastName", "Brescia");
+        request.addParameter("address","Via Castello");
+        request.addParameter("city","Fisciano");
+        request.addParameter("mail","Gerardo@gmail.com");
+        request.addParameter("country", "FR");
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-number", "4916551444956962");
+        request.addParameter("cc-cvv", "347");
+        request.addParameter("paymentMethod", "creditCard");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+
+    }
+
+    @Test
+    public void mailNullNotLogged() throws ServletException, IOException {
+
+        request.addParameter("firstName", "Gerardo");
+        request.addParameter("lastName", "Brescia");
+        request.addParameter("address","Via Castello");
+        request.addParameter("city","Fisciano");
+        request.addParameter("telephone", "3328985488");
+        request.addParameter("country", "FR");
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-number", "4916551444956962");
+        request.addParameter("cc-cvv", "347");
+        request.addParameter("paymentMethod", "creditCard");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+
+    }
+
+
+    @Test
+    public void cityNullNotLogged() throws ServletException, IOException {
+
+        request.addParameter("firstName", "Gerardo1");
+        request.addParameter("lastName", "Brescia");
+        request.addParameter("mail","Gerardo@gmail.com");
+        request.addParameter("address","Via Castello");
+        request.addParameter("telephone", "3328985488");
+        request.addParameter("country", "FR");
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-number", "4916551444956962");
+        request.addParameter("cc-cvv", "347");
+        request.addParameter("paymentMethod", "creditCard");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+
+    }
+
+
+    @Test
+    public void addressNullNotLogged() throws ServletException, IOException {
+
+        request.addParameter("firstName", "Gerardo");
+        request.addParameter("lastName", "Brescia");
+        request.addParameter("mail","Gerardo@gmail.com");
+        request.addParameter("city","Fisciano");
+        request.addParameter("telephone", "3328985488");
+        request.addParameter("country", "FR");
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-number", "4916551444956962");
+        request.addParameter("cc-cvv", "347");
+        request.addParameter("paymentMethod", "creditCard");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+
+    }
+
 
     @Test
     public void surnameTooShortNotLogged() throws ServletException, IOException {
@@ -710,6 +820,22 @@ public class ProceedCheckoutServletTest {
         request.addParameter("paymentMethod", "creditCard");
         servlet.doPost(request, response);
         assertEquals("/WEB-INF/view/purchaseConfirmed.jsp", response.getForwardedUrl());
+
+    }
+
+
+    @Test
+    public void cartEmptyLogged() throws ServletException, IOException {
+        session.setAttribute("loggedUser", u2);
+        cart = new Cart(u2);
+        session.setAttribute("cart", cart);
+        request.setSession(session);
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-number", "4916551444956962");
+        request.addParameter("cc-cvv", "347");
+        request.addParameter("paymentMethod", "creditCard");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
 
     }
 

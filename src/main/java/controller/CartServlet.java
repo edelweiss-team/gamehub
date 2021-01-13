@@ -12,17 +12,38 @@ import model.dao.CartDAO;
 import model.dao.DigitalProductDAO;
 import model.dao.PhysicalProductDAO;
 
+/**
+ * This Servlet allows to manage the Cart.
+ * The cart can be added to the session
+ * The cart can be showed to the user
+ * The cart can be removed from the session
+ */
 @WebServlet(urlPatterns = {
         "/add-cart", "/remove-cart", "/show-cart"
 })
 public class CartServlet extends HttpServlet {
 
+    /**
+     * calls doGet method.
+     *
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         this.doGet(req, resp);
     }
-
+    /**
+     * provides all the operations to manage the cart.
+     *
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
