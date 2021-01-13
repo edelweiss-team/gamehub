@@ -38,14 +38,16 @@ public class CategoryDAO {
             PreparedStatement ps = cn.prepareStatement("SELECT * FROM category C WHERE C.name=?;");
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
+
             if (rs.next()) {
                 category = new Category(rs.getString(1), rs.getString(2), rs.getString(3));
             }
+
             st.close();
             cn.close();
             return category;
         } catch (SQLException e) {
-            return null;
+            throw new RuntimeException(e);
         }
     }
 

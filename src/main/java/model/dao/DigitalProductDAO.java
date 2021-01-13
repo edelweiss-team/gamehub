@@ -56,20 +56,16 @@ public class DigitalProductDAO {
                 p.setSoftwareHouse(rs.getString(9));
                 p.setPublisher(rs.getString(10));
                 p.setQuantity(rs.getInt(11));
-
-
                 p.setCategories(doRetrieveAllProdCatById(p.getId()));
                 p.setTags(doRetrieveAllProdTagById(p.getId()));
 
                 prodotti.add(p);
-
             }
 
             return prodotti;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
-
         }
     }
 
@@ -84,12 +80,12 @@ public class DigitalProductDAO {
 
     @Nullable
     public DigitalProduct doRetrieveById(int id) {
+        DigitalProduct p = null;
+
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("SELECT * from digitalproduct WHERE id=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-
-            DigitalProduct p = null;
 
             if (rs.next()) {
                 p = new DigitalProduct();
@@ -104,22 +100,15 @@ public class DigitalProductDAO {
                 p.setSoftwareHouse(rs.getString(9));
                 p.setPublisher(rs.getString(10));
                 p.setQuantity(rs.getInt(11));
-
-
                 p.setCategories(doRetrieveAllProdCatById(p.getId()));
                 p.setTags(doRetrieveAllProdTagById(p.getId()));
-
-
-
             }
-
-            return p;
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
-
         }
+
+        return p;
     }
 
     /**
@@ -235,8 +224,7 @@ public class DigitalProductDAO {
 
             while (rs.next()) {
                 CategoryDAO categoryDao = new CategoryDAO();
-                Category temp;
-                temp = categoryDao.doRetrieveByName(rs.getString(1));
+                Category temp = categoryDao.doRetrieveByName(rs.getString(1));
                 categories.add(temp);
             }
 
