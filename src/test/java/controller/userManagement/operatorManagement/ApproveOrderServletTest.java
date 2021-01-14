@@ -94,7 +94,7 @@ public class ApproveOrderServletTest {
 
 
         order = new Order(
-                1,
+                10000000,
                 buyerUser,
                 operator,
                 "11/11/11");
@@ -102,7 +102,7 @@ public class ApproveOrderServletTest {
 
 
         orderByUnregisteredUser = new Order(
-                2,
+                10000001,
                 unregisteredUser,
                 operator,
                 "10/10/10"
@@ -118,7 +118,6 @@ public class ApproveOrderServletTest {
         opdao.doDeleteByUsername(operator.getUsername());
 
         udao.doDeleteFromUsername(buyerUser.getUsername());
-        udao.doDeleteFromUsername(unregisteredUser.getUsername());
     }
 
     @BeforeEach
@@ -147,15 +146,15 @@ public class ApproveOrderServletTest {
 
     @Test
     public void OrderIsByUnregisteredUser() throws ServletException, IOException {
-        request.addParameter("approveOrder", "2");
+        request.addParameter("approveOrder", "10000001");
         servlet.doPost(request, response);
-        assertNull(odao.doRetrieveById(2));
+        assertNull(odao.doRetrieveById(10000001));
     }
 
     @Test
     public void OrderIsByRegisteredUser() throws ServletException, IOException {
-        request.addParameter("approveOrder", "1");
+        request.addParameter("approveOrder", "10000000");
         servlet.doPost(request,response);
-        assertEquals(((odao.doRetrieveById(1)).getOperator()).getUsername(), operator.getUsername());
+        assertEquals(((odao.doRetrieveById(10000000)).getOperator()).getUsername(), operator.getUsername());
     }
 }
