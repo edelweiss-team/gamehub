@@ -19,13 +19,14 @@ public class ManageUserServlet extends HttpServlet {
     public static final int USERNAME_MIN_LENGTH = 6;
 
     /**
-     *This method calls the doGet method.
+     * this method manages Post request calling doGet method.
      *
-     * @param req the HttpServletRequest from the client
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
-     */    @Override
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
+     */
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         this.doGet(req, resp);

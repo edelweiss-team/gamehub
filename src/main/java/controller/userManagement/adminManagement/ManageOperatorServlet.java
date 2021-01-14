@@ -24,6 +24,14 @@ public class ManageOperatorServlet extends HttpServlet {
     public static final int CV_MAX_LENGTH = 1000;
     public static final int CV_MIN_LENGTH = 3;
 
+    /**
+     * this method manages Post request calling doGet method.
+     *
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
