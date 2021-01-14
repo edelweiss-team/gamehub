@@ -93,8 +93,7 @@ public class ApproveOrderServlet extends HttpServlet {
                         "atatbj.22@gmail.com",
                         "Billjobs22", order.getUser().getMail(),
                         "Order #" + order.getId() + " Confirmed",
-                        "The order #" + order.getId()
-                                + " has been confirmed!" + activationCode[0]
+                        "The order #" + order.getId() + " has been confirmed!" + activationCode[0]
                 );
             } catch (MessagingException e) {
                 throw new ServletException(e);
