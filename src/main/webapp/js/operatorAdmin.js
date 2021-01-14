@@ -6,48 +6,107 @@ function getMoreOperatorsPaging(startingIndex) {
         success: responseObject =>{
             let newOperators = responseObject.newOperators, $targetPage = $(".operators-table-body");
             $targetPage.empty();
-            if(isFirstSearch){
-                let newMaxPage = responseObject.newMaxPages;
-                for(let i = newMaxPage+1; i <= maxPageOperators; i++){
-                    $("#pageOperators"+i).remove();
-                }
-                for(let i = maxPageOperators+1; i <= newMaxPage; i++){
-                    if(i == 1)
-                        $("#pageOperators"+(i-1)).after("<span class='current visible pageNumBtnOperatorAdmin' id='pageOperators"+i+"'> "+i+" </span>");
-                    else if(i <= 4)
-                        $("#pageOperators"+(i-1)).after("<span class='pageNumBtnOperatorAdmin visible' id='pageOperators"+i+"'> "+i+" </span>");
-                    else
-                        $("#pageOperators"+(i-1)).after("<span class='pageNumBtnOperatorAdmin' id='pageOperators"+i+"'> "+i+" </span>");
-                    $("#pageOperators"+i).on("click", paginationOperatorsListener);
-                }
-                maxPageOperators = newMaxPage;
+
+            //se la pagina è vuota, a meno che non sia la prima, cancelliamola e ritorniamo alla prima pagina
+            if(newOperators.length == 0 && startingIndex != 0){
+                $(".paginationOperators #pageOperators" + maxPageOperators).remove();
+                maxPageOperators--;
+                $("#pageOperators1").click();
             }
-            else{
-                //se la pagina è vuota, a meno che non sia la prima, cancelliamola e ritorniamo alla prima pagina
-                if(newOperators.length == 0 && startingIndex != 0){
-                    $(".paginationOperators #pageOperators" + maxPageOperators).remove();
-                    maxPageOperators--;
-                    $("#pageOperators1").click();
-                }
-                for(let operator of newOperators){
-                    $targetPage.append("<tr id='" + operator.username + "OperatorRow' class='operators-table-body-row'>\n" +
-                        "                            <td> "+ operator.username +" </td>\n" +
-                        "                            <td> "+ operator.curriculum +"</td>\n" +
-                        "                            <td class='form-container'>\n" +
-                        "                                <form name='removeOperatorForm' class='removeOperatorForm' method='post' action='removeOperator-servlet'>\n" +
-                        "                                    <input type='hidden' value='"+operator.username+"' name='removeOperator' class='operatorNameForRemove'>\n" +
-                        "                                    <input type='submit' value='✗' class='removeOperatorAdminButton'>\n" +
-                        "                                </form>\n" +
-                        "                            </td>\n" +
-                        "                        </tr>")
-                }
-                //async Operator removal
-                $(".removeOperatorForm").on("submit", ev => ev.preventDefault());
-                $(".removeOperatorAdminButton").on("click", removeOperatorListener);
+            for(let operator of newOperators){
+                $targetPage.append("<tr id='" + operator.username + "OperatorRow' class='operators-table-body-row'>\n" +
+                    "                            <td class=\"can-be-editable editable-name\"> "+ operator.username +" </td>\n" +
+                    "                            <td class=\"can-be-editable editable-cv\"> "+ operator.cv +"</td>\n" +
+                    "                            <td class=\"can-be-editable editable-contractTime\"> "+ operator.contractTime +"</td>\n" +
+                    "                            <td class='form-container'>\n" +
+                    "                                <form name='changeOperatorForm' class='changeOperatorForm' method='post' action='manageOperator-servlet'>\n" +
+                    "                                    <input type='hidden' value='"+operator.username+"' name='changeOperator' class='changeOperatorOldName'>\n" +
+                    "                                    <input type='submit' value='✗' class='changeOperatorAdminButton'>\n" +
+                    "                                </form>\n" +
+                    "                            </td>\n" +
+                    "                            <td class='form-container'>\n" +
+                    "                                <form name='removeOperatorForm' class='removeOperatorForm' method='post' action='manageOperator-servlet'>\n" +
+                    "                                    <input type='hidden' value='"+operator.username+"' name='removeOperator' class='operatorNameForRemove'>\n" +
+                    "                                    <input type='submit' value='✗' class='removeOperatorAdminButton'>\n" +
+                    "                                </form>\n" +
+                    "                            </td>\n" +
+                    "                        </tr>")
             }
-        }
+            //async Operator removal
+            $(".removeOperatorForm").on("submit", ev => ev.preventDefault());
+            $(".removeOperatorAdminButton").on("click", removeOperatorListener);
+            }
+
     });
 }
+
+var changeOperatorListener = ev =>{
+    //impediamo il submit del form
+    ev.preventDefault();
+
+    var $target = $(ev.target);
+    var $editableContent = $target.closest(".operators-table-body-row").find(".can-be-editable");
+    var $updateContent = $target.closest(".operators-table-body-row").find(".form-container");
+    var fd = new FormData();
+
+    //se il valore è change, allora rendiamo editabili i campi e mostriamo il form di inserimento del file
+    if($target.val() == "📝"){
+        //rendiamo il contenuto della riga editabile
+        $editableContent.prop("contenteditable", true);
+
+        //cambiamo il bottone da change a submit
+        $target.val("Submit");
+    }
+    //altrimenti, mandiamo la richiesta asincrona
+    else{
+        $editableContent.removeAttr("contenteditable"); //rendiamo il contenuto non editabile
+        $target.val("📝"); //cambiamo il valore nuovamente a change
+
+
+        //prendiamo gli altri campi di input ed inseriamoli nel form data
+        fd.append("editable-name", $editableContent.filter(".editable-name").text());
+        fd.append("editable-cv", $editableContent.filter(".editable-cv").text());
+        fd.append("editable-contractTime", $editableContent.filter(".editable-contracTime").text());
+        fd.append("old-name", $updateContent.find(".changeOperatorOldName").val());
+
+        //inviamo la richiesta asincrona
+        $.ajax("manage-operator?manage_operator=update_operator", {
+            method: "POST",
+            dataType: "json",
+            enctype : 'multipart/form-data',
+            data: fd,
+            contentType: false,
+            processData: false,
+            cache: false,
+            error: ev => alert("Request failed on operator page failed."),
+            success: responseObject => {
+                let msg, type, updatedOperator, oldName, $editedRow;
+
+                //leggiamo la risposta json
+                updatedOperator = responseObject.updatedOperator;
+                oldName = responseObject.oldName;
+                $editedRow = $(document.getElementById(oldName + "OperatorRow"));
+                msg = responseObject.message;
+                type = responseObject.type;
+
+                //aggiorniamo gli input type=hidden con il categoryName apposito, e aggiorniamo la riga della tabella
+                $editedRow.find(".changeOperatorOldName").val(updatedOperator.name);
+                $editedRow.find(".removeOperatorOldName").val(updatedOperator.name);
+                //eventuale codice per visualizzare l'immagine
+                $editedRow.find(".editable-contractTime span").text(updatedOperator.contractTime);
+                $editedRow.find(".editable-cv").text(updatedOperator.cv);
+                $editedRow.find(".editable-name").text(updatedOperator.name);
+                $editedRow.prop("id", updatedOperator.name + "OperatorRow");
+
+
+                //mostriamo il messaggio di popup
+                showPopupMessage(type, msg, 8);
+            }
+        });
+
+    }
+}
+
 
 var paginationOperatorsListener = ev =>{
     let $target = $(ev.target), targetIdNum, $currentPage = $(".paginationOperators span.current"), $pageBtn,
@@ -123,7 +182,7 @@ var removeOperatorListener = ev => {
     ev.preventDefault();
     let $targetRow = $(ev.target).closest("tr"), operatorName;
     operatorName = $targetRow.find(".operatorNameForRemove").val();
-    $.ajax("remove-operator?removeOperator=" + operatorName, {
+    $.ajax("manage-operator?manage_operator=remove_operator&removeOperator=" + operatorName, {
         method: "GET",
         dataType: "json",
         error: ev => alert("Request of operator " + operatorName + " removal failed."),
@@ -142,6 +201,9 @@ var removeOperatorListener = ev => {
 };
 
 $(document).ready(function () {
+
+    $(".changeOperatorAdminButton").on("click", changeOperatorListener);
+
 
     //paginazione
     $(".paginationOperators span").on("click", paginationOperatorsListener);
@@ -165,7 +227,7 @@ $(document).ready(function () {
     $("#submitAdminButtonContainerAddOperator input[type=submit]").on("click", ev => {
         ev.preventDefault();
         let fd = new FormData(document.getElementById("addOperatorForm"));
-        $.ajax("add-operator", {
+        $.ajax("manage-operator?manage_operator=add_operator", {
             method: "POST",
             dataType: "json",
             enctype : 'multipart/form-data',
@@ -175,8 +237,7 @@ $(document).ready(function () {
             cache: false,
             error: ev => alert("Request on operator adding failed."),
             success: responseObject => {
-                //triggeriamo la ricerca per generare eventuali nuove pages
-                $("#searchBarContainerOperatorAdmin button[type=submit]").click();
+
                 showPopupMessage(responseObject.type, responseObject.msg, 8);
             }
         });

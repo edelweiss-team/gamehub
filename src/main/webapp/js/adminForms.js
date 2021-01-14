@@ -35,6 +35,17 @@ function checkCategoryName(categoryNameField){
     }
 }
 
+function checkOperatorName(usernameField){
+    let userName = usernameField.value;
+    let pattern = new RegExp("^(([A-Za-z][a-z0-9]*([-'\\s\\.]))*([A-Za-z0-9][a-z0-9]*))$");
+    if(pattern.test(userName) && userName.length >= 3 && userName.length <= 50)
+        return true;
+    else{
+        $(".submitBtn").prop("disabled", true);
+        return false;
+    }
+}
+
 function checkImage(imageField) {
     return true;
 }
@@ -84,6 +95,16 @@ var setErrorListenerAdminAddCategory = ev =>{
         errorMessage.classList.add("toShow");
 };
 
+var setErrorListenerAdminAddOperator = ev =>{
+    let flag = checkFormLengthAdmin("addOperatorForm");
+    let errorMessage = document.getElementById("errorMessageAddOperator");
+    if (flag === 1)
+        errorMessage.textContent = "Errore: i campi non possono essere vuoti";
+    if(flag === 2)
+        errorMessage.textContent = "Errore: il testo che hai inserito è troppo lungo! Max:30 caratteri";
+    if(flag > 0)
+        errorMessage.classList.add("toShow");
+};
 
 let addCategoryForm = document.getElementById("addCategoryForm"),
     submitAdminButtonContainerAddCategory = document.getElementById("submitAdminButtonContainerAddCategory");
@@ -136,6 +157,58 @@ addCategoryForm.onsubmit = ev =>{
     }
     else if(!checkDescription(descriptionField)){
         errorMessage.textContent = "Errore: descrizione";
+        errorMessage.classList.add("toShow");
+        flag = false;
+    }
+    if(flag)
+        errorMessage.classList.remove("toShow");
+    return flag;
+};
+
+
+
+
+let addOperatorForm = document.getElementById("addOperatorForm"),
+    submitAdminButtonContainerAddOperator = document.getElementById("submitAdminButtonContainerAddOperator");
+
+addEmptyCheckToTextFieldsAdmin("addOperatorForm");
+submitAdminButtonContainerAddOperator.addEventListener("click", setErrorListenerAdminAddOperator);
+$(addOperatorForm).on("input", ev => {
+    let usernameField = document.getElementById("userName");
+    let curriculumField = document.getElementById("curriculum");
+    let contractTimeField = document.getElementById("contractTime");
+    let errorMessage = document.getElementById("errorMessageAddOperator");
+    let flag = true;
+
+    if(!checkOperatorName(usernameField)){
+        errorMessage.textContent = "Errore: nome Operator";
+        errorMessage.classList.add("toShow");
+        flag = false;
+    }
+    if(!checkDescription(curriculumField)){
+        errorMessage.textContent = "Errore: cv";
+        errorMessage.classList.add("toShow");
+        flag = false;
+    }
+    if(flag) {
+        errorMessage.classList.remove("toShow");
+        $(".submitBtn").removeAttr("disabled");
+    }
+});
+addOperatorForm.onsubmit = ev =>{
+    let usernameField = document.getElementById("userName");
+    let curriculumField = document.getElementById("curriculum");
+    let contractTimeField = document.getElementById("contractTime");
+    let errorMessage = document.getElementById("errorMessageAddOperator");
+    let flag = true;
+
+    if(!checkOperatorName(usernameField)){
+        errorMessage.textContent = "Errore: username";
+        errorMessage.classList.add("toShow");
+        flag = false;
+    }
+    else if(!checkDescription(curriculumField)){
+        errorMessage.textContent = "Errore: cv";
         errorMessage.classList.add("toShow");
         flag = false;
     }
