@@ -107,7 +107,9 @@ public class ProceedCheckoutServlet extends HttpServlet {
             u = ud.doRetrieveByMail(req.getParameter("mail"));
 
             if (u != null && !u.getUsername().equalsIgnoreCase(u.getMail())) {
-                resp.sendRedirect("login.html"); //l'utente è già registrato
+                RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/view/Login.jsp");
+                rd.forward(req,resp);
+                return;
             } else if (u == null) {
                 u = new User(
                         req.getParameter("mail"), "NotLogged",
