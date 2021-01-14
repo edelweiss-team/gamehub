@@ -2,6 +2,7 @@ package controller.userManagement.userProfileManagement;
 
 import com.google.gson.JsonObject;
 import java.io.IOException;
+import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -41,6 +42,8 @@ public class UpdateUserServlet extends HttpServlet {
     public static final @NotNull String TELEPHONE_REGEX = "(([+]|00)39)?((3[0-9]{2})(\\d{7}))$";
     public static final int USERNAME_MIN = LoginServlet.USERNAME_MIN_LENGTH;
     public static final int USERNAME_MAX = LoginServlet.USERNAME_MAX_LENGTH;
+    public static final @NotNull String
+            BIRTHDATE_REGEX = "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$";
     public static final int MAIL_MAX = 40;
     public static final int NAME_MIN = 2;
     public static final int NAME_MAX = 30;
@@ -92,6 +95,9 @@ public class UpdateUserServlet extends HttpServlet {
         String tableTriggered = req.getParameter("table-triggered");
         HttpSession session = req.getSession();
         User loggedUser = (User) session.getAttribute("loggedUser");
+        JsonObject responseUser = new JsonObject();
+        JsonObject responseJson = new JsonObject();
+
 
         if (loggedUser == null) {
             throw new RequestParametersException(
@@ -120,12 +126,15 @@ public class UpdateUserServlet extends HttpServlet {
                     && username.matches(USERNAME_REGEX)
                     && name.matches(NAME_REGEX)
                     && surname.matches(NAME_REGEX)
-                    && telephone.matches(TELEPHONE_REGEX)) {
+                    && telephone.matches(TELEPHONE_REGEX)
+                    && birthdate.matches(BIRTHDATE_REGEX)
+                    && sex.length() == 1
+                    && (sex.toLowerCase().charAt(0) == 'm'
+                        || sex.toLowerCase().charAt(0) == 'f')) {
 
                 String oldUsername = loggedUser.getUsername();
                 oldUsername = oldUsername.trim();
-                JsonObject responseUser = new JsonObject();
-                JsonObject responseJson = new JsonObject();
+
                 User u1 = ud.doRetrieveByUsername(username);
                 u = ud.doRetrieveByUsername(oldUsername);
                 User u2 = ud.doRetrieveByMail(mail);
@@ -234,8 +243,21 @@ public class UpdateUserServlet extends HttpServlet {
                 resp.getWriter().println(responseJson.toString());
                 resp.flushBuffer();
             } else {
-                throw new RequestParametersException("Error in the request parameters: max or min "
-                        + "text length exceeded or it doesn't match with regex");
+                responseJson.addProperty("type", "error");
+                responseJson.addProperty("message", "One or more fields doesn't match");
+                responseUser.addProperty("username", loggedUser.getUsername());
+                responseUser.addProperty("name", loggedUser.getName());
+                responseUser.addProperty("surname", loggedUser.getSurname());
+                responseUser.addProperty("birthDate", loggedUser.getBirthDate());
+                responseUser.addProperty("telephone", loggedUser.getTelephone());
+                responseUser.addProperty("password", loggedUser.getPasswordHash());
+                responseUser.addProperty("mail", loggedUser.getMail());
+                responseUser.addProperty("sex", loggedUser.getSex());
+                responseUser.addProperty("address", loggedUser.getAddress());
+                responseUser.addProperty("city", loggedUser.getCity());
+                responseUser.addProperty("country", loggedUser.getCountry());
+                resp.getWriter().println(responseJson.toString());
+                resp.flushBuffer();
             }
         } else {
             throw new RequestParametersException("Error in the request parameters: "
