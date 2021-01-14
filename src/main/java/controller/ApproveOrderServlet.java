@@ -24,7 +24,7 @@ import model.dao.UserDAO;
 @WebServlet(urlPatterns = {"/approveOrder-servlet"})
 public class ApproveOrderServlet extends HttpServlet {
     /**
-     *This method calls the doGet method.
+     * This method calls the doGet method.
      *
      * @param req the HttpServletRequest from the client
      * @param resp the HttpServletResponse
@@ -48,7 +48,7 @@ public class ApproveOrderServlet extends HttpServlet {
         throws ServletException, IOException {
 
         String idString = req.getParameter("approveOrder");
-        OrderDAO od = new OrderDAO();
+        OrderDAO orderDAO = new OrderDAO();
         int id;
         HttpSession session = req.getSession();
         User operator;
@@ -63,8 +63,8 @@ public class ApproveOrderServlet extends HttpServlet {
                     + "a wrong id");
         }
 
-        Order o = od.doRetrieveById(id);
-        if (o == null) {
+        Order order = orderDAO.doRetrieveById(id);
+        if (order == null) {
             throw new RequestParametersException("Error: it doesn't exist an order with this id");
         } else {
             synchronized (session) {
@@ -77,7 +77,7 @@ public class ApproveOrderServlet extends HttpServlet {
             //mail di conferma dell'ordine con i codici di attivazione
             String[] activationCode = new String[1]; //per permettere alla lambda di modificarlo
             activationCode[0] = "\nActivation codes: \n";
-            Collection<Product> digitalProducts = o.getAllProducts();
+            Collection<Product> digitalProducts = order.getAllProducts();
             digitalProducts.removeIf(p -> !(p instanceof DigitalProduct));
             digitalProducts.forEach(
                     p -> activationCode[0] +=
@@ -90,26 +90,27 @@ public class ApproveOrderServlet extends HttpServlet {
                         "smtp.gmail.com",
                         "587",
                         "atatbj.22@gmail.com",
-                        "Billjobs22", o.getUser().getMail(),
-                        "Order #" + o.getId() + " Confirmed",
-                        "The order #" + o.getId()
+                        "Billjobs22", order.getUser().getMail(),
+                        "Order #" + order.getId() + " Confirmed",
+                        "The order #" + order.getId()
                                 + " has been confirmed!" + activationCode[0]
                 );
             } catch (MessagingException e) {
                 throw new ServletException(e);
             }
             //controlli sull'ordine di un utente non registrato
-            if (o.getUser().getUsername().equalsIgnoreCase(o.getUser().getMail())) {
-                od.doDelete(o.getId());
+            if (order.getUser().getUsername().equalsIgnoreCase(order.getUser().getMail())) {
+                orderDAO.doDelete(order.getId());
+
                 //se l'utente fittizio non ha più ordini eliminiamolo
                 if (Objects.requireNonNull(
-                        od.doRetrieveByUsername(o.getUser().getUsername())).isEmpty()) {
-                    (new UserDAO()).doDeleteFromUsername(o.getUser().getUsername());
+                        orderDAO.doRetrieveByUsername(order.getUser().getUsername())).isEmpty()) {
+                    (new UserDAO()).doDeleteFromUsername(order.getUser().getUsername());
                 }
             } else {
-                od.doUpdateOperator(id, operator.getUsername());
+                orderDAO.doUpdateOperator(id, operator.getUsername());
             }
-            orderList = od.doRetrieveNonApproved(0, 3);
+            orderList = orderDAO.doRetrieveNonApproved(0, 3);
             address = "/WEB-INF/view/OperatorArea.jsp";
             req.setAttribute("orders", orderList);
             rd = req.getRequestDispatcher(address);

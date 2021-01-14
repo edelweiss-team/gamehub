@@ -373,7 +373,6 @@ public class OrderDAO {
      * @throws RuntimeException if an exception is occurred
      */
     public void doDelete(int id) {
-
         try {
             Connection cn = ConPool.getConnection();
             PreparedStatement st = cn.prepareStatement("DELETE FROM `order` WHERE id=?;");
@@ -384,7 +383,6 @@ public class OrderDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     /**
@@ -404,16 +402,11 @@ public class OrderDAO {
             st.setInt(2, id);
             if (st.executeUpdate() != 1) {
                 throw new RuntimeException();
-
             }
             st.close();
             cn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
-
-
 }

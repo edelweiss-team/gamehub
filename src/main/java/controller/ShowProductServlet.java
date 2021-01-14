@@ -14,12 +14,37 @@ import model.dao.PhysicalProductDAO;
 
 @WebServlet(urlPatterns = {"/showProduct.html"})
 public class ShowProductServlet extends HttpServlet {
+    /**
+     *This method calls the doGet method.
+     *
+     * @param req the HttpServletRequest from the client
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         this.doGet(req, resp);
     }
 
+    /**
+     * this method shows, to the user which wants visualize a product, the
+     * product page only if these conditions are satisfied:
+     *      'productType' of the product is either "digital" or "physical" (ignore case)
+     *          any other string will result in a 'RequestParameterException'
+     *          there's a product in the DB that matches the 'productType' and the
+     *          'productId' (product not null) otherwise will result in
+     *          'RequestParameterException'
+     *
+     *      if these conditions are satisfied the information about the product are
+     *          inserted in the request.
+     *
+     * @param req the HttpServletRequest
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

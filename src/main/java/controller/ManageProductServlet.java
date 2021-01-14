@@ -22,6 +22,14 @@ public class ManageProductServlet extends HttpServlet {
     public static final int DESCRIPTION_MAX_LENGTH = 1000;
     public static final int DESCRIPTION_MIN_LENGTH = 3;
 
+    /**
+     *This method calls the doGet method.
+     *
+     * @param req the HttpServletRequest from the client
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

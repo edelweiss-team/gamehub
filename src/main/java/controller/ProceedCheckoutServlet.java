@@ -29,12 +29,35 @@ public class ProceedCheckoutServlet extends HttpServlet {
     private static final @NotNull String DUMMY_USER_BIRTH_DATE = "2000-12-12";
     private static final char DUMMY_USER_SEX = 'M';
 
+    /**
+     *This method calls the doGet method.
+     *
+     * @param req the HttpServletRequest from the client
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         this.doGet(req, resp);
     }
 
+    /**
+     * This method complete the checkout if:
+     *      payment informations are valid,
+     *      there's a cart in the session and is not empty,
+     *      there's an user in the session,
+     *      the user informations are valid,
+     *
+     * after that the we clean the session's cart and
+     * save an order in the db.
+     *
+     * @param req the HttpServletRequest
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, ServletException {
