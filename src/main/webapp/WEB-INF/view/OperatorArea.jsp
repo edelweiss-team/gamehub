@@ -92,6 +92,12 @@
                                 </div>
                             </div>
                         </th>
+                        <th>
+                            <form action="declineOrder-servlet" method="post">
+                                <button type="submit" class="btn btn-outline-danger">Rifiuta </button>
+                                <input type='hidden' value='${orders.get(i).id}' name='declineOrder' class='declineOrder'>
+                            </form>
+                        </th>
                     </c:if>
                 </tr>
                 </thead>

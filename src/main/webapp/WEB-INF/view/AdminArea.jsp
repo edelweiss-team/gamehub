@@ -469,5 +469,6 @@
     <script src="${pageContext.request.contextPath}/js/categoriesAdmin.js"></script>
     <script src="${pageContext.request.contextPath}/js/adminForms.js"></script>
     <script src="${pageContext.request.contextPath}/js/tagsAdmin.js"></script>
+    <script src="${pageContext.request.contextPath}/js/operatorAdmin.js"></script>
 </body>
 </html>
