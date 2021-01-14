@@ -81,6 +81,43 @@ class ModeratorDAOTest {
     }
 
     @Test
+    void doRetrieveByUsernameFragmentxNone() {
+        ArrayList<Moderator> list = mDAO.doRetrieveByUsernameFragment("NameFragment", 0, 1000);
+        assertTrue(list.isEmpty());
+    }
+
+    @Test
+    void doRetrieveByUsernameFragmentxOne() {
+        User u1 = new User("NameFragmentUsername", "password", "Name", "Surname", "Address", "City", "Country", "2020-11-16", "Mail", 'M', "1111111111");
+        Moderator o1 = new Moderator(u1, "2020-11-11");
+        uDAO.doSave(u1);
+        mDAO.doSave(o1);
+        ArrayList<Moderator> list = mDAO.doRetrieveByUsernameFragment("NameFragment", 0, 1000);
+        assertEquals(o1, list.get(0));
+        mDAO.doDeleteByUsername(u1.getUsername());
+        uDAO.doDeleteFromUsername(u1.getUsername());
+    }
+
+    @Test
+    void doRetrieveByUsernameFragmentxAll() {
+        User u1 = new User("aNameFragmentUsername", "password", "Name", "Surname", "Address", "City", "Country", "2020-11-16", "Mail", 'M', "1111111111");
+        Moderator o1 = new Moderator(u1, "2020-11-11");
+        uDAO.doSave(u1);
+        User u2 = new User("ausername2NameFragment", "password2", "Name2", "Surname2", "Address2", "City2", "Country2", "2020-11-13", "Mail2", 'F', "1111111112");
+        Moderator o2 = new Moderator(u2, "2020-11-11");
+        uDAO.doSave(u2);
+        mDAO.doSave(o1);
+        mDAO.doSave(o2);
+        ArrayList<Moderator> list = mDAO.doRetrieveByUsernameFragment("NameFragment", 0, 1000);
+        assertEquals(o1, list.get(0));
+        assertEquals(o2, list.get(1));
+        uDAO.doDeleteFromUsername(u1.getUsername());
+        uDAO.doDeleteFromUsername(u2.getUsername());
+        mDAO.doDeleteByUsername(u1.getUsername());
+        mDAO.doDeleteByUsername(u2.getUsername());
+    }
+
+    @Test
     void doDeleteByUsernameOk() {
         // saving user and moderator in DB.
         uDAO.doSave(u);
@@ -164,7 +201,7 @@ class ModeratorDAOTest {
     }
 
     @Test
-    void doRetiveByUsernameNotOk() {
+    void doRetriveByUsernameNotOk() {
         Moderator m = new Moderator(u, contractTime);
         m.setUsername("usernameNotInDB");
         assertNull(mDAO.doRetrieveByUsername(m.getUsername()));
@@ -193,7 +230,7 @@ class ModeratorDAOTest {
     }
 
     @Test
-    void doRetiveByUsernamePasswordNotOk() {
+    void doRetriveByUsernamePasswordNotOk() {
         Moderator m = new Moderator(u, contractTime);
         m.setUsername("usernameNotInDB");
         assertNull(mDAO.doRetrieveByUsernamePassword(m.getUsername(), "password"));
