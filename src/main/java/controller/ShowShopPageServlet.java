@@ -24,17 +24,36 @@ public class ShowShopPageServlet extends HttpServlet {
     private static final int OFFSET = 0;
     private static final int LIMIT_MAX = 2000000;
 
+    /**
+     *This method calls the doGet method.
+     *
+     * @param req the HttpServletRequest from the client
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         this.doGet(req, resp);
     }
 
+    /**
+     * this method shows, to the user which wants visualize the shop, the shop page.
+     * It gets the from the request parameters supposed to be the filters.
+     *
+     * Gets a list of products based on these filters and add them to request.
+     *
+     * @param req the HttpServletRequest
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        List<DigitalProduct> digProducts;
+
         DigitalProductDAO dpd = new DigitalProductDAO();
         PhysicalProductDAO ppd = new PhysicalProductDAO();
 

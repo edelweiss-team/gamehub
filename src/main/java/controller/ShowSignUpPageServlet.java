@@ -12,12 +12,29 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = {"/signup.html"})
 public class ShowSignUpPageServlet extends HttpServlet {
 
+    /**
+     *This method calls the doGet method.
+     *
+     * @param req the HttpServletRequest from the client
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         this.doGet(req, resp);
     }
 
+    /**
+     * this method shows, to the user which wants to signup to the website, the signup page
+     * if there's already a user in the session this will result in a RequestParameterException.
+     *
+     * @param req the HttpServletRequest
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

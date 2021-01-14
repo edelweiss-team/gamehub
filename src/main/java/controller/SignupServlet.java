@@ -68,6 +68,14 @@ public class SignupServlet extends HttpServlet {
         }
     }
 
+    /**
+     *This method calls the doGet method.
+     *
+     * @param req the HttpServletRequest from the client
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -75,6 +83,16 @@ public class SignupServlet extends HttpServlet {
         this.doGet(req, resp);
     }
 
+    /**
+     * this method save an user, that wanted to signup, in the DB on condition that all required parameters are
+     * non-null and match their corrispective regex.
+     * If that happens the user is added to the session too.
+     *
+     * @param req the HttpServletRequest
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

@@ -21,7 +21,6 @@ import model.dao.TagDAO;
  */
 @WebServlet(urlPatterns = {"/index.html", "/home", "/Home", "/HOME"}, loadOnStartup = 0)
 public class HomeServlet extends HttpServlet {
-
     @Override
     public void init() throws ServletException {
         DigitalProductDAO dpDao = new DigitalProductDAO();
@@ -62,11 +61,27 @@ public class HomeServlet extends HttpServlet {
         super.init();
     }
 
+    /**
+     * This method calls the doGet method.
+     *
+     * @param request the HttpServletRequest from the client
+     * @param response the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         this.doGet(request, response);
     }
 
+    /**
+     * forward the User to the home.
+     *
+     * @param request a HttpServletRequest
+     * @param response an HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/Home.jsp");

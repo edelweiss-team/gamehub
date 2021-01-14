@@ -16,12 +16,27 @@ public class ManageUserServlet extends HttpServlet {
     public static final int USERNAME_MAX_LENGTH = 20;
     public static final int USERNAME_MIN_LENGTH = 6;
 
-    @Override
+    /**
+     *This method calls the doGet method.
+     *
+     * @param req the HttpServletRequest from the client
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         this.doGet(req, resp);
     }
 
+    /**
+     * This method allows the admin to remove an user from the website:
+     * if there's no user to remove in the request we get an exception
+     * if the username length exceeds (in both direction) the min and
+     *     the max length OR there's no user with that username we get
+     *     an exception in we get an error in the response.
+     * otherwise we get a success message in the response.
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

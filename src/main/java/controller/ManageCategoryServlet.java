@@ -25,6 +25,14 @@ public class ManageCategoryServlet extends HttpServlet {
     public static final @NotNull String NAME_REGEX = "^(([A-Za-z][a-z0-9]*"
             + "([-'\\s\\.]))*([A-Za-z0-9][A-Za-z0-9]*))$";
 
+    /**
+     *This method calls the doGet method.
+     *
+     * @param req the HttpServletRequest from the client
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

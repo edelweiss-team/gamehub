@@ -41,12 +41,32 @@ public class UpdateUserServlet extends HttpServlet {
     public static final int COUNTRY_MIN = 3;
     public static final int COUNTRY_MAX = 25;
 
+    /**
+     *This method calls the doGet method.
+     *
+     * @param req the HttpServletRequest from the client
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
         this.doGet(req, resp);
     }
 
+    /**
+     * this method update an user, that wants to update his information, in the DB
+     * on condition that all required parameters are
+     * non-null, match their corrispective regex and the user is present in the session.
+     * If that happens the user is re-added to the session too.
+     *
+     *
+     * @param req the HttpServletRequest
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {

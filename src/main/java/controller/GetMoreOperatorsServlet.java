@@ -16,11 +16,27 @@ import java.util.ArrayList;
 public class GetMoreOperatorsServlet extends HttpServlet {
     public static final int OPERATORS_PER_REQUEST_DEFAULT = 4;
 
+    /**
+     * This method calls the doGet method.
+     *
+     * @param req the HttpServletRequest from the client
+     * @param resp the HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         this.doGet(req, resp);
     }
 
+    /**
+     * Add more operators to the response.
+     *
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int startingIndex;
