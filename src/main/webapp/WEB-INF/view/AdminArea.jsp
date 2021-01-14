@@ -310,7 +310,7 @@
                     <c:forEach items='${firstOperators}' var='operator'>
                         <tr id="${operator.username}OperatorRow" class='operators-table-body-row'>
                             <td>  ${operator.username}  </td>
-                            <td>  ${operator.curriculum}</td>
+                            <td>  ${operator.cv}</td>
                             <td>  ${operator.contractTime}</td>
                             <td class='form-container'>
                                 <form name='removeOperatorForm' class='removeOperatorForm' method='post' action='removeOperator-servlet'>

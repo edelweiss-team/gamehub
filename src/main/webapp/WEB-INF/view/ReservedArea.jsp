@@ -14,8 +14,7 @@
             <form action="logout" method="post">
                 <button type="submit" class="btn btn-danger" style="float: right; margin-left: 1%">Logout</button>
             </form>
-            <%if(((User)session.getAttribute("loggedUser")).getClass().equals(Admin.class) ||
-                    ((User)session.getAttribute("loggedUser")).getClass().equals(Operator.class)){%>
+            <%if (((User)session.getAttribute("loggedUser")).getClass().equals(Operator.class)){%>
                 <form action="operatorArea.html" method="post">
                     <button type="submit" class="btn btn-success" style="float: right; margin-left: 1%">Operator Area</button>
                 </form>
