@@ -276,7 +276,7 @@
         <h1 class='manage-header-operator'>Manage operators</h1>
         <div class='admin-fieldset'>
             <h3>Add operator</h3>
-            <form id='addOperatorForm' name='addOperatorForm' action='addOperator-servlet' method='post'>
+            <form id='addOperatorForm' name='addOperatorForm' action='manageOperator-servlet' method='post'>
                 <div class='admin-textbox'>
                     <input type='text' id='userName' class='admin-textbox' name='userName' placeholder='Username'><br>
                 </div>
@@ -284,12 +284,13 @@
                     <textarea id='curriculum' placeholder="Curriculum" name='curriculum'></textarea><br>
                 </div>
                 <div class="admin-textbox">
-                    <input type="date" id="contractTime" class="admin-textbox" name="contractTime" placeholder="contractTime"><br>
+                    <input type="text" id="contractTime" class="admin-textbox" name="contractTime" placeholder="contractTime"><br>
                 </div>
                 <div class='admin-textbox' style='border: none'>
                     <span id='errorMessageAddOperator' class='Error'></span><br>
                 </div>
                 <div id='submitAdminButtonContainerAddOperator'>
+                    <input type="hidden" value="add_operator" name="manage_operator">
                     <input type='submit' class='btnAdmin submitBtn' disabled>
                 </div>
             </form>
@@ -303,17 +304,26 @@
                         <th>Username</th>
                         <th>Curriculum</th>
                         <th>Contract Time</th>
+                        <th>Change</th>
                         <th>Remove</th>
                     </tr>
                     </thead>
                     <tbody class='operators-table-body'>
                     <c:forEach items='${firstOperators}' var='operator'>
                         <tr id="${operator.username}OperatorRow" class='operators-table-body-row'>
-                            <td>  ${operator.username}  </td>
-                            <td>  ${operator.cv}</td>
-                            <td>  ${operator.contractTime}</td>
+                            <td class="can-be-editable editable-name">  ${operator.username}  </td>
+                            <td class="can-be-editable editable-cv">  ${operator.cv}</td>
+                            <td class="can-be-editable editable-contractTime">  ${operator.contractTime}</td>
                             <td class='form-container'>
-                                <form name='removeOperatorForm' class='removeOperatorForm' method='post' action='removeOperator-servlet'>
+                                <form class='changeOperatorForm' name='changeOperatorForm' method='post' action='manage-category'>
+                                    <input type='hidden' value='${operator.name}' name='changeOperator' class='changeOperatorOldName'>
+                                    <input type="hidden" name="manage_operator" value="update_operator">
+                                    <input type='submit' value='📝' class='changeOperatorAdminButton'>
+                                    <span class="errorOperatorMessage" style="color: #c75450; display: none"></span>
+                                </form>
+                            </td>
+                            <td class='form-container'>
+                                <form name='removeOperatorForm' class='removeOperatorForm' method='post' action='manageOperator-servlet'>
                                     <input type='hidden' value='${operator.username}' name='removeOperator' class='operatorNameForRemove'>
                                     <input type='submit' value='✗' class='removeOperatorAdminButton'>
                                 </form>
@@ -443,6 +453,53 @@
                     <input type='submit' class='btnAdmin submitBtn' disabled>
                 </div>
             </form>
+        </div>
+        <div class='admin-fieldset'>
+            <h3>All admins</h3>
+            <div class="table-div admins-table-div">
+                <table border='1' id='admins-table' class='content-table'>
+                    <thead>
+                    <tr class='admins-table-header'>
+                        <th>Username</th>
+                        <th>SuperRoot</th>
+                        <th>Change</th>
+                        <th>Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody class='admins-table-body'>
+                    <c:forEach items='${firstAdmins}' var='admin'>
+                        <tr id="${admin.username}AdminRow" class='admins-table-body-row'>
+                            <td>${admin.username}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class='paginationModerators'>
+                <span id='previousPageModerators' class='visible'>&laquo;</span>
+                <span id='ellipseSxModerators'>...</span>
+                <c:set var='maxPageModerators' value='${Math.ceil(moderatorsLength/4)}'/>
+                <c:forEach var='i' begin='1' end='${maxPageModerators}'>
+                    <c:if test='${i == 1}'>
+                        <span class='current visible pageNumBtnModeratorAdmin' id='pageModerators${i}'>${i}</span>
+                    </c:if>
+                    <c:if test='${i != 1}'>
+                        <c:if test='${i <= 4}'>
+                            <span class='pageNumBtnModeratorAdmin visible' id='pageModerators${i}'>${i}</span>
+                        </c:if>
+                        <c:if test='${i > 4}'>
+                            <span class='pageNumBtnModeratorAdmin' id='pageModerators${i}'>${i}</span>
+                        </c:if>
+                    </c:if>
+                </c:forEach>
+                <c:if test='${maxPageModerators > 4}'>
+                    <span id='ellipseDxModerators' class='visible'>...</span>
+                </c:if>
+                <c:if test='${maxPageModerators <= 4}'>
+                    <span id='ellipseDxModerators'>...</span>
+                </c:if>
+                <span id='nextPageModerators' class='visible'>&raquo;</span>
+            </div>
         </div>
     </div>
 
