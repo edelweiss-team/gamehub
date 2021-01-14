@@ -273,15 +273,177 @@
     </div>
 
     <div id="operators-div" style="display: none">
-        <p>Operators</p>
+        <h1 class='manage-header-operator'>Manage operators</h1>
+        <div class='admin-fieldset'>
+            <h3>Add operator</h3>
+            <form id='addOperatorForm' name='addOperatorForm' action='addOperator-servlet' method='post'>
+                <div class='admin-textbox'>
+                    <input type='text' id='userName' class='admin-textbox' name='userName' placeholder='Username'><br>
+                </div>
+                <div class='admin-textbox-textarea'>
+                    <textarea id='curriculum' placeholder="Curriculum" name='curriculum'></textarea><br>
+                </div>
+                <div class="admin-textbox">
+                    <input type="date" id="contractTime" class="admin-textbox" name="contractTime" placeholder="contractTime"><br>
+                </div>
+                <div class='admin-textbox' style='border: none'>
+                    <span id='errorMessageAddOperator' class='Error'></span><br>
+                </div>
+                <div id='submitAdminButtonContainerAddOperator'>
+                    <input type='submit' class='btnAdmin submitBtn' disabled>
+                </div>
+            </form>
+        </div>
+        <div class='admin-fieldset'>
+            <h3>All operators</h3>
+            <div class="table-div operators-table-div">
+                <table border='1' id='operators-table' class='content-table'>
+                    <thead>
+                    <tr class='operators-table-header'>
+                        <th>Username</th>
+                        <th>Curriculum</th>
+                        <th>Contract Time</th>
+                        <th>Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody class='operators-table-body'>
+                    <c:forEach items='${firstOperators}' var='operator'>
+                        <tr id="${operator.username}OperatorRow" class='operators-table-body-row'>
+                            <td>  ${operator.username}  </td>
+                            <td>  ${operator.curriculum}</td>
+                            <td>  ${operator.contractTime}</td>
+                            <td class='form-container'>
+                                <form name='removeOperatorForm' class='removeOperatorForm' method='post' action='removeOperator-servlet'>
+                                    <input type='hidden' value='${operator.username}' name='removeOperator' class='operatorNameForRemove'>
+                                    <input type='submit' value='✗' class='removeOperatorAdminButton'>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class='paginationOperators'>
+                <span id='previousPageOperators' class='visible'>&laquo;</span>
+                <span id='ellipseSxOperators'>...</span>
+                <c:set var='maxPageOperators' value='${Math.ceil(operatorsLength/4)}'/>
+                <c:forEach var='i' begin='1' end='${maxPageOperators}'>
+                    <c:if test='${i == 1}'>
+                        <span class='current visible pageNumBtnOperatorAdmin' id='pageOperators${i}'>${i}</span>
+                    </c:if>
+                    <c:if test='${i != 1}'>
+                        <c:if test='${i <= 4}'>
+                            <span class='pageNumBtnOperatorAdmin visible' id='pageOperators${i}'>${i}</span>
+                        </c:if>
+                        <c:if test='${i > 4}'>
+                            <span class='pageNumBtnOperatorAdmin' id='pageOperators${i}'>${i}</span>
+                        </c:if>
+                    </c:if>
+                </c:forEach>
+                <c:if test='${maxPageOperators > 4}'>
+                    <span id='ellipseDxOperators' class='visible'>...</span>
+                </c:if>
+                <c:if test='${maxPageOperators <= 4}'>
+                    <span id='ellipseDxOperators'>...</span>
+                </c:if>
+                <span id='nextPageOperators' class='visible'>&raquo;</span>
+            </div>
+        </div>
     </div>
 
     <div id="moderators-div" style="display: none">
-        <p>Moderators</p>
+        <h1 class='manage-header-moderator'>Manage moderators</h1>
+        <div class='admin-fieldset'>
+            <h3>Add moderator</h3>
+            <form id='addModeratorForm' name='addModeratorForm' action='addModerator-servlet' method='post'>
+                <div class='admin-textbox'>
+                    <input type='text' id='moderatorName' class='admin-textbox' name='moderatorName' placeholder='Username'><br>
+                </div>
+                <div class="admin-textbox">
+                    <input type="date" id="contractTimeModerator" class="admin-textbox" name="contractTimeModerator" placeholder="contractTime"><br>
+                </div>
+                <div class='admin-textbox' style='border: none'>
+                    <span id='errorMessageAddModerator' class='Error'></span><br>
+                </div>
+                <div id='submitAdminButtonContainerAddModerator'>
+                    <input type='submit' class='btnAdmin submitBtn' disabled>
+                </div>
+            </form>
+        </div>
+        <div class='admin-fieldset'>
+            <h3>All moderators</h3>
+            <div class="table-div moderators-table-div">
+                <table border='1' id='moderators-table' class='content-table'>
+                    <thead>
+                    <tr class='moderators-table-header'>
+                        <th>Username</th>
+                        <th>Contract Time</th>
+                        <th>Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody class='moderators-table-body'>
+                    <c:forEach items='${firstModerators}' var='moderator'>
+                        <tr id="${moderator.username}ModeratorRow" class='moderators-table-body-row'>
+                            <td>  ${moderator.username}  </td>
+                            <td>  ${moderator.contractTime}</td>
+                            <td class='form-container'>
+                                <form name='removeModeratorForm' class='removeModeratorForm' method='post' action='removeModerator-servlet'>
+                                    <input type='hidden' value='${moderator.username}' name='removeModerator' class='moderatorNameForRemove'>
+                                    <input type='submit' value='✗' class='removeModeratorAdminButton'>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class='paginationModerators'>
+                <span id='previousPageModerators' class='visible'>&laquo;</span>
+                <span id='ellipseSxModerators'>...</span>
+                <c:set var='maxPageModerators' value='${Math.ceil(moderatorsLength/4)}'/>
+                <c:forEach var='i' begin='1' end='${maxPageModerators}'>
+                    <c:if test='${i == 1}'>
+                        <span class='current visible pageNumBtnModeratorAdmin' id='pageModerators${i}'>${i}</span>
+                    </c:if>
+                    <c:if test='${i != 1}'>
+                        <c:if test='${i <= 4}'>
+                            <span class='pageNumBtnModeratorAdmin visible' id='pageModerators${i}'>${i}</span>
+                        </c:if>
+                        <c:if test='${i > 4}'>
+                            <span class='pageNumBtnModeratorAdmin' id='pageModerators${i}'>${i}</span>
+                        </c:if>
+                    </c:if>
+                </c:forEach>
+                <c:if test='${maxPageModerators > 4}'>
+                    <span id='ellipseDxModerators' class='visible'>...</span>
+                </c:if>
+                <c:if test='${maxPageModerators <= 4}'>
+                    <span id='ellipseDxModerators'>...</span>
+                </c:if>
+                <span id='nextPageModerators' class='visible'>&raquo;</span>
+            </div>
+        </div>
     </div>
 
     <div id="admins-div" style="display: none">
-        <p>Admins</p>
+        <h1 class='manage-header-admin'>Manage admins</h1>
+        <div class='admin-fieldset'>
+            <h3>Add admin</h3>
+            <form id='addAdminForm' name='addAdminForm' action='addAdmin-servlet' method='post'>
+                <div class='admin-textbox'>
+                    <input type='text' id='adminName' class='admin-textbox' name='adminName' placeholder='Username'><br>
+                </div>
+                <div class="admin-textbox">
+                    <input type="text" id="superRoot" class="admin-textbox" name="superRoot" placeholder="superRoot"><br>
+                </div>
+                <div class='admin-textbox' style='border: none'>
+                    <span id='errorMessageAddAdmin' class='Error'></span><br>
+                </div>
+                <div id='submitAdminButtonContainerAddAdmin'>
+                    <input type='submit' class='btnAdmin submitBtn' disabled>
+                </div>
+            </form>
+        </div>
     </div>
 
     <%@include file="footer.jsp"%> <!--footer-->
@@ -295,6 +457,9 @@
         resizeFooter();
         window.onresize = ev => resizeFooter();
     </script>
+    <script>var maxPageOperators = ${(maxPageOperators > 0)?(maxPageOperators):(1)}; //mantiena l'indice dell'ultima pagina</script>
+    <script>var maxPageModerators = ${(maxPageModerators > 0)?(maxPageModerators):(1)}; //mantiena l'indice dell'ultima pagina</script>
+    <script>var maxPageAdmins = ${(maxPageAdmins > 0)?(maxPageAdmins):(1)}; //mantiena l'indice dell'ultima pagina</script>
     <script>var maxPageCategories = ${(maxPageCategories > 0)?(maxPageCategories):(1)}; //mantiena l'indice dell'ultima pagina</script>
     <script>var maxPageTags = ${(maxPageTags > 0)?(maxPageTags):(1)}; //mantiena l'indice dell'ultima pagina</script>
     <script>var maxPageUsers = ${(maxPageUsers > 0)?(maxPageUsers):(1)}; //mantiena l'indice dell'ultima pagina</script>
