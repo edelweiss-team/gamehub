@@ -62,7 +62,7 @@ public class ShowProductServletTest {
                 new ArrayList<Category>(),
                 new ArrayList<Tag>(),
                 1,
-                "3",
+                "3x3x3",
                 1
         );
         pProdId = (ppdao.doSave(pProd)).getId();

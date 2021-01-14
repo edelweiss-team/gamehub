@@ -1,5 +1,6 @@
 package model.bean;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import org.jetbrains.annotations.NotNull;
@@ -231,7 +232,7 @@ public class Cart {
      */
     @NotNull
     public Collection<Product> getAllProducts() {
-        return products.values();
+        return new ArrayList<>(products.values());
     }
 
     @Nullable
