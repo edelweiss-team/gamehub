@@ -16,7 +16,10 @@ import model.dao.OrderDAO;
 
 
 
-
+/**
+ * This servlet forwards the operator to its personal area and
+ * adds to the response the orders the still need approvation
+ */
 @WebServlet(urlPatterns = {"/operatorArea.html"})
 public class ShowOperatorAreaServlet extends HttpServlet {
 
@@ -35,12 +38,12 @@ public class ShowOperatorAreaServlet extends HttpServlet {
     }
 
     /**
-     * This method allows to show all the orders to confirm.
+     * this method manages Get requests.
      *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

@@ -18,7 +18,16 @@ import controller.userManagement.userProfileManagement.SignupServlet;
 import model.bean.*;
 import model.dao.*;
 import org.jetbrains.annotations.NotNull;
-
+/**
+ * This servlet complete the checkout if:
+ *      payment informations are valid,
+ *      there's a cart in the session and is not empty,
+ *      there's an user in the session,
+ *      the user informations are valid,
+ *
+ * after that the we clean the session's cart and
+ * save an order in the db.
+ */
 @WebServlet(urlPatterns = {"/proceed-checkout"})
 public class ProceedCheckoutServlet extends HttpServlet {
     public static final @NotNull String CC_EXPIRATION_DATE_REGEX =
@@ -47,19 +56,12 @@ public class ProceedCheckoutServlet extends HttpServlet {
     }
 
     /**
-     * This method complete the checkout if:
-     *      payment informations are valid,
-     *      there's a cart in the session and is not empty,
-     *      there's an user in the session,
-     *      the user informations are valid,
+     * this method manages Get requests.
      *
-     * after that the we clean the session's cart and
-     * save an order in the db.
-     *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)

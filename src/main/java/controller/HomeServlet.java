@@ -75,12 +75,12 @@ public class HomeServlet extends HttpServlet {
     }
 
     /**
-     * forward the User to the home.
+     * this method manages Get requests.
      *
      * @param request a HttpServletRequest
      * @param response an HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {

@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * This servlet processes the logout.
+ * If there's no loggedUser in the session, we get an exception
+ * otherwise the user is redirected to the homepage.
+ */
 @WebServlet(urlPatterns = {"/logout"})
 public class LogoutServlet extends HttpServlet {
 
@@ -28,14 +33,12 @@ public class LogoutServlet extends HttpServlet {
     }
 
     /**
-     * This method process the logout.
-     * If there's no loggedUser in the session, we get an exception
-     * otherwise the user is redirected to the homepage.
+     * this method manages Get requests.
      *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

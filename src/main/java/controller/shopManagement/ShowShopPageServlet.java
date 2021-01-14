@@ -18,7 +18,12 @@ import model.dao.DigitalProductDAO;
 import model.dao.PhysicalProductDAO;
 
 import static controller.shopManagement.GetMoreProductsServlet.PRODUCTS_PER_REQUEST_DEFAULT;
-
+/**
+ * this servlet shows, to the user which wants visualize the shop, the shop page.
+ * It gets the from the request parameters supposed to be the filters.
+ *
+ * Gets a list of products based on these filters and add them to request.
+ */
 @WebServlet(urlPatterns = {"/shop.html", "/show-products"})
 public class ShowShopPageServlet extends HttpServlet {
     private static final int LIMIT = 8;
@@ -40,15 +45,12 @@ public class ShowShopPageServlet extends HttpServlet {
     }
 
     /**
-     * this method shows, to the user which wants visualize the shop, the shop page.
-     * It gets the from the request parameters supposed to be the filters.
+     * this method manages Get requests.
      *
-     * Gets a list of products based on these filters and add them to request.
-     *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

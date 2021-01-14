@@ -40,13 +40,12 @@ public class LoginServlet extends HttpServlet {
     }
 
     /**
-     * This method process the login it controls if a user is logged.
-     * If all the parameters are valid then the user is inserted into the session
+     * this method manages Get requests.
      *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

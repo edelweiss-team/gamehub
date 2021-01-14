@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import controller.RequestParametersException;
 import model.bean.Tag;
 import model.dao.TagDAO;
-
+/**
+ * this servlet adds more Tag to the response.
+ */
 @WebServlet(urlPatterns = {"/get-more-tags"})
 public class GetMoreTagsServlet extends HttpServlet {
     public static final int TAGS_PER_REQUEST_DEFAULT = 4;
@@ -33,12 +35,12 @@ public class GetMoreTagsServlet extends HttpServlet {
     }
 
     /**
-     * Add more Tag to the response.
+     * this method manages Get requests.
      *
      * @param req a HttpServletRequest
      * @param resp an HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

@@ -14,7 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import controller.RequestParametersException;
 import model.bean.Category;
 import model.dao.CategoryDAO;
-
+/**
+ * This servlet shows to the users the page containing categories.
+ *
+ */
 @WebServlet(urlPatterns = {"/category.html", "/show-categories"})
 public class ShowCategoryPageServlet extends HttpServlet {
 
@@ -36,12 +39,12 @@ public class ShowCategoryPageServlet extends HttpServlet {
     }
 
     /**
-     * This method shows to the users the page containing categories.
+     * this method manages Get requests.
      *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

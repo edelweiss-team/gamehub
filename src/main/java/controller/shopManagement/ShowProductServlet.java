@@ -13,7 +13,18 @@ import model.bean.Product;
 import model.dao.DigitalProductDAO;
 import model.dao.PhysicalProductDAO;
 
-
+/**
+ * this servlet shows, to the user which wants visualize a product, the
+ * product page only if these conditions are satisfied:
+ *      'productType' of the product is either "digital" or "physical" (ignore case)
+ *          any other string will result in a 'RequestParameterException'
+ *          there's a product in the DB that matches the 'productType' and the
+ *          'productId' (product not null) otherwise will result in
+ *          'RequestParameterException'
+ *
+ *      if these conditions are satisfied the information about the product are
+ *          inserted in the request.
+ */
 @WebServlet(urlPatterns = {"/showProduct.html"})
 public class ShowProductServlet extends HttpServlet {
     /**
@@ -30,22 +41,14 @@ public class ShowProductServlet extends HttpServlet {
         this.doGet(req, resp);
     }
 
+
     /**
-     * this method shows, to the user which wants visualize a product, the
-     * product page only if these conditions are satisfied:
-     *      'productType' of the product is either "digital" or "physical" (ignore case)
-     *          any other string will result in a 'RequestParameterException'
-     *          there's a product in the DB that matches the 'productType' and the
-     *          'productId' (product not null) otherwise will result in
-     *          'RequestParameterException'
+     * this method manages Get requests.
      *
-     *      if these conditions are satisfied the information about the product are
-     *          inserted in the request.
-     *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

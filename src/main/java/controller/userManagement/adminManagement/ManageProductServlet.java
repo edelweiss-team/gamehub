@@ -13,6 +13,9 @@ import model.bean.PhysicalProduct;
 import model.dao.DigitalProductDAO;
 import model.dao.PhysicalProductDAO;
 
+/**
+ * this servlet let Admin to add/remove/edit a product saved in the DB.
+ */
 @WebServlet(urlPatterns = {"/manageProduct-servlet", "/manage-product"})
 @MultipartConfig
 public class ManageProductServlet extends HttpServlet {
@@ -36,6 +39,14 @@ public class ManageProductServlet extends HttpServlet {
         this.doGet(req, resp);
     }
 
+    /**
+     * this method manages Get requests.
+     *
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

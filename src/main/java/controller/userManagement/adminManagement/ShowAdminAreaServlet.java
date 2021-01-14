@@ -13,7 +13,11 @@ import controller.RequestParametersException;
 import model.bean.*;
 import model.dao.*;
 
-
+/**
+ * this servlet redirects the admin to the admin page and adds to the
+ * request information about: users, products, categories, tags, operator
+ * moderators and other admin.
+ */
 @WebServlet(urlPatterns = {"/adminArea.html"})
 public class ShowAdminAreaServlet extends HttpServlet {
 
@@ -33,15 +37,14 @@ public class ShowAdminAreaServlet extends HttpServlet {
         this.doGet(req, resp);
     }
 
+
     /**
-     * this method redirect the admin to the admin page and adds to the
-     * request information about: users, products, categories, tags, operator
-     * moderators and other admin.
+     * this method manages Get requests.
      *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

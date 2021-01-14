@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+/**
+ * this servlert shows, to the user which wants to proceed to the login, the
+ * login page only if these conditions are satisfied:
+ *      there's no logged user (no user in the session).
+ */
 @WebServlet(urlPatterns = {"/login.html"})
 public class ShowLoginPageServlet extends HttpServlet {
 
@@ -29,14 +33,12 @@ public class ShowLoginPageServlet extends HttpServlet {
     }
 
     /**
-     * this method shows, to the user which wants to proceed to the login, the
-     * login page only if these conditions are satisfied:
-     *      there's no logged user (no user in the session).
+     * this method manages Get requests.
      *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

@@ -12,7 +12,9 @@ import controller.RequestParametersException;
 import model.bean.Tag;
 import model.dao.TagDAO;
 
-
+/**
+ * this servlet let Admin to add/remove/edit a tag saved in the DB.
+ */
 @WebServlet(urlPatterns = {"/manageTag-servlet", "/manage-tag"})
 public class ManageTagServlet extends HttpServlet {
 
@@ -33,6 +35,14 @@ public class ManageTagServlet extends HttpServlet {
         this.doGet(req, resp);
     }
 
+    /**
+     * this method manages Get requests.
+     *
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

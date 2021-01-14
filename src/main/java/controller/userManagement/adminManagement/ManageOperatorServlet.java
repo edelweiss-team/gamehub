@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * this servlet let Admin to add/remove/edit an Operator profile.
+ */
 @WebServlet(urlPatterns = {"/manageOperator-servlet", "/manage-operator"})
 @MultipartConfig
 public class ManageOperatorServlet extends HttpServlet {
@@ -38,6 +41,14 @@ public class ManageOperatorServlet extends HttpServlet {
         this.doGet(req, resp);
     }
 
+    /**
+     * this method manages Get requests.
+     *
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

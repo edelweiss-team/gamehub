@@ -11,7 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import controller.RequestParametersException;
 import model.bean.User;
 import model.dao.UserDAO;
-
+/**
+ * This servlet allows the admin to remove an user from the website:
+ * if there's no user to remove in the request we get an exception
+ * if the username length exceeds (in both direction) the min and
+ *     the max length OR there's no user with that username we get
+ *     an exception in we get an error in the response.
+ * otherwise we get a success message in the response.
+ */
 @WebServlet(urlPatterns = {"/removeUser-servlet", "/remove-user"})
 public class ManageUserServlet extends HttpServlet {
 
@@ -33,12 +40,12 @@ public class ManageUserServlet extends HttpServlet {
     }
 
     /**
-     * This method allows the admin to remove an user from the website:
-     * if there's no user to remove in the request we get an exception
-     * if the username length exceeds (in both direction) the min and
-     *     the max length OR there's no user with that username we get
-     *     an exception in we get an error in the response.
-     * otherwise we get a success message in the response.
+     * this method manages Get requests.
+     *
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

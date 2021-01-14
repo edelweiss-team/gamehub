@@ -15,7 +15,9 @@ import model.bean.Category;
 import model.dao.CategoryDAO;
 import org.jetbrains.annotations.NotNull;
 
-
+/**
+ * this servlet let Admin to add/remove/edit a category
+ */
 @WebServlet(urlPatterns = {"/manageCategory-servlet", "/manage-category"})
 @MultipartConfig
 public class ManageCategoryServlet extends HttpServlet {
@@ -40,7 +42,14 @@ public class ManageCategoryServlet extends HttpServlet {
             throws ServletException, IOException {
         this.doGet(req, resp);
     }
-
+    /**
+     * this method manages Get requests.
+     *
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

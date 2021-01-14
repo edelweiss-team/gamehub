@@ -8,12 +8,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+/**
+ * this servlet shows, to the user which wants to access the community, the
+ * community page.
+ * */
 @WebServlet(urlPatterns = {"/community.html"})
 public class ShowCommunityPage extends HttpServlet {
 
     /**
-     *This method calls the doGet method.
+     * This method manages Post request calling doGet method.
      *
      * @param req the HttpServletRequest from the client
      * @param resp the HttpServletResponse
@@ -27,11 +30,10 @@ public class ShowCommunityPage extends HttpServlet {
     }
 
     /**
-     * this method shows, to the user which wants to access the community, the
-     * community page.
+     * this method manages Get requests.
      *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
      * @throws ServletException if an exception is occurred
      * @throws IOException if an exception is occurred
      */

@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * this servlet allows the operator to decline an order.
+ */
 @WebServlet(urlPatterns = {"/declineOrder-servlet"})
 public class DeclineOrderServlet extends HttpServlet {
 
@@ -31,6 +34,14 @@ public class DeclineOrderServlet extends HttpServlet {
         this.doGet(req, resp);
     }
 
+    /**
+     * this method manages Get requests.
+     *
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
+     */
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
         String idString = req.getParameter("declineOrder");

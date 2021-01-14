@@ -11,7 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import controller.RequestParametersException;
 import controller.userManagement.userProfileManagement.SignupServlet;
 import model.bean.Cart;
-
+/**
+ * this servlet shows, to the user which wants to proceed to the checkout, the
+ * checkout page only if these conditions are satisfied:
+ *      the cart in the session is NOT null
+ *      the cart in the session in NOT empty
+ */
 @WebServlet(urlPatterns = {"/checkout.html", "/purchase-items"})
 public class ShowCheckoutPageServlet extends HttpServlet {
 
@@ -29,16 +34,14 @@ public class ShowCheckoutPageServlet extends HttpServlet {
         this.doGet(req, resp);
     }
 
+
     /**
-     * this method shows, to the user which wants to proceed to the checkout, the
-     * checkout page only if these conditions are satisfied:
-     *      the cart in the session is NOT null
-     *      the cart in the session in NOT empty
+     * this method manages Get requests.
      *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
