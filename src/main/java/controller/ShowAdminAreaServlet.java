@@ -38,21 +38,25 @@ public class ShowAdminAreaServlet extends HttpServlet {
         DigitalProductDAO dpd = new DigitalProductDAO();
         PhysicalProductDAO ppd = new PhysicalProductDAO();
         CategoryDAO cd = new CategoryDAO();
+        TagDAO td = new TagDAO();
 
         ArrayList<User> users = ud.doRetrieveAll();
         ArrayList<DigitalProduct> dproducts = dpd.doRetrieveAll(0, 1000);
         ArrayList<PhysicalProduct> pproducts = ppd.doRetrieveAll(0, 1000);
         ArrayList<Category> categories = cd.doRetrieveAll();
+        ArrayList<Tag> tags = td.doRetrieveByNameFragment("%", 0, 1000);
 
         req.setAttribute("usersLength", users.size());
         req.setAttribute("digitalProductsLength", dproducts.size());
         req.setAttribute("physicalProductsLength", pproducts.size());
         req.setAttribute("categoriesLength", categories.size());
+        req.setAttribute("tagsLength", tags.size());
 
         int usersIndex = DIMENSION_PAGE;
         int dproductsIndex = DIMENSION_PAGE;
         int pproductsIndex = DIMENSION_PAGE;
         int categoriesIndex = DIMENSION_PAGE;
+        int tagsIndex = DIMENSION_PAGE;
 
         if (users.size() < DIMENSION_PAGE) {
             usersIndex = users.size();
@@ -66,11 +70,15 @@ public class ShowAdminAreaServlet extends HttpServlet {
         if (categories.size() < DIMENSION_PAGE) {
             categoriesIndex = DIMENSION_PAGE;
         }
+        if (tags.size() < DIMENSION_PAGE) {
+            tagsIndex = DIMENSION_PAGE;
+        }
 
         req.setAttribute("firstUsers", users.subList(0, usersIndex));
         req.setAttribute("firstDigitalProducts", dproducts.subList(0, dproductsIndex));
         req.setAttribute("firstPhysicalProducts", pproducts.subList(0, pproductsIndex));
         req.setAttribute("firstCategories", categories.subList(0, categoriesIndex));
+        req.setAttribute("firstTags", tags.subList(0, tagsIndex));
 
         RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/view/AdminArea.jsp");
         rd.forward(req, resp);

@@ -154,7 +154,9 @@ form {
 #submitAdminButtonContainerRemoveCategory > input[disabled],
 #submitAdminButtonContainerAddTeacher > input[disabled],
 #submitAdminButtonContainerAddAdmin > input[disabled],
-#submitAdminButtonContainerRemoveAdmin > input[disabled]{
+#submitAdminButtonContainerRemoveAdmin > input[disabled],
+#submitAdminButtonContainerAddTag > input[disabled],
+#submitAdminButtonContainerRemoveTag > input[disabled]{
     pointer-events: none;
 }
 
@@ -184,7 +186,7 @@ form {
     cursor: pointer;
 }
 
-.changeCategoryAdminButton, .changeProductAdminButton{
+.changeCategoryAdminButton, .changeProductAdminButton, .changeTagAdminButton, .changeProductAdminButton{
     border: none;
     outline: none;
     background-color: inherit;

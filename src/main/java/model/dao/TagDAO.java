@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+
 import model.bean.Tag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,6 +36,23 @@ public class TagDAO {
                     + "values (?);");
             st.setString(1, t.getName());
             st.executeUpdate();
+            st.close();
+            cn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void doUpdate(@NotNull Tag t, String oldName) {
+        try {
+            Connection cn = ConPool.getConnection();
+            PreparedStatement st = cn.prepareStatement("UPDATE tag SET name = ? "
+                    + "WHERE tag.name = ?;");
+            st.setString(1, t.getName());
+            st.setString(2, oldName);
+            if (st.executeUpdate() != 1) {
+                throw new RuntimeException();
+            }
             st.close();
             cn.close();
         } catch (SQLException e) {

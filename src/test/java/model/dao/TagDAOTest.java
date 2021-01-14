@@ -36,6 +36,30 @@ class TagDAOTest {
     }
 
     @Test
+    void doUpdateOk() {
+        Tag t = new Tag("Tag1");
+        TagDAO td = new TagDAO();
+        td.doSave(t);
+        String name = t.getName();
+        t.setName("Tag2");
+        td.doUpdate(t, name);
+        t = td.doRetrieveByName(t.getName());
+        if (t != null) {
+            assertFalse(t.getName().equals(name));
+        } else {
+            fail();
+        }
+        td.doDelete(t.getName());
+    }
+
+    @Test
+    void doUpdateNotOk() {
+        Tag t = new Tag("Tag4");
+        TagDAO td = new TagDAO();
+        assertThrows(RuntimeException.class, ()->td.doUpdate(t, "notexists"));
+    }
+
+    @Test
     void doRetrieveByNameOk() {
         Tag tag1 = new Tag("Tag");
         tagdao.doSave(tag1);
