@@ -204,6 +204,46 @@ public class ModeratorDAO {
         return moderator;
     }
 
+    @NotNull
+    public ArrayList<Moderator> doRetrieveByUsernameFragment(
+            @NotNull String usernameFragment, int offset, int limit) {
+        ArrayList<Moderator> moderators = new ArrayList<>();
+        try {
+            Connection cn = ConPool.getConnection();
+            PreparedStatement st = cn.prepareStatement("SELECT * FROM user U,"
+                    + " moderator M WHERE U.username = M.user AND lower(M.user) like ?"
+                    + " limit ? offset ?;");
+            st.setString(1, "%" + usernameFragment.toLowerCase() + "%");
+            st.setInt(2, limit);
+            st.setInt(3, offset);
+            ResultSet rs = st.executeQuery();
+            User u = null;
+            Moderator m = null;
+            while (rs.next()) {
+                u = new User();
+                u.setUsername(rs.getString("username"));
+                u.setPasswordHash(rs.getString("password"));
+                u.setName(rs.getString("name"));
+                u.setSurname(rs.getString("surname"));
+                u.setAddress(rs.getString("address"));
+                u.setCity(rs.getString("city"));
+                u.setCountry(rs.getString("country"));
+                u.setBirthDate(rs.getString("birthDate"));
+                u.setMail(rs.getString("mail"));
+                u.setSex(rs.getString("sex").charAt(0));
+                u.setTelephone(rs.getString("telephone"));
+                m = new Moderator(u, rs.getString("contractTime"));
+                moderators.add(m);
+            }
+            rs.close();
+            st.close();
+            cn.close();
+            return moderators;
+        } catch (SQLException e) {
+            return new ArrayList<>();
+        }
+    }
+
     /**
      * This method allow to find a Moderator given his username and his password.
      *
