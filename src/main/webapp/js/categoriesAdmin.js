@@ -43,7 +43,7 @@ function getMoreCategoriesPaging(startingIndex=0){
                     "                   </td>\n" +
                     "                   <td class='can-be-editable editable-imagePath'>" +
                     "                       <input type='file' name='fileCategory' style=\"display: none\">" +
-                    "                       <span>"+category.image +"</span>" +
+                    "                       <span>"+category.imagePath +"</span>" +
                     "                   </td>\n" +
                     "                   <td class='form-container'>\n" +
                     "                        <form class=\"changeCategoryForm\" name=\"changeCategoryForm\" method=\"post\" action=\"changeCategory-servlet\">\n" +
@@ -207,7 +207,7 @@ var paginationCategoriesListener = ev => {
     $(".paginationCategories .pageNumBtnCategoryAdmin.visible").removeClass("visible");
     if(targetIdNum == 1 || targetIdNum == 2 || maxPageCategories <= 4){
         for(let i = 1; i <= 4; i++){
-            $pageBtn = $("#pageCategories"+i);
+            $pageBtn = $("#pageCategories" + i);
             if($pageBtn.length > 0)
                 $pageBtn.addClass("visible");
         }
@@ -253,7 +253,7 @@ var removeCategoryListener =  ev => {
         dataType: "json",
         error: ev => alert("Request of category " + categoryName + " removal failed."),
         success: responseObject => {
-            let removedCategoryName = responseObject.removedCategoryName, type= responseObject.type,
+            let removedCategoryName = responseObject.removedCategory, type= responseObject.type,
                 msg = responseObject.msg;
             if(removedCategoryName != null && removedCategoryName != undefined)
                 $(document.getElementById(removedCategoryName + "CategoryRow")).remove();
@@ -286,7 +286,7 @@ $(document).ready(function () {
     $("#submitAdminButtonContainerAddCategory input[type=submit]").on("click", ev => {
         ev.preventDefault();
         let fd = new FormData(document.getElementById("addCategoryForm"));
-        $.ajax("manage-category&manage_category=add_category", {
+        $.ajax("manage-category?&manage_category=add_category", {
             method: "POST",
             dataType: "json",
             enctype : 'multipart/form-data',
