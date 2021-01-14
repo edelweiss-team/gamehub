@@ -8,6 +8,7 @@ import model.dao.OrderDAO;
 import model.dao.UserDAO;
 import org.apache.log4j.BasicConfigurator;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -46,6 +47,12 @@ class ShowOperatorAreaServletTest {
 
     @Test
     public void loggedUserIsNull() throws ServletException, IOException {
+        Operator operator = new Operator("OtherUsername123", "Password1",
+                "Nomenuovo", "Cognomenuovo",
+                "Inidirizzo", "Città", "FR",
+                "1999-05-22", "Utente99414@gmail.it", 'm',
+                "3281883997","2021-05-22","aaa");
+        opdao.doSave(operator);
         assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
     }
 
@@ -54,7 +61,8 @@ class ShowOperatorAreaServletTest {
         Operator operator = new Operator("OtherUsername123", "Password1", "Nomenuovo", "Cognomenuovo",
                 "Inidirizzo", "Città", "FR",
                 "1999-05-22", "Utente99414@gmail.it", 'm',
-                "3281883997","","");
+                "3281883997","2021-05-22","aaa");
+        session = new MockHttpSession();
         opdao.doSave(operator);
         session.setAttribute("loggedUser" , operator);
         request.setSession(session);
@@ -62,8 +70,8 @@ class ShowOperatorAreaServletTest {
         assertEquals("/WEB-INF/view/OperatorArea.jsp", response.getForwardedUrl());
     }
 
-    @AfterAll
-    public static void DeSetup() {
+    @AfterEach
+    public void DeSetup() {
         od.doDelete(o.getId());
         ud.doDeleteFromUsername(u2.getUsername());
         opdao.doDeleteByUsername("OtherUsername123");

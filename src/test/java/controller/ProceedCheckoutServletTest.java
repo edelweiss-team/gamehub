@@ -2,6 +2,7 @@ package controller;
 
 import model.bean.*;
 import model.dao.DigitalProductDAO;
+import model.dao.PhysicalProductDAO;
 import model.dao.UserDAO;
 import org.apache.log4j.BasicConfigurator;
 import org.junit.jupiter.api.AfterAll;
@@ -21,16 +22,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ProceedCheckoutServletTest {
 
-
     private ProceedCheckoutServlet servlet;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
     private MockHttpSession session;
     private static UserDAO dao = new UserDAO();
     private static DigitalProductDAO daoP = new DigitalProductDAO();
+    private static PhysicalProductDAO daoPP = new PhysicalProductDAO();
     private static User u2;
     private Cart cart;
     private static DigitalProduct p;
+    private static PhysicalProduct pp;
 
     @BeforeAll
     public static void inizialize(){
@@ -40,8 +42,11 @@ public class ProceedCheckoutServletTest {
                 "3281883997");
         p = new DigitalProduct(7, "NuovoProdottoTesting", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
                 "xbox", "1999-05-05", 18, "testing", "testingpub");
+        pp = new PhysicalProduct(8, "NuovoProdottoTesting2", 23.56, "testing", "imagetesting",
+                new ArrayList<Category>(), new ArrayList<Tag>(), 330, "3x3x3", 3);
         dao.doSave(u2);
         daoP.doSave(p);
+        daoPP.doSave(pp);
     }
 
     @BeforeEach
@@ -52,6 +57,7 @@ public class ProceedCheckoutServletTest {
         session =  new MockHttpSession();
         cart = new Cart();
         cart.addProduct(p,1);
+        cart.addProduct(pp, 2);
         session.setAttribute("cart", cart);
         request.setSession(session);
         BasicConfigurator.configure();
@@ -282,7 +288,7 @@ public class ProceedCheckoutServletTest {
 
     }
 
-       @Test
+    @Test
     public void mailNotValidNotLogged() throws ServletException, IOException {
 
         request.addParameter("firstName", "Gerardo");
@@ -723,6 +729,26 @@ public class ProceedCheckoutServletTest {
 
     }
 
+    @Test
+    public void purchaseOkNotLoggedAlreadyRegistered() throws ServletException, IOException {
+
+        request.addParameter("firstName", "Gerardo");
+        request.addParameter("lastName", "Brescia");
+        request.addParameter("mail","Gerardo@gmail.com");
+        request.addParameter("address","Via Castello");
+        request.addParameter("city","Fisciano");
+        request.addParameter("telephone", "3328985488");
+        request.addParameter("country", "FR");
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-number", "4916551444956962");
+        request.addParameter("cc-cvv", "347");
+        request.addParameter("paymentMethod", "creditCard");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/purchaseConfirmed.jsp", response.getForwardedUrl());
+
+    }
+
 
     @Test
     public void purchaseOkEmailNotValidNotLogged() throws ServletException, IOException {
@@ -901,6 +927,7 @@ public class ProceedCheckoutServletTest {
         request.addParameter("cc-number", "4916551444956962");
         request.addParameter("cc-cvv", "347");
         request.addParameter("paymentMethod", "creditCard");
+
         servlet.doPost(request, response);
         assertEquals("/WEB-INF/view/purchaseConfirmed.jsp", response.getForwardedUrl());
 
@@ -1051,6 +1078,7 @@ public class ProceedCheckoutServletTest {
     @AfterAll
     public static void clear(){
         dao.doDeleteFromUsername(u2.getUsername());
+        dao.doDeleteFromUsername("Gerardo@gmail.com");
         daoP.doDelete(p.getId());
     }
 

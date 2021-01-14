@@ -1,5 +1,6 @@
 package model.bean;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Objects;
@@ -278,10 +279,11 @@ public class Order {
      */
     @NotNull
     public Collection<Product> getAllProducts() {
-        return products.values();
+        return new ArrayList<>(products.values());
     }
 
     @Override
+    @NotNull
     public String toString() {
         return "Order{"
                 + "id=" + id
@@ -291,12 +293,8 @@ public class Order {
                 + '}';
     }
 
-    public HashMap<String, Product> getProducts() {
-        return products;
-    }
-
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(@Nullable Object o) {
         if (this == o) {
             return true;
         }

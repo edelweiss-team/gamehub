@@ -108,7 +108,7 @@ public class ProceedCheckoutServlet extends HttpServlet {
 
             if (u != null && !u.getUsername().equalsIgnoreCase(u.getMail())) {
                 RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/view/Login.jsp");
-                rd.forward(req,resp);
+                rd.forward(req, resp);
                 return;
             } else if (u == null) {
                 u = new User(
@@ -145,8 +145,9 @@ public class ProceedCheckoutServlet extends HttpServlet {
             order.addProduct(p, cart.getQuantitySingleProduct(p.getId(), p.getClass()));
             //rimuoviamo i prodotti dal carrello
             int prevQuantity = cart.getQuantitySingleProduct(p.getId(), p.getClass());
-            cart.removeProduct(p, prevQuantity);
-
+            synchronized (cart) {
+                cart.removeProduct(p, prevQuantity);
+            }
             p.setQuantity(p.getQuantity() - prevQuantity);
             if (p instanceof DigitalProduct) {
                 (new DigitalProductDAO()).doUpdate((DigitalProduct) p);
