@@ -21,7 +21,7 @@
 <body class="admin-body">
 
     <div class="admin-fieldset">
-        <button id="admin" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Admins</button>
+        <button id="admin" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%; margin-right: 20%">Admins</button>
         <button id="moderator" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Moderators</button>
         <button id="operator" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Operators</button>
         <button id="tag" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Tags</button>
@@ -192,7 +192,84 @@
     </div>
 
     <div id="tags-div" style="display: none">
-        <p>Tags</p>
+        <h1 class='manage-header-tag'>Manage tags</h1>
+        <div class='admin-fieldset'>
+            <h3>Add tag</h3>
+            <form id='addTagForm' name='addTagForm' action='manage-tag' method='post' enctype='multipart/form-data'>
+                <div class='admin-textbox'>
+                    <input type='text' id='tagName' class='admin-textbox' name='tagName' placeholder='Tag name'><br>
+                </div>
+                <div class='admin-textbox' style='border: none'>
+                    <span id='errorMessageAddTag' class='Error'></span><br>
+                </div>
+                <div id='submitAdminButtonContainerAddTag'>
+                    <input type='submit' class='btnAdmin submitBtn' disabled>
+                    <input type="hidden" name="manage_tag" value="add_tag">
+                </div>
+            </form>
+        </div>
+        <div class='admin-fieldset'>
+            <h3>Update tag</h3>
+            <div class="table-div tags-table-div">
+                <table border='1' id='tags-table' class='content-table'>
+                    <thead>
+                    <tr class='tags-table-header'>
+                        <th>Name</th>
+                        <th>Change</th>
+                        <th>Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody class='tags-table-body'>
+                    <c:forEach items='${firstTags}' var='tag'>
+                        <tr id="${tag.name}TagRow" class='tags-table-body-row'>
+                            <td class='can-be-editable editable-name'>  ${tag.name}  </td>
+                            </td>
+                            <td class='form-container'>
+                                <form class='changeTagForm' name='changeTagForm' method='post' action='manage-tag'>
+                                    <input type='hidden' value='${tag.name}' name='changeTag' class='changeTagOldName'>
+                                    <input type="hidden" name="manage_tag" value="update_tag">
+                                    <input type='submit' value='📝' class='changeTagAdminButton'>
+                                    <span class="errorTagMessage" style="color: #c75450; display: none"></span>
+                                </form>
+                            </td>
+                            <td class='form-container'>
+                                <form class='removeTagForm' name='removeTagForm' method='post' action='manage-tag'>
+                                    <input type='hidden' value='${tag.name}' name='removeTag' class='removeTagOldName'>
+                                    <input type="hidden" name="manage_tag" value="remove_tag">
+                                    <input type='submit' value='✗' class='removeTagAdminButton'>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class='paginationTags'>
+                <span id='previousPageTags' class='visible'>&laquo;</span>
+                <span id='ellipseSxTags'>...</span>
+                <c:set var='maxPageTags' value='${Math.ceil(tagsLength/4)}'/>
+                <c:forEach var='i' begin='1' end='${maxPageTags}'>
+                    <c:if test='${i == 1}'>
+                        <span class='current visible pageNumBtnTagAdmin' id='pageTags${i}'>${i}</span>
+                    </c:if>
+                    <c:if test='${i != 1}'>
+                        <c:if test='${i <= 4}'>
+                            <span class='pageNumBtnTagAdmin visible' id='pageTags${i}'>${i}</span>
+                        </c:if>
+                        <c:if test='${i > 4}'>
+                            <span class='pageNumBtnTagAdmin' id='pageTags${i}'>${i}</span>
+                        </c:if>
+                    </c:if>
+                </c:forEach>
+                <c:if test='${maxPageTags > 4}'>
+                    <span id='ellipseDxTags' class='visible'>...</span>
+                </c:if>
+                <c:if test='${maxPageTags <= 4}'>
+                    <span id='ellipseDxTags'>...</span>
+                </c:if>
+                <span id='nextPageTags' class='visible'>&raquo;</span>
+            </div>
+        </div>
     </div>
 
     <div id="operators-div" style="display: none">
@@ -219,11 +296,13 @@
         window.onresize = ev => resizeFooter();
     </script>
     <script>var maxPageCategories = ${(maxPageCategories > 0)?(maxPageCategories):(1)}; //mantiena l'indice dell'ultima pagina</script>
+    <script>var maxPageTags = ${(maxPageTags > 0)?(maxPageTags):(1)}; //mantiena l'indice dell'ultima pagina</script>
     <script>var maxPageUsers = ${(maxPageUsers > 0)?(maxPageUsers):(1)}; //mantiena l'indice dell'ultima pagina</script>
     <script src="${pageContext.request.contextPath}/js/adminArea.js"></script>
     <script src="${pageContext.request.contextPath}/js/utility.js"></script>
     <script src="${pageContext.request.contextPath}/js/usersAdmin.js"></script>
     <script src="${pageContext.request.contextPath}/js/categoriesAdmin.js"></script>
     <script src="${pageContext.request.contextPath}/js/adminForms.js"></script>
+    <script src="${pageContext.request.contextPath}/js/tagsAdmin.js"></script>
 </body>
 </html>

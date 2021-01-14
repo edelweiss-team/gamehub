@@ -70,7 +70,7 @@ public class AdminDAO {
             try {
                 Connection cn = ConPool.getConnection();
                 PreparedStatement st = cn.prepareStatement("UPDATE admin SET superAdmin = ?"
-                                                                + " WHERE admin.moderator = ?");
+                    + " WHERE admin.moderator = ?");
 
                 st.setBoolean(1, a.isSuperAdmin());
                 st.setString(2, username);
