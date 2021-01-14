@@ -81,7 +81,7 @@ public class ManageCategoryServlet extends HttpServlet {
             } else if (operation.equals("update_category")) {
                 String categoryName = req.getParameter("editable-name");
                 String description = req.getParameter("editable-description");
-                Part category_image = req.getPart("fileCategory");
+                Part categoryImage = req.getPart("fileCategory");
                 if (categoryName != null && description != null) {
                     categoryName = categoryName.trim();
                     description = description.trim();
@@ -89,16 +89,16 @@ public class ManageCategoryServlet extends HttpServlet {
                             && categoryName.length() <= CATEGORY_MAX_LENGTH
                             && description.length() >= DESCRIPTION_CATEGORY_MIN_LENGTH
                             && description.length() <= DESCRIPTION_CATEGORY_MAX_LENGTH) {
-                        if (category_image != null) {
+                        if (categoryImage != null) {
                             //se la nuova immagine esiste sovrascriviamo quella vecchia
-                            InputStream is = category_image.getInputStream();
+                            InputStream is = categoryImage.getInputStream();
                             BufferedInputStream bin = new BufferedInputStream(is);
-                            FileOutputStream fos = new FileOutputStream(
-                                    new File("C:\\apache-tomcat-9.0.31\\webapps\\studium\\"
-                                            + "resources\\images\\categoryImages"
-                                            + File.separator,
-                                            categoryName.toLowerCase().replace(" ",
-                                                    "-") + "-Image.jpg"));
+                            FileOutputStream fos =
+                                    new FileOutputStream(new File(
+                                            getServletContext().getRealPath("/img/categories")
+                                                    + File.separator,
+                                            categoryName.toLowerCase().replace(" ", "-")
+                                                    + "-Image.jpg"));
                             /*FileOutputStream fos2 = new FileOutputStream(
                             new File("C:\\Users\\Roberto Esposito\\Desktop\\tsw" +
                                     "\\progettoTSWv0.1\\web\\resources\\images\\categoryImages" +
@@ -135,7 +135,7 @@ public class ManageCategoryServlet extends HttpServlet {
                             // e scriviamo quella aggiornata nella risposta json
                             c.setName(categoryName);
                             c.setDescription(description);
-                            if (category_image != null) {
+                            if (categoryImage != null) {
                                 //se c'è una nuova immagine aggiorniamo l'imagePath
                                 c.setImage(categoryName.toLowerCase().replace(" ",
                                         "-") + "-Image.jpg");
@@ -170,40 +170,38 @@ public class ManageCategoryServlet extends HttpServlet {
             } else if (operation.equals("add_category")) {
                 String categoryName = req.getParameter("categoryName");
                 String description = req.getParameter("description_category");
-                Part category_image = req.getPart("image_path");
+                Part categoryImage = req.getPart("image_path");
                 JsonObject categoryJson;
 
-                if (categoryName != null && description != null && category_image != null) {
+                if (categoryName != null && description != null && categoryImage != null) {
                     if (categoryName.length() >= CATEGORY_MIN_LENGTH
                             && categoryName.length() <= CATEGORY_MAX_LENGTH
                             && description.length() >= DESCRIPTION_CATEGORY_MIN_LENGTH
                             && description.length() <= DESCRIPTION_CATEGORY_MAX_LENGTH
                             && categoryName.matches(NAME_REGEX)) {
-                        InputStream is = category_image.getInputStream();
+                        InputStream is = categoryImage.getInputStream();
                         BufferedInputStream bin = new BufferedInputStream(is);
-                        FileOutputStream fos = new FileOutputStream(
+                        /*FileOutputStream fos2 = new FileOutputStream(
                                 new File("C:\\apache-tomcat-9.0.31\\webapps\\studium\\"
                                         + "resources\\images\\categoryImages"
                                         + File.separator,
                                         categoryName.toLowerCase().replace(" ", "-")
-                                                + "-Image.jpg"));
-                        FileOutputStream fos2 =
-                                new FileOutputStream(new File("C:\\Users\\Roberto Esposito"
-                                        + "\\Desktop\\tsw"
-                                        + "\\progettoTSWv0.1\\web\\resources\\images\\"
-                                        + "categoryImages"
+                                                + "-Image.jpg"));*/
+                        FileOutputStream fos =
+                                new FileOutputStream(new File(
+                                        getServletContext().getRealPath("/img/categories")
                                         + File.separator,
                                         categoryName.toLowerCase().replace(" ", "-")
                                                 + "-Image.jpg"));
                         int ch = 0;
                         while ((ch = bin.read()) != -1) {
                             fos.write(ch);
-                            fos2.write(ch);
+                            //fos2.write(ch);
                         }
                         fos.flush();
-                        fos2.flush();
+                        //fos2.flush();
                         fos.close();
-                        fos2.close();
+                        //fos2.close();
                         bin.close();
 
                         Category cat = new Category(categoryName, description,
