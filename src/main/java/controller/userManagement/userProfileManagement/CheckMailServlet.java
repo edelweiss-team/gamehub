@@ -7,7 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.dao.UserDAO;
-
+/**
+ * this Servlet checks if an email from the request is
+ * valid(match the regex and not already saved in DB).
+ */
 @WebServlet("/check-mail")
 public class CheckMailServlet extends HttpServlet {
 
@@ -26,12 +29,12 @@ public class CheckMailServlet extends HttpServlet {
     }
 
     /**
-     * check in an email from the request is valid (match the regex and not already saved in DB).
+     * this method manages Get requests.
      *
      * @param req a HttpServletRequest
      * @param resp an HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,

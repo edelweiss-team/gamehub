@@ -16,7 +16,11 @@ import model.bean.User;
 import model.dao.UserDAO;
 import org.jetbrains.annotations.NotNull;
 
-
+/**
+ * this servlet save an user, that wanted to signup, in the DB on condition that all required parameters are
+ * non-null and match their corrispective regex.
+ * If that happens the user is added to the session too.
+ */
 @WebServlet(urlPatterns = {"/signup-servlet", "/signup"}, loadOnStartup = 0)
 public class SignupServlet extends HttpServlet {
     public static final @NotNull String USERNAME_REGEX = LoginServlet.USERNAME_REGEX;
@@ -86,15 +90,15 @@ public class SignupServlet extends HttpServlet {
         this.doGet(req, resp);
     }
 
+
+
     /**
-     * this method save an user, that wanted to signup, in the DB on condition that all required parameters are
-     * non-null and match their corrispective regex.
-     * If that happens the user is added to the session too.
+     * this method manages Get requests.
      *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

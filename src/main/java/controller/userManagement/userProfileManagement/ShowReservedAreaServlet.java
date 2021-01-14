@@ -14,6 +14,12 @@ import model.bean.Order;
 import model.bean.User;
 import model.dao.OrderDAO;
 
+/**
+ * this method shows, to the user which wants to access to his personal area,
+ * the the personal area page on condition that there's a user logged (user in
+ *      session).
+ * otherwise it will lead to a RequestParameterException.
+ */
 @WebServlet(urlPatterns = {"/reservedArea.html"})
 public class ShowReservedAreaServlet extends HttpServlet {
 
@@ -32,16 +38,12 @@ public class ShowReservedAreaServlet extends HttpServlet {
     }
 
     /**
-     * this method shows, to the user which wants to access to his personal area,
-     * the the personal area page on condition that there's a user logged (user in
-     *      session).
-     * otherwise it will lead to a RequestParameterException.
+     * this method manages Get requests.
      *
-     *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

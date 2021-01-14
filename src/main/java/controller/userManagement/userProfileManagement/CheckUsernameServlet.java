@@ -7,7 +7,9 @@ import javax.servlet.http.*;
 
 import controller.userManagement.userProfileManagement.LoginServlet;
 import model.dao.UserDAO;
-
+/**
+ * this servlet checks if the username from the request is valid (match the regex and not already saved in DB).
+ */
 @WebServlet("/check-username")
 public class CheckUsernameServlet extends HttpServlet {
 
@@ -26,12 +28,12 @@ public class CheckUsernameServlet extends HttpServlet {
     }
 
     /**
-     * check in an username from the request is valid (match the regex and not already saved in DB).
+     * this method manages Get requests.
      *
      * @param req a HttpServletRequest
      * @param resp an HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,

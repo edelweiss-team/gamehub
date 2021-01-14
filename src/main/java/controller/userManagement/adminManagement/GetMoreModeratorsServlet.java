@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-
+/**
+ * This servlet add more moderators to the response.
+ */
 @WebServlet(urlPatterns = {"/get-more-moderators"})
 public class GetMoreModeratorsServlet extends HttpServlet {
     public static final int MODERATORS_PER_REQUEST_DEFAULT = 4;
@@ -31,12 +33,12 @@ public class GetMoreModeratorsServlet extends HttpServlet {
     }
 
     /**
-     * Add more moderators to the response.
+     * this method manages Get requests.
      *
      * @param req a HttpServletRequest
      * @param resp an HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

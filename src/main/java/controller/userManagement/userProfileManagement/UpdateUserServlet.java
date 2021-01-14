@@ -17,6 +17,12 @@ import model.bean.User;
 import model.dao.UserDAO;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * this servlet updates an user, that wants to update his information, in the DB
+ * on condition that all required parameters are
+ * non-null, match their corrispective regex and the user is present in the session.
+ * If that happens the user is re-added to the session too.
+ */
 @WebServlet(urlPatterns = {"/changeUser"})
 @MultipartConfig
 public class UpdateUserServlet extends HttpServlet {
@@ -60,16 +66,12 @@ public class UpdateUserServlet extends HttpServlet {
     }
 
     /**
-     * this method update an user, that wants to update his information, in the DB
-     * on condition that all required parameters are
-     * non-null, match their corrispective regex and the user is present in the session.
-     * If that happens the user is re-added to the session too.
+     * this method manages Get requests.
      *
-     *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,

@@ -14,7 +14,10 @@ import controller.RequestParametersException;
 import model.bean.Product;
 import model.dao.DigitalProductDAO;
 import model.dao.PhysicalProductDAO;
-
+/**
+ *  This servlet adds more products to the response.
+ *
+ */
 @WebServlet(urlPatterns = {"/get-more-products"})
 public class GetMoreProductsServlet extends HttpServlet {
     public static final int PRODUCTS_PER_REQUEST_DEFAULT = 8;
@@ -35,12 +38,12 @@ public class GetMoreProductsServlet extends HttpServlet {
     }
 
     /**
-     * Add more products to rhe response.
+     * this method manages Get requests.
      *
      * @param req a HttpServletRequest
      * @param resp an HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {

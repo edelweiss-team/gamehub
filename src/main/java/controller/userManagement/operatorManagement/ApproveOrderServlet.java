@@ -38,12 +38,12 @@ public class ApproveOrderServlet extends HttpServlet {
     }
 
     /**
-     *This method process the request to approve an order.
+     * this method manages Get requests.
      *
-     * @param req the HttpServletRequest from the client
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {

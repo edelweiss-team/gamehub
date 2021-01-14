@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+/**
+ * this servlet shows, to the user which wants to signup to the website, the signup page
+ * if there's already a user in the session this will result in a RequestParameterException.
+ */
 @WebServlet(urlPatterns = {"/signup.html"})
 public class ShowSignUpPageServlet extends HttpServlet {
 
@@ -29,13 +32,12 @@ public class ShowSignUpPageServlet extends HttpServlet {
     }
 
     /**
-     * this method shows, to the user which wants to signup to the website, the signup page
-     * if there's already a user in the session this will result in a RequestParameterException.
+     * this method manages Get requests
      *
-     * @param req the HttpServletRequest
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
