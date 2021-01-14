@@ -35,10 +35,7 @@ public class ShowOperatorAreaServlet extends HttpServlet {
     }
 
     /**
-     * this method shows, to the user which wants to proceed to the checkout, the
-     * checkout page only if these conditions are satisfied:
-     *      the cart in the session is NOT null
-     *      the cart in the session in NOT empty
+     * This method allows to show all the orders to confirm.
      *
      * @param req the HttpServletRequest
      * @param resp the HttpServletResponse
