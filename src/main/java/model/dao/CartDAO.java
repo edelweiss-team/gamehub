@@ -190,14 +190,15 @@ public class CartDAO {
                 if (ps.executeUpdate() < 1) {
                     throw new RuntimeException("Product is not contained in the cart.");
                 }
-
-                ps = cn.prepareStatement("INSERT INTO digitalcontaining values "
-                        + "(?, ?, ?) on duplicate key update quantity=?;");
-                ps.setInt(1, p.getId());
-                ps.setString(2, u.getUsername());
-                ps.setInt(3, c.getQuantitySingleProduct(p.getId(), p.getClass()));
-                ps.setInt(4, c.getQuantitySingleProduct(p.getId(), p.getClass()));
-                ps.executeUpdate();
+                if (c.getQuantitySingleProduct(p.getId(), p.getClass()) > 0) {
+                    ps = cn.prepareStatement("INSERT INTO digitalcontaining values "
+                            + "(?, ?, ?) on duplicate key update quantity=?;");
+                    ps.setInt(1, p.getId());
+                    ps.setString(2, u.getUsername());
+                    ps.setInt(3, c.getQuantitySingleProduct(p.getId(), p.getClass()));
+                    ps.setInt(4, c.getQuantitySingleProduct(p.getId(), p.getClass()));
+                    ps.executeUpdate();
+                }
             } else if (p instanceof PhysicalProduct) {
                 ps = cn.prepareStatement(
                         "DELETE FROM physicalcontaining where cart=? AND physicalProduct=?;"
