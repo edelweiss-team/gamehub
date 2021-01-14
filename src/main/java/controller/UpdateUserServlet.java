@@ -141,7 +141,7 @@ public class UpdateUserServlet extends HttpServlet {
                     responseUser.addProperty("address", u.getAddress());
                     responseUser.addProperty("city", u.getCity());
                     responseUser.addProperty("country", u.getCountry());
-                } else if (!SignupServlet.MAIL_REGEX.matches(mail)) {
+                } else if (!mail.matches(MAIL_REGEX)) {
                     responseJson.addProperty("type", "error");
                     responseJson.addProperty("message", "Mail not valid");
                     responseUser.addProperty("username", u.getUsername());

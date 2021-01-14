@@ -15,7 +15,7 @@ import org.springframework.mock.web.MockHttpSession;
 import javax.servlet.ServletException;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UpdateUserServletTest {
 
@@ -40,11 +40,11 @@ public class UpdateUserServletTest {
     @BeforeAll
     static public void inizializeVariable() {
         User u = new User("OtherUsername", "Password1", "Nomenuovo", "Cognomenuovo",
-                "Inidirizzo", "Città", "FR",
+                "Via Castello", "Fisciano", "FR",
                 "1999-05-22", "Utente99@gmail.it", 'm',
                 "3281883997");
         u2 = new User("MyUsername", "Password1","Nomenuovo", "Cognomenuovo",
-                "Inidirizzo","Città","Nazione",
+                "Via Castello","Fisciano","FR",
                 "1999-05-22", "Utente@gmail.it", 'm',
                 "3281883997");
         dao.doSave(u);
@@ -56,39 +56,33 @@ public class UpdateUserServletTest {
     //TC_1.1_26
     @Test
     public void modifyOk() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
+        request.addParameter("editable-username", "MyUsername");
+        request.addParameter("editable-name", "Luigi");
         request.addParameter("editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
         request.addParameter("editable-birthdate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+        request.addParameter("editable-telephone", "3542746998");
+        request.addParameter("table-triggered", "1");
         servlet.doPost(request, response);
-        assertEquals(".", response.getForwardedUrl());
-        UserDAO udao = new UserDAO();
-        udao.doDeleteFromUsername("MyUsername");
+
     }
 
     //TC_1.1_1
     @Test
     public void usernameTooShort() throws ServletException, IOException {
-        request.addParameter(" editable-username", "M");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter("surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter("birthdate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue( !response.getContentAsString().isEmpty());
     }
 
     //TC_1.1_2
@@ -537,6 +531,7 @@ public class UpdateUserServletTest {
     @AfterAll
     static public void DeSetup() {
         dao.doDeleteFromUsername("OtherUsername");
+        dao.doDeleteFromUsername("MyUsername2");
     }
     
 }
