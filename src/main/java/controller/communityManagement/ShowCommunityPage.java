@@ -17,8 +17,8 @@ public class ShowCommunityPage extends HttpServlet {
      *
      * @param req the HttpServletRequest from the client
      * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -32,8 +32,8 @@ public class ShowCommunityPage extends HttpServlet {
      *
      * @param req the HttpServletRequest
      * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

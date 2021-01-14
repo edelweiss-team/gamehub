@@ -46,12 +46,12 @@ public class UpdateUserServlet extends HttpServlet {
     public static final int COUNTRY_MAX = 25;
 
     /**
-     *This method calls the doGet method.
+     * this method manages Post request calling doGet method.
      *
-     * @param req the HttpServletRequest from the client
-     * @param resp the HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @param req a HttpServletRequest
+     * @param resp an HttpServletResponse
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,

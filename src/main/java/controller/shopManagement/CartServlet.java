@@ -26,12 +26,12 @@ import model.dao.PhysicalProductDAO;
 public class CartServlet extends HttpServlet {
 
     /**
-     * calls doGet method.
+     * this method manages Post request calling doGet method.
      *
      * @param req a HttpServletRequest
      * @param resp an HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -39,12 +39,12 @@ public class CartServlet extends HttpServlet {
         this.doGet(req, resp);
     }
     /**
-     * provides all the operations to manage the cart.
+     * this method manages Get requests.
      *
      * @param req a HttpServletRequest
      * @param resp an HttpServletResponse
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException if an exception is occurred
+     * @throws IOException if an exception is occurred
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
