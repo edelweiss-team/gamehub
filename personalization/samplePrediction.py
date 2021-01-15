@@ -22,7 +22,7 @@ def predict() -> list:
 
     tagList = mostCommonTagList[clusterNum] #accediamo alla lista di tag del cluster
     formatTagList(tagList) #formattiamo correttamente i tag
-    #print(tagList)
+
     return tagList
 
 
@@ -36,7 +36,7 @@ def registerVote(vote: bool) -> bool:
         flag = False
 
         # Se c'è già il voto di un utente con lo stesso username, aggiorniamo il voto
-        for i in range(0, len(dataFrameVotes['Username'])):
+        for i in range(len(dataFrameVotes['Username'])):
             if(dataFrameVotes['Username'][i] == username):
                 dataFrameVotes['Vote'][i] = vote
                 flag = True
