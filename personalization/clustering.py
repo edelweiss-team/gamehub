@@ -19,15 +19,13 @@ def saveClusterer(clustererTrained: KMeans, mostCommonTagsList: list):
 
 
 def loadClusterer() -> (KMeans, list):
-	couple = pickle.load(open(SERIALIZED_CLUSTER_FILENAME, 'rb'))
-	clusterer = couple[0]
-	mostCommonTagsList = couple[1]
-	return clusterer, mostCommonTagsList
+	clusterAndTagList = pickle.load(open(SERIALIZED_CLUSTER_FILENAME, 'rb'))
+	return clusterAndTagList
 
-
+# costruiamo una lista di mappe (una per cluster), ogni mappa e' caratterizzata da: key->nomeTag, value->frequenzaTag
 def findMostCommonTagsList(df: pd.DataFrame, clustererTrained: KMeans, amountTags: int, n_clusters: int) -> list:
 	df['cluster'] = clustererTrained.labels_ #prendiamo le label
-	listMaps = [] #costruiamo una mappa che contenga ogni tag con la sua frequenza nel cluster
+	listMaps = []
 
 	for i in range (n_clusters):
 		tagsHead = df.filter(regex="((^Tag_.*$)|(usesMultiplayer))", axis=1).columns
@@ -91,7 +89,7 @@ if __name__ == '__main__':
 			tagsMap[tag] = len(buffer[buffer['cluster']==i])
 		listMaps.append(tagsMap)
 	print(listMaps)
-	
+
 	#estraiamo i migliori 5 da ogni cluster
 	bestLists = [[] in range(0, 5)] #lista di best vuoti
 	for i in range(0, 5):
@@ -99,24 +97,24 @@ if __name__ == '__main__':
 			maxKey = max(listMaps[i], key=lambda key: stats[key]) #chiave con il massimo valore, ripetuto per 5 volte
 			listMaps[i].pop(maxKey) #rimuoviamo il massimo
 			bestList[i].append(maxKey) #aggiungiamo la sua chiave alla lista dei migliori tag per il cluster specificato
-	
-	
-	
-	
-	
+
+
+
+
+
 	couple = (km, listMaps)
 	pickle.dump(couple, open("serializedCouple", 'wb'))
 	km2 = pickle.load(open("serializedCouple", 'rb'))[0]
 	print(km2.predict(predictValue))
-	
-	
+
+
 	valueToPredict = pd.read_csv("buffer.csv")
 	valueToPredict = valueToPredict.drop(['Id', 'Username', 'Tag_Action', 'Ctg_demo', 'usesMultiplayer'], axis=1)
 	print(valueToPredict)
 	cluster = loaded.predict(valueToPredict)
 	print(cluster)
-	
-	
+
+
 	valueToPredict = pd.read_csv("buffer.csv")
 	valueToPredict = valueToPredict.drop(['Id', 'Username', 'Tag_Action', 'Ctg_demo', 'usesMultiplayer'], axis=1)
 	print(valueToPredict)
