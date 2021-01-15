@@ -203,10 +203,8 @@ public class UpdateUserServlet extends HttpServlet {
                 } else {
                     if (password != null) {
                         password = password.trim();
-                        if (password.matches(PASSWORD_REGEX)) {
-                            u.setPassword(password);
-                        }
-                        else {
+                        if (!password.matches(PASSWORD_REGEX)) {
+
                             responseJson.addProperty("type", "error");
                             responseJson.addProperty("message", "Password is not"
                                     +" valid");
@@ -223,6 +221,9 @@ public class UpdateUserServlet extends HttpServlet {
                             responseUser.addProperty("country", u.getCountry());
                             resp.getWriter().println(responseJson.toString());
                             resp.flushBuffer();
+                            return;
+                        } else {
+                            u.setPassword(password);
                         }
                     }
                     u.setMail(mail);
