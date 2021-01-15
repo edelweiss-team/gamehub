@@ -29,7 +29,7 @@ def findMostCommonTagsList(df: pd.DataFrame, clustererTrained: KMeans, amountTag
 	df['cluster'] = clustererTrained.labels_ #prendiamo le label
 	listMaps = [] #costruiamo una mappa che contenga ogni tag con la sua frequenza nel cluster
 
-	for i in range (0, n_clusters):
+	for i in range (n_clusters):
 		tagsHead = df.filter(regex="((^Tag_.*$)|(usesMultiplayer))", axis=1).columns
 		listMaps.append({})
 		filteredDf = df.filter(regex="((^Tag_.*$)|(usesMultiplayer)|(cluster))", axis=1)
@@ -39,9 +39,9 @@ def findMostCommonTagsList(df: pd.DataFrame, clustererTrained: KMeans, amountTag
 			listMaps[i][tag] = len(buffer[buffer['cluster']==i])
 
 	#estraiamo i migliori amountTags da ogni cluster
-	bestLists = [[] for l in range(0, n_clusters)] #lista di best vuoti
-	for i in range(0, n_clusters):
-		for j in range(0, amountTags):
+	bestLists = [[] for l in range(n_clusters)] #lista di best vuoti
+	for i in range(n_clusters):
+		for j in range(amountTags):
 			#chiave con il massimo valore, ripetuto per amountTags volte
 			maxKey = max(listMaps[i].keys(), key=(lambda k: listMaps[i][k]))
 			listMaps[i].pop(maxKey) #rimuoviamo il massimo

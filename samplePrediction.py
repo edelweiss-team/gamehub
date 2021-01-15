@@ -10,7 +10,7 @@ def registerVote(vote: bool) -> bool:
         dataFrameVotes = pd.read_csv("./votes.csv")
         username = dataFrame.iloc[0].Username
         flag = False
-        for i in range(0, len(dataFrameVotes['Username'])):
+        for i in range(len(dataFrameVotes['Username'])):
             if(dataFrameVotes['Username'][i] == username):
                 dataFrameVotes['Vote'][i] = vote
                 flag = True
