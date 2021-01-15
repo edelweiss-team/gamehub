@@ -73,7 +73,7 @@ public class ShowAdminAreaServlet extends HttpServlet {
         ArrayList<Tag> tags = td.doRetrieveByNameFragment("%", 0, 1000);
         ArrayList<Operator> operators = od.doRetrieveAll();
         ArrayList<Moderator> moderators = md.doRetrieveAll();
-        ArrayList<Admin> admins = ad.doRetrieveAll();
+        ArrayList<Admin> admins = ad.doRetrieveAll(0, 1000);
 
         req.setAttribute("usersLength", users.size());
         req.setAttribute("digitalProductsLength", dproducts.size());

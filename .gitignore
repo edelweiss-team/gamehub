@@ -88,3 +88,6 @@ ConPool.java
 
 #SetupTesting
 SetupTesting.java
+
+#chromedriver
+chromedriver.exe

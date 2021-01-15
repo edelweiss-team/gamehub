@@ -278,13 +278,13 @@
             <h3>Add operator</h3>
             <form id='addOperatorForm' name='addOperatorForm' action='manageOperator-servlet' method='post'>
                 <div class='admin-textbox'>
-                    <input type='text' id='userName' class='admin-textbox' name='userName' placeholder='Username'><br>
+                    <input type='text' id='userName' pattern="^[A-Za-z0-9]{6,20}$" class='admin-textbox' name='userName' placeholder='Username'><br>
                 </div>
                 <div class='admin-textbox-textarea'>
-                    <textarea id='curriculum' placeholder="Curriculum" name='curriculum'></textarea><br>
+                    <textarea id='curriculum' minlength="3" maxlength="10000" placeholder="Curriculum" name='curriculum'></textarea><br>
                 </div>
                 <div class="admin-textbox">
-                    <input type="text" id="contractTime" class="admin-textbox" name="contractTime" placeholder="contractTime"><br>
+                    <input type="text" pattern="^\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$" id="contractTime" class="admin-textbox" name="contractTime" placeholder="contractTime yyyy-mm-dd"><br>
                 </div>
                 <div class='admin-textbox' style='border: none'>
                     <span id='errorMessageAddOperator' class='Error'></span><br>
@@ -311,12 +311,12 @@
                     <tbody class='operators-table-body'>
                     <c:forEach items='${firstOperators}' var='operator'>
                         <tr id="${operator.username}OperatorRow" class='operators-table-body-row'>
-                            <td class="can-be-editable editable-name">  ${operator.username}  </td>
+                            <td>  ${operator.username}  </td>
                             <td class="can-be-editable editable-cv">  ${operator.cv}</td>
                             <td class="can-be-editable editable-contractTime">  ${operator.contractTime}</td>
                             <td class='form-container'>
                                 <form class='changeOperatorForm' name='changeOperatorForm' method='post' action='manage-category'>
-                                    <input type='hidden' value='${operator.name}' name='changeOperator' class='changeOperatorOldName'>
+                                    <input type='hidden' value='${operator.username}' name='changeOperator' class='changeOperatorOldName'>
                                     <input type="hidden" name="manage_operator" value="update_operator">
                                     <input type='submit' value='📝' class='changeOperatorAdminButton'>
                                     <span class="errorOperatorMessage" style="color: #c75450; display: none"></span>
@@ -434,75 +434,93 @@
             </div>
         </div>
     </div>
-
-    <div id="admins-div" style="display: none">
-        <h1 class='manage-header-admin'>Manage admins</h1>
-        <div class='admin-fieldset'>
-            <h3>Add admin</h3>
-            <form id='addAdminForm' name='addAdminForm' action='addAdmin-servlet' method='post'>
-                <div class='admin-textbox'>
-                    <input type='text' id='adminName' class='admin-textbox' name='adminName' placeholder='Username'><br>
-                </div>
-                <div class="admin-textbox">
-                    <input type="text" id="superRoot" class="admin-textbox" name="superRoot" placeholder="superRoot"><br>
-                </div>
-                <div class='admin-textbox' style='border: none'>
-                    <span id='errorMessageAddAdmin' class='Error'></span><br>
-                </div>
-                <div id='submitAdminButtonContainerAddAdmin'>
-                    <input type='submit' class='btnAdmin submitBtn' disabled>
-                </div>
-            </form>
-        </div>
-        <div class='admin-fieldset'>
-            <h3>All admins</h3>
-            <div class="table-div admins-table-div">
-                <table border='1' id='admins-table' class='content-table'>
-                    <thead>
-                    <tr class='admins-table-header'>
-                        <th>Username</th>
-                        <th>SuperRoot</th>
-                        <th>Change</th>
-                        <th>Remove</th>
-                    </tr>
-                    </thead>
-                    <tbody class='admins-table-body'>
-                    <c:forEach items='${firstAdmins}' var='admin'>
-                        <tr id="${admin.username}AdminRow" class='admins-table-body-row'>
-                            <td>${admin.username}</td>
+    <c:if test="${loggedUser.isSuperAdmin()}">
+        <div id="admins-div" style="display: none">
+            <h1 class='manage-header-admin'>Manage admins</h1>
+            <div class='admin-fieldset'>
+                <h3>Add admin</h3>
+                <form id='addAdminForm' name='addAdminForm' action='addAdmin-servlet' method='post'>
+                    <div class='admin-textbox'>
+                        <input type='text' id='adminName' class='admin-textbox' name='adminName' placeholder='Username'><br>
+                    </div>
+                    <div class="admin-textbox">
+                        <input type="text" id="superRoot" class="admin-textbox" name="superRoot" placeholder="superRoot"><br>
+                    </div>
+                    <div class='admin-textbox' style='border: none'>
+                        <span id='errorMessageAddAdmin' class='Error'></span><br>
+                    </div>
+                    <div id='submitAdminButtonContainerAddAdmin'>
+                        <input type='submit' class='btnAdmin submitBtn'>
+                    </div>
+                </form>
+            </div>
+            <div class='admin-fieldset'>
+                <h3>All admins</h3>
+                <div class="table-div admins-table-div">
+                    <table border='1' id='admins-table' class='content-table'>
+                        <thead>
+                        <tr class='admins-table-header'>
+                            <th>Username</th>
+                            <th>SuperRoot</th>
+                            <th>Change</th>
+                            <th>Remove</th>
                         </tr>
+                        </thead>
+                        <tbody class='admins-table-body'>
+                        <c:forEach items='${firstAdmins}' var='admin'>
+                            <c:if test="${not admin.username.equals(loggedUser.username)}">
+                                <tr id="${admin.username}AdminRow" class='admins-table-body-row'>
+                                    <td>${admin.username}</td>
+                                    <td class="can-be-editable editable-isSuperAdmin">${admin.isSuperAdmin()}</td>
+                                    <td class='form-container'>
+                                        <form class='changeAdminForm' name='changeAdminForm' method='post' action='manage-admin'>
+                                            <input type='hidden' value='${admin.username}' name='changeAdmin' class='changeAdminOldName'>
+                                            <input type="hidden" name="manage_admin" value="update_admin">
+                                            <input type='submit' value='📝' class='changeAdminAdminButton'>
+                                            <span class="errorMessage" style="color: #c75450; display: none"></span>
+                                        </form>
+                                    </td>
+                                    <td class='form-container'>
+                                        <form class='removeAdminForm' name='removeAdminForm' method='post' action='manage-admin'>
+                                            <input type='hidden' value='${admin.username}' name='removeAdmin' class='removeAdminOldName'>
+                                            <input type="hidden" name="manage_admin" value="remove_admin">
+                                            <input type='submit' value='✗' class='removeAdminAdminButton'>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+                <div class='paginationAdmins'>
+                    <span id='previousPageAdmins' class='visible'>&laquo;</span>
+                    <span id='ellipseSxAdmins'>...</span>
+                    <c:set var='maxPageAdmins' value='${Math.ceil(adminsLength/4)}'/>
+                    <c:forEach var='i' begin='1' end='${maxPageAdmins}'>
+                        <c:if test='${i == 1}'>
+                            <span class='current visible pageNumBtnAdminsAdmin' id='pageAdmins${i}'>${i}</span>
+                        </c:if>
+                        <c:if test='${i != 1}'>
+                            <c:if test='${i <= 4}'>
+                                <span class='pageNumBtnAdminsAdmin visible' id='pageAdmins${i}'>${i}</span>
+                            </c:if>
+                            <c:if test='${i > 4}'>
+                                <span class='pageNumBtnAdminsAdmin' id='pageAdmins${i}'>${i}</span>
+                            </c:if>
+                        </c:if>
                     </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-            <div class='paginationModerators'>
-                <span id='previousPageModerators' class='visible'>&laquo;</span>
-                <span id='ellipseSxModerators'>...</span>
-                <c:set var='maxPageModerators' value='${Math.ceil(moderatorsLength/4)}'/>
-                <c:forEach var='i' begin='1' end='${maxPageModerators}'>
-                    <c:if test='${i == 1}'>
-                        <span class='current visible pageNumBtnModeratorAdmin' id='pageModerators${i}'>${i}</span>
+                    <c:if test='${maxPageAdmins > 4}'>
+                        <span id='ellipseDxAdmins' class='visible'>...</span>
                     </c:if>
-                    <c:if test='${i != 1}'>
-                        <c:if test='${i <= 4}'>
-                            <span class='pageNumBtnModeratorAdmin visible' id='pageModerators${i}'>${i}</span>
-                        </c:if>
-                        <c:if test='${i > 4}'>
-                            <span class='pageNumBtnModeratorAdmin' id='pageModerators${i}'>${i}</span>
-                        </c:if>
+                    <c:if test='${maxPageAdmins <= 4}'>
+                        <span id='ellipseDxAdmins'>...</span>
                     </c:if>
-                </c:forEach>
-                <c:if test='${maxPageModerators > 4}'>
-                    <span id='ellipseDxModerators' class='visible'>...</span>
-                </c:if>
-                <c:if test='${maxPageModerators <= 4}'>
-                    <span id='ellipseDxModerators'>...</span>
-                </c:if>
-                <span id='nextPageModerators' class='visible'>&raquo;</span>
+                    <span id='nextPageAdmins' class='visible'>&raquo;</span>
+                </div>
             </div>
         </div>
-    </div>
-
+    </c:if>
     <%@include file="footer.jsp"%> <!--footer-->
     <script>
         function resizeFooter(){ //per evitare strani ridimensionamenti su iPadPro
@@ -526,6 +544,7 @@
     <script src="${pageContext.request.contextPath}/js/categoriesAdmin.js"></script>
     <script src="${pageContext.request.contextPath}/js/adminForms.js"></script>
     <script src="${pageContext.request.contextPath}/js/tagsAdmin.js"></script>
+    <script src="${pageContext.request.contextPath}/js/adminAdmin.js"></script>
     <script src="${pageContext.request.contextPath}/js/operatorAdmin.js"></script>
 </body>
 </html>
