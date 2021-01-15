@@ -14,6 +14,9 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
 
+import javax.servlet.ServletException;
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DeclineOrderServletTest {
@@ -43,6 +46,7 @@ class DeclineOrderServletTest {
                 "3281883997");
         UserDAO ud = new UserDAO();
         ud.doSave(u);
+        OrderDAO od = new OrderDAO();
         o = new Order(30, u, null, "2020-11-11");
         od.doSave(o);
     }
@@ -60,8 +64,10 @@ class DeclineOrderServletTest {
     }
 
     @Test
-    public void declineOrderOk() {
-
+    public void declineOrderOk() throws ServletException, IOException {
+        request.setParameter("declineOrder", "30");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/OperatorArea.jsp", response.getForwardedUrl());
     }
 
     @AfterAll
@@ -72,7 +78,7 @@ class DeclineOrderServletTest {
                 "3281883997");
         UserDAO ud = new UserDAO();
         ud.doDeleteFromUsername(u.getUsername());
-        od = new OrderDAO();
+        OrderDAO od = new OrderDAO();
         o = new Order(30, u, null, "2020-11-11");
         od.doDelete(o.getId());
     }
