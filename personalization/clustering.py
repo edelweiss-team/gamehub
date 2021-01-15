@@ -22,10 +22,10 @@ def loadClusterer() -> (KMeans, list):
 	clusterAndTagList = pickle.load(open(SERIALIZED_CLUSTER_FILENAME, 'rb'))
 	return clusterAndTagList
 
-
+# costruiamo una lista di mappe (una per cluster), ogni mappa e' caratterizzata da: key->nomeTag, value->frequenzaTag
 def findMostCommonTagsList(df: pd.DataFrame, clustererTrained: KMeans, amountTags: int, n_clusters: int) -> list:
 	df['cluster'] = clustererTrained.labels_ #prendiamo le label
-	listMaps = [] #costruiamo una mappa che contenga ogni tag con la sua frequenza nel cluster
+	listMaps = []
 
 	for i in range (n_clusters):
 		tagsHead = df.filter(regex="((^Tag_.*$)|(usesMultiplayer))", axis=1).columns
