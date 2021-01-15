@@ -104,7 +104,7 @@
                         <h4 class="mb-3">Payment</h4>
                         <div class="d-block my-3">
                             <div class="custom-control custom-radio">
-                                <input id="credit" value="creditCard" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
+                                <input id="credit" value="creditCard" name="paymentMethod" type="radio" class="custom-control-input"  required="">
                                 <label class="custom-control-label" for="credit">Credit card</label>
                             </div>
                             <div class="custom-control custom-radio">
