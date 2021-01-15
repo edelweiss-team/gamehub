@@ -206,6 +206,24 @@ public class UpdateUserServlet extends HttpServlet {
                         if (password.matches(PASSWORD_REGEX)) {
                             u.setPassword(password);
                         }
+                        else {
+                            responseJson.addProperty("type", "error");
+                            responseJson.addProperty("message", "Password is not"
+                                    +" valid");
+                            responseUser.addProperty("username", u.getUsername());
+                            responseUser.addProperty("name", u.getName());
+                            responseUser.addProperty("surname", u.getSurname());
+                            responseUser.addProperty("birthDate", u.getBirthDate());
+                            responseUser.addProperty("telephone", u.getTelephone());
+                            responseUser.addProperty("password", u.getPasswordHash());
+                            responseUser.addProperty("mail", u.getMail());
+                            responseUser.addProperty("sex", u.getSex());
+                            responseUser.addProperty("address", u.getAddress());
+                            responseUser.addProperty("city", u.getCity());
+                            responseUser.addProperty("country", u.getCountry());
+                            resp.getWriter().println(responseJson.toString());
+                            resp.flushBuffer();
+                        }
                     }
                     u.setMail(mail);
                     u.setSex(sex.charAt(0));
