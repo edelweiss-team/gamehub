@@ -1,5 +1,6 @@
 package controller.userManagement.userProfileManagement;
 
+import controller.RequestParametersException;
 import controller.userManagement.userProfileManagement.UpdateUserServlet;
 import model.bean.User;
 import model.dao.UserDAO;
@@ -22,7 +23,7 @@ public class UpdateUserServletTest {
     private UpdateUserServlet servlet;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
-    private MockHttpSession session;
+    private static MockHttpSession session;
     private static UserDAO dao = new UserDAO();
     private static User u2;
 
@@ -31,8 +32,6 @@ public class UpdateUserServletTest {
         servlet = new UpdateUserServlet();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
-        session = new MockHttpSession();
-        session.setAttribute("loggedUser" , u2);
         request.setSession(session);
         BasicConfigurator.configure();
     }
@@ -49,26 +48,34 @@ public class UpdateUserServletTest {
                 "3281883997");
         dao.doSave(u);
         dao.doSave(u2);
-
-
-    }
-
-    //TC_1.1_26
-    @Test
-    public void modifyOk() throws ServletException, IOException {
-        request.addParameter("editable-username", "MyUsername");
-        request.addParameter("editable-name", "Luigi");
-        request.addParameter("editable-surname", "Rossi");
-        request.addParameter("editable-birthdate", "1999-05-22");
-        request.addParameter("editable-telephone", "3542746998");
-        request.addParameter("table-triggered", "1");
-        servlet.doPost(request, response);
+        session = new MockHttpSession();
+        session.setAttribute("loggedUser" , u2);
 
     }
 
-    //TC_1.1_1
+    //TC_3a.1_1
     @Test
     public void usernameTooShort() throws ServletException, IOException {
+        request.addParameter("editable-username", "M");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        servlet.doPost(request, response);
+        assertTrue(!response.getContentAsString().isEmpty());
+
+    }
+
+    //TC_3a.1_12
+    @Test
+    public void firstInformationtOk() throws ServletException, IOException {
         request.addParameter("editable-username", "MyUsername2");
         request.addParameter("editable-password", "Password1");
         request.addParameter("editable-mail", "Utente80@gmail.it");
@@ -85,453 +92,515 @@ public class UpdateUserServletTest {
         assertTrue( !response.getContentAsString().isEmpty());
     }
 
-    //TC_1.1_2
+    //TC_3a.1_2
     @Test
     public void usernameFormatNotValid() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername!");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter("surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter("birthdate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+        request.addParameter("editable-username", "MyUsername!");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
-    //TC_1.1_3
+    //TC_3a.1_3
     @Test
     public void usernameAlreadyExists() throws ServletException, IOException {
-        request.addParameter(" editable-username", "OtherUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter("surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter("birthdate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+        request.addParameter("editable-username", "OtherUsername!");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
-    //TC_1.1_4
+    //TC_3a.1_4
+    @Test
+    public void nameTooShort() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "L");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        servlet.doPost(request, response);
+        assertTrue(!response.getContentAsString().isEmpty());
+    }
+
+    //TC_3a.1_5
+    @Test
+    public void nameFormatNotValid() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi1");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        servlet.doPost(request, response);
+        assertTrue(!response.getContentAsString().isEmpty());
+    }
+
+
+    //TC_3a.1_6
+    @Test
+    public void  surnameTooshort() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "R");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        servlet.doPost(request, response);
+        assertTrue(!response.getContentAsString().isEmpty());
+    }
+
+
+    //TC_3a.1_7
+    @Test
+    public void surnamFormatNotValid() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi1");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        servlet.doPost(request, response);
+        assertTrue(!response.getContentAsString().isEmpty());
+    }
+
+    //TC_3a.1_8
+    @Test
+    public void dateNotSelect() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+    }
+
+    //TC_3a.1_9
+    @Test
+    public void dateNotValid() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "22-05-1999");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        servlet.doPost(request, response);
+        assertTrue(!response.getContentAsString().isEmpty());
+    }
+
+
+    //TC_3a.1_10
+    @Test
+    public void telephoneTooShort() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3542");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        servlet.doPost(request, response);
+        assertTrue(!response.getContentAsString().isEmpty());
+    }
+
+
+    //TC_3a.1_11
+    @Test
+    public void phoneNotValid() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3542ab746");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        servlet.doPost(request, response);
+        assertTrue(!response.getContentAsString().isEmpty());
+    }
+
+
+    //TC_3b.1_1
     @Test
     public void passwordTooShort() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "pass");
-        request.addParameter("repeatPassword", "pass");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter("surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter("birthdate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "pass");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
-    //TC_1.1_5
+    //TC_3b.1_2
     @Test
-    public void passwordFormatNotValid() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "1234567");
-        request.addParameter("repeatPassword", "1234567");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter("birthdate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+    public void passwordNotValid() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "pa ss");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
-
-    //TC_1.1_7
+    //TC_3b.1_3
     @Test
-    public void  mailTooshort() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "ut@u.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter("birthdate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+    public void passwordOk() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
-
-    //TC_1.1_8
+    //TC_3.1c_1
     @Test
-    public void mailFormatNotValid() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+    public void mailTooShort() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Ut@u.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "2");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
-    //TC_1.1_9
+    //TC_3.1c_2
     @Test
-    public void mailAlreadyExsist() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente99@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+    public void mailNotValid() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "2");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
-    //TC_1.1_10
+    //TC_3.1c_3
     @Test
-    public void nomeTooshort() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "L");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+    public void emailAlreadyExist() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "2");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
-
-    //TC_1.1_11
+    //TC_3.1c_4
     @Test
-    public void nomeFormatNotValid() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi1");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+    public void sexTooLongm() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "paschio");
+        request.addParameter("table-triggered", "2");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
-
-    //TC_1.1_12
+    //TC_3.1c_5
     @Test
-    public void surnameTooShort() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "R");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+    public void  sexNotValid() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "g");
+        request.addParameter("table-triggered", "2");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
 
-    //TC_1.1_13
+    //TC_3.1c_6
     @Test
-    public void surnameFormatNotValid() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi1");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+    public void addressTooShort() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Vi");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "2");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
-    //TC_1.1_14
-    @Test
-    public void  addressTooShort() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
-        servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
-    }
-
-    //TC_1.1_15
+    //TC_3.1c_7
     @Test
     public void addressNotValid() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via!!!");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello!!!");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "2");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
-    //TC_1.1_16
+    //TC_3.1c_8
     @Test
     public void cityTooShort() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "F");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "F");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "2");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
-    //TC_1.1_17
+    //TC_3.1c_9
     @Test
     public void cityNotValid() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano1");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano1");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "2");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
-    //TC_1.1_18
+    //TC_3.1c_10
     @Test
-    public void countryTooShort() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "F");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+    public void  nationTooShort() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "F");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "2");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
-    //TC_1.1_19
+    //TC_3.1c_11
     @Test
-    public void countryFormatNotValid() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "F1");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
+    public void nationFormatNotValid() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "F1");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "2");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
-    }
-
-    //TC_1.1_20
-    @Test
-    public void  countryNotExist() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "AY");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
-        servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
 
-    //TC_1.1_21
+    //TC_3.1c_11
     @Test
-    public void dateNotSelected() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "");
-        request.addParameter(" editable-sex", "m");
+    public void nationNotValid() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "AY");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "2");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
-    //TC_1.1_22
-    @Test
-    public void dateFormatNotValid() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter(" editable-birthDate", "22-05-1999");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "m");
-        servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
-    }
 
-    //TC_1.1_23
+    //TC_3.1c_11
     @Test
-    public void phoneTooShort() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "35426");
-        request.addParameter(" editable-sex", "m");
+    public void secondPartValid() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "2");
         servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
-    }
-
-    //TC_1.1_24
-    @Test
-    public void phoneFormatNotValid() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3542ab746");
-        request.addParameter(" editable-sex", "m");
-        servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
-    }
-
-    //TC_1.1_25
-    @Test
-    public void  sexTooLong() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "paschio");
-        servlet.doPost(request, response);
-        servlet.doPost(request, response);
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
-    }
-
-    //TC_1.1_26
-    @Test
-    public void sexFormatNotValid() throws ServletException, IOException {
-        request.addParameter(" editable-username", "MyUsername");
-        request.addParameter(" editable-password", "Password1");
-        request.addParameter(" editable-mail", "Utente@gmail.it");
-        request.addParameter(" editable-name", "Luigi");
-        request.addParameter(" editable-surname", "Rossi");
-        request.addParameter(" editable-address", "Via Castello");
-        request.addParameter(" editable-city", "Fisciano");
-        request.addParameter(" editable-country", "FR");
-        request.addParameter(" editable-birthDate", "1999-05-22");
-        request.addParameter(" editable-telephone", "3281883997");
-        request.addParameter(" editable-sex", "g");
-        servlet.doPost(request, response);
-
-        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+        assertTrue(!response.getContentAsString().isEmpty());
     }
 
 
     @AfterAll
     static public void DeSetup() {
         dao.doDeleteFromUsername("OtherUsername");
-        dao.doDeleteFromUsername("MyUsername2");
+        if(dao.doRetrieveByUsername("MyUsername2")!=null)
+            dao.doDeleteFromUsername("MyUsername2");
+        if(dao.doRetrieveByUsername("MyUsername")!=null)
+            dao.doDeleteFromUsername("MyUsername");
+
     }
     
 }
