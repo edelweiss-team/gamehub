@@ -58,7 +58,7 @@ class CartServletTest {
                 "xbox", "1999-05-05", 18, "testing", "testingpub");
          pp1 = new PhysicalProduct(60, "NuovoProdottoTesting4", 23.56,
                 "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
-                200, "sizetest", 20.05);
+                200, "1x1x1", 20.05);
         pd1 = dpd.doSave(pd1);
         pp1 = ppd.doSave(pp1);
 
@@ -81,6 +81,23 @@ class CartServletTest {
         request.setParameter("quantity", "1");
         request.setParameter("productType", "wrongType");
         assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
+    }
+
+    @Test
+    public void removeCartNegativeQuantity() throws ServletException, IOException {
+        User u = new User("MyUsername11", "Password1","Nomenuovo",
+                "Cognomenuovo",
+                "Inidirizzo","Città","Nazione",
+                "1999-05-22", "Utente11@gmail.it", 'm',
+                "3281883997");
+        session.setAttribute("loggedUser", u);
+        request.setSession(session);
+        request.setParameter("removeCart", "true");
+        request.setParameter("productId", Integer.toString(pd1.getId()));
+        request.setParameter("productType", "digital");
+        request.setParameter("quantity", "-1");
+        servlet.doPost(request, response);
+        assertFalse(response.getContentAsString().isEmpty());
     }
 
 
@@ -160,7 +177,7 @@ class CartServletTest {
         session.setAttribute("loggedUser", u);
         request.setSession(session);
         request.setParameter("removeCart", "true");
-        request.setParameter("productId", Integer.toString(pd1.getId()));
+        request.setParameter("productId", Integer.toString(-1));
         request.setParameter("productType", "physical");
         request.setParameter("quantity", "1");
         assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
@@ -194,6 +211,21 @@ class CartServletTest {
         request.setParameter("productType", "wrong");
         request.setParameter("quantity", "1");
         assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
+    }
+
+    @Test
+    public void removeCartNotNullAndTypeNull() throws ServletException, IOException {
+        User u = new User("MyUsername11", "Password1", "Nomenuovo",
+                "Cognomenuovo",
+                "Inidirizzo", "Città", "Nazione",
+                "1999-05-22", "Utente11@gmail.it", 'm',
+                "3281883997");
+        session.setAttribute("loggedUser", u);
+        request.setSession(session);
+        request.setParameter("removeCart", "true");
+        request.setParameter("productId", "-1");
+        request.setParameter("quantity", "1");
+        assertThrows(RequestParametersException.class, () -> servlet.doPost(request, response));
     }
 
     @Test
