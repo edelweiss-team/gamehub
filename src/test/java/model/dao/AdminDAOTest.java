@@ -91,7 +91,7 @@ class AdminDAOTest {
     @Test
     void doRetrieveAllxNone() {
         // the result list is empty since there's no admin saved in the DB.
-        assertTrue((aDAO.doRetrieveAll()).isEmpty());
+        assertTrue((aDAO.doRetrieveAll(0, 0)).isEmpty());
     }
 
     @Test
@@ -102,7 +102,7 @@ class AdminDAOTest {
 
         ArrayList<Admin> admins;
 
-        if ((admins = aDAO.doRetrieveAll()).size() == 1 )
+        if ((admins = aDAO.doRetrieveAll(0, 1)).size() == 1 )
             assertEquals(admins.get(0), a);
         else
             fail();
@@ -130,7 +130,7 @@ class AdminDAOTest {
         mDAO.doSave(m2);
         aDAO.doSave(a2);
 
-        ArrayList<Admin> admins = aDAO.doRetrieveAll();
+        ArrayList<Admin> admins = aDAO.doRetrieveAll(0, 3);
 
         boolean result = ((Admin) admins.get(0)).equals(a2) && ((Admin) admins.get(1)).equals(a);
 

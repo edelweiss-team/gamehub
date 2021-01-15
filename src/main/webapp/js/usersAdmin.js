@@ -115,9 +115,11 @@ var removeUserListener = ev => {
       dataType: "json",
       error: ev => alert("Request of user " + username + " remove failed."),
       success: responseObject =>{
-          let removedUsername = responseObject.removedUsername, type=responseObject.type, msg=responseObject.msg;
+          let removedUsername = responseObject.removedUsername, type = responseObject.type,
+              msg=responseObject.msg;
           if(removedUsername != null && removedUsername != undefined)
               $(document.getElementById(removedUsername+"UserRow")).remove();
+          showPopupMessage(type, msg, 8);
       }
   });
 };

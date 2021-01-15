@@ -79,16 +79,16 @@ public class ShowAdminAreaServletTest {
                 "xbox", "1999-05-05", 18, "testing", "testingpub");
         PhysicalProduct pp1 = new PhysicalProduct(60, "NuovoProdottoTesting4", 23.56,
                 "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
-                200, "sizetest", 20.05);
+                200, "2x2x2", 20.05);
         PhysicalProduct pp2 = new PhysicalProduct(61, "NuovoProdottoTesting5", 23.56,
                 "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
-                200, "sizetest", 20.05);
+                200, "2x2x2", 20.05);
         PhysicalProduct pp3 = new PhysicalProduct(62, "NuovoProdottoTesting6", 23.56,
                 "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
-                200, "sizetest", 20.05);
+                200, "2x2x2", 20.05);
         PhysicalProduct pp4 = new PhysicalProduct(63, "NuovoProdottoTesting7", 23.56,
                 "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
-                200, "sizetest", 20.05);
+                200, "2x2x2", 20.05);
         DigitalProductDAO digdao = new DigitalProductDAO();
         PhysicalProductDAO phydao = new PhysicalProductDAO();
         digdao.doSave(pd1);

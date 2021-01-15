@@ -2,18 +2,19 @@ package controller.userManagement.adminManagement;
 
 import com.google.gson.JsonObject;
 import controller.RequestParametersException;
-import model.bean.Operator;
-import model.bean.User;
-import model.dao.OperatorDAO;
-import model.dao.UserDAO;
-
+import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import model.bean.Operator;
+import model.bean.User;
+import model.dao.OperatorDAO;
+import model.dao.UserDAO;
+import org.jetbrains.annotations.NotNull;
+
 
 /**
  * this servlet let Admin to add/remove/edit an Operator profile.
@@ -23,9 +24,12 @@ import java.io.IOException;
 public class ManageOperatorServlet extends HttpServlet {
 
     public static final int OPERATOR_MAX_LENGTH = 20;
-    public static final int OPERATOR_MIN_LENGTH = 3;
-    public static final int CV_MAX_LENGTH = 1000;
+    public static final int OPERATOR_MIN_LENGTH = 6;
+    public static final int CV_MAX_LENGTH = 10000;
     public static final int CV_MIN_LENGTH = 3;
+    @NotNull
+    public static final String DATE_REGEX =
+            "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$";
 
     /**
      * this method manages Post request calling doGet method.
@@ -67,7 +71,7 @@ public class ManageOperatorServlet extends HttpServlet {
                         o = od.doRetrieveByUsername(name);
                         if (o != null) {
                             od.doDeleteByUsername(name);
-                            responseObject.addProperty("removedOperator", name);
+                            responseObject.addProperty("username", name);
                             responseObject.addProperty("type", "success");
                             responseObject.addProperty("msg", "Operator "
                                     + name + " successfully removed.");
@@ -93,7 +97,8 @@ public class ManageOperatorServlet extends HttpServlet {
                 if (cv != null && contractTime != null) {
                     cv = cv.trim();
                     contractTime = contractTime.trim();
-                    if (cv.length() >= CV_MIN_LENGTH && cv.length() <= CV_MAX_LENGTH) {
+                    if (cv.length() >= CV_MIN_LENGTH && cv.length() <= CV_MAX_LENGTH
+                            && contractTime.matches(DATE_REGEX)) {
                         String oldName = req.getParameter("old-name");
                         o = od.doRetrieveByUsername(oldName);
 
@@ -109,8 +114,15 @@ public class ManageOperatorServlet extends HttpServlet {
                             o.setCv(cv);
                             od.doUpdate(o);
                             responseJson.addProperty("type", "success");
-                            responseJson.addProperty("message", "Update completed successfully!");
-                            responseTag.addProperty("name", o.getUsername());
+                            responseJson.addProperty(
+                                    "message",
+                                    "Update completed successfully!"
+                            );
+                            responseJson.addProperty("cv", o.getCv());
+                            responseJson.addProperty("contractTime", o.getContractTime());
+                            responseJson.addProperty("username", o.getUsername());
+                            resp.getWriter().println(responseJson);
+                            resp.flushBuffer();
                         }
                     } else {
                         throw new RequestParametersException("error in the request parameters: "
@@ -127,7 +139,8 @@ public class ManageOperatorServlet extends HttpServlet {
                 JsonObject tagJson;
 
                 if (name != null) {
-                    if (name.length() >= OPERATOR_MIN_LENGTH && name.length() <= OPERATOR_MAX_LENGTH) {
+                    if (name.length() >= OPERATOR_MIN_LENGTH
+                            && name.length() <= OPERATOR_MAX_LENGTH) {
 
                         o = od.doRetrieveByUsername(name);
                         if (o != null) {
@@ -146,7 +159,8 @@ public class ManageOperatorServlet extends HttpServlet {
                                 Operator o1 = od.doRetrieveByUsername(name);
                                 if (o1 != null && !o1.equals(o)) {
                                     responseObject.addProperty("type", "error");
-                                    responseObject.addProperty("msg", "Operator " + o.getUsername()
+                                    responseObject.addProperty("msg", "Operator "
+                                            + o.getUsername()
                                             + " cannot be added, because it already exists!");
                                 } else {
                                     od.doPromote(o);

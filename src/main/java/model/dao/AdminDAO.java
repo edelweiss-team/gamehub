@@ -121,17 +121,21 @@ public class AdminDAO {
     /**
      * This method allows to find all the Admins saved into the database.
      *
+     * @param limit the max number of results
+     * @param offset the index we start reading results
      * @return an ArrayList formed by Admin, if there are Admins saved into the database.
      * @throws RuntimeException if an exception is occurred
      */
 
     @NotNull
-    public ArrayList<Admin> doRetrieveAll() {
+    public ArrayList<Admin> doRetrieveAll(int offset, int limit) {
         ArrayList<Admin> admins = new ArrayList<>();
 
         try {
             Connection cn = ConPool.getConnection();
-            PreparedStatement st = cn.prepareStatement("SELECT * FROM admin");
+            PreparedStatement st = cn.prepareStatement("SELECT * FROM admin limit ? offset ?");
+            st.setInt(1, limit);
+            st.setInt(2, offset);
             ResultSet rs = st.executeQuery();
 
             boolean isSuperAdmin;
@@ -217,7 +221,7 @@ public class AdminDAO {
         try {
             Moderator m = mdao.doRetrieveByUsernamePassword(username, password);
 
-            if(m != null) {
+            if (m != null) {
                 Connection cn = ConPool.getConnection();
 
                 PreparedStatement st = cn.prepareStatement("SELECT A.moderator, superAdmin"
