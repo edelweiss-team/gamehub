@@ -8,16 +8,16 @@ public class DatabasePopulator {
     public static void main(String[] args) {
 
 
-        User u1 = new User("username1","password", "Name", "Surname",
-                "Address", "City", "Country", "2020-11-16", "Mail1",
+        User u1 = new User("username155","password", "Name", "Surname",
+                "Address", "City", "Country", "2020-11-16", "Mail15",
                 'M', "3313456754");
-        User u2 = new User("username2","password", "Name", "Surname",
+        User u2 = new User("username255","password", "Name", "Surname",
                 "Address", "City", "Country", "2020-11-16", "Mail2",
                 'M', "3313456754");
-        User u3 = new User("username3","password", "Name", "Surname",
+        User u3 = new User("username355","password", "Name", "Surname",
                 "Address", "City", "Country", "2020-11-16", "Mail3",
                 'M', "3313456754");
-        User u4 = new User("username4","password", "Name", "Surname",
+        User u4 = new User("username45","password", "Name", "Surname",
                 "Address", "City", "Country", "2020-11-16", "Mail4",
                 'M', "3313456754");
         User u5 = new User("roberto","password", "Roberto", "Esposito",
