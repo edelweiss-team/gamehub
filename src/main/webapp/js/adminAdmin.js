@@ -113,7 +113,7 @@ var paginationAdminsListener = ev =>{
         if(currentPageNum == 1)
             return;
         $currentPage.removeClass("current");
-        $target = $currentPage.prev("span.pageNumBtnAdminAdmin");
+        $target = $currentPage.prev("span.pageNumBtnAdminsAdmin");
     }
     else if($target.prop("id") == "nextPageAdmins"){
         let currentPageNum;
@@ -121,7 +121,7 @@ var paginationAdminsListener = ev =>{
         if(currentPageNum == maxPageAdmins)
             return;
         $currentPage.removeClass("current");
-        $target = $currentPage.next("span.pageNumBtnAdminAdmin");
+        $target = $currentPage.next("span.pageNumBtnAdminsAdmin");
     }
 
     targetIdNum = parseInt($target.text());
@@ -156,12 +156,12 @@ var paginationAdminsListener = ev =>{
         }
     }
 
-    if(parseInt($(".pageNumBtnAdminAdmin.visible").first().text()) != 1)
+    if(parseInt($(".pageNumBtnAdminsAdmin.visible").first().text()) != 1)
         $("#ellipseSxAdmins").addClass("visible");
     else{
         $("#ellipseSxAdmins").removeClass("visible");
     }
-    if(parseInt($(".pageNumBtnAdminAdmin.visible").last().text()) != maxPageAdmins)
+    if(parseInt($(".pageNumBtnAdminsAdmin.visible").last().text()) != maxPageAdmins)
         $("#ellipseDxAdmins").addClass("visible");
     else
         $("#ellipseDxAdmins").removeClass("visible");
