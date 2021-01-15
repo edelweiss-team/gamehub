@@ -57,6 +57,7 @@ class ManageUserServletTest {
 
     @Test
     public void removeUserMinLengthNotOk() throws ServletException, IOException {
+        u.setUsername("Use9e");
         request.addParameter("removeUser",u.getUsername());
         servlet.doPost(request, response);
         assertTrue( !response.getContentAsString().isEmpty());
@@ -64,6 +65,7 @@ class ManageUserServletTest {
 
     @Test
     public void removeUserMaxLengthNotOk() throws ServletException, IOException {
+        u.setUsername("Userasdasdasdasdasdasd");
         request.addParameter("removeUser",u.getUsername());
         servlet.doPost(request, response);
         assertTrue( !response.getContentAsString().isEmpty());
