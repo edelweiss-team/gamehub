@@ -4,11 +4,11 @@ import java.io.IOException;
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
-
-import controller.userManagement.userProfileManagement.LoginServlet;
 import model.dao.UserDAO;
+
 /**
- * this servlet checks if the username from the request is valid (match the regex and not already saved in DB).
+ * This servlet checks if the username from the request is valid
+ * (match the regex and not already saved in DB).
  */
 @WebServlet("/check-username")
 public class CheckUsernameServlet extends HttpServlet {
