@@ -56,6 +56,7 @@ class ShowShopPageServletTest {
     @Test
     public void showShopPriceNotOkEmpty() throws ServletException, IOException{
         request.addParameter("price","");
-        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Shop.jsp", response.getForwardedUrl());
     }
 }
