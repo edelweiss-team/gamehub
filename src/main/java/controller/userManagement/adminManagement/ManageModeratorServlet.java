@@ -148,18 +148,10 @@ public class ManageModeratorServlet extends HttpServlet {
                                          + " because it's not a user!");
                             } else {
                                 m = new Moderator(u, contractTime);
-                                Moderator o1 = md.doRetrieveByUsername(name);
-                                if (o1 != null && !o1.equals(m)) {
-                                    responseObject.addProperty("type", "error");
-                                    responseObject.addProperty("msg", "Moderator "
-                                            + m.getUsername()
-                                            + " cannot be added, because it already exists!");
-                                } else {
-                                    md.doSave(m);
-                                    responseObject.addProperty("type", "success");
-                                    responseObject.addProperty("msg", "Moderator "
-                                            + m.getUsername() + " added successfully!");
-                                }
+                                md.doSave(m);
+                                responseObject.addProperty("type", "success");
+                                responseObject.addProperty("msg", "Moderator "
+                                        + m.getUsername() + " added successfully!");
                             }
                         }
                     } else {
