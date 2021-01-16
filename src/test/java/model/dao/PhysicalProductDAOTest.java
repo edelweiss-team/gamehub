@@ -543,4 +543,105 @@ class PhysicalProductDAOTest {
         });
     }
 
+    @Test
+    void doRetrieveAllByTagsListEmpty() {
+        assertThrows(RuntimeException.class, () -> {
+            ArrayList<Tag> tags = new ArrayList<>();
+            @NotNull ArrayList<PhysicalProduct> dg = dao.doRetrieveAllByTags(tags, 0, 100);
+        });
+    }
+
+    @Test
+    void doRetrieveAllByTagsTwoTags() {
+        Tag t1= new Tag("TagTestAncora");
+        Tag t2 = new Tag ("TagTestAncora2");
+        tagdao.doSave(t1);
+        tagdao.doSave(t2);
+        ArrayList<Tag> tags = new ArrayList<>();
+        tags.add(t1);
+        tags.add(t2);
+        @NotNull ArrayList<PhysicalProduct> dg = dao.doRetrieveAllByTags(tags, 0, 0);
+        tagdao.doDelete(t1.getName());
+        tagdao.doDelete(t2.getName());
+        assertTrue(dg.size()==0);
+    }
+
+    @Test
+    void doRetrieveAllByTagsThreeTags() {
+        Tag t1= new Tag("TagTestAncora");
+        Tag t2 = new Tag ("TagTestAncora2");
+        Tag t3 = new Tag ("TagTestAncora3");
+        tagdao.doSave(t1);
+        tagdao.doSave(t2);
+        tagdao.doSave(t3);
+        ArrayList<Tag> tags = new ArrayList<>();
+        tags.add(t1);
+        tags.add(t2);
+        @NotNull ArrayList<PhysicalProduct> dg = dao.doRetrieveAllByTags(tags, 0, 0);
+        tagdao.doDelete(t1.getName());
+        tagdao.doDelete(t2.getName());
+        tagdao.doDelete(t3.getName());
+        assertTrue(dg.size()==0);
+    }
+
+    @Test
+    void doRetrieveOneProduct() {
+        PhysicalProduct p = new PhysicalProduct(7, "NuovoProdottoTesting", 23.56,
+                "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
+                200, "sizetest", 20.05);
+
+        Tag t1= new Tag("TagTest1");
+        p.addTag(t1);
+        tagdao.doSave(t1);
+        Tag t2 = new Tag ("TagTest2");
+        Tag t3 = new Tag ("TagTest3");
+        tagdao.doSave(t2);
+        tagdao.doSave(t3);
+        PhysicalProduct dp = dao.doSave(p);
+        ArrayList<Tag> tags = new ArrayList<>();
+        tags.add(t1);
+        @NotNull ArrayList<PhysicalProduct> dg = dao.doRetrieveAllByTags(tags, 0, 100);
+        tagdao.doDelete(t1.getName());
+        tagdao.doDelete(t2.getName());
+        tagdao.doDelete(t3.getName());
+        dao.doDelete(dp.getId());
+        assertTrue(dg.size()==1);
+    }
+
+
+    @Test
+    void doRetrieveMoreProduct() {
+        PhysicalProduct p = new PhysicalProduct(7, "NuovoProdottoTesting", 23.56,
+                "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
+                200, "sizetest", 20.05);
+
+        Tag t1= new Tag("TagTest1");
+        p.addTag(t1);
+        tagdao.doSave(t1);
+        Tag t2 = new Tag ("TagTest2");
+        Tag t3 = new Tag ("TagTest3");
+        tagdao.doSave(t2);
+        tagdao.doSave(t3);
+        p.addTag(t2);
+        PhysicalProduct p2 = new PhysicalProduct(7, "NuovoProdottoTesting2", 23.56,
+                "testing2", "imagetest2", new ArrayList<Category>() , new ArrayList<Tag>(),
+                200, "sizetest2", 20.05);
+        p2.addTag(t1);
+
+        PhysicalProduct dp = dao.doSave(p);
+        PhysicalProduct dp2 = dao.doSave(p2);
+        ArrayList<Tag> tags = new ArrayList<>();
+        tags.add(t1);
+        tags.add(t2);
+        @NotNull ArrayList<PhysicalProduct> dg = dao.doRetrieveAllByTags(tags, 0, 100);
+        tagdao.doDelete(t1.getName());
+        tagdao.doDelete(t2.getName());
+        tagdao.doDelete(t3.getName());
+        dao.doDelete(dp.getId());
+        dao.doDelete(dp2.getId());
+        assertTrue(dg.size()==2);
+    }
+
+
+
 }
