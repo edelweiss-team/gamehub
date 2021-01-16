@@ -593,6 +593,90 @@ public class UpdateUserServletTest {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+    @Test
+    public void NotLoggedSelect() throws ServletException, IOException {
+        MockHttpSession sessionNuova;
+        sessionNuova = new MockHttpSession();
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setSession(sessionNuova);
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+    }
+
+    @Test
+    public void NotUsername() throws ServletException, IOException {
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+    }
+
+    @Test
+    public void NotPassword() throws ServletException, IOException {
+        MockHttpSession sessionNuova;
+        sessionNuova = new MockHttpSession();
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setSession(sessionNuova);
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+    }
+    @Test
+    public void NotEmail() throws ServletException, IOException {
+        MockHttpSession sessionNuova;
+        sessionNuova = new MockHttpSession();
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setSession(sessionNuova);
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+    }
+
     @AfterAll
     static public void DeSetup() {
         dao.doDeleteFromUsername("OtherUsername");
