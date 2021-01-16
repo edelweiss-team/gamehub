@@ -374,7 +374,7 @@
                     <input type='text' id='moderatorName' class='admin-textbox' name='moderatorName' placeholder='Username'><br>
                 </div>
                 <div class="admin-textbox">
-                    <input type="date" id="contractTimeModerator" class="admin-textbox" name="contractTimeModerator" placeholder="contractTime"><br>
+                    <input type="text" pattern="^\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$" id="contractTimeModerator" class="admin-textbox" name="contractTime" placeholder="contractTime yyyy-mm-dd"><br>
                 </div>
                 <div class='admin-textbox' style='border: none'>
                     <span id='errorMessageAddModerator' class='Error'></span><br>
@@ -392,6 +392,7 @@
                     <tr class='moderators-table-header'>
                         <th>Username</th>
                         <th>Contract Time</th>
+                        <th>Update</th>
                         <th>Remove</th>
                     </tr>
                     </thead>
@@ -401,6 +402,14 @@
                             <tr id="${moderator.username}ModeratorRow" class='moderators-table-body-row'>
                                 <td>  ${moderator.username}  </td>
                                 <td>  ${moderator.contractTime}</td>
+                                <td class='form-container'>
+                                    <form class='changeModeratorForm' name='changeModeratorForm' method='post' action='manage-category'>
+                                        <input type='hidden' value='${moderator.username}' name='changeModerator' class='changeModeratorOldName'>
+                                        <input type="hidden" name="manage_moderator" value="update_moderator">
+                                        <input type='submit' value='📝' class='changeModeratorAdminButton'>
+                                        <span class="errorModeratorMessage" style="color: #c75450; display: none"></span>
+                                    </form>
+                                </td>
                                 <td class='form-container'>
                                     <form name='removeModeratorForm' class='removeModeratorForm' method='post' action='removeModerator-servlet'>
                                         <input type='hidden' value='${moderator.username}' name='removeModerator' class='moderatorNameForRemove'>
@@ -551,6 +560,7 @@
     <script src="${pageContext.request.contextPath}/js/adminForms.js"></script>
     <script src="${pageContext.request.contextPath}/js/tagsAdmin.js"></script>
     <script src="${pageContext.request.contextPath}/js/adminAdmin.js"></script>
+    <script src="${pageContext.request.contextPath}/js/moderatorAdmin.js"></script>
     <script src="${pageContext.request.contextPath}/js/operatorAdmin.js"></script>
 </body>
 </html>

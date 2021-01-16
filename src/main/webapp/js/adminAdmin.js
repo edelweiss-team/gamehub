@@ -212,7 +212,7 @@ $(document).ready(function () {
     $("#submitAdminButtonContainerAddAdmin, #contractTime, #curriculum, #userName").on("click input", ev => {
         ev.preventDefault();
         let $errorMessage = $("#errorMessageAddAdmin");
-        let $submit =  $("#submitAdminButtonContainerAddAdmin button[type=submit]");
+        let $submit =  $("#submitAdminButtonContainerAddAdmin input[type=submit]");
         $submit.prop("disabled", false);
         $errorMessage.removeClass("visible");
         if(!$("#contractTime")[0].checkValidity()) {
