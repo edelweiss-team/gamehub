@@ -108,11 +108,7 @@ public class ManageCategoryServlet extends HttpServlet {
                                                     + File.separator,
                                             categoryName.toLowerCase().replace(" ", "-")
                                                     + "-Image.jpg"));
-                            /*FileOutputStream fos2 = new FileOutputStream(
-                            new File("C:\\Users\\Roberto Esposito\\Desktop\\tsw" +
-                                    "\\progettoTSWv0.1\\web\\resources\\images\\categoryImages" +
-                                    File.separator,
-                                    categoryName.toLowerCase().replace(" ", "-") + "-Image.jpg"));*/
+
                             int ch = 0;
                             while ((ch = bin.read()) != -1) {
                                 fos.write(ch);
