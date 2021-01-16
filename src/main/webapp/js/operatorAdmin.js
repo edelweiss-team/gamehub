@@ -78,7 +78,8 @@ var changeOperatorListener = ev =>{
             contentType: false,
             processData: false,
             cache: false,
-            error: ev => (xhr, textStatus, errorThrown) => showPopupMessage("error", xhr.responseText, 8),
+            error: (xhr, textStatus, errorThrown) =>
+                showPopupMessage("error", "Error in cv or contractTime", 8),
             success: responseObject => {
                 let msg, type,  $editedRow;
 
