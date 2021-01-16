@@ -3,6 +3,7 @@ package controller.userManagement.adminManagement;
 import com.google.gson.JsonObject;
 import controller.RequestParametersException;
 import java.io.IOException;
+import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -89,11 +90,11 @@ public class ManageAdminsServlet extends HttpServlet {
                 }
             } else if (operation.equals("update_admin")) {
                 boolean superAdmin;
-                try {
+                if (req.getParameter("editable-isSuperAdmin").toLowerCase().matches("(true|false)")) {
                     superAdmin = Boolean.parseBoolean(
                             req.getParameter("editable-isSuperAdmin")
                     );
-                } catch (NumberFormatException e) {
+                } else {
                     JsonObject responseJson = new JsonObject();
                     responseJson.addProperty("type", "success");
                     responseJson.addProperty(
@@ -109,14 +110,15 @@ public class ManageAdminsServlet extends HttpServlet {
                 String oldName = req.getParameter("old-name");
                 a = ad.doRetrieveByUsername(oldName);
 
-                JsonObject responseTag = new JsonObject();
                 JsonObject responseJson = new JsonObject();
 
                 if (a == null) {
                     responseJson.addProperty("type", "error");
                     responseJson.addProperty("message", "Admin "
                             + oldName + " doesn't exists!");
-                    responseTag.addProperty("name", oldName);
+                    responseJson.addProperty("name", oldName);
+                    resp.getWriter().println(responseJson);
+                    resp.flushBuffer();
                 } else {
                     a.setSuperAdmin(superAdmin);
                     ad.doUpdate(a);
