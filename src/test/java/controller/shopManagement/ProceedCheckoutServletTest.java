@@ -1082,6 +1082,7 @@ public class ProceedCheckoutServletTest {
         dao.doDeleteFromUsername(u2.getUsername());
         dao.doDeleteFromUsername("Gerardo@gmail.com");
         daoP.doDelete(p.getId());
+        daoPP.doDelete(pp.getId());
     }
 
 
