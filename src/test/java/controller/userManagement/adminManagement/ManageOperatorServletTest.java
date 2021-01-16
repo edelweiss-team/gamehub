@@ -88,6 +88,25 @@ class ManageOperatorServletTest {
     }
 
     @Test
+    public void operationOkUpdateOkContractOkCvMinLengthNotOk() throws ServletException, IOException {
+        request.addParameter("manage_operator","update_operator");
+        request.addParameter("editable-contractTime","2021-01-15");
+        request.addParameter("editable-cv","ci");
+        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
+    }
+
+    @Test
+    public void operationOkUpdateOkContractOkCvMaxLengthNotOk() throws ServletException, IOException {
+        request.addParameter("manage_operator","update_operator");
+        request.addParameter("editable-contractTime","2021-01-15");
+        String s = "a";
+        for(int i=0;i<10000;i++)
+            s = s + "a";
+        request.addParameter("editable-cv",s);
+        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
+    }
+
+    @Test
     public void operationOkUpdateOkContractOkUpdateNotOk() throws ServletException, IOException {
         request.addParameter("manage_operator","update_operator");
         request.addParameter("editable-contractTime","2021-01-15");
@@ -213,6 +232,7 @@ class ManageOperatorServletTest {
         request.addParameter("curriculum","ciao");
         request.addParameter("userName","MyUser1234");
         md.doDeleteByUsername(m.getUsername());
+        ud.doSave(u);
         servlet.doPost(request, response);
         assertTrue( !response.getContentAsString().isEmpty());
 
