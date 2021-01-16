@@ -93,7 +93,7 @@ class CartServletTest {
         session.setAttribute("loggedUser", u);
         request.setSession(session);
         request.setParameter("removeCart", "true");
-        request.setParameter("productId", "-1");
+        request.setParameter("productId", Integer.toString(pd1.getId()));
         request.setParameter("productType", "digital");
         request.setParameter("quantity", "-1");
         servlet.doPost(request, response);
