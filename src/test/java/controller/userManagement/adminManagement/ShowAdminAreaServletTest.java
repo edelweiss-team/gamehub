@@ -29,6 +29,8 @@ public class ShowAdminAreaServletTest {
     private static UserDAO dao = new UserDAO();
     private User u2;
     private Admin a;
+    private static DigitalProduct pd1,pd2,pd3,pd4;
+    private static PhysicalProduct pp1,pp2,pp3,pp4;
 
     @BeforeEach
     public void setUp() {
@@ -69,24 +71,24 @@ public class ShowAdminAreaServletTest {
         ud.doSave(u2);
         ud.doSave(u3);
         ud.doSave(u4);
-        DigitalProduct pd1 = new DigitalProduct(50, "NuovoProdottoTesting1", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
+        pd1 = new DigitalProduct(50, "NuovoProdottoTesting1", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
                 "xbox", "1999-05-05", 18, "testing", "testingpub");
-        DigitalProduct pd2 = new DigitalProduct(51, "NuovoProdottoTesting2", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
+        pd2 = new DigitalProduct(51, "NuovoProdottoTesting2", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
                 "xbox", "1999-05-05", 18, "testing", "testingpub");
-        DigitalProduct pd3 = new DigitalProduct(52, "NuovoProdottoTesting3", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
+        pd3 = new DigitalProduct(52, "NuovoProdottoTesting3", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
                 "xbox", "1999-05-05", 18, "testing", "testingpub");
-        DigitalProduct pd4 = new DigitalProduct(53, "NuovoProdottoTesting4", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
+        pd4 = new DigitalProduct(53, "NuovoProdottoTesting4", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
                 "xbox", "1999-05-05", 18, "testing", "testingpub");
-        PhysicalProduct pp1 = new PhysicalProduct(60, "NuovoProdottoTesting4", 23.56,
+        pp1 = new PhysicalProduct(60, "NuovoProdottoTesting4", 23.56,
                 "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
                 200, "2x2x2", 20.05);
-        PhysicalProduct pp2 = new PhysicalProduct(61, "NuovoProdottoTesting5", 23.56,
+        pp2 = new PhysicalProduct(61, "NuovoProdottoTesting5", 23.56,
                 "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
                 200, "2x2x2", 20.05);
-        PhysicalProduct pp3 = new PhysicalProduct(62, "NuovoProdottoTesting6", 23.56,
+        pp3 = new PhysicalProduct(62, "NuovoProdottoTesting6", 23.56,
                 "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
                 200, "2x2x2", 20.05);
-        PhysicalProduct pp4 = new PhysicalProduct(63, "NuovoProdottoTesting7", 23.56,
+        pp4 = new PhysicalProduct(63, "NuovoProdottoTesting7", 23.56,
                 "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
                 200, "2x2x2", 20.05);
         DigitalProductDAO digdao = new DigitalProductDAO();
@@ -211,26 +213,6 @@ public class ShowAdminAreaServletTest {
         ud.doDeleteFromUsername(u2.getUsername());
         ud.doDeleteFromUsername(u3.getUsername());
         ud.doDeleteFromUsername(u4.getUsername());
-        DigitalProduct pd1 = new DigitalProduct(50, "NuovoProdottoTesting1", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
-                "xbox", "1999-05-05", 18, "testing", "testingpub");
-        DigitalProduct pd2 = new DigitalProduct(51, "NuovoProdottoTesting2", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
-                "xbox", "1999-05-05", 18, "testing", "testingpub");
-        DigitalProduct pd3 = new DigitalProduct(52, "NuovoProdottoTesting3", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
-                "xbox", "1999-05-05", 18, "testing", "testingpub");
-        DigitalProduct pd4 = new DigitalProduct(53, "NuovoProdottoTesting4", 23.56, "testing", "imagetesting", new ArrayList<Category>() , new ArrayList<Tag>(), 330,
-                "xbox", "1999-05-05", 18, "testing", "testingpub");
-        PhysicalProduct pp1 = new PhysicalProduct(60, "NuovoProdottoTesting4", 23.56,
-                "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
-                200, "sizetest", 20.05);
-        PhysicalProduct pp2 = new PhysicalProduct(61, "NuovoProdottoTesting5", 23.56,
-                "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
-                200, "sizetest", 20.05);
-        PhysicalProduct pp3 = new PhysicalProduct(62, "NuovoProdottoTesting6", 23.56,
-                "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
-                200, "sizetest", 20.05);
-        PhysicalProduct pp4 = new PhysicalProduct(63, "NuovoProdottoTesting7", 23.56,
-                "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
-                200, "sizetest", 20.05);
         DigitalProductDAO digdao = new DigitalProductDAO();
         PhysicalProductDAO phydao = new PhysicalProductDAO();
         digdao.doDelete(pd1.getId());

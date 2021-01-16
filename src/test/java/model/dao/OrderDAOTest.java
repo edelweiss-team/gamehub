@@ -18,8 +18,8 @@ class OrderDAOTest {
 
     @Test
     void doRetrieveByUsernameValid() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
@@ -30,17 +30,17 @@ class OrderDAOTest {
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
-        @Nullable ArrayList<Order> prova2 = or.doRetrieveByUsername("gigino");
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveByUsername("gigggino");
         assertTrue(prova2.contains(prova));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveByUsernameNotValid() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
@@ -51,17 +51,17 @@ class OrderDAOTest {
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
-        @Nullable ArrayList<Order> prova2 = or.doRetrieveByUsername("gigino2");
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveByUsername("gigggino2");
         assertTrue(prova2.isEmpty());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveByUsernameXNone() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
@@ -72,17 +72,17 @@ class OrderDAOTest {
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
-        @Nullable ArrayList<Order> prova2 = or.doRetrieveByUsername("gigino44");
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveByUsername("gigggino44");
         assertTrue(prova2.isEmpty());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveByUsernameXOne() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
@@ -93,17 +93,17 @@ class OrderDAOTest {
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
-        @Nullable ArrayList<Order> prova2 = or.doRetrieveByUsername("gigino");
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveByUsername("gigggino");
         assertTrue(prova2.contains(prova));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveByUsernameXAll() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
@@ -117,34 +117,34 @@ class OrderDAOTest {
         prova2.addProduct(p2,3);
         or.doSave(prova);
         or.doSave(prova2);
-        @Nullable ArrayList<Order> prova3 = or.doRetrieveByUsername("gigino");
+        @Nullable ArrayList<Order> prova3 = or.doRetrieveByUsername("gigggino");
         assertTrue(prova3.contains(prova));
         assertTrue(prova3.contains(prova2));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveByUsernameProductNone() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
         Order prova = new Order(70,u,o,"2020-12-12");
         or.doSave(prova);
-        @Nullable ArrayList<Order> prova2 = or.doRetrieveByUsername("gigino");
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveByUsername("gigggino");
         Order p = prova2.get(0);
         assertTrue(p.getAllProducts().isEmpty());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveByUsernameProductXOne() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
@@ -159,11 +159,11 @@ class OrderDAOTest {
         prova.addProduct(d2,4);
         prova.addProduct(p2,5);
         or.doSave(prova);
-        @Nullable ArrayList<Order> prova2 = or.doRetrieveByUsername("gigino");
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveByUsername("gigggino");
         Order p = prova2.get(0);
         assertTrue(p.getAllProducts().contains(p2));
         assertTrue(p.getAllProducts().contains(d2));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         dy.doDelete(d2.getId());
         or.doDelete(prova.getId());
@@ -171,8 +171,8 @@ class OrderDAOTest {
 
     @Test
     void doRetrieveByUsernameProductXAll() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
@@ -196,13 +196,13 @@ class OrderDAOTest {
         prova.addProduct(d3,4);
         prova.addProduct(p3,5);
         or.doSave(prova);
-        @Nullable ArrayList<Order> prova2 = or.doRetrieveByUsername("gigino");
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveByUsername("gigggino");
         Order p = prova2.get(0);
         assertTrue(p.getAllProducts().contains(p2));
         assertTrue(p.getAllProducts().contains(d2));
         assertTrue(p.getAllProducts().contains(p3));
         assertTrue(p.getAllProducts().contains(d3));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         dy.doDelete(d2.getId());
         py.doDelete(p3.getId());
@@ -212,8 +212,8 @@ class OrderDAOTest {
 
     @Test
     void doRetrieveByOperatorValid() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
@@ -224,17 +224,17 @@ class OrderDAOTest {
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
-        @Nullable ArrayList<Order> prova2 = or.doRetrieveByOperator("gigino");
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveByOperator("gigggino");
         assertTrue(prova2.contains(prova));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveByOperatorNotValid() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
@@ -245,17 +245,17 @@ class OrderDAOTest {
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
-        @Nullable ArrayList<Order> prova2 = or.doRetrieveByOperator("gigino44");
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveByOperator("gigggino44");
         assertTrue(prova2.isEmpty());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveByOperatorXNone() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
@@ -266,17 +266,17 @@ class OrderDAOTest {
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
-        @Nullable ArrayList<Order> prova2 = or.doRetrieveByOperator("gigino44");
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveByOperator("gigggino44");
         assertTrue(prova2.isEmpty());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveByOperatorXOne() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
@@ -287,17 +287,17 @@ class OrderDAOTest {
         p2 = py.doSave(p2);
         prova.addProduct(p2,5);
         or.doSave(prova);
-        @Nullable ArrayList<Order> prova2 = or.doRetrieveByOperator("gigino");
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveByOperator("gigggino");
         assertTrue(prova2.contains(prova));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveByOperatorXAll() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
@@ -311,10 +311,10 @@ class OrderDAOTest {
         prova2.addProduct(p2,6);
         or.doSave(prova);
         or.doSave(prova2);
-        @Nullable ArrayList<Order> prova3 = or.doRetrieveByOperator("gigino");
+        @Nullable ArrayList<Order> prova3 = or.doRetrieveByOperator("gigggino");
         assertTrue(prova3.contains(prova));
         assertTrue(prova3.contains(prova2));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         or.doDelete(prova.getId());
         or.doDelete(prova2.getId());
@@ -322,24 +322,24 @@ class OrderDAOTest {
 
     @Test
     void doRetrieveByOperatorProductNone() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
         Order prova = new Order(70,u,o,"2020-12-12");
         or.doSave(prova);
-        @Nullable ArrayList<Order> prova2 = or.doRetrieveByOperator("gigino");
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveByOperator("gigggino");
         Order p = prova2.get(0);
         assertTrue(p.getAllProducts().isEmpty());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveByOperatorProductXOne() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
@@ -354,11 +354,11 @@ class OrderDAOTest {
         prova.addProduct(d2,4);
         prova.addProduct(p2,5);
         or.doSave(prova);
-        @Nullable ArrayList<Order> prova2 = or.doRetrieveByOperator("gigino");
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveByOperator("gigggino");
         Order p = prova2.get(0);
         assertTrue(p.getAllProducts().contains(p2));
         assertTrue(p.getAllProducts().contains(d2));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         dy.doDelete(d2.getId());
         or.doDelete(prova.getId());
@@ -368,8 +368,8 @@ class OrderDAOTest {
 
     @Test
     void doRetrieveByOperatorProductXAll() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
@@ -393,13 +393,13 @@ class OrderDAOTest {
         prova.addProduct(d3,4);
         prova.addProduct(p3,5);
         or.doSave(prova);
-        @Nullable ArrayList<Order> prova2 = or.doRetrieveByOperator("gigino");
+        @Nullable ArrayList<Order> prova2 = or.doRetrieveByOperator("gigggino");
         Order p = prova2.get(0);
         assertTrue(p.getAllProducts().contains(p2));
         assertTrue(p.getAllProducts().contains(d2));
         assertTrue(p.getAllProducts().contains(p3));
         assertTrue(p.getAllProducts().contains(d3));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         dy.doDelete(d2.getId());
         py.doDelete(p3.getId());
@@ -409,8 +409,8 @@ class OrderDAOTest {
 
     @Test
     void doRetrieveNonApprovedXNone() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Order prova = new Order(70,u,null,"2020-12-12");
@@ -422,15 +422,15 @@ class OrderDAOTest {
         or.doSave(prova);
         @Nullable ArrayList<Order> prova2 = or.doRetrieveNonApproved(0, 0);
         assertTrue(prova2.isEmpty());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveNonApprovedXOne() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Order prova = new Order(70,u,null,"2020-12-12");
@@ -442,15 +442,15 @@ class OrderDAOTest {
         or.doSave(prova);
         @Nullable ArrayList<Order> prova2 = or.doRetrieveNonApproved(0, 1);
         assertTrue(prova2.contains(prova));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveNonApprovedXAll() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Order prova = new Order(70,u,null,"2020-12-12");
@@ -466,7 +466,7 @@ class OrderDAOTest {
         @Nullable ArrayList<Order> prova3 = or.doRetrieveNonApproved(0, 10);
         assertTrue(prova3.contains(prova));
         assertTrue(prova3.contains(prova2));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         or.doDelete(prova.getId());
         or.doDelete(prova2.getId());
@@ -474,8 +474,8 @@ class OrderDAOTest {
 
     @Test
     void doRetrieveNonApprovedProductNone() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Order prova = new Order(70,u,null,"2020-12-12");
@@ -483,14 +483,14 @@ class OrderDAOTest {
         @Nullable ArrayList<Order> prova2 = or.doRetrieveNonApproved(0, 10);
         Order p = prova2.get(0);
         assertTrue(p.getAllProducts().isEmpty());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveNonApprovedProductXOne() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Order prova = new Order(70,u,null,"2020-12-12");
@@ -508,7 +508,7 @@ class OrderDAOTest {
         Order p = prova2.get(0);
         assertTrue(p.getAllProducts().contains(p2));
         assertTrue(p.getAllProducts().contains(d2));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         dy.doDelete(d2.getId());
         or.doDelete(prova.getId());
@@ -517,8 +517,8 @@ class OrderDAOTest {
 
     @Test
     void doRetrieveNonApprovedProductXAll() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         (new UserDAO()).doSave(u);
         Order prova = new Order(70,u,null,"2020-12-12");
@@ -547,7 +547,7 @@ class OrderDAOTest {
         assertTrue(p.getAllProducts().contains(d2));
         assertTrue(p.getAllProducts().contains(p3));
         assertTrue(p.getAllProducts().contains(d3));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         dy.doDelete(d2.getId());
         py.doDelete(p3.getId());
@@ -557,8 +557,8 @@ class OrderDAOTest {
 
     @Test
     void doRetrieveByIdOk() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
@@ -571,7 +571,7 @@ class OrderDAOTest {
         or.doSave(prova);
         @Nullable Order prova2 = or.doRetrieveById(70);
         assertTrue(prova2.equals(prova));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         or.doDelete(prova.getId());
     }
@@ -583,8 +583,8 @@ class OrderDAOTest {
 
     @Test
     void doRetrieveByIdOperatorNull(){
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
@@ -592,14 +592,14 @@ class OrderDAOTest {
         or.doSave(prova);
         Order p = or.doRetrieveById(70);
         assertTrue(p.getOperator()==null);
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveByIdOperatorOk(){
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
@@ -607,14 +607,14 @@ class OrderDAOTest {
         or.doSave(prova);
         Order p = or.doRetrieveById(70);
         assertEquals(p.getOperator(), o);
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveByIdProductNone() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
@@ -622,14 +622,14 @@ class OrderDAOTest {
         or.doSave(prova);
         Order prova2 = or.doRetrieveById(70);
         assertTrue(prova2.getAllProducts().isEmpty());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
     }
 
     @Test
     void doRetrieveByIdProductXOne() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
@@ -648,7 +648,7 @@ class OrderDAOTest {
 
         assertTrue(prova2.getAllProducts().contains(p2));
         assertTrue(prova2.getAllProducts().contains(d2));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         dy.doDelete(d2.getId());
         or.doDelete(prova.getId());
@@ -658,8 +658,8 @@ class OrderDAOTest {
 
     @Test
     void doRetrieveByIdProductXAll() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
@@ -688,7 +688,7 @@ class OrderDAOTest {
         assertTrue(prova2.getAllProducts().contains(d2));
         assertTrue(prova2.getAllProducts().contains(p3));
         assertTrue(prova2.getAllProducts().contains(d3));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         py.doDelete(p2.getId());
         dy.doDelete(d2.getId());
         py.doDelete(p3.getId());
@@ -699,36 +699,36 @@ class OrderDAOTest {
 
     @Test
     void doSaveOperatorOk() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
         Order prova = new Order(70,u,o,"2020-12-12");
         or.doSave(prova);
         assertTrue(or.doRetrieveById(70).getOperator().equals(o));
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
     }
 
     @Test
     void doSaveOperatorNull() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
         Order prova = new Order(70,u,o,"2020-12-12");
         or.doSave(prova);
         assertTrue(or.doRetrieveById(70).getOperator()==null);
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
     }
 
     @Test
     void doSaveProductNone() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
@@ -736,7 +736,7 @@ class OrderDAOTest {
         or.doSave(prova);
         Order prova2 = or.doRetrieveById(70);
         assertIterableEquals(prova.getAllProducts(),prova2.getAllProducts());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
     }
 
@@ -751,8 +751,8 @@ class OrderDAOTest {
                 1, "p1", 11, "desc0", "path0", new ArrayList<>(),
                 new ArrayList<>(), 1,"50x20x40",8);
         py.doSave(p1);
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
@@ -762,7 +762,7 @@ class OrderDAOTest {
         or.doSave(prova);
         Order prova2 = or.doRetrieveById(70);
         assertIterableEquals(prova.getAllProducts(),prova2.getAllProducts());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
         py.doDelete(p1.getId());
         dy.doDelete(p.getId());
@@ -771,8 +771,8 @@ class OrderDAOTest {
 
     @Test
     void doSaveProductAll() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
@@ -798,7 +798,7 @@ class OrderDAOTest {
         or.doSave(prova);
         Order prova2 = or.doRetrieveById(70);
         assertIterableEquals(prova.getAllProducts(),prova2.getAllProducts());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
         py.doDelete(p2.getId());
         dy.doDelete(d2.getId());
@@ -809,31 +809,31 @@ class OrderDAOTest {
 
     @Test
     void doSaveProductNoneNoIdOperator() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u, "2022-12-12", "curriculum");
         op.doSave(o);
         Order prova = new Order(0,u,o,"2020-12-12");
         or.doSave(prova);
-        Order prova2 = or.doRetrieveByUsername("gigino").get(0);
+        Order prova2 = or.doRetrieveByUsername("gigggino").get(0);
         assertIterableEquals(prova.getAllProducts(),prova2.getAllProducts());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
     }
 
     @Test
     void doSaveProductNoneNoId() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
         Order prova = new Order(0,u,o,"2020-12-12");
         or.doSave(prova);
-        Order prova2 = or.doRetrieveByUsername("gigino").get(0);
+        Order prova2 = or.doRetrieveByUsername("gigggino").get(0);
         assertIterableEquals(prova.getAllProducts(),prova2.getAllProducts());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
     }
 
@@ -848,8 +848,8 @@ class OrderDAOTest {
                 1, "p1", 11, "desc0", "path0", new ArrayList<>(),
                 new ArrayList<>(), 1,"50x20x40",8);
         py.doSave(p1);
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
@@ -857,9 +857,9 @@ class OrderDAOTest {
         prova.addProduct(p,5);
         prova.addProduct(p1,6);
         or.doSave(prova);
-        Order prova2 = or.doRetrieveByUsername("gigino").get(0);
+        Order prova2 = or.doRetrieveByUsername("gigggino").get(0);
         assertIterableEquals(prova.getAllProducts(),prova2.getAllProducts());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
         py.doDelete(p1.getId());
         dy.doDelete(p.getId());
@@ -877,8 +877,8 @@ class OrderDAOTest {
                 1, "p1", 11, "desc0", "path0", new ArrayList<>(),
                 new ArrayList<>(), 1,"50x20x40",8);
         py.doSave(p1);
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u, "2022-12-12", "curriculum");
         op.doSave(o);
@@ -886,9 +886,9 @@ class OrderDAOTest {
         prova.addProduct(p,5);
         prova.addProduct(p1,6);
         or.doSave(prova);
-        Order prova2 = or.doRetrieveByUsername("gigino").get(0);
+        Order prova2 = or.doRetrieveByUsername("gigggino").get(0);
         assertIterableEquals(prova.getAllProducts(),prova2.getAllProducts());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
         py.doDelete(p1.getId());
         dy.doDelete(p.getId());
@@ -897,8 +897,8 @@ class OrderDAOTest {
 
     @Test
     void doSaveProductAllNoId() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = null;
         us.doSave(u);
@@ -922,9 +922,9 @@ class OrderDAOTest {
         prova.addProduct(d3,4);
         prova.addProduct(p3,5);
         or.doSave(prova);
-        Order prova2 = or.doRetrieveByUsername("gigino").get(0);
+        Order prova2 = or.doRetrieveByUsername("gigggino").get(0);
         assertIterableEquals(prova.getAllProducts(),prova2.getAllProducts());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
         py.doDelete(p2.getId());
         dy.doDelete(d2.getId());
@@ -934,8 +934,8 @@ class OrderDAOTest {
 
     @Test
     void doSaveProductAllNoIdOperator() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
@@ -959,9 +959,9 @@ class OrderDAOTest {
         prova.addProduct(d3,4);
         prova.addProduct(p3,5);
         or.doSave(prova);
-        Order prova2 = or.doRetrieveByUsername("gigino").get(0);
+        Order prova2 = or.doRetrieveByUsername("gigggino").get(0);
         assertIterableEquals(prova.getAllProducts(),prova2.getAllProducts());
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
         py.doDelete(p2.getId());
         dy.doDelete(d2.getId());
@@ -971,8 +971,8 @@ class OrderDAOTest {
 
     @Test
     void doDeleteOk() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
@@ -981,14 +981,14 @@ class OrderDAOTest {
         Order prova2 = or.doRetrieveById(prova.getId());
         or.doDelete(prova2.getId());
         assertTrue(or.doRetrieveById(prova2.getId()) == null);
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
 
     }
 
     @Test
     void doDeleteNotOkID() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         Operator o = new Operator(u,"2022-11-11", "cvv");
         op.doSave(o);
@@ -997,29 +997,29 @@ class OrderDAOTest {
 
         or.doDelete(999);
         assertFalse(or.doRetrieveById(prova.getId()) == null);
-        us.doDeleteFromUsername("gigino");
+        us.doDeleteFromUsername("gigggino");
         or.doDelete(prova.getId());
 
     }
 
     @Test
     void doUpdateOperatorOk() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
         Order prova = new Order(70,u,o,"2020-12-12");
         or.doSave(prova);
-        User u2 = new User("gigino2", "pass", "Luigi", "Tufano", "Via Marchese",
+        User u2 = new User("gigggino2", "pass", "Luigi", "Tufano", "Via Marchese",
                 "Boscoreale", "Italia", "1999-12-12", "gigisno@gmail.com",
                 'M', "3351212121");
         Operator o2 = new Operator(u2,"2021-11-11", "cvv");
         op.doSave(o2);
         or.doUpdateOperator(prova.getId(), o2.getUsername());
         assertTrue(o2.getUsername().equals(or.doRetrieveById(prova.getId()).getOperator().getUsername()));
-        us.doDeleteFromUsername("gigino");
-        us.doDeleteFromUsername("gigino2");
+        us.doDeleteFromUsername("gigggino");
+        us.doDeleteFromUsername("gigggino2");
         or.doDelete(prova.getId());
 
 
@@ -1029,21 +1029,21 @@ class OrderDAOTest {
 
     @Test
     void doUpdateOperatorNotOkOrder() {
-        User u = new User("gigino", "pass", "Luigi", "Tufano", "Via Marchese",
-                "Boscoreale", "Italia", "1999-12-12", "gigino@gmail.com",
+        User u = new User("gigggino", "pass", "Luigi", "Tufano", "Via Marchese",
+                "Boscoreale", "Italia", "1999-12-12", "gigggino@gmail.com",
                 'M', "3351212121");
         us.doSave(u);
         Operator o = null;
         Order prova = new Order(70,u,o,"2020-12-12");
         or.doSave(prova);
-        User u2 = new User("gigino2", "pass", "Luigi", "Tufano", "Via Marchese",
+        User u2 = new User("gigggino2", "pass", "Luigi", "Tufano", "Via Marchese",
                 "Boscoreale", "Italia", "1999-12-12", "gigisno@gmail.com",
                 'M', "3351212121");
         Operator o2 = new Operator(u2,"2021-11-11", "cvv");
         op.doSave(o2);
         assertThrows(RuntimeException.class,()-> or.doUpdateOperator(999,o2.getUsername()));
-        us.doDeleteFromUsername("gigino");
-        us.doDeleteFromUsername("gigino2");
+        us.doDeleteFromUsername("gigggino");
+        us.doDeleteFromUsername("gigggino2");
         or.doDelete(prova.getId());
 
 

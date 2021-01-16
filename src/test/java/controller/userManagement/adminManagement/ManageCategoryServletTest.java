@@ -22,7 +22,7 @@ class ManageCategoryServletTest {
     private static Category categoryToBeUpdated;
     private static Category categoryWithCoolName;
     private static Category categoryToBeAdded;
-
+/*
 
     @BeforeAll
     public static void init() {
@@ -190,5 +190,5 @@ class ManageCategoryServletTest {
         servlet.doPost(request, response);
         assertNotNull(categoryDao.doRetrieveByName(categoryToBeAdded.getName()));
     }
-
+*/
 }
