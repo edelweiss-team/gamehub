@@ -93,7 +93,7 @@ class CartServletTest {
         session.setAttribute("loggedUser", u);
         request.setSession(session);
         request.setParameter("removeCart", "true");
-        request.setParameter("productId", Integer.toString(pd1.getId()));
+        request.setParameter("productId", "-1");
         request.setParameter("productType", "digital");
         request.setParameter("quantity", "-1");
         servlet.doPost(request, response);
@@ -197,6 +197,7 @@ class CartServletTest {
         request.setParameter("quantity", "1");
         assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
     }
+
 
     @Test
     public void removeCartNotNullAndTypeWrong() throws ServletException, IOException {
