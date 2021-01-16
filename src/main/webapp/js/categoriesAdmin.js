@@ -35,7 +35,6 @@ function getMoreCategoriesPaging(startingIndex=0){
 
             //aggiungiamo le categorie alla target page
             for(let category of newCategories) {
-                let imagePath = '/studium/resources/images/categoryImages/' + category.imagePath; //eventualmente sostituire
                 $targetPage.append("<tr id='" + category.name + "CategoryRow' class='categories-table-body-row'>\n" +
                     "                   <td class='can-be-editable editable-name'>" + category.name + "</td>\n" +
                     "                   <td class='can-be-editable editable-description'>" +

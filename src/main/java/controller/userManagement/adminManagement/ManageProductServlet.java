@@ -73,11 +73,9 @@ public class ManageProductServlet extends HttpServlet {
                     && req.getParameter("removeProduct").length() >= PRODUCT_MIN_LENGTH) {
                     String name = req.getParameter("removeProduct");
                     if (type.equals("digitalProduct")) {
-                        d = dpd.doRetrieveByAllFragment(name, "%",
-                                Double.parseDouble("1000"), "%", "%",
-                                "%", 0, 1000).get(0);
+                        d = dpd.doRetrieveById(Integer.parseInt(name));
                         if (d == null) {
-                            responseObject.addProperty("name", name);
+                            responseObject.addProperty("removedDigitalProduct", name);
                             responseObject.addProperty("type", "error");
                             responseObject.addProperty("msg", "Digital Product "
                                     + "has not been removed because it doesn't exist.");
@@ -86,7 +84,7 @@ public class ManageProductServlet extends HttpServlet {
                             return;
                         } else {
                             dpd.doDelete(d.getId());
-                            responseObject.addProperty("name", name);
+                            responseObject.addProperty("removedDigitalProduct", name.trim());
                             responseObject.addProperty("type", "success");
                             responseObject.addProperty("msg", "Digital Product "
                                     + " successfully removed.");
@@ -95,9 +93,7 @@ public class ManageProductServlet extends HttpServlet {
                             return;
                         }
                     } else if (type.equals("physicalProduct")) {
-                        p = ppd.doRetrieveByAllFragment(name, "%",
-                                Double.parseDouble("1000"), "%", "%",
-                                 0, 1000).get(0);
+                        p = ppd.doRetrieveById(Integer.parseInt(name));
                         if (p == null) {
                             responseObject.addProperty("name", name);
                             responseObject.addProperty("type", "error");
