@@ -46,7 +46,7 @@ function getMoreTagsPaging(startingIndex=0){
                     "                   </td>" +
                     "                   <td class='form-container'>\n" +
                     "                       <form class=\"removeTagForm\" name=\"removeTagForm\" method=\"post\" action=\"removeTag\">\n" +
-                    "                           <input type=\"hidden\" value=\"" + tag.name +"\" name=\"removeTag\" class='removeTagOldName'>\n" +
+                    "                           <input type=\"hidden\" value=\"" + tag.name + "\" name=\"removeTag\" class='removeTagOldName'>\n" +
                     "                           <input type=\"submit\" value=\"✗\" class=\"removeTagAdminButton\">\n" +
                     "                       </form>\n" +
                     "                   </td>\n" +
@@ -103,11 +103,13 @@ var changeTagListener = ev =>{
                 let msg, type, updatedTag, oldName, $editedRow;
 
                 //leggiamo la risposta json
-                updatedTag = responseObject.updatedTag;
+                updatedTag = responseObject.name;
                 oldName = responseObject.oldName;
                 $editedRow = $(document.getElementById(oldName + "TagRow"));
                 msg = responseObject.message;
                 type = responseObject.type;
+                if(type == "error")
+                    return;
 
                 //aggiorniamo gli input type=hidden con il TagName apposito, e aggiorniamo la riga della tabella
                 $editedRow.find(".changeTagOldName").val(updatedTag.name);
@@ -125,23 +127,15 @@ var changeTagListener = ev =>{
 }
 
 var validateTagTableRowInputsListener = ev => {
-    let $targetRow, namePattern = new RegExp("^(([A-Za-z][a-z0-9]*([-'\\s\\.]))*([A-Za-z0-9][A-Za-z0-9]*))$"),
-        nameText, descriptionText, $errorMessage;
+    let $targetRow, nameText, $errorMessage;
     $targetRow = $(ev.target).closest("tr");
-    descriptionText = $targetRow.find(".editable-description").text().trim();
     nameText = $targetRow.find(".editable-name").text().trim();
     $errorMessage = $targetRow.find(".errorTagMessage");
 
-    if(nameText.length > 50 || nameText.length < 3 || !namePattern.test(nameText)){
+    if(nameText.length > 45 || nameText.length < 1){
         $targetRow.find(".changeTagAdminButton").hide();
         $errorMessage.css("display", "unset");
-        $errorMessage.text("Error: tag name must contain from 3 to 50 characters, " +
-            "including letters, numbers and separators.");
-    }
-    else if(descriptionText.length > 1000 || descriptionText.length < 10){
-        $targetRow.find(".changeTagAdminButton").hide();
-        $errorMessage.css("display", "unset");
-        $errorMessage.text("Error: tag description must contain from 10 to 1000 characters!");
+        $errorMessage.text("Error: tag name must contain from 1 to 45 characters!");
     }
     else{
         $targetRow.find(".changeTagAdminButton").show();
@@ -229,7 +223,7 @@ var removeTagListener =  ev => {
         dataType: "json",
         error: ev => alert("Request of tag " + tagName + " removal failed."),
         success: responseObject => {
-            let removedTagName = responseObject.removedTagName, type= responseObject.type,
+            let removedTagName = responseObject.removedTag, type= responseObject.type,
                 msg = responseObject.msg;
             if(removedTagName != null && removedTagName != undefined)
                 $(document.getElementById(removedTagName + "TagRow")).remove();
@@ -261,8 +255,19 @@ $(document).ready(function () {
 
     $("#submitAdminButtonContainerAddTag input[type=submit]").on("click", ev => {
         ev.preventDefault();
+
+        let $errorMessage = $("#errorMessageAddTag")
+        $errorMessage.removeClass("visible");
+        $errorMessage.text("");
+
+        if(!new RegExp("^.{1,45}$").test($("#tagName").val())){
+            $errorMessage.addClass("visible");
+            $errorMessage.text("Error: tag name must be from 1 to 45 characters long!");
+            return;
+        }
+
         let fd = new FormData(document.getElementById("addTagForm"));
-        $.ajax("manage-tag&manage_tag=add_tag", {
+        $.ajax("manage-tag?&manage_tag=add_tag", {
             method: "POST",
             dataType: "json",
             enctype : 'multipart/form-data',

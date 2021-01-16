@@ -3,6 +3,7 @@ package controller.userManagement.adminManagement;
 import com.google.gson.JsonObject;
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,10 +17,11 @@ import model.dao.TagDAO;
  * this servlet let Admin to add/remove/edit a tag saved in the DB.
  */
 @WebServlet(urlPatterns = {"/manageTag-servlet", "/manage-tag"})
+@MultipartConfig
 public class ManageTagServlet extends HttpServlet {
 
-    public static final int TAG_MAX_LENGTH = 20;
-    public static final int TAG_MIN_LENGTH = 3;
+    public static final int TAG_MAX_LENGTH = 45;
+    public static final int TAG_MIN_LENGTH = 1;
 
     /**
      * this method manages Post request calling doGet method.
@@ -54,7 +56,7 @@ public class ManageTagServlet extends HttpServlet {
 
         if (operation != null) {
             if (operation.equals("remove_tag")) {
-                if (req.getParameter("removeTag") != null) {
+                    if (req.getParameter("removeTag") != null) {
                     if (req.getParameter("removeTag").length() <= TAG_MAX_LENGTH
                         && req.getParameter("removeTag").length() >= TAG_MIN_LENGTH) {
                         String name = req.getParameter("removeTag");
@@ -88,21 +90,26 @@ public class ManageTagServlet extends HttpServlet {
                     if (name.length() >= TAG_MIN_LENGTH && name.length() <= TAG_MAX_LENGTH) {
                         String oldName = req.getParameter("old-name");
                         t = td.doRetrieveByName(oldName);
-                        Tag tNuovo = td.doRetrieveByName(name);
+                        Tag tagNew = td.doRetrieveByName(name);
                         JsonObject responseTag = new JsonObject();
                         JsonObject responseJson = new JsonObject();
 
-                        if (tNuovo != null && !tNuovo.equals(t)) {
+                        if (tagNew != null && !tagNew.equals(t)) {
                             responseJson.addProperty("type", "error");
                             responseJson.addProperty("message", "Category "
                                     + name + " already exists!");
-                            responseTag.addProperty("name", t.getName());
+                            responseJson.addProperty("name", t.getName());
+                            resp.getWriter().println(responseJson);
+                            resp.flushBuffer();
                         } else {
                             t.setName(name);
                             td.doUpdate(t, oldName);
+                            responseJson.addProperty("oldName", oldName);
                             responseJson.addProperty("type", "success");
                             responseJson.addProperty("message", "Update completed successfully!");
-                            responseTag.addProperty("name", t.getName());
+                            responseJson.addProperty("name", t.getName());
+                            resp.getWriter().println(responseJson);
+                            resp.flushBuffer();
                         }
                     } else {
                         throw new RequestParametersException("error in the request parameters: "
@@ -113,8 +120,7 @@ public class ManageTagServlet extends HttpServlet {
                             + "null parameters.");
                 }
             } else if (operation.equals("add_tag")) {
-                String name = req.getParameter("name");
-                JsonObject tagJson;
+                String name = req.getParameter("tagName");
 
                 if (name != null) {
                     if (name.length() >= TAG_MIN_LENGTH && name.length() <= TAG_MAX_LENGTH) {
