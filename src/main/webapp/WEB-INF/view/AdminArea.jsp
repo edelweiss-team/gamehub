@@ -48,19 +48,21 @@
                     </thead>
                     <tbody class='users-table-body'>
                     <c:forEach items='${firstUsers}' var='user'>
-                        <tr id="${user.username}UserRow" class='users-table-body-row'>
-                            <td>  ${user.username}  </td>
-                            <td>  ${user.mail}  </td>
-                            <td>  ${user.name}  </td>
-                            <td>  ${user.surname}  </td>
-                            <td>  ${user.birthDate}  </td>
-                            <td class='form-container'>
-                                <form name='removeUserForm' class='removeUserForm' method='post' action='removeUser-servlet'>
-                                    <input type='hidden' value='${user.username}' name='removeUser' class="usernameForRemove">
-                                    <input type='submit' value='✗' class='removeUserAdminButton'>
-                                </form>
-                            </td>
-                        </tr>
+                        <c:if test='${not user.username.equals(loggedUser.username)}'>
+                            <tr id="${user.username}UserRow" class='users-table-body-row'>
+                                <td>  ${user.username}  </td>
+                                <td>  ${user.mail}  </td>
+                                <td>  ${user.name}  </td>
+                                <td>  ${user.surname}  </td>
+                                <td>  ${user.birthDate}  </td>
+                                <td class='form-container'>
+                                    <form name='removeUserForm' class='removeUserForm' method='post' action='removeUser-servlet'>
+                                        <input type='hidden' value='${user.username}' name='removeUser' class="usernameForRemove">
+                                        <input type='submit' value='✗' class='removeUserAdminButton'>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:if>
                     </c:forEach>
                     </tbody>
                 </table>
@@ -197,13 +199,13 @@
             <h3>Add tag</h3>
             <form id='addTagForm' name='addTagForm' action='manage-tag' method='post' enctype='multipart/form-data'>
                 <div class='admin-textbox'>
-                    <input type='text' id='tagName' class='admin-textbox' name='tagName' placeholder='Tag name'><br>
+                    <input type='text' minlength="1" maxlength="45" id='tagName' class='admin-textbox' name='tagName' placeholder='Tag name'><br>
                 </div>
                 <div class='admin-textbox' style='border: none'>
                     <span id='errorMessageAddTag' class='Error'></span><br>
                 </div>
                 <div id='submitAdminButtonContainerAddTag'>
-                    <input type='submit' class='btnAdmin submitBtn' disabled>
+                    <input type='submit' class='btnAdmin submitBtn'>
                     <input type="hidden" name="manage_tag" value="add_tag">
                 </div>
             </form>
@@ -310,25 +312,27 @@
                     </thead>
                     <tbody class='operators-table-body'>
                     <c:forEach items='${firstOperators}' var='operator'>
-                        <tr id="${operator.username}OperatorRow" class='operators-table-body-row'>
-                            <td>  ${operator.username}  </td>
-                            <td class="can-be-editable editable-cv">  ${operator.cv}</td>
-                            <td class="can-be-editable editable-contractTime">  ${operator.contractTime}</td>
-                            <td class='form-container'>
-                                <form class='changeOperatorForm' name='changeOperatorForm' method='post' action='manage-category'>
-                                    <input type='hidden' value='${operator.username}' name='changeOperator' class='changeOperatorOldName'>
-                                    <input type="hidden" name="manage_operator" value="update_operator">
-                                    <input type='submit' value='📝' class='changeOperatorAdminButton'>
-                                    <span class="errorOperatorMessage" style="color: #c75450; display: none"></span>
-                                </form>
-                            </td>
-                            <td class='form-container'>
-                                <form name='removeOperatorForm' class='removeOperatorForm' method='post' action='manageOperator-servlet'>
-                                    <input type='hidden' value='${operator.username}' name='removeOperator' class='operatorNameForRemove'>
-                                    <input type='submit' value='✗' class='removeOperatorAdminButton'>
-                                </form>
-                            </td>
-                        </tr>
+                        <c:if test='${not operator.username.equals(loggedUser.username)}'>
+                            <tr id="${operator.username}OperatorRow" class='operators-table-body-row'>
+                                <td>  ${operator.username}  </td>
+                                <td class="can-be-editable editable-cv">  ${operator.cv}</td>
+                                <td class="can-be-editable editable-contractTime">  ${operator.contractTime}</td>
+                                <td class='form-container'>
+                                    <form class='changeOperatorForm' name='changeOperatorForm' method='post' action='manage-category'>
+                                        <input type='hidden' value='${operator.username}' name='changeOperator' class='changeOperatorOldName'>
+                                        <input type="hidden" name="manage_operator" value="update_operator">
+                                        <input type='submit' value='📝' class='changeOperatorAdminButton'>
+                                        <span class="errorOperatorMessage" style="color: #c75450; display: none"></span>
+                                    </form>
+                                </td>
+                                <td class='form-container'>
+                                    <form name='removeOperatorForm' class='removeOperatorForm' method='post' action='manageOperator-servlet'>
+                                        <input type='hidden' value='${operator.username}' name='removeOperator' class='operatorNameForRemove'>
+                                        <input type='submit' value='✗' class='removeOperatorAdminButton'>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:if>
                     </c:forEach>
                     </tbody>
                 </table>
@@ -393,16 +397,18 @@
                     </thead>
                     <tbody class='moderators-table-body'>
                     <c:forEach items='${firstModerators}' var='moderator'>
-                        <tr id="${moderator.username}ModeratorRow" class='moderators-table-body-row'>
-                            <td>  ${moderator.username}  </td>
-                            <td>  ${moderator.contractTime}</td>
-                            <td class='form-container'>
-                                <form name='removeModeratorForm' class='removeModeratorForm' method='post' action='removeModerator-servlet'>
-                                    <input type='hidden' value='${moderator.username}' name='removeModerator' class='moderatorNameForRemove'>
-                                    <input type='submit' value='✗' class='removeModeratorAdminButton'>
-                                </form>
-                            </td>
-                        </tr>
+                        <c:if test='${not moderator.username.equals(loggedUser.username)}'>
+                            <tr id="${moderator.username}ModeratorRow" class='moderators-table-body-row'>
+                                <td>  ${moderator.username}  </td>
+                                <td>  ${moderator.contractTime}</td>
+                                <td class='form-container'>
+                                    <form name='removeModeratorForm' class='removeModeratorForm' method='post' action='removeModerator-servlet'>
+                                        <input type='hidden' value='${moderator.username}' name='removeModerator' class='moderatorNameForRemove'>
+                                        <input type='submit' value='✗' class='removeModeratorAdminButton'>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:if>
                     </c:forEach>
                     </tbody>
                 </table>
