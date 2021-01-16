@@ -102,14 +102,15 @@ public class ManageOperatorServlet extends HttpServlet {
                         String oldName = req.getParameter("old-name");
                         o = od.doRetrieveByUsername(oldName);
 
-                        JsonObject responseTag = new JsonObject();
                         JsonObject responseJson = new JsonObject();
 
                         if (o == null) {
                             responseJson.addProperty("type", "error");
                             responseJson.addProperty("message", "Operator "
                                     + oldName + " doesn't exists!");
-                            responseTag.addProperty("name", oldName);
+                            responseJson.addProperty("name", oldName);
+                            resp.getWriter().println(responseJson);
+                            resp.flushBuffer();
                         } else {
                             o.setCv(cv);
                             o.setContractTime(contractTime);

@@ -97,14 +97,15 @@ public class ManageModeratorServlet extends HttpServlet {
                         String oldName = req.getParameter("old-name");
                         m = md.doRetrieveByUsername(oldName);
 
-                        JsonObject responseTag = new JsonObject();
                         JsonObject responseJson = new JsonObject();
 
                         if (m == null) {
                             responseJson.addProperty("type", "error");
                             responseJson.addProperty("message", "Moderator "
                                     + oldName + " doesn't exists!");
-                            responseTag.addProperty("name", oldName);
+                            responseJson.addProperty("name", oldName);
+                            resp.getWriter().println(responseJson);
+                            resp.flushBuffer();
                         } else {
                             m.setContractTime(contractTime);
                             md.doUpdate(m);
