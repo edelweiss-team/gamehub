@@ -44,7 +44,7 @@ public class GetMoreModeratorsServlet extends HttpServlet {
      * @throws IOException if an exception is occurred
      */
     @Override
-    protected void doGet(HttpServletRequest req,HttpServletResponse resp)
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         int startingIndex;
 

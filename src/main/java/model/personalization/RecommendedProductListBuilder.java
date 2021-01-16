@@ -7,15 +7,31 @@ import model.dao.DigitalProductDAO;
 import model.dao.PhysicalProductDAO;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * This class has the only purpose to build the actual recommended product list for the
+ * {@link RecommendedProductList} class. It should, for this reason, never be used outside of the
+ * aforementioned class or one of its specialization.
+ */
 public class RecommendedProductListBuilder {
     private static final int NUM_PRODS = 3;
     private static final int MAX_LIMIT = 100;
 
+    /**
+     * Construct a new {@link RecommendedProductListBuilder}.
+     */
     public RecommendedProductListBuilder() {
         this.ppd = new PhysicalProductDAO();
         this.dpd = new DigitalProductDAO();
     }
 
+    /**
+     * This method build a recommended product list, maximizing the
+     * number of products that match the given tags.
+     *
+     * @param tags an hash map with keys equal to the tag names, and tag equal to the actual tags
+     * @return a recommended product list that maximize the number of products that match the given
+     *         tags
+     */
     @NotNull
     public List<Product> buildList(@NotNull HashMap<String, Tag> tags) {
         List<Product> products = new ArrayList<>();

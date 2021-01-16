@@ -108,8 +108,10 @@ var changeTagListener = ev =>{
                 $editedRow = $(document.getElementById(oldName + "TagRow"));
                 msg = responseObject.message;
                 type = responseObject.type;
-                if(type == "error")
+                if(type == "error"){
+                    showPopupMessage(type, msg, 8);
                     return;
+                }
 
                 //aggiorniamo gli input type=hidden con il TagName apposito, e aggiorniamo la riga della tabella
                 $editedRow.find(".changeTagOldName").val(updatedTag.name);
@@ -117,7 +119,6 @@ var changeTagListener = ev =>{
                 //eventuale codice per visualizzare l'immagine
                 $editedRow.find(".editable-name").text(updatedTag.name);
                 $editedRow.prop("id", updatedTag.name + "TagRow");
-
 
                 //mostriamo il messaggio di popup
                 showPopupMessage(type, msg, 8);

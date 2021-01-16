@@ -9,24 +9,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.bean.Operator;
+import model.bean.Moderator;
 import model.bean.User;
-import model.dao.OperatorDAO;
+import model.dao.ModeratorDAO;
 import model.dao.UserDAO;
 import org.jetbrains.annotations.NotNull;
 
 
 /**
- * this servlet let Admin to add/remove/edit an Operator profile.
+ * this servlet let Admin to add/remove/edit an Moderator profile.
  */
-@WebServlet(urlPatterns = {"/manageOperator-servlet", "/manage-operator"})
+@WebServlet(urlPatterns = {"/manageModerator-servlet", "/manage-moderator"})
 @MultipartConfig
-public class ManageOperatorServlet extends HttpServlet {
+public class ManageModeratorServlet extends HttpServlet {
 
-    public static final int OPERATOR_MAX_LENGTH = 20;
-    public static final int OPERATOR_MIN_LENGTH = 6;
-    public static final int CV_MAX_LENGTH = 10000;
-    public static final int CV_MIN_LENGTH = 3;
+    public static final int MODERATOR_MAX_LENGTH = 20;
+    public static final int MODERATOR_MIN_LENGTH = 6;
     @NotNull
     public static final String DATE_REGEX =
             "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$";
@@ -57,32 +55,32 @@ public class ManageOperatorServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        OperatorDAO od = new OperatorDAO();
-        Operator o;
+        ModeratorDAO md = new ModeratorDAO();
+        Moderator m;
         JsonObject responseObject = new JsonObject();
-        String operation = req.getParameter("manage_operator");
+        String operation = req.getParameter("manage_moderator");
 
         if (operation != null) {
-            if (operation.equals("remove_operator")) {
-                if (req.getParameter("removeOperator") != null) {
-                    if (req.getParameter("removeOperator").length() <= OPERATOR_MAX_LENGTH
-                            && req.getParameter("removeOperator").length() >= OPERATOR_MIN_LENGTH) {
-                        String name = req.getParameter("removeOperator");
-                        o = od.doRetrieveByUsername(name);
-                        if (o != null) {
-                            od.doDeleteByUsername(name);
+            if (operation.equals("remove_moderator")) {
+                if (req.getParameter("removeModerator") != null) {
+                    if (req.getParameter("removeModerator").length() <= MODERATOR_MAX_LENGTH
+                        && req.getParameter("removeModerator").length() >= MODERATOR_MIN_LENGTH) {
+                        String name = req.getParameter("removeModerator");
+                        m = md.doRetrieveByUsername(name);
+                        if (m != null) {
+                            md.doDeleteByUsername(name);
                             responseObject.addProperty("username", name);
                             responseObject.addProperty("type", "success");
-                            responseObject.addProperty("msg", "Operator "
+                            responseObject.addProperty("msg", "Moderator "
                                     + name + " successfully removed.");
                         } else {
                             responseObject.addProperty("type", "error");
-                            responseObject.addProperty("msg", "Operator "
+                            responseObject.addProperty("msg", "Moderator "
                                     + name + " doesn't exists and cannot be removed.");
                         }
                     } else {
                         responseObject.addProperty("type", "error");
-                        responseObject.addProperty("msg", "The operator is "
+                        responseObject.addProperty("msg", "The moderator is "
                                 + "too long or too short");
                     }
                     resp.getWriter().println(responseObject);
@@ -91,37 +89,32 @@ public class ManageOperatorServlet extends HttpServlet {
                     throw new RequestParametersException("\nError in the parameter "
                             + "passing: one of the parameters is null.");
                 }
-            } else if (operation.equals("update_operator")) {
-                String cv = req.getParameter("editable-cv");
+            } else if (operation.equals("update_moderator")) {
                 String contractTime = req.getParameter("editable-contractTime");
-                if (cv != null && contractTime != null) {
-                    cv = cv.trim();
+                if (contractTime != null) {
                     contractTime = contractTime.trim();
-                    if (cv.length() >= CV_MIN_LENGTH && cv.length() <= CV_MAX_LENGTH
-                            && contractTime.matches(DATE_REGEX)) {
+                    if (contractTime.matches(DATE_REGEX)) {
                         String oldName = req.getParameter("old-name");
-                        o = od.doRetrieveByUsername(oldName);
+                        m = md.doRetrieveByUsername(oldName);
 
                         JsonObject responseTag = new JsonObject();
                         JsonObject responseJson = new JsonObject();
 
-                        if (o == null) {
+                        if (m == null) {
                             responseJson.addProperty("type", "error");
-                            responseJson.addProperty("message", "Operator "
+                            responseJson.addProperty("message", "Moderator "
                                     + oldName + " doesn't exists!");
                             responseTag.addProperty("name", oldName);
                         } else {
-                            o.setCv(cv);
-                            o.setContractTime(contractTime);
-                            od.doUpdate(o);
+                            m.setContractTime(contractTime);
+                            md.doUpdate(m);
                             responseJson.addProperty("type", "success");
                             responseJson.addProperty(
                                     "message",
                                     "Update completed successfully!"
                             );
-                            responseJson.addProperty("cv", o.getCv());
-                            responseJson.addProperty("contractTime", o.getContractTime());
-                            responseJson.addProperty("username", o.getUsername());
+                            responseJson.addProperty("contractTime", m.getContractTime());
+                            responseJson.addProperty("username", m.getUsername());
                             resp.getWriter().println(responseJson);
                             resp.flushBuffer();
                         }
@@ -133,47 +126,45 @@ public class ManageOperatorServlet extends HttpServlet {
                     throw new RequestParametersException("error in the request parameters: "
                             + "null parameters.");
                 }
-            } else if (operation.equals("add_operator")) {
-                String name = req.getParameter("userName");
-                String cv = req.getParameter("curriculum");
+            } else if (operation.equals("add_moderator")) {
+                String name = req.getParameter("moderatorName");
                 String contractTime = req.getParameter("contractTime");
-                JsonObject tagJson;
 
                 if (name != null) {
-                    if (name.length() >= OPERATOR_MIN_LENGTH
-                            && name.length() <= OPERATOR_MAX_LENGTH) {
+                    if (name.length() >= MODERATOR_MIN_LENGTH
+                            && name.length() <= MODERATOR_MAX_LENGTH) {
 
-                        o = od.doRetrieveByUsername(name);
-                        if (o != null) {
+                        m = md.doRetrieveByUsername(name);
+                        if (m != null) {
                             responseObject.addProperty("type", "error");
-                            responseObject.addProperty("msg", "Operator " + name
-                                    + " cannot be added, because it doesn't already exists!");
+                            responseObject.addProperty("msg", "Moderator " + name
+                                    + " cannot be added, because it already exists!");
                         } else {
                             UserDAO ud = new UserDAO();
                             User u = ud.doRetrieveByUsername(name);
                             if (u == null) {
                                 responseObject.addProperty("type", "error");
-                                responseObject.addProperty("msg", "Operator because"
+                                responseObject.addProperty("msg", "Moderator because"
                                          + " because it's not a user!");
                             } else {
-                                o = new Operator(u, contractTime, cv);
-                                Operator o1 = od.doRetrieveByUsername(name);
-                                if (o1 != null && !o1.equals(o)) {
+                                m = new Moderator(u, contractTime);
+                                Moderator o1 = md.doRetrieveByUsername(name);
+                                if (o1 != null && !o1.equals(m)) {
                                     responseObject.addProperty("type", "error");
-                                    responseObject.addProperty("msg", "Operator "
-                                            + o.getUsername()
+                                    responseObject.addProperty("msg", "Moderator "
+                                            + m.getUsername()
                                             + " cannot be added, because it already exists!");
                                 } else {
-                                    od.doPromote(o);
+                                    md.doSave(m);
                                     responseObject.addProperty("type", "success");
-                                    responseObject.addProperty("msg", "Operator "
-                                            + o.getUsername() + " added successfully!");
+                                    responseObject.addProperty("msg", "Moderator "
+                                            + m.getUsername() + " added successfully!");
                                 }
                             }
                         }
                     } else {
                         responseObject.addProperty("type", "error");
-                        responseObject.addProperty("msg", "Operator " + name
+                        responseObject.addProperty("msg", "Moderator " + name
                                 + " cannot be added, because some parameters don't"
                                 + " fit the criteria!");
                     }
