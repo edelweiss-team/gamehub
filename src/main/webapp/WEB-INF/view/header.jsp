@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
     <head>
         <title>${param.pageTitle}</title>
@@ -50,7 +51,9 @@
                         <li><a href="index.html">Home</a></li>
                         <li><a href="category.html">Shop</a></li>
                         <li><a href="community.html">Community</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <c:if test="${not empty loggedUser}">
+                            <li><a href="recommendedProducts.html">Recommended Products</a></li>
+                        </c:if>
                     </ul>
                 </nav>
                 <div id="cartContainer">
