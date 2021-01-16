@@ -185,7 +185,7 @@ var removeOperatorListener = ev => {
 
             //leggiamo la risposta json
             $(document.getElementById(responseObject.username + "OperatorRow")).remove();
-            msg = responseObject.message;
+            msg = responseObject.msg;
             type = responseObject.type;
 
             //mostriamo il messaggio di popup

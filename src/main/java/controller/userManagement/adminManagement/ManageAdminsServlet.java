@@ -159,7 +159,7 @@ public class ManageAdminsServlet extends HttpServlet {
                         if (a != null) {
                             responseObject.addProperty("type", "error");
                             responseObject.addProperty("msg", "Admin " + name
-                                    + " cannot be added, because it doesn't already exists!");
+                                    + " cannot be added, because it already exists!");
                         } else {
                             ModeratorDAO ud = new ModeratorDAO();
                             Moderator u = ud.doRetrieveByUsername(name);
@@ -169,18 +169,10 @@ public class ManageAdminsServlet extends HttpServlet {
                                          + " because it's not a user!");
                             } else {
                                 a = new Admin(u, superAdmin);
-                                Admin o1 = ad.doRetrieveByUsername(name);
-                                if (o1 != null && !o1.equals(a)) {
-                                    responseObject.addProperty("type", "error");
-                                    responseObject.addProperty("msg", "Admin "
-                                            + a.getUsername()
-                                            + " cannot be added, because it already exists!");
-                                } else {
-                                    ad.doSave(a);
-                                    responseObject.addProperty("type", "success");
-                                    responseObject.addProperty("msg", "Admin "
+                                ad.doSave(a);
+                                responseObject.addProperty("type", "success");
+                                responseObject.addProperty("msg", "Admin "
                                             + a.getUsername() + " added successfully!");
-                                }
                             }
                         }
                     } else {

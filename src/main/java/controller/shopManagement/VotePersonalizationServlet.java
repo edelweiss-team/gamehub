@@ -1,27 +1,24 @@
 package controller.shopManagement;
 
+import com.google.gson.JsonObject;
 import controller.RequestParametersException;
 import java.io.IOException;
-import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.bean.Product;
 import model.bean.User;
+import model.personalization.ListNotInitializedException;
 import model.personalization.RecommendedProductList;
 
 /**
- * This servlet handles the creation of the {@link RecommendedProductList} for the user.
- * As the aforementioned class uses the proxy design pattern, an empty list is stored in the
- * session, until the user calls this servlet, which calls the method to fill the empty list
- * stored in the session.
+ * This servlet handles the voting of the {@link RecommendedProductList} for the user, and
+ * its registration on the dataset.
  */
-@WebServlet(urlPatterns = {"/recommendedProducts.html", "/recommended-products"})
-public class ShowRecommendedProductsServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/vote-personalization"})
+public class VotePersonalizationServlet extends HttpServlet {
 
 
     /**
@@ -49,7 +46,7 @@ public class ShowRecommendedProductsServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User loggedUser = (User) session.getAttribute("loggedUser");
-        List<Product> actualProductList;
+        boolean vote = Boolean.parseBoolean(request.getParameter("vote"));
         RecommendedProductList rpl;
         rpl = (RecommendedProductList) session.getAttribute("recommendedProducts");
 
@@ -59,15 +56,19 @@ public class ShowRecommendedProductsServlet extends HttpServlet {
             );
         }
 
+        JsonObject responseObject = new JsonObject();
         synchronized (session) {
-            actualProductList = rpl.getList(); //calcoliamo la lista dei prodotti consigliati
+            try {
+                rpl.setVote(vote);
+                responseObject.addProperty("type", "success");
+                responseObject.addProperty("msg", "Voting completed successfully!");
+            } catch (Exception e) {
+                responseObject.addProperty("type", "error");
+                responseObject.addProperty("msg", "Voting not completed: " + e);
+            } finally {
+                response.getWriter().println(responseObject);
+                response.flushBuffer();
+            }
         }
-
-
-        request.setAttribute("products", actualProductList);
-        RequestDispatcher rd = request.getRequestDispatcher(
-                "/WEB-INF/view/recommendedProducts.jsp"
-        );
-        rd.forward(request, response);
     }
 }
