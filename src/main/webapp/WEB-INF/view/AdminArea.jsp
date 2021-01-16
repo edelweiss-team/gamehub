@@ -108,14 +108,14 @@
                 <div class='admin-textbox'>
                     <input type='text' id='digitalProductPrice' class='admin-textbox' name='price' placeholder='Digital product price'><br>
                 </div>
-                <div class='admin-textbox'>
-                    <input type='text' id='digitalProductDescription' class='admin-textbox' name='description' placeholder='Digital product description'><br>
+                <div class='admin-textbox-textarea'>
+                    <textarea type='text' id='digitalProductDescription' class='admin-textbox' name='description' placeholder='Digital product description'></textarea><br>
                 </div>
                 <div class='admin-textbox'>
                     <input type='text' id='digitalProductPlatform' class='admin-textbox' name='platform' placeholder='Digital product platform'><br>
                 </div>
                 <div class='admin-textbox'>
-                    <input type='text' id='digitalProductreleaseDate' class='admin-textbox' name='releaseDate' placeholder='Digital product release date'><br>
+                    <input type='date' id='digitalProductreleaseDate' class='admin-textbox' name='releaseDate' placeholder='Digital product release date'><br>
                 </div>
                 <div class='admin-textbox'>
                     <input type='text' id='digitalProductRequiredAge' class='admin-textbox' name='requiredAge' placeholder='Digital product requiredAge'><br>
@@ -175,8 +175,13 @@
                         <tr id="${digitalProduct.id}DigitalProductRow" class='digitalProducts-table-body-row'>
                             <td class='can-be-editable editable-name'>  ${digitalProduct.name}  </td>
                             <td class='can-be-editable editable-category'>
+                                <c:set var="i" value="${0}"/>
                                 <c:forEach  items='${digitalProduct.categories}' var='category'>
-                                    ${category.name},
+                                    ${category.name}
+                                    <c:if test="${i != digitalProduct.categories.size()}">
+                                        ,
+                                    </c:if>
+                                    <c:set var="i" value="${i+1}"/>
                                 </c:forEach>
                             </td>
                             <td class='can-be-editable editable-tag'>
@@ -257,8 +262,8 @@
                 <div class='admin-textbox'>
                     <input type='text' id='physicalProductPrice' class='admin-textbox' name='price' placeholder='Physical product price'><br>
                 </div>
-                <div class='admin-textbox'>
-                    <input type='text' id='physicalProductDescription' class='admin-textbox' name='description' placeholder='Physical product description'><br>
+                <div class='admin-textbox-textarea'>
+                    <textarea type='text' id='physicalProductDescription' class='admin-textbox' name='description' placeholder='Physical product description'></textarea><br>
                 </div>
                 <div class='admin-textbox'>
                     <input type='text' id='physicalProductQuantity' class='admin-textbox' name='quantity' placeholder='Physical product quantity'><br>
