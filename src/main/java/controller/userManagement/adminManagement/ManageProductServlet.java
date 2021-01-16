@@ -503,7 +503,8 @@ public class ManageProductServlet extends HttpServlet {
                                     } else {
                                         responseObject.addProperty("type", "error");
                                         responseObject.addProperty("msg", "DigitalProduct "
-                                                + matcher.group(1).trim() + " cannot be added because the cagegory doesn't"
+                                                + matcher.group(1).trim() + " cannot be added "
+                                                + "because the cagegory doesn't"
                                                 + " exists!");
                                         resp.getWriter().println(responseObject);
                                         resp.flushBuffer();
@@ -528,8 +529,10 @@ public class ManageProductServlet extends HttpServlet {
                                                 matcher.group(1).trim().length() + 1);
                                     } else {
                                         responseObject.addProperty("type", "error");
-                                        responseObject.addProperty("msg", "DigitalProduct "
-                                                + matcher.group(1).trim() + " cannot be added because the taag doesn't"
+                                        responseObject.addProperty("msg",
+                                                "DigitalProduct "
+                                                + matcher.group(1).trim() + " cannot be added "
+                                                        + "because the product doesn't"
                                                 + " exists!");
                                         resp.getWriter().println(responseObject);
                                         resp.flushBuffer();
@@ -542,7 +545,8 @@ public class ManageProductServlet extends HttpServlet {
                             }
                             d.setTags(tagsList);
 
-                            ArrayList<DigitalProduct> dCheck = dpd.doRetrieveByAllFragment(name, "%",
+                            ArrayList<DigitalProduct> dCheck = dpd.doRetrieveByAllFragment(name,
+                                    "%",
                                     Double.parseDouble("10000"), "%", "%",
                                     "%", 0, 1000);
                             DigitalProduct dProduct = null;
@@ -553,7 +557,8 @@ public class ManageProductServlet extends HttpServlet {
                             if (dProduct != null) {
                                 responseObject.addProperty("type", "error");
                                 responseObject.addProperty("msg", "DigitalProduct "
-                                        + dProduct.getName() + " cannot be added, because it already"
+                                        + dProduct.getName() + " cannot be added, "
+                                        + "because it already"
                                         + " exists!");
                                 resp.getWriter().println(responseObject);
                                 resp.flushBuffer();
@@ -627,8 +632,10 @@ public class ManageProductServlet extends HttpServlet {
                                                 matcher.group(1).trim().length() + 1);
                                     } else {
                                         responseObject.addProperty("type", "error");
-                                        responseObject.addProperty("msg", "PhysicalProduct "
-                                                + matcher.group(1).trim() + " cannot be added because the cagegory doesn't"
+                                        responseObject.addProperty("msg",
+                                                "PhysicalProduct "
+                                                + matcher.group(1).trim() + " cannot be added "
+                                                + "because the cagegory doesn't"
                                                 + " exists!");
                                         resp.getWriter().println(responseObject);
                                         resp.flushBuffer();
@@ -641,8 +648,10 @@ public class ManageProductServlet extends HttpServlet {
                                         categories = "";
                                     } else {
                                         responseObject.addProperty("type", "error");
-                                        responseObject.addProperty("msg", "PhysicalProduct "
-                                                + matcher.group(1).trim() + " cannot be added because the cagegory doesn't"
+                                        responseObject.addProperty("msg",
+                                                "PhysicalProduct "
+                                                + matcher.group(1).trim() + " cannot be added "
+                                                + "because the cagegory doesn't"
                                                 + " exists!");
                                         resp.getWriter().println(responseObject);
                                         resp.flushBuffer();
@@ -664,8 +673,10 @@ public class ManageProductServlet extends HttpServlet {
                                                 matcher.group(1).trim().length() + 1);
                                     } else {
                                         responseObject.addProperty("type", "error");
-                                        responseObject.addProperty("msg", "DigitalProduct "
-                                                + matcher.group(1).trim() + " cannot be added because the taag doesn't"
+                                        responseObject.addProperty("msg",
+                                                "DigitalProduct "
+                                                + matcher.group(1).trim() + " cannot be added "
+                                                + "because the taag doesn't"
                                                 + " exists!");
                                         resp.getWriter().println(responseObject);
                                         resp.flushBuffer();
@@ -689,7 +700,8 @@ public class ManageProductServlet extends HttpServlet {
                             if (pProduct != null) {
                                 responseObject.addProperty("type", "error");
                                 responseObject.addProperty("msg", "Physical Product "
-                                        + pProduct.getName() + " cannot be added, because it already"
+                                        + pProduct.getName() + " cannot be added,"
+                                        + " because it already"
                                         + " exists!");
                                 resp.getWriter().println(responseObject);
                                 resp.flushBuffer();
