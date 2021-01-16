@@ -28,12 +28,17 @@ public class RecommendedProductListBuilder {
      * This method build a recommended product list, maximizing the
      * number of products that match the given tags.
      *
-     * @param tags an hash map with keys equal to the tag names, and tag equal to the actual tags
+     * @param tags an hash map with keys equal to the tag names, and tag equal to the actual tags.
+     *             It has to be not null nor empty.
      * @return a recommended product list that maximize the number of products that match the given
      *         tags
      */
     @NotNull
+
     public List<Product> buildList(@NotNull HashMap<String, Tag> tags) {
+        if (tags.isEmpty()) {
+            throw new IllegalArgumentException("Error: tag list must be not null!");
+        }
         List<Product> products = new ArrayList<>();
         List<Tag> tagList = new ArrayList<>(tags.values());
         HashMap<String, Integer> productsPriorities = new HashMap<>();

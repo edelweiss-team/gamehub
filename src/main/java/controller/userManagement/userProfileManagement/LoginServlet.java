@@ -1,5 +1,6 @@
 package controller.userManagement.userProfileManagement;
 
+import controller.RequestParametersException;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,14 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import controller.RequestParametersException;
 import model.bean.User;
 import model.dao.*;
+import model.personalization.RecommendedProductList;
 import org.jetbrains.annotations.NotNull;
+
 /**
  * This Servlet allows the user to login.
- * When a user logs in the request is processed by this servlet.
+ * When a user logs in the request is processed by this servlet. If the login is completed
+ * successfully, the logged user is stored in the session, as well as an empty
+ * {@link RecommendedProductList}.
  */
 @WebServlet("/login-servlet")
 public class LoginServlet extends HttpServlet {
@@ -26,7 +29,7 @@ public class LoginServlet extends HttpServlet {
     public static final int USERNAME_MIN_LENGTH = 6;
 
     /**
-     * this method manages Post request calling doGet method.
+     * This method manages Post request calling doGet method.
      *
      * @param req a HttpServletRequest
      * @param resp an HttpServletResponse
@@ -40,7 +43,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     /**
-     * this method manages Get requests.
+     * This method manages Get requests.
      *
      * @param req a HttpServletRequest
      * @param resp an HttpServletResponse
@@ -58,8 +61,6 @@ public class LoginServlet extends HttpServlet {
         AdminDAO ad = new AdminDAO();
         User u;
         HttpSession session = req.getSession();
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
 
         if (session.getAttribute("loggedUser") != null) {
             throw new RequestParametersException(
@@ -97,6 +98,7 @@ public class LoginServlet extends HttpServlet {
                     session.invalidate();
                     session = req.getSession();
                     session.setAttribute("loggedUser", u);
+                    session.setAttribute("recommendedProducts", new RecommendedProductList(u));
                 }
                 address = ".";
 

@@ -1,5 +1,7 @@
 package controller.userManagement.userProfileManagement;
 
+import controller.RequestParametersException;
+import controller.userManagement.userProfileManagement.LoginServlet;
 import java.io.IOException;
 import java.util.*;
 import javax.servlet.RequestDispatcher;
@@ -9,17 +11,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import controller.RequestParametersException;
-import controller.userManagement.userProfileManagement.LoginServlet;
 import model.bean.User;
 import model.dao.UserDAO;
+import model.personalization.RecommendedProductList;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * this servlet save an user, that wanted to signup, in the DB on condition that all required parameters are
- * non-null and match their corrispective regex.
- * If that happens the user is added to the session too.
+ * This servlet handles the registration of an user, that wanted to signup, in the DB on condition
+ * that all required parameters are non-null and match their respective regex.
+ * If the signup is completed successfully, the logged user is stored in the session, as well as an
+ * empty {@link RecommendedProductList}.
  */
 @WebServlet(urlPatterns = {"/signup-servlet", "/signup"}, loadOnStartup = 0)
 public class SignupServlet extends HttpServlet {
@@ -76,7 +77,7 @@ public class SignupServlet extends HttpServlet {
     }
 
     /**
-     * this method manages Post request calling doGet method.
+     * This method manages Post request calling doGet method.
      *
      * @param req a HttpServletRequest
      * @param resp an HttpServletResponse
@@ -93,7 +94,7 @@ public class SignupServlet extends HttpServlet {
 
 
     /**
-     * this method manages Get requests.
+     * This method manages Get requests.
      *
      * @param req a HttpServletRequest
      * @param resp an HttpServletResponse
@@ -170,6 +171,7 @@ public class SignupServlet extends HttpServlet {
                 synchronized (session) {
                     session = req.getSession();
                     session.setAttribute("loggedUser", u);
+                    session.setAttribute("recommendedProducts", new RecommendedProductList(u));
                 }
             }
         }
