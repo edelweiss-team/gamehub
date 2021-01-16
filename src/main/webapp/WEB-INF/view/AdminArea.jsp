@@ -21,12 +21,13 @@
 <body class="admin-body">
 
     <div class="admin-fieldset">
-        <button id="admin" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%; margin-right: 20%">Admins</button>
+        <button id="admin" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%; margin-right: 10%">Admins</button>
         <button id="moderator" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Moderators</button>
         <button id="operator" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Operators</button>
         <button id="tag" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Tags</button>
         <button id="category" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Categories</button>
-        <button id="product" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Products</button>
+        <button id="productDigital" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Digital Product</button>
+        <button id="productPhysical" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Physical Product</button>
         <button id="user" type="submit" class="btn btn-warning" style="float: right; margin-left: 1%">Users</button>
     </div>
 
@@ -96,8 +97,287 @@
 
     </div>
 
-    <div id="products-div" style="display: none">
-        <p>Products</p>
+    <div id="productsDigital-div" style="display: none">
+        <h1 class='manage-header-digitalProduct'>Manage digital products</h1>
+        <div class='admin-fieldset'>
+            <h3>Add digital product</h3>
+            <form id='addDigitalProductForm' name='addDigitalProductForm' action='manage-product' method='post' enctype='multipart/form-data'>
+                <div class='admin-textbox'>
+                    <input type='text' id='digitalProductName' class='admin-textbox' name='name' placeholder='Digital product name'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='digitalProductPrice' class='admin-textbox' name='price' placeholder='Digital product price'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='digitalProductDescription' class='admin-textbox' name='description' placeholder='Digital product description'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='digitalProductPlatform' class='admin-textbox' name='platform' placeholder='Digital product platform'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='digitalProductreleaseDate' class='admin-textbox' name='releaseDate' placeholder='Digital product release date'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='digitalProductRequiredAge' class='admin-textbox' name='requiredAge' placeholder='Digital product requiredAge'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='digitalProductSoftwareHouse' class='admin-textbox' name='softwareHouse' placeholder='Digital product software house'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='digitalProductPublisher' class='admin-textbox' name='publisher' placeholder='Digital product publisher'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='digitalProductQuantity' class='admin-textbox' name='quantity' placeholder='Digital product quantity'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='file' id='imageDigitalProduct_path' name='image'>
+                </div>
+                <div class='admin-textbox' style='border: none'>
+                    <span id='errorMessageAddDigitalProduct' class='Error'></span><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='digitalProductCategories' class='admin-textbox' name='categories' placeholder='Digital product categories'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='digitalProductTags' class='admin-textbox' name='tags' placeholder='Digital product tags'><br>
+                </div>
+                <div id='submitAdminButtonContainerAddDigitalProduct'>
+                    <input type='submit' class='btnAdmin submitBtn'>
+                    <input type="hidden" name="manage_product" value="add_category">
+                    <input type="hidden" name="product_type" value="digitalProduct">
+                </div>
+            </form>
+        </div>
+        <div class='admin-fieldset'>
+            <h3>Update digital product</h3>
+            <div class="table-div digitalProducts-table-div">
+                <table border='1' id='digitalProducts-table' class='content-table'>
+                    <thead>
+                    <tr class='digitalProducts-table-header'>
+                        <th>Name</th>
+                        <th>Categories</th>
+                        <th>Tags</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>Image Path</th>
+                        <th>Platform</th>
+                        <th>Release Date</th>
+                        <th>Required Age</th>
+                        <th>Software House</th>
+                        <th>Publisher</th>
+                        <th>Quantity</th>
+                        <th>Change</th>
+                        <th>Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody class='digitalProducts-table-body'>
+                    <c:forEach items='${firstDigitalProducts}' var='digitalProduct'>
+                        <tr id="${digitalProduct.id}DigitalProductRow" class='digitalProducts-table-body-row'>
+                            <td class='can-be-editable editable-name'>  ${digitalProduct.name}  </td>
+                            <td class='can-be-editable editable-category'>
+                                <c:forEach  items='${digitalProduct.categories}' var='category'>
+                                    ${category.name},
+                                </c:forEach>
+                            </td>
+                            <td class='can-be-editable editable-tag'>
+                                <c:forEach items='${digitalProduct.tags}' var='tag'>
+                                    ${tag.name},
+                                </c:forEach>
+                            </td>
+                            <td class='can-be-editable editable-price'>  ${digitalProduct.price}  </td>
+                            <td class='can-be-editable editable-description'>  ${digitalProduct.description}  </td>
+                            <td class='can-be-editable editable-imagePath'>
+                                <input type='file' name='fileDigitalProduct' style='display: none'>
+                                <span>${digitalProduct.image}</span>
+                            </td>
+                            <td class='can-be-editable editable-platform'>  ${digitalProduct.platform}  </td>
+                            <td class='can-be-editable editable-releaseDate'>  ${digitalProduct.releaseDate}  </td>
+                            <td class='can-be-editable editable-requiredAge'>  ${digitalProduct.requiredAge}  </td>
+                            <td class='can-be-editable editable-softwareHouse'>  ${digitalProduct.softwareHouse}  </td>
+                            <td class='can-be-editable editable-publisher'>  ${digitalProduct.publisher}  </td>
+                            <td class='can-be-editable editable-quantity'>  ${digitalProduct.quantity}  </td>
+                            <td class='form-container'>
+                                <form class='changeDigitalProductForm' name='changeDigitalProductForm' method='post' action='manage-product'>
+                                    <input type='hidden' value='${digitalProduct.id}' name='changeDigitalProduct' class='changeDigitalProductOldName'>
+                                    <input type="hidden" name="manage_product" value="update_product">
+                                    <input type="hidden" name="product_type" value="digitalProduct">
+                                    <input type='submit' value='📝' class='changeDigitalProductAdminButton'>
+                                    <span class="errorDigitalProductMessage" style="color: #c75450; display: none"></span>
+                                </form>
+                            </td>
+                            <td class='form-container'>
+                                <form class='removeDigitalProductForm' name='removeDigitalProductForm' method='post' action='manage-product'>
+                                    <input type='hidden' value='${digitalProduct.id}' name='removeDigitalProduct' class='removeDigitalProductOldName'>
+                                    <input type="hidden" name="manage_product" value="remove_product">
+                                    <input type="hidden" name="product_type" value="digitalProduct">
+                                    <input type='submit' value='✗' class='removeDigitalProductAdminButton'>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class='paginationDigitalProducts'>
+                <span id='previousPageDigitalProducts' class='visible'>&laquo;</span>
+                <span id='ellipseSxDigitalProducts'>...</span>
+                <c:set var='maxPageDigitalProducts' value='${Math.ceil(digitalProductsLength/4)}'/>
+                <c:forEach var='i' begin='1' end='${maxPageDigitalProducts}'>
+                    <c:if test='${i == 1}'>
+                        <span class='current visible pageNumBtnDigitalProductAdmin' id='pageDigitalProducts${i}'>${i}</span>
+                    </c:if>
+                    <c:if test='${i != 1}'>
+                        <c:if test='${i <= 4}'>
+                            <span class='pageNumBtnDigitalProductAdmin visible' id='pageDigitalProducts${i}'>${i}</span>
+                        </c:if>
+                        <c:if test='${i > 4}'>
+                            <span class='pageNumBtnDigitalProductAdmin' id='pageDigitalProducts${i}'>${i}</span>
+                        </c:if>
+                    </c:if>
+                </c:forEach>
+                <c:if test='${maxPageDigitalProducts > 4}'>
+                    <span id='ellipseDxDigitalProductss' class='visible'>...</span>
+                </c:if>
+                <c:if test='${maxPageDigitalProductss <= 4}'>
+                    <span id='ellipseDxDigitalProducts'>...</span>
+                </c:if>
+                <span id='nextPageDigitalProducts' class='visible'>&raquo;</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="productsPhysical-div" style="display: none">
+        <h1 class='manage-header-physicalProduct'>Manage physical products</h1>
+        <div class='admin-fieldset'>
+            <h3>Add physical product</h3>
+            <form id='addPhysicalProductForm' name='addPhysicalProductForm' action='manage-product' method='post' enctype='multipart/form-data'>
+                <div class='admin-textbox'>
+                    <input type='text' id='physicalProductName' class='admin-textbox' name='name' placeholder='Physical product name'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='physicalProductPrice' class='admin-textbox' name='price' placeholder='Physical product price'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='physicalProductDescription' class='admin-textbox' name='description' placeholder='Physical product description'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='physicalProductQuantity' class='admin-textbox' name='quantity' placeholder='Physical product quantity'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='file' id='imagePhysicalProduct_path' name='image'>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='physicalProductCategories' class='admin-textbox' name='categories' placeholder='Physical product categories'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='physicalProductTags' class='admin-textbox' name='tags' placeholder='Physical product tags'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='physicalProductSize' class='admin-textbox' name='size' placeholder='Physical product size'><br>
+                </div>
+                <div class='admin-textbox'>
+                    <input type='text' id='physicalProductWeight' class='admin-textbox' name='weight' placeholder='Physical product weight'><br>
+                </div>
+                <div class='admin-textbox' style='border: none'>
+                    <span id='errorMessageAddPhysicalProduct' class='Error'></span><br>
+                </div>
+                <div id='submitAdminButtonContainerAddPhysicalProduct'>
+                    <input type='submit' class='btnAdmin submitBtn'>
+                    <input type="hidden" name="manage_product" value="add_category">
+                    <input type="hidden" name="product_type" value="physicalProduct">
+                </div>
+            </form>
+        </div>
+        <div class='admin-fieldset'>
+            <h3>Update physical product</h3>
+            <div class="table-div physicalProducts-table-div">
+                <table border='1' id='physicalProducts-table' class='content-table'>
+                    <thead>
+                    <tr class='physicalProducts-table-header'>
+                        <th>Name</th>
+                        <th>Categories</th>
+                        <th>Tags</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>Image Path</th>
+                        <th>Quantity</th>
+                        <th>Size</th>
+                        <th>Weight</th>
+                        <th>Change</th>
+                        <th>Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody class='physicalProducts-table-body'>
+                    <c:forEach items='${firstPhysicalProducts}' var='physicalProduct'>
+                        <tr id="${physicalProduct.id}PhysicalProductRow" class='physicalProducts-table-body-row'>
+                            <td class='can-be-editable editable-name'>  ${physicalProduct.name}  </td>
+                            <td class='can-be-editable editable-category'>
+                                <c:forEach  items='${physicalProduct.categories}' var='physical'>
+                                    ${category.name},
+                                </c:forEach>
+                            </td>
+                            <td class='can-be-editable editable-tag'>
+                                <c:forEach items='${physicalProduct.tags}' var='tag'>
+                                    ${tag.name},
+                                </c:forEach>
+                            </td>
+                            <td class='can-be-editable editable-price'>  ${physicalProduct.price}  </td>
+                            <td class='can-be-editable editable-description'>  ${physicalProduct.description}  </td>
+                            <td class='can-be-editable editable-imagePath'>
+                                <input type='file' name='filePhysicalProduct' style='display: none'>
+                                <span>${physicalProduct.image}</span>
+                            </td>
+                            <td class='can-be-editable editable-quantity'>  ${physicalProduct.quantity}  </td>
+                            <td class='can-be-editable editable-size'>  ${physicalProduct.size}  </td>
+                            <td class='can-be-editable editable-weight'>  ${physicalProduct.weight}  </td>
+                            <td class='form-container'>
+                                <form class='changePhysicalProductForm' name='changePhysicalProductForm' method='post' action='manage-product'>
+                                    <input type='hidden' value='${physicalProduct.id}' name='changePhysicalProduct' class='changePhysicalProductOldName'>
+                                    <input type="hidden" name="manage_product" value="update_product">
+                                    <input type="hidden" name="product_type" value="physicalProduct">
+                                    <input type='submit' value='📝' class='changePhysicalProductAdminButton'>
+                                    <span class="errorPhysicalProductMessage" style="color: #c75450; display: none"></span>
+                                </form>
+                            </td>
+                            <td class='form-container'>
+                                <form class='removePhysicalProductForm' name='removePhysicalProductForm' method='post' action='manage-product'>
+                                    <input type='hidden' value='${physicalProduct.id}' name='removePhysicalProduct' class='removePhysicalProductOldName'>
+                                    <input type="hidden" name="manage_product" value="remove_product">
+                                    <input type="hidden" name="product_type" value="physicalProduct">
+                                    <input type='submit' value='✗' class='removePhysicalProductAdminButton'>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class='paginationPhysicalProducts'>
+                <span id='previousPagePhysicalProducts' class='visible'>&laquo;</span>
+                <span id='ellipseSxPhysicalProducts'>...</span>
+                <c:set var='maxPagePhysicalProducts' value='${Math.ceil(physicalProductsLength/4)}'/>
+                <c:forEach var='i' begin='1' end='${maxPagePhysicalProducts}'>
+                    <c:if test='${i == 1}'>
+                        <span class='current visible pageNumBtnPhysicalProductAdmin' id='pagePhysicalProducts${i}'>${i}</span>
+                    </c:if>
+                    <c:if test='${i != 1}'>
+                        <c:if test='${i <= 4}'>
+                            <span class='pageNumBtnPhysicalProductAdmin visible' id='pagePhysicalProducts${i}'>${i}</span>
+                        </c:if>
+                        <c:if test='${i > 4}'>
+                            <span class='pageNumBtnPhysicalProductAdmin' id='pagePhysicalProducts${i}'>${i}</span>
+                        </c:if>
+                    </c:if>
+                </c:forEach>
+                <c:if test='${maxPagePhysicalProducts > 4}'>
+                    <span id='ellipseDxPhysicalProductss' class='visible'>...</span>
+                </c:if>
+                <c:if test='${maxPagePhysicalProductss <= 4}'>
+                    <span id='ellipseDxPhysicalProducts'>...</span>
+                </c:if>
+                <span id='nextPagePhysicalProducts' class='visible'>&raquo;</span>
+            </div>
+        </div>
     </div>
 
     <div id="categories-div" style="display: none">
@@ -553,6 +833,8 @@
     <script>var maxPageCategories = ${(maxPageCategories > 0)?(maxPageCategories):(1)}; //mantiena l'indice dell'ultima pagina</script>
     <script>var maxPageTags = ${(maxPageTags > 0)?(maxPageTags):(1)}; //mantiena l'indice dell'ultima pagina</script>
     <script>var maxPageUsers = ${(maxPageUsers > 0)?(maxPageUsers):(1)}; //mantiena l'indice dell'ultima pagina</script>
+    <script>var maxPageDigitalProducts = ${(maxPageDigitalProducts > 0)?(maxPageDigitalProducts):(1)};</script>
+    <script>var maxPagePhysicalProducts = ${(maxPagePhysicalProducts > 0)?(maxPagePhysicalProducts):(1)};</script>
     <script src="${pageContext.request.contextPath}/js/adminArea.js"></script>
     <script src="${pageContext.request.contextPath}/js/utility.js"></script>
     <script src="${pageContext.request.contextPath}/js/usersAdmin.js"></script>
@@ -562,5 +844,7 @@
     <script src="${pageContext.request.contextPath}/js/adminAdmin.js"></script>
     <script src="${pageContext.request.contextPath}/js/moderatorAdmin.js"></script>
     <script src="${pageContext.request.contextPath}/js/operatorAdmin.js"></script>
+    <script src="${pageContext.request.contextPath}/js/digitalProductAdmin.js"></script>
+    <script src="${pageContext.request.contextPath}/js/physicalProductAdmin.js"></script>
 </body>
 </html>

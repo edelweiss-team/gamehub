@@ -29,7 +29,8 @@ form {
 }
 
 .manage-header-user, .manage-header-product, .manage-header-operator,
-.manage-header-moderator, .manage-header-category, .manage-header-tag, .manage-header-admin{
+.manage-header-moderator, .manage-header-category, .manage-header-tag, .manage-header-admin, .manage-header-digitalProduct,
+.manage-header-physicalProduct{
     border-bottom: 4px solid #ffb320;
     margin-left: 30%;
     margin-top: 10%;
@@ -157,7 +158,11 @@ form {
 #submitAdminButtonContainerAddAdmin > input[disabled],
 #submitAdminButtonContainerRemoveAdmin > input[disabled],
 #submitAdminButtonContainerAddTag > input[disabled],
-#submitAdminButtonContainerRemoveTag > input[disabled]{
+#submitAdminButtonContainerRemoveTag > input[disabled],
+#submitAdminButtonContainerAddDigitalProduct > input[disabled],
+#submitAdminButtonContainerRemoveDigitalProduct > input[disabled],
+#submitAdminButtonContainerAddPhysicalProduct > input[disabled],
+#submitAdminButtonContainerRemovePhysicalProduct > input[disabled]{
     pointer-events: none;
 }
 
@@ -171,24 +176,27 @@ form {
 }
 
 .paginationUsers, .paginationOperators, .paginationCategories, .paginationProducts,
-.paginationTags, .paginationModerators, .paginationAdmins{
+.paginationTags, .paginationModerators, .paginationAdmins, .paginationDigitalProducts, .paginationPhysicalProducts{
     display: inline-block;
 }
 
 .paginationUsers span, .paginationOperators span, .paginationCategories span,
-.paginationProducts span, .paginationTags span, .paginationModerators span, .paginationAdmins span{
+.paginationProducts span, .paginationTags span, .paginationModerators span, .paginationAdmins span, .paginationDigitalProducts span,
+.paginationPhysicalProducts span{
     display: none;
     cursor: pointer;
 }
 
 .paginationUsers span.visible, .paginationOperators span.visible,
 .paginationCategories span.visible, .paginationProducts span.visible, .paginationTags span.visible,
-.paginationModerators span.visible, .paginationAdmins span.visible {
+.paginationModerators span.visible, .paginationAdmins span.visible , .paginationDigitalProducts span.visible,
+.paginationPhysicalProducts span.visible{
     display: unset;
 }
 
 .removeAdminAdminButton, .removeUserAdminButton, .removeOperatorAdminButton, .removeCategoryAdminButton,
-.removeProductAdminButton, .removeTagAdminButton, .removeModeratorAdminButton{
+.removeProductAdminButton, .removeTagAdminButton, .removeModeratorAdminButton, .removeDigitalProductAdminButton,
+.removePhysicalProductAdminButton{
     background: none;
     outline: none;
     border: none;
@@ -200,7 +208,8 @@ form {
     cursor: pointer;
 }
 
-.changeCategoryAdminButton, .changeProductAdminButton, .changeTagAdminButton, .changeProductAdminButton{
+.changeCategoryAdminButton, .changeProductAdminButton, .changeTagAdminButton, .changeProductAdminButton, .changeDigitalProductAdminButton,
+.changePhysicalProductAdminButton{
     border: none;
     outline: none;
     background-color: inherit;
