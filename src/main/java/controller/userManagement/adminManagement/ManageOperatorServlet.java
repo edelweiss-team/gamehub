@@ -102,14 +102,15 @@ public class ManageOperatorServlet extends HttpServlet {
                         String oldName = req.getParameter("old-name");
                         o = od.doRetrieveByUsername(oldName);
 
-                        JsonObject responseTag = new JsonObject();
                         JsonObject responseJson = new JsonObject();
 
                         if (o == null) {
                             responseJson.addProperty("type", "error");
                             responseJson.addProperty("message", "Operator "
                                     + oldName + " doesn't exists!");
-                            responseTag.addProperty("name", oldName);
+                            responseJson.addProperty("name", oldName);
+                            resp.getWriter().println(responseJson);
+                            resp.flushBuffer();
                         } else {
                             o.setCv(cv);
                             o.setContractTime(contractTime);
@@ -147,7 +148,7 @@ public class ManageOperatorServlet extends HttpServlet {
                         if (o != null) {
                             responseObject.addProperty("type", "error");
                             responseObject.addProperty("msg", "Operator " + name
-                                    + " cannot be added, because it doesn't already exists!");
+                                    + " cannot be added, because it already exists!");
                         } else {
                             UserDAO ud = new UserDAO();
                             User u = ud.doRetrieveByUsername(name);
@@ -157,18 +158,10 @@ public class ManageOperatorServlet extends HttpServlet {
                                          + " because it's not a user!");
                             } else {
                                 o = new Operator(u, contractTime, cv);
-                                Operator o1 = od.doRetrieveByUsername(name);
-                                if (o1 != null && !o1.equals(o)) {
-                                    responseObject.addProperty("type", "error");
-                                    responseObject.addProperty("msg", "Operator "
-                                            + o.getUsername()
-                                            + " cannot be added, because it already exists!");
-                                } else {
-                                    od.doPromote(o);
-                                    responseObject.addProperty("type", "success");
-                                    responseObject.addProperty("msg", "Operator "
-                                            + o.getUsername() + " added successfully!");
-                                }
+                                od.doPromote(o);
+                                responseObject.addProperty("type", "success");
+                                responseObject.addProperty("msg", "Operator "
+                                        + o.getUsername() + " added successfully!");
                             }
                         }
                     } else {
