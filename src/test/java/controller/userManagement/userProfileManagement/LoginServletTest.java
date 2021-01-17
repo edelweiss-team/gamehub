@@ -1,5 +1,6 @@
 package controller.userManagement.userProfileManagement;
 
+import controller.RequestParametersException;
 import controller.userManagement.userProfileManagement.LoginServlet;
 import model.bean.User;
 import model.dao.UserDAO;
@@ -10,23 +11,27 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockHttpSession;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class LoginServletTest {
 
     private LoginServlet servlet;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
+    private MockHttpSession session;
     private static UserDAO dao = new UserDAO();
 
     @BeforeEach
     public void setUp() {
         servlet = new LoginServlet();
         request = new MockHttpServletRequest();
+        session = new MockHttpSession();
         request.addHeader("referer", "/WEB-INF/view/Login.jsp");
         response = new MockHttpServletResponse();
         BasicConfigurator.configure();
@@ -80,6 +85,22 @@ public class LoginServletTest {
         request.addParameter("password", "Password1");
         servlet.doPost(request,response);
         assertEquals("." , response.getForwardedUrl());
+    }
+
+    @Test
+    public void AlreadyAUserInSession() {
+        session.setAttribute("loggedUser", "10");
+        request.setSession(session);
+        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
+    }
+
+    @Test
+    public void LoginParameterIsNull() {
+        session.setAttribute("loggedUser", null);
+        request.setSession(session);
+        request.setSession(session);
+        // 'login' parameter not added to request, it will be null
+        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
     }
 
     @AfterAll
