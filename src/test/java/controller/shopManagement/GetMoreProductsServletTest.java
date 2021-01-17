@@ -157,7 +157,7 @@ class GetMoreProductsServletTest {
         request.addParameter("price","24.44");
         request.addParameter("category","TestCategory1");
         request.addParameter("productsPerRequest","1");
-        request.addParameter("startingIndex","1");
+        request.addParameter("startingIndex","0");
         servlet.doPost(request, response);
         assertTrue( !response.getContentAsString().isEmpty());
     }
