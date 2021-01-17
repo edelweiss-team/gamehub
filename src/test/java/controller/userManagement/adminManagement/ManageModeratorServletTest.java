@@ -55,6 +55,12 @@ class ManageModeratorServletTest {
     }
 
     @Test
+    public void operationNotOk() throws ServletException, IOException {
+        request.addParameter("manage_moderator", "notValidOperation");
+        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
+    }
+
+    @Test
     public void operationOkUpdateOkContractNull() throws ServletException, IOException {
         request.addParameter("manage_moderator","update_moderator");
         assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));

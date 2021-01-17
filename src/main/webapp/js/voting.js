@@ -7,7 +7,7 @@ $(".dislike").click(function(e) {
         error: ev => alert("Request failed."),
         success: responseText => {
             let responseObject = JSON.parse(responseText), msg, type;
-            msg = responseObject.message;
+            msg = responseObject.msg;
             type = responseObject.type;
 
             if(type != "error") {
@@ -30,7 +30,7 @@ $(".like").click(function(e) {
         error: ev => alert("Request failed."),
         success: responseText => {
             let responseObject = JSON.parse(responseText), msg, type;
-            msg = responseObject.message;
+            msg = responseObject.msg;
             type = responseObject.type;
 
             if(type != "error") {

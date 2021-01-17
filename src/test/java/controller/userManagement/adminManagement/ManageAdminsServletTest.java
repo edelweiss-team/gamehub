@@ -62,6 +62,12 @@ class ManageAdminsServletTest {
     }
 
     @Test
+    public void operationNotOk() throws ServletException, IOException {
+        request.addParameter("manage_admin", "notValidOperation");
+        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
+    }
+
+    @Test
     public void operationOkUpdateOkSuperadminNotOk() throws ServletException, IOException {
         request.addParameter("manage_admin","update_admin");
         request.addParameter("editable-isSuperAdmin","5g");
@@ -130,14 +136,16 @@ class ManageAdminsServletTest {
     @Test
     public void operationOkAddNotOk() throws ServletException, IOException {
         request.addParameter("manage_admin","add_admin");
-        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
+        servlet.doPost(request, response);
+        assertTrue( !response.getContentAsString().isEmpty());
     }
 
     @Test
     public void operationOkAddOkSuperadminNotOk() throws ServletException, IOException {
         request.addParameter("manage_admin","add_admin");
         request.addParameter("editable-isSuperAdmin","5g");
-        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
+        servlet.doPost(request, response);
+        assertTrue( !response.getContentAsString().isEmpty());
     }
 
     @Test

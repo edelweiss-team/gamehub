@@ -103,13 +103,13 @@ public class RecommendedProductList {
                 + '}';
     }
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         RecommendedProductList rpl = new RecommendedProductList(
-                (new UserDAO()).doRetrieveByUsername("username1")
+                (new UserDAO()).doRetrieveByUsername("mauy2000")
         );
         rpl.getList().forEach(p -> System.out.println(p));
-        //rpl.setVote(true);
-    }*/
+        //rpl.setVote(false);
+    }
 
     @NotNull
     private final List<Product> products;

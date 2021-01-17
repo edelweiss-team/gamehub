@@ -90,7 +90,8 @@ public class ManageAdminsServlet extends HttpServlet {
                 }
             } else if (operation.equals("update_admin")) {
                 boolean superAdmin;
-                if (req.getParameter("editable-isSuperAdmin").toLowerCase().matches("(true|false)")) {
+                if (req.getParameter("editable-isSuperAdmin").toLowerCase().matches(
+                        "(true|false)")) {
                     superAdmin = Boolean.parseBoolean(
                             req.getParameter("editable-isSuperAdmin")
                     );
@@ -136,11 +137,13 @@ public class ManageAdminsServlet extends HttpServlet {
             } else if (operation.equals("add_admin")) {
                 String name = req.getParameter("adminName");
                 boolean superAdmin;
-                try {
+                if (req.getParameter("editable-isSuperAdmin") != null
+                        && req.getParameter("editable-isSuperAdmin").toLowerCase().matches(
+                        "(true|false)")) {
                     superAdmin = Boolean.parseBoolean(
                             req.getParameter("editable-isSuperAdmin")
                     );
-                } catch (NumberFormatException e) {
+                } else {
                     JsonObject responseJson = new JsonObject();
                     responseJson.addProperty("type", "success");
                     responseJson.addProperty(
