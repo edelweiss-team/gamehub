@@ -102,7 +102,7 @@ class ManageCategoryServletTest {
         servlet.doPost(request, response);
         assertNull(categoryDao.doRetrieveByName(categoryToBeRemoved.getName()));
     }
-/*
+
     @Test
     public void n6_operationIsRemoveCategoryButNewNameIsNull() {
         request.addParameter("manage_category", "update_category");
@@ -110,7 +110,6 @@ class ManageCategoryServletTest {
         assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
     }
 
- */
 /*
     @Test
     public void n7_operationIsRemoveCategoryNewNameNotNullButExceedsLength() {
