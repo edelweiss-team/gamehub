@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-
 import controller.RequestParametersException;
-import controller.userManagement.userProfileManagement.LoginServlet;
 import model.bean.Category;
 import model.bean.DigitalProduct;
 import model.bean.PhysicalProduct;
@@ -128,21 +126,27 @@ public class ManageProductServlet extends HttpServlet {
                 }
             } else if (operation.equals("update_product")) {
                 if (type.equals("digitalProduct")) {
-                    String name = req.getParameter("editable-name").trim();
-                    double price = Double.parseDouble(req.getParameter("editable-price").trim());
-                    String description = req.getParameter("editable-description").trim();
-                    String platform = req.getParameter("editable-platform").trim();
-                    String releaseDate = req.getParameter("editable-releaseDate").trim();
-                    int requiredAge = Integer.parseInt(req.getParameter("editable-requiredAge").trim());
-                    String softwareHouse = req.getParameter("editable-softwareHouse").trim();
-                    String publisher = req.getParameter("editable-publisher").trim();
-                    int quantity = Integer.parseInt(req.getParameter("editable-quantity").trim());
-                    //Part digitalProductImage = req.getPart("editable-imagePath");
-                    String categories = req.getParameter("editable-categories").trim();
-                    String tags = req.getParameter("editable-tags").trim();
-                    if (name != null && description != null && platform != null
-                        && releaseDate != null && softwareHouse != null
-                        && publisher != null && categories != null && tags != null) {
+
+                    if (req.getParameter("editable-name") != null
+                            && req.getParameter("editable-description") != null
+                            && req.getParameter("editable-platform") != null
+                        && req.getParameter("editable-releaseDate") != null
+                            && req.getParameter("editable-softwareHouse") != null
+                        && req.getParameter("editable-publisher") != null
+                            && req.getParameter("editable-categories") != null
+                            && req.getParameter("editable-tags") != null) {
+                        String name = req.getParameter("editable-name").trim();
+                        double price = Double.parseDouble(req.getParameter("editable-price").trim());
+                        String description = req.getParameter("editable-description").trim();
+                        String platform = req.getParameter("editable-platform").trim();
+                        String releaseDate = req.getParameter("editable-releaseDate").trim();
+                        int requiredAge = Integer.parseInt(req.getParameter("editable-requiredAge").trim());
+                        String softwareHouse = req.getParameter("editable-softwareHouse").trim();
+                        String publisher = req.getParameter("editable-publisher").trim();
+                        int quantity = Integer.parseInt(req.getParameter("editable-quantity").trim());
+                        //Part digitalProductImage = req.getPart("editable-imagePath");
+                        String categories = req.getParameter("editable-categories").trim();
+                        String tags = req.getParameter("editable-tags").trim();
                         if (name.length() >= PRODUCT_MIN_LENGTH
                                 && name.length() <= PRODUCT_MAX_LENGTH
                                 && description.length() >= DESCRIPTION_MIN_LENGTH
@@ -314,17 +318,22 @@ public class ManageProductServlet extends HttpServlet {
                         return;
                     }
                 } else if (type.equals("physicalProduct")) {
-                    String name = req.getParameter("editable-name").trim();
-                    double price = Double.parseDouble(req.getParameter("editable-price"));
-                    String description = req.getParameter("editable-description").trim();
-                    String weight = req.getParameter("editable-weight").trim();
-                    String size = req.getParameter("editable-size").trim();
-                    int quantity = Integer.parseInt(req.getParameter("editable-quantity").trim());
-                    String categories = req.getParameter("editable-categories").trim();
-                    String tags = req.getParameter("editable-tags").trim();
-                    //Part physicalProductImage = req.getPart("editable-imagePath");
-                    if (name != null && description != null && weight != null && size != null
-                        && categories != null && tags != null) {
+
+                    if (req.getParameter("editable-name") != null
+                            && req.getParameter("editable-description") != null
+                            && req.getParameter("editable-weight") != null
+                            && req.getParameter("editable-size") != null
+                        && req.getParameter("editable-categories") != null
+                            && req.getParameter("editable-tags") != null) {
+                        String name = req.getParameter("editable-name").trim();
+                        double price = Double.parseDouble(req.getParameter("editable-price"));
+                        String description = req.getParameter("editable-description").trim();
+                        String weight = req.getParameter("editable-weight").trim();
+                        String size = req.getParameter("editable-size").trim();
+                        int quantity = Integer.parseInt(req.getParameter("editable-quantity").trim());
+                        String categories = req.getParameter("editable-categories").trim();
+                        String tags = req.getParameter("editable-tags").trim();
+                        //Part physicalProductImage = req.getPart("editable-imagePath");
                         if (name.length() >= PRODUCT_MIN_LENGTH
                                 && name.length() <= PRODUCT_MAX_LENGTH
                                 && description.length() >= DESCRIPTION_MIN_LENGTH
@@ -474,22 +483,28 @@ public class ManageProductServlet extends HttpServlet {
                 }
             } else if (operation.equals("add_product")) {
                 if (type.equals("digitalProduct")) {
-                    String name = req.getParameter("name").trim();
-                    double price = Double.parseDouble(req.getParameter("price"));
-                    String description = req.getParameter("description").trim();
-                    String platform = req.getParameter("platform").trim();
-                    String releaseDate = req.getParameter("releaseDate").trim();
-                    int requiredAge = Integer.parseInt(req.getParameter("requiredAge"));
-                    String softwareHouse = req.getParameter("softwareHouse").trim();
-                    String publisher = req.getParameter("publisher").trim();
-                    int quantity = Integer.parseInt(req.getParameter("quantity"));
-                    //Part digitalProductImage = req.getPart("image");
-                    String categories = req.getParameter("categories");
-                    String tags = req.getParameter("tags");
 
-                    if (name != null && description != null && platform != null
-                            && releaseDate != null && softwareHouse != null
-                            && publisher != null && categories != null && tags != null) {
+
+                    if (req.getParameter("name") != null
+                            && req.getParameter("description") != null
+                            && req.getParameter("platform") != null
+                            && req.getParameter("releaseDate") != null
+                            && req.getParameter("softwareHouse") != null
+                            && req.getParameter("publisher") != null
+                            && req.getParameter("categories") != null
+                            && req.getParameter("tags") != null) {
+                        String name = req.getParameter("name").trim();
+                        double price = Double.parseDouble(req.getParameter("price"));
+                        String description = req.getParameter("description").trim();
+                        String platform = req.getParameter("platform").trim();
+                        String releaseDate = req.getParameter("releaseDate").trim();
+                        int requiredAge = Integer.parseInt(req.getParameter("requiredAge"));
+                        String softwareHouse = req.getParameter("softwareHouse").trim();
+                        String publisher = req.getParameter("publisher").trim();
+                        int quantity = Integer.parseInt(req.getParameter("quantity"));
+                        //Part digitalProductImage = req.getPart("image");
+                        String categories = req.getParameter("categories").trim();
+                        String tags = req.getParameter("tags").trim();
                         if (name.length() >= PRODUCT_MIN_LENGTH
                                 && name.length() <= PRODUCT_MAX_LENGTH
                                 && description.length() >= DESCRIPTION_MIN_LENGTH
@@ -619,17 +634,22 @@ public class ManageProductServlet extends HttpServlet {
                         }
                     }
                 } else if (type.equals("physicalProduct")) {
-                    String name = req.getParameter("name").trim();
-                    double price = Double.parseDouble(req.getParameter("price"));
-                    String description = req.getParameter("description").trim();
-                    String weight = req.getParameter("weight").trim();
-                    String size = req.getParameter("size").trim();
-                    int quantity = Integer.parseInt(req.getParameter("quantity"));
-                    //Part physicalProductImage = req.getPart("image");
-                    String categories = req.getParameter("categories");
-                    String tags = req.getParameter("tags");
-                    if (name != null && description != null && weight != null && size != null
-                            && categories != null && tags != null) {
+
+                    if (req.getParameter("name") != null
+                            && req.getParameter("description") != null
+                            && req.getParameter("weight") != null
+                            && req.getParameter("size") != null
+                            && req.getParameter("categories") != null
+                            && req.getParameter("tags") != null) {
+                        String name = req.getParameter("name").trim();
+                        double price = Double.parseDouble(req.getParameter("price"));
+                        String description = req.getParameter("description").trim();
+                        String weight = req.getParameter("weight").trim();
+                        String size = req.getParameter("size").trim();
+                        int quantity = Integer.parseInt(req.getParameter("quantity"));
+                        //Part physicalProductImage = req.getPart("image");
+                        String categories = req.getParameter("categories").trim();
+                        String tags = req.getParameter("tags").trim();
                         if (name.length() >= PRODUCT_MIN_LENGTH
                                 && name.length() <= PRODUCT_MAX_LENGTH
                                 && description.length() >= DESCRIPTION_MIN_LENGTH
