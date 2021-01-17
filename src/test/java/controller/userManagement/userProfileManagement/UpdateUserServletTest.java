@@ -596,15 +596,6 @@ public class UpdateUserServletTest {
 
 
 
-
-
-
-
-
-
-
-
-
     @Test
     public void NotLoggedSelect() throws ServletException, IOException {
         MockHttpSession sessionNuova;

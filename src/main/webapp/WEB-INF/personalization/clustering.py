@@ -20,11 +20,7 @@ def hasToRetrain() -> bool:
 	if ('False' not in votes['Vote']):
 		return False
 	negativeVotesPerc = votes['Vote']['False']
-	if (negativeVotesPerc > 0.5 and df.size >= MIN_VOTES_RETRAIN):
-		return True
-	else:
-		return False
-
+	return (negativeVotesPerc > 0.5 and df.size >= MIN_VOTES_RETRAIN)
 
 
 def saveClusterer(clustererTrained: KMeans, mostCommonTagsList: list):
