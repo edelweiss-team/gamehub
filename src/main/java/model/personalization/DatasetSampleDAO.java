@@ -1,6 +1,7 @@
 package model.personalization;
 
 import com.opencsv.CSVWriter;
+import controller.HomeServlet;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,7 +16,8 @@ import org.jetbrains.annotations.NotNull;
  * learning model used to segment a classify the users.
  */
 public class DatasetSampleDAO {
-    public static final @NotNull String BUFFER = "personalization/buffer.csv";
+    public static final @NotNull String BUFFER =
+            HomeServlet.EXECUTION_PATH + "/WEB-INF/personalization/buffer.csv";
 
     /**
      * This method buffers all user samples in a given range.

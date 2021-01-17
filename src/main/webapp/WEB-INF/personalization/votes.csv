@@ -1,0 +1,4 @@
+Username,Country,avgPrice,maxRequiredAge,Tags,Categories,Developers,Publishers,Vote
+username1,US,12.2,10,"Action,Adventure,Indie,RPG,Racing,Sports,Strategy","demo,game,dlc,video",PlatinumGames,Cyan,False
+username2,US,12.2,10,"Action,Adventure,Indie,RPG,Racing,Sports,Strategy","demo,game,dlc,video",PlatinumGames,Cyan,True
+mauy2000,IT,12.3,10,"Action,Adventure,Indie,RPG","demo,game",PlatinumGames,Cyan,False

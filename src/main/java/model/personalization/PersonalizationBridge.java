@@ -1,5 +1,6 @@
 package model.personalization;
 
+import controller.HomeServlet;
 import java.util.ArrayList;
 import java.util.List;
 import jep.*;
@@ -20,7 +21,12 @@ public class PersonalizationBridge {
 
     //aggiungiamo le include paths per permettere di includere i moduli locali
     static {
-        JEP_CONFIG.addIncludePaths("./personalization/");
+        JEP_CONFIG.addIncludePaths(HomeServlet.EXECUTION_PATH + "/WEB-INF/personalization/");
+        try {
+            SharedInterpreter.setConfig(JEP_CONFIG);
+        } catch (JepException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -60,12 +66,18 @@ public class PersonalizationBridge {
     public synchronized void registerVote(@NotNull User u, boolean vote) {
         dsd.doBufferByUsername(u.getUsername()); //scriviamo sul file il campione
 
-        try (Interpreter interp = JEP_CONFIG.createSubInterpreter()) {
+        try {
+            SharedInterpreter si = new SharedInterpreter();
+            //gestione della path
+            String path = HomeServlet.EXECUTION_PATH.replace("\\", "/");
+            si.exec("import os");
+            si.exec("os.chdir('" + path + "')");
             //passiamo il voto da registrare allo script python
-            interp.exec("from samplePrediction import registerVote");
-            interp.set("vote", vote);
-            Boolean success = interp.getValue("registerVote(vote)", Boolean.class);
-            interp.close();
+            Boolean voteObj = vote;
+            si.exec("from samplePrediction import registerVote");
+            si.set("vote", voteObj);
+            Boolean success = si.getValue("registerVote(vote)", Boolean.class);
+            si.close();
             if (!success) {
                 throw new VoteRegistrationException();
             }
@@ -84,26 +96,57 @@ public class PersonalizationBridge {
      * @throws TagPredictionException if the tag prediction fails
      */
     @NotNull
-    public synchronized List<Tag> getTagList(@NotNull User u) {
+    public synchronized List<Tag> getTagList(@NotNull User u)  {
         List<Tag> tags = new ArrayList<>();
         TagDAO td = new TagDAO();
         dsd.doBufferByUsername(u.getUsername()); //scriviamo sul file il campione
+        try {
+            //creiamo l'istanza dell'interprete
+            SharedInterpreter si = new SharedInterpreter();
+            //gestione della path
+            String path = HomeServlet.EXECUTION_PATH.replace("\\", "/");
+            si.exec("import os");
+            si.exec("os.chdir('" + path + "')");
 
-        //creiamo l'istanza dell'interprete
-        try (Interpreter interp = JEP_CONFIG.createSubInterpreter()) {
             //prendiamoci i tag dallo script python, che chiamerà il modello di machine learning
             //tramite il metodo predict()
-            interp.exec("from samplePrediction import predict");
-            ArrayList<String> tagNames = interp.getValue("predict()", ArrayList.class);
-            interp.close();
-
-            //prendiamoci i tag dal database, corrispondenti ai nomi di tag sullo script
+            si.exec("from samplePrediction import predict");
+            ArrayList<String> tagNames = si.getValue("predict()", ArrayList.class);
+            si.close();
             tagNames.forEach(t -> tags.add(td.doRetrieveByName(t)));
             return tags;
-        } catch (JepException e) {
+        } catch (Exception e) {
             throw new TagPredictionException(e);
         }
     }
+
+    /**
+     * This method calls a python script to establish whatever the clusterer has to be retraining
+     * on new data, based on the votes of the users.
+     *
+     * @throws CheckRetrainingException if the tag prediction fails
+     */
+    public synchronized void checkRetraining() {
+        //creiamo l'istanza dell'interprete
+        try {
+            SharedInterpreter si = new SharedInterpreter();
+            //gestione della path
+            String path = HomeServlet.EXECUTION_PATH.replace("\\", "/");
+            si.exec("import os");
+            si.exec("os.chdir('" + path + "')");
+            //chiamiamo lo script per verificare se il clusterizzatore necessita retraining
+            si.exec("from samplePrediction import checkRetraining");
+            si.exec("checkRetraining()");
+            si.close();
+        } catch (JepException e) {
+            throw new CheckRetrainingException(e);
+        }
+    }
+
+    /*public static void main(String[] args) {
+        PersonalizationBridge pb = PersonalizationBridge.getInstance();
+        pb.checkRetraining();
+    }*/
 
     @NotNull
     private final DatasetSampleDAO dsd;
