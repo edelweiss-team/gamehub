@@ -109,7 +109,7 @@ var changePhysicalProductListener = ev =>{
         //prendiamo il valore di input del campo file, la nuova immagine, se esiste, ed inseriamola nel form data
         let newImageFile = $editableContent.filter(".editable-imagePath").find("input[type=file]")[0].files[0];
         if(newImageFile != null && newImageFile != undefined)
-            fd.append("filePhysicalProduct", newImageFile, "filePhysicalProduct.jpg");
+            fd.append("editable-imagePath", newImageFile, "filePhysicalProduct.jpg");
 
         //prendiamo gli altri campi di input ed inseriamoli nel form data
         fd.append("editable-name", $editableContent.filter(".editable-name").text());
@@ -131,7 +131,7 @@ var changePhysicalProductListener = ev =>{
             contentType: false,
             processData: false,
             cache: false,
-            error: ev => alert("Request failed on Physical product page failed."),
+            error: (xhr, textStatus, errorThrown) => showPopupMessage("error", "Error", 8),
             success: responseObject => {
                 let msg, type, updatedPhysicalProduct, oldName, $editedRow;
 
