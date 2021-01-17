@@ -92,6 +92,7 @@ public class PhysicalProduct extends Product {
      * @return hashmap where keys are the informations and keys are their respective values.
      */
     @NotNull
+    @Override
     public HashMap<String, String> getAdditionalInformations() {
         HashMap<String, String> additionalInformations = new HashMap<>();
 
