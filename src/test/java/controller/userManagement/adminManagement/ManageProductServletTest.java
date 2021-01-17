@@ -520,13 +520,13 @@ class ManageProductServletTest {
     public void  oprationOkTypeOkLongOkUpdateNotOKOkPHYP14() throws ServletException, IOException {
         request.addParameter("manage_product", "add_product");
         request.addParameter("product_type", "physicalProduct");
-        request.addParameter("editable-name", "n");
-        request.addParameter("editable-price", "17.0");
-        request.addParameter("editable-description", "descrizione");
-        request.addParameter("editable-size", "descrizione");
-        request.addParameter("editable-quantity", "19");
-        request.addParameter("editable-categories", "categorie");
-        request.addParameter("editable-tags", "digitalProduct");
+        request.addParameter("name", "n");
+        request.addParameter("price", "17.0");
+        request.addParameter("description", "descrizione");
+        request.addParameter("size", "descrizione");
+        request.addParameter("quantity", "19");
+        request.addParameter("categories", "categorie");
+        request.addParameter("tags", "digitalProduct");
         ppd.doDelete(p1.getId());
         servlet.doPost(request, response);
         assertTrue( !response.getContentAsString().isEmpty());
@@ -537,12 +537,13 @@ class ManageProductServletTest {
     public void  oprationOkTypeOkLongOkUpdateNotOKOkPHYP15() throws ServletException, IOException {
         request.addParameter("manage_product", "add_product");
         request.addParameter("product_type", "physicalProduct");
-        request.addParameter("editable-price", "17.0");
-        request.addParameter("editable-description", "descrizione");
-        request.addParameter("editable-size", "descrizione");
-        request.addParameter("editable-quantity", "19");
-        request.addParameter("editable-categories", "categorie");
-        request.addParameter("editable-tags", "digitalProduct");
+        request.addParameter("name", "n");
+        request.addParameter("price", "17.0");
+        request.addParameter("description", "descrizione");
+        request.addParameter("size", "descrizione");
+        request.addParameter("quantity", "19");
+        request.addParameter("categories", "categorie");
+        request.addParameter("tags", "digitalProduct");
         ppd.doDelete(p1.getId());
         servlet.doPost(request, response);
         assertTrue( !response.getContentAsString().isEmpty());
@@ -552,11 +553,11 @@ class ManageProductServletTest {
     public void  oprationOkTypeOkLongOkUpdateNotOKOkPHYP16() throws ServletException, IOException {
         request.addParameter("manage_product", "add_product");
         request.addParameter("product_type", "physicalProduct");
-        request.addParameter("editable-price", "17.0");
-        request.addParameter("editable-description", "descrizione");
-        request.addParameter("editable-quantity", "19");
-        request.addParameter("editable-categories", "categorie");
-        request.addParameter("editable-tags", "digitalProduct");
+        request.addParameter("price", "17.0");
+        request.addParameter("description", "descrizione");
+        request.addParameter("quantity", "19");
+        request.addParameter("categories", "categorie");
+        request.addParameter("tags", "digitalProduct");
         ppd.doDelete(p1.getId());
         servlet.doPost(request, response);
         assertTrue( !response.getContentAsString().isEmpty());
@@ -566,11 +567,11 @@ class ManageProductServletTest {
     public void  oprationOkTypeOkLongOkUpdateNotOKOkPHYP17() throws ServletException, IOException {
         request.addParameter("manage_product", "add_product");
         request.addParameter("product_type", "physicalProduct");
-        request.addParameter("editable-price", "17.0");
-        request.addParameter("editable-size", "descrizione");
-        request.addParameter("editable-quantity", "19");
-        request.addParameter("editable-categories", "categorie");
-        request.addParameter("editable-tags", "digitalProduct");
+        request.addParameter("price", "17.0");
+        request.addParameter("size", "descrizione");
+        request.addParameter("quantity", "19");
+        request.addParameter("categories", "categorie");
+        request.addParameter("tags", "digitalProduct");
         ppd.doDelete(p1.getId());
         servlet.doPost(request, response);
         assertTrue( !response.getContentAsString().isEmpty());
@@ -579,11 +580,25 @@ class ManageProductServletTest {
     @Test
     public void  oprationOkTypeOkLongOkUpdateNotOKOkPHYP19() throws ServletException, IOException {
         request.addParameter("manage_product", "add_product");
+        request.addParameter("name", "nome");
         request.addParameter("product_type", "physicalProduct");
-        request.addParameter("editable-price", "17.0");
-        request.addParameter("editable-size", "descrizione");
-        request.addParameter("editable-quantity", "19");
-        request.addParameter("editable-tags", "digitalProduct");
+        request.addParameter("price", "17.0");
+        request.addParameter("size", "descrizione");
+        request.addParameter("quantity", "19");
+        request.addParameter("tags", "digitalProduct");
+        ppd.doDelete(p1.getId());
+        servlet.doPost(request, response);
+        assertTrue( !response.getContentAsString().isEmpty());
+    }
+
+    @Test
+    public void  oprationOkTypeOkLongOkUpdateNotOKOkPHYP20() throws ServletException, IOException {
+        request.addParameter("manage_product", "add_product");
+        request.addParameter("nome", "Nome");
+        request.addParameter("product_type", "physicalProduct");
+        request.addParameter("price", "17.0");
+        request.addParameter("size", "descrizione");
+        request.addParameter("quantity", "19");
         ppd.doDelete(p1.getId());
         servlet.doPost(request, response);
         assertTrue( !response.getContentAsString().isEmpty());
