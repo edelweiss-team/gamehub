@@ -174,20 +174,21 @@
                     <c:forEach items='${firstDigitalProducts}' var='digitalProduct'>
                         <tr id="${digitalProduct.id}DigitalProductRow" class='digitalProducts-table-body-row'>
                             <td class='can-be-editable editable-name'>  ${digitalProduct.name}  </td>
-                            <td class='can-be-editable editable-category'>
-                                <c:set var="i" value="${0}"/>
+                            <td class='can-be-editable editable-categories'>
+                                <c:set var="categories" value=""/>
                                 <c:forEach  items='${digitalProduct.categories}' var='category'>
-                                    ${category.name}
-                                    <c:if test="${i != digitalProduct.categories.size()}">
-                                        ,
-                                    </c:if>
-                                    <c:set var="i" value="${i+1}"/>
+                                    <c:set var="categories" value="${categories.concat(category.name).concat(',')}"/>
                                 </c:forEach>
+                                <c:set var="categories" value='${categories.replaceAll(",$", "")}'/>
+                                ${categories}
                             </td>
-                            <td class='can-be-editable editable-tag'>
-                                <c:forEach items='${digitalProduct.tags}' var='tag'>
-                                    ${tag.name},
+                            <td class='can-be-editable editable-tags'>
+                                <c:set var="tags" value=""/>
+                                <c:forEach  items='${digitalProduct.tags}' var='tag'>
+                                    <c:set var="tags" value="${tags.concat(tag.name).concat(',')}"/>
                                 </c:forEach>
+                                <c:set var="tags" value='${tags.replaceAll(",$", "")}'/>
+                                    ${tags}
                             </td>
                             <td class='can-be-editable editable-price'>  ${digitalProduct.price}  </td>
                             <td class='can-be-editable editable-description'>  ${digitalProduct.description}  </td>
@@ -316,15 +317,21 @@
                     <c:forEach items='${firstPhysicalProducts}' var='physicalProduct'>
                         <tr id="${physicalProduct.id}PhysicalProductRow" class='physicalProducts-table-body-row'>
                             <td class='can-be-editable editable-name'>  ${physicalProduct.name}  </td>
-                            <td class='can-be-editable editable-category'>
-                                <c:forEach  items='${physicalProduct.categories}' var='physical'>
-                                    ${category.name},
+                            <td class='can-be-editable editable-categories'>
+                                <c:set var="categories" value=""/>
+                                <c:forEach  items='${physicalProduct.categories}' var='category'>
+                                    <c:set var="categories" value="${categories.concat(category.name).concat(',')}"/>
                                 </c:forEach>
+                                <c:set var="categories" value='${categories.replaceAll(",$", "")}'/>
+                                    ${categories}
                             </td>
-                            <td class='can-be-editable editable-tag'>
-                                <c:forEach items='${physicalProduct.tags}' var='tag'>
-                                    ${tag.name},
+                            <td class='can-be-editable editable-tags'>
+                                <c:set var="tags" value=""/>
+                                <c:forEach  items='${physicalProduct.tags}' var='tag'>
+                                    <c:set var="tags" value="${tags.concat(tag.name).concat(',')}"/>
                                 </c:forEach>
+                                <c:set var="tags" value='${tags.replaceAll(",$", "")}'/>
+                                    ${tags}
                             </td>
                             <td class='can-be-editable editable-price'>  ${physicalProduct.price}  </td>
                             <td class='can-be-editable editable-description'>  ${physicalProduct.description}  </td>

@@ -121,17 +121,17 @@ public class ManageProductServlet extends HttpServlet {
             } else if (operation.equals("update_product")) {
                 if (type.equals("digitalProduct")) {
                     String name = req.getParameter("editable-name").trim();
-                    double price = Double.parseDouble(req.getParameter("editable-price"));
+                    double price = Double.parseDouble(req.getParameter("editable-price").trim());
                     String description = req.getParameter("editable-description").trim();
                     String platform = req.getParameter("editable-platform").trim();
                     String releaseDate = req.getParameter("editable-releaseDate").trim();
-                    int requiredAge = Integer.parseInt(req.getParameter("editable-requiredAge"));
+                    int requiredAge = Integer.parseInt(req.getParameter("editable-requiredAge").trim());
                     String softwareHouse = req.getParameter("editable-softwareHouse").trim();
                     String publisher = req.getParameter("editable-publisher").trim();
-                    int quantity = Integer.parseInt(req.getParameter("editable-quantity"));
+                    int quantity = Integer.parseInt(req.getParameter("editable-quantity").trim());
                     Part digitalProductImage = req.getPart("editable-image");
-                    String categories = req.getParameter("editable-categories");
-                    String tags = req.getParameter("editable-tags");
+                    String categories = req.getParameter("editable-categories").trim();
+                    String tags = req.getParameter("editable-tags").trim();
                     if (name != null && description != null && platform != null
                         && releaseDate != null && softwareHouse != null
                         && publisher != null && categories != null && tags != null) {
@@ -167,36 +167,19 @@ public class ManageProductServlet extends HttpServlet {
                                 //fos2.close();
                                 bin.close();
                             }
-                            String oldName = req.getParameter("old-name");
-                            d = dpd.doRetrieveByAllFragment(oldName, "%",
-                                    Double.parseDouble("1000"), "%", "%",
-                                    "%", 0, 1000).get(0);
-                            DigitalProduct dCheck = dpd.doRetrieveByAllFragment(name, "%",
-                                    Double.parseDouble("1000"), "%", "%",
-                                    "%", 0, 1000).get(0);
+                            int id = Integer.parseInt(req.getParameter("old-name"));
+                            d = dpd.doRetrieveById(id);
                             JsonObject responseDigitalProduct = new JsonObject();
                             JsonObject responseJson = new JsonObject();
-                            if (dCheck != null && !dCheck.equals(d)) {
-                                responseJson.addProperty("type", "error");
-                                responseJson.addProperty("message", "Digital Product "
-                                        + name + " already exists!");
-                                responseDigitalProduct.addProperty("name", d.getName());
-                                responseDigitalProduct.addProperty("price", d.getPrice());
-                                responseDigitalProduct.addProperty("description",
-                                        d.getDescription());
-                                responseDigitalProduct.addProperty("platform",
-                                        d.getPlatform());
-                                responseDigitalProduct.addProperty("releaseDate",
-                                        d.getReleaseDate());
-                                responseDigitalProduct.addProperty("requiredAge",
-                                        d.getRequiredAge());
-                                responseDigitalProduct.addProperty("softwareHouse",
-                                        d.getSoftwareHouse());
-                                responseDigitalProduct.addProperty("publisher",
-                                        d.getPublisher());
-                                responseDigitalProduct.addProperty("quantity",
-                                        d.getQuantity());
-                                responseDigitalProduct.addProperty("image", d.getImage());
+                            if (d == null) {
+                                responseObject.addProperty("type", "error");
+                                responseObject.addProperty("msg", "DigitalProduct "
+                                        + id + " cannot be added, "
+                                        + "because it doesn't"
+                                        + " exists!");
+                                resp.getWriter().println(responseObject);
+                                resp.flushBuffer();
+                                return;
                             } else {
                                 d.setName(name);
                                 d.setPrice(price);
@@ -266,7 +249,7 @@ public class ManageProductServlet extends HttpServlet {
                                 responseDigitalProduct.addProperty("image", d.getImage());
                             }
 
-                            responseJson.addProperty("oldName", oldName);
+                            responseJson.addProperty("oldName", id);
                             responseJson.add("updatedDigitalProduct", responseDigitalProduct);
                             resp.getWriter().println(responseJson.toString());
                             resp.flushBuffer();
