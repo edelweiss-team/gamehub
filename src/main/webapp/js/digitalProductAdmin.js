@@ -126,8 +126,8 @@ var changeDigitalProductListener = ev =>{
         fd.append("editable-softwareHouse", $editableContent.filter(".editable-softwareHouse").text());
         fd.append("editable-publisher", $editableContent.filter(".editable-publisher").text());
         fd.append("editable-quantity", $editableContent.filter(".editable-quantity").text());
-        fd.append("editable-categories", $editableContent.filter(".editable-categories").text());
-        fd.append("editable-tags", $editableContent.filter(".editable-tags").text());
+        fd.append("editable-categories", $editableContent.filter(".editable-categories").text().replaceAll("&nbsp", ""));
+        fd.append("editable-tags", $editableContent.filter(".editable-tags").text().replaceAll("&nbsp", ""));
         fd.append("old-name", $updateContent.find(".changeDigitalProductOldName").val());
 
         //inviamo la richiesta asincrona
