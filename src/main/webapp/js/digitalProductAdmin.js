@@ -126,10 +126,12 @@ var changeDigitalProductListener = ev =>{
         fd.append("editable-softwareHouse", $editableContent.filter(".editable-softwareHouse").text());
         fd.append("editable-publisher", $editableContent.filter(".editable-publisher").text());
         fd.append("editable-quantity", $editableContent.filter(".editable-quantity").text());
+        fd.append("editable-categories", $editableContent.filter(".editable-categories").text());
+        fd.append("editable-tags", $editableContent.filter(".editable-tags").text());
         fd.append("old-name", $updateContent.find(".changeDigitalProductOldName").val());
 
         //inviamo la richiesta asincrona
-        $.ajax("manage-product?manage_product=update_category&product_type=digitalProduct", {
+        $.ajax("manage-product?manage_product=update_product&product_type=digitalProduct", {
             method: "POST",
             dataType: "json",
             enctype : 'multipart/form-data',
@@ -161,6 +163,8 @@ var changeDigitalProductListener = ev =>{
                 $editedRow.find(".editable-requiredAge").text(updatedDigitalProduct.requiredAge);
                 $editedRow.find(".editable-softwareHouse").text(updatedDigitalProduct.softwareHouse);
                 $editedRow.find(".editable-publisher").text(updatedDigitalProduct.publisher);
+                $editedRow.find(".editable-categories").text(updatedDigitalProduct.categories);
+                $editedRow.find(".editable-tags").text(updatedDigitalProduct.tags);
                 $editedRow.find(".editable-quantity").text(updatedDigitalProduct.quantity);
                 $editedRow.prop("id", updatedDigitalProduct.id + "DigitalProductRow");
 

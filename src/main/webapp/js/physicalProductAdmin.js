@@ -118,10 +118,12 @@ var changePhysicalProductListener = ev =>{
         fd.append("editable-size", $editableContent.filter(".editable-size").text());
         fd.append("editable-weight", $editableContent.filter(".editable-weight").text());
         fd.append("editable-quantity", $editableContent.filter(".editable-quantity").text());
+        fd.append("editable-categories", $editableContent.filter(".editable-categories").text());
+        fd.append("editable-tags", $editableContent.filter(".editable-tags").text());
         fd.append("old-name", $updateContent.find(".changePhysicalProductOldName").val());
 
         //inviamo la richiesta asincrona
-        $.ajax("manage-product?manage_product=update_category&product_type=physicalProduct", {
+        $.ajax("manage-product?manage_product=update_product&product_type=physicalProduct", {
             method: "POST",
             dataType: "json",
             enctype : 'multipart/form-data',
@@ -148,11 +150,8 @@ var changePhysicalProductListener = ev =>{
                 $editedRow.find(".editable-description").text(updatedPhysicalProduct.description);
                 $editedRow.find(".editable-name").text(updatedPhysicalProduct.name);
                 $editedRow.find(".editable-price").text(updatedPhysicalProduct.price);
-                $editedRow.find(".editable-platform").text(updatedPhysicalProduct.platform);
-                $editedRow.find(".editable-releaseDate").text(updatedPhysicalProduct.releaseDate);
-                $editedRow.find(".editable-requiredAge").text(updatedPhysicalProduct.requiredAge);
-                $editedRow.find(".editable-softwareHouse").text(updatedPhysicalProduct.softwareHouse);
-                $editedRow.find(".editable-publisher").text(updatedPhysicalProduct.publisher);
+                $editedRow.find(".editable-categories").text(updatedPhysicalProduct.categories);
+                $editedRow.find(".editable-tags").text(updatedPhysicalProduct.tags);
                 $editedRow.find(".editable-quantity").text(updatedPhysicalProduct.quantity);
                 $editedRow.prop("id", updatedPhysicalProduct.id + "PhysicalProductRow");
 
