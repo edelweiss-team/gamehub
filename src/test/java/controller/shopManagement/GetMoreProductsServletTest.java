@@ -198,10 +198,10 @@ class GetMoreProductsServletTest {
             dpd.doDelete(d1.getId());
         if(dpd.doRetrieveById(d2.getId())!=null)
             dpd.doDelete(d2.getId());
-        if(dpd.doRetrieveById(p1.getId())!=null)
-            dpd.doDelete(p1.getId());
-        if(dpd.doRetrieveById(p2.getId())!=null)
-            dpd.doDelete(p2.getId());
+        if(ppd.doRetrieveById(p1.getId())!=null)
+            ppd.doDelete(p1.getId());
+        if(ppd.doRetrieveById(p2.getId())!=null)
+            ppd.doDelete(p2.getId());
         tdao.doDelete(t1.getName());
         catdao.doDeleteByName(cat1.getName());
     }

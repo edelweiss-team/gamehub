@@ -2,7 +2,11 @@ package controller.shopManagement;
 
 import controller.RequestParametersException;
 import controller.shopManagement.GetMoreCategoriesServlet;
+import model.bean.Category;
+import model.dao.CategoryDAO;
 import org.apache.log4j.BasicConfigurator;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -17,6 +21,9 @@ class GetMoreCategoriesServletTest {
     private GetMoreCategoriesServlet servlet;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
+    private static CategoryDAO dao = new CategoryDAO();
+    private static Category c1;
+    private static  Category c2;
 
     @BeforeEach
     void setUp() {
@@ -24,6 +31,14 @@ class GetMoreCategoriesServletTest {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         BasicConfigurator.configure();
+    }
+
+    @BeforeAll
+    static void populate(){
+        c1 = new Category("catProva", "descrizionenenenenn", "immagine.jpg");
+        c2 = new Category("catProva2", "descrizionenenenenn", "immagine.jpg");
+        dao.doSave(c1);
+        dao.doSave(c2);
     }
 
     @Test
@@ -81,5 +96,11 @@ class GetMoreCategoriesServletTest {
         request.addParameter("startingIndex","1");
         servlet.doPost(request, response);
         assertTrue( !response.getContentAsString().isEmpty());
+    }
+
+    @AfterAll
+    public static void clear(){
+        dao.doDeleteByName("catProva");
+        dao.doDeleteByName("catProva2");
     }
 }
