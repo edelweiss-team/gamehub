@@ -14,7 +14,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class SignupServletTest {
+public class SignupTwoServletTest {
 
     private SignupServlet servlet;
     private MockHttpServletRequest request;
