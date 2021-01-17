@@ -119,6 +119,9 @@ public class ManageProductServlet extends HttpServlet {
                         responseObject.addProperty("type", "error");
                         responseObject.addProperty("msg", "The product type is "
                                 + "invalid.");
+                        resp.getWriter().println(responseObject);
+                        resp.flushBuffer();
+                        return;
                     }
                 } else {
                     throw new RequestParametersException("Length or Regex aren't valid");
@@ -290,6 +293,7 @@ public class ManageProductServlet extends HttpServlet {
                                 responseDigitalProduct.addProperty("quantity",
                                         d.getQuantity());
                                 responseDigitalProduct.addProperty("image", d.getImage());
+
                             }
 
                             responseJson.addProperty("oldName", d.getName());
