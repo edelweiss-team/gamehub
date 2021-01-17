@@ -114,7 +114,7 @@ var changeDigitalProductListener = ev =>{
         //prendiamo il valore di input del campo file, la nuova immagine, se esiste, ed inseriamola nel form data
         let newImageFile = $editableContent.filter(".editable-imagePath").find("input[type=file]")[0].files[0];
         if(newImageFile != null && newImageFile != undefined)
-            fd.append("fileDigitalProduct", newImageFile, "fileDigitalProduct.jpg");
+            fd.append("editable-imagePath", newImageFile, "fileDigitalProduct.jpg");
 
         //prendiamo gli altri campi di input ed inseriamoli nel form data
         fd.append("editable-name", $editableContent.filter(".editable-name").text());
@@ -139,7 +139,7 @@ var changeDigitalProductListener = ev =>{
             contentType: false,
             processData: false,
             cache: false,
-            error: ev => alert("Request failed on digital product page failed."),
+            error: (xhr, textStatus, errorThrown) => showPopupMessage("error", "Error", 8),
             success: responseObject => {
                 let msg, type, updatedDigitalProduct, oldName, $editedRow;
 
