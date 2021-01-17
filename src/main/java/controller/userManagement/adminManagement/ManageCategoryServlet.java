@@ -90,7 +90,7 @@ public class ManageCategoryServlet extends HttpServlet {
             } else if (operation.equals("update_category")) {
                 String categoryName = req.getParameter("editable-name");
                 String description = req.getParameter("editable-description");
-                Part categoryImage = req.getPart("fileCategory");
+
                 if (categoryName != null && description != null) {
                     categoryName = categoryName.trim();
                     description = description.trim();
@@ -99,7 +99,7 @@ public class ManageCategoryServlet extends HttpServlet {
                             && description.length() >= DESCRIPTION_CATEGORY_MIN_LENGTH
                             && description.length() <= DESCRIPTION_CATEGORY_MAX_LENGTH) {
 
-
+                        Part categoryImage = req.getPart("fileCategory");
                         if (categoryImage != null) {
                             //se la nuova immagine esiste sovrascriviamo quella vecchia
                             InputStream is = categoryImage.getInputStream();
