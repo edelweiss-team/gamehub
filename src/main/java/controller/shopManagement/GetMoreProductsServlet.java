@@ -114,7 +114,7 @@ public class GetMoreProductsServlet extends HttpServlet {
             });
 
             //categorie
-            String[] categories = new String[1]; //array per ovviare al problema dell'espressione lambda
+            String[] categories = new String[1]; //array per ovviare al problema della lambda
             categories[0] = "";
             finalProductJson.addProperty("categories", "");
             productList.get(i).getCategories().forEach(c -> {
