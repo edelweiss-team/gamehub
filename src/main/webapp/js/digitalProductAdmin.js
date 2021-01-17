@@ -38,8 +38,8 @@ function getMoreDigitalProductsPaging(startingIndex = 0) {
 
                 $targetPage.append("<tr id='" + digitalProduct.id + "DigitalProductRow' class='digitalProducts-table-body-row'>\n" +
                     "                   <td class='can-be-editable editable-name'>" + digitalProduct.name + "</td>\n" +
-                    "                   <td class='can-be-editable editable-categories'" + digitalProduct.categories + "</td>"+
-                    "                   <td class='can-be-editable editable-tags'" + digitalProduct.tags + "</td>" +
+                    "                   <td class='can-be-editable editable-categories'>" + digitalProduct.categories + "</td>"+
+                    "                   <td class='can-be-editable editable-tags'>" + digitalProduct.tags + "</td>" +
                     "                   <td class='can-be-editable editable-price'>" + digitalProduct.price +  "</td>\n" +
                     "                   <td class='can-be-editable editable-description'>" + digitalProduct.description +
                     "                   </td>\n" +
@@ -55,18 +55,18 @@ function getMoreDigitalProductsPaging(startingIndex = 0) {
                     "                   <td class='can-be-editable editable-quantity'>" + digitalProduct.quantity +  "</td>\n" +
                     "                   <td class='form-container'>\n" +
                     "                        <form class=\"changeDigitalProductForm\" name=\"changeDigitalProductForm\" method=\"post\" action=\"manage-product\">\n" +
-                    "                            <input type='hidden' value='"+digitalProduct.name+"' name='changeDigitalProduct' class='changeDigitalProductOldName'>\n" +
-                    "                            <input type='hidden' name='manage_product' value='update_product'\n" +
-                    "                            <input type='hidden' name='product_type' value='digitalProduct'\n" +
+                    "                            <input type='hidden' value='"+digitalProduct.id+"' name='changeDigitalProduct' class='changeDigitalProductOldName'>\n" +
+                    "                            <input type='hidden' name='manage_product' value='update_product'>\n" +
+                    "                            <input type='hidden' name='product_type' value='digitalProduct'>\n" +
                     "                            <input type=\"submit\" value=\"📝\" class=\"changeDigitalProductAdminButton\">\n" +
                     "                            <span class=\"errorDigitalProductMessage\" style=\"color: #c75450; display: none\"></span>" +
                     "                        </form>\n" +
                     "                   </td>" +
                     "                   <td class='form-container'>\n" +
                     "                       <form class=\"removeDigitalProductForm\" name=\"removeDigitalProductForm\" method=\"post\" action=\"manage-product\">\n" +
-                    "                           <input type=\"hidden\" value=\"" + digitalProduct.name +"\" name=\"removeDigitalProduct\" class='removeDigitalProductOldName'>\n" +
-                    "                            <input type='hidden' name='manage_product' value='remove_product'\n" +
-                    "                            <input type='hidden' name='product_type' value='digitalProduct'\n" +
+                    "                           <input type=\"hidden\" value=\"" + digitalProduct.id +"\" name=\"removeDigitalProduct\" class='removeDigitalProductOldName'>\n" +
+                    "                            <input type='hidden' name='manage_product' value='remove_product'>\n" +
+                    "                            <input type='hidden' name='product_type' value='digitalProduct'>\n" +
                     "                           <input type=\"submit\" value=\"✗\" class=\"removeDigitalProductAdminButton\">\n" +
                     "                       </form>\n" +
                     "                   </td>\n" +

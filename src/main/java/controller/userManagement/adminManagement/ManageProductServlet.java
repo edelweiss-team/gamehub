@@ -318,7 +318,7 @@ public class ManageProductServlet extends HttpServlet {
                     String description = req.getParameter("editable-description").trim();
                     String weight = req.getParameter("editable-weight").trim();
                     String size = req.getParameter("editable-size").trim();
-                    int quantity = Integer.parseInt(req.getParameter("editable-quantity"));
+                    int quantity = Integer.parseInt(req.getParameter("editable-quantity").trim());
                     String categories = req.getParameter("editable-categories").trim();
                     String tags = req.getParameter("editable-tags").trim();
                     Part physicalProductImage = req.getPart("editable-imagePath");

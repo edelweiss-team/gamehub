@@ -38,8 +38,8 @@ function getMorePhysicalProductsPaging(startingIndex = 0) {
 
                 $targetPage.append("<tr id='" + physicalProduct.id + "PhysicalProductRow' class='physicalProducts-table-body-row'>\n" +
                     "                   <td class='can-be-editable editable-name'>" + physicalProduct.name + "</td>\n" +
-                    "                   <td class='can-be-editable editable-categories'" + physicalProduct.categories + "</td>"+
-                    "                   <td class='can-be-editable editable-tags'" + physicalProduct.tags + "</td>" +
+                    "                   <td class='can-be-editable editable-categories'>" + physicalProduct.categories + "</td>"+
+                    "                   <td class='can-be-editable editable-tags'>" + physicalProduct.tags + "</td>" +
                     "                   <td class='can-be-editable editable-price'>" + physicalProduct.price +  "</td>\n" +
                     "                   <td class='can-be-editable editable-description'>" + physicalProduct.description +
                     "                   </td>\n" +
@@ -47,23 +47,23 @@ function getMorePhysicalProductsPaging(startingIndex = 0) {
                     "                       <input type='file' name='filePhysicalProduct' style=\"display: none\">" +
                     "                       <span>"+physicalProduct.imagePath +"</span>" +
                     "                   </td>\n" +
-                    "                   <td class='can-be-editable editable-quantity'>" + physicalProduct.platform +  "</td>\n" +
-                    "                   <td class='can-be-editable editable-size'>" + physicalProduct.releaseDate +  "</td>\n" +
-                    "                   <td class='can-be-editable editable-weight'>" + physicalProduct.quantity +  "</td>\n" +
+                    "                   <td class='can-be-editable editable-quantity'>" + physicalProduct.quantity +  "</td>\n" +
+                    "                   <td class='can-be-editable editable-size'>" + physicalProduct.size +  "</td>\n" +
+                    "                   <td class='can-be-editable editable-weight'>" + physicalProduct.weight +  "</td>\n" +
                     "                   <td class='form-container'>\n" +
                     "                        <form class=\"changePhysicalProductForm\" name=\"changePhysicalProductForm\" method=\"post\" action=\"manage-product\">\n" +
-                    "                            <input type='hidden' value='"+physicalProduct.name+"' name='changePhysicalProduct' class='changePhysicalProductOldName'>\n" +
-                    "                            <input type='hidden' name='manage_product' value='update_product'\n" +
-                    "                            <input type='hidden' name='product_type' value='physicalProduct'\n" +
+                    "                            <input type='hidden' value='"+physicalProduct.id+"' name='changePhysicalProduct' class='changePhysicalProductOldName'>\n" +
+                    "                            <input type='hidden' name='manage_product' value='update_product'>\n" +
+                    "                            <input type='hidden' name='product_type' value='physicalProduct'>\n" +
                     "                            <input type=\"submit\" value=\"📝\" class=\"changePhysicalProductAdminButton\">\n" +
                     "                            <span class=\"errorPhysicalProductMessage\" style=\"color: #c75450; display: none\"></span>" +
                     "                        </form>\n" +
                     "                   </td>" +
                     "                   <td class='form-container'>\n" +
                     "                       <form class=\"removePhysicalProductForm\" name=\"removePhysicalProductForm\" method=\"post\" action=\"manage-product\">\n" +
-                    "                           <input type=\"hidden\" value=\"" + physicalProduct.name +"\" name=\"removePhysicalProduct\" class='removePhysicalProductOldName'>\n" +
-                    "                            <input type='hidden' name='manage_product' value='remove_product'\n" +
-                    "                            <input type='hidden' name='product_type' value='physicalProduct'\n" +
+                    "                           <input type=\"hidden\" value=\"" + physicalProduct.id +"\" name=\"removePhysicalProduct\" class='removePhysicalProductOldName'>\n" +
+                    "                            <input type='hidden' name='manage_product' value='remove_product'>\n" +
+                    "                            <input type='hidden' name='product_type' value='physicalProduct'>\n" +
                     "                           <input type=\"submit\" value=\"✗\" class=\"removePhysicalProductAdminButton\">\n" +
                     "                       </form>\n" +
                     "                   </td>\n" +
