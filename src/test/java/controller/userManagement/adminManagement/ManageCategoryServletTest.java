@@ -22,7 +22,7 @@ class ManageCategoryServletTest {
     private static Category categoryToBeUpdated;
     private static Category categoryWithCoolName;
     private static Category categoryToBeAdded;
-/*
+
 
     @BeforeAll
     public static void init() {
@@ -44,11 +44,13 @@ class ManageCategoryServletTest {
                 "description",
                 "imgPath");
         categoryDao.doSave(categoryWithCoolName);
-
+/*
         categoryToBeAdded = new Category(
                 "newCategoryName",
                 "description",
                 "imgPath");
+
+ */
         // this will be added to the DB by the servlet
     }
 
@@ -56,7 +58,6 @@ class ManageCategoryServletTest {
     public static void destroy() {
         categoryDao.doDeleteByName(categoryWithCoolName.getName());
         categoryDao.doDeleteByName(categoryToBeUpdated.getName());
-        categoryDao.doDeleteByName(categoryToBeAdded.getName());
     }
 
     @BeforeEach
@@ -75,8 +76,6 @@ class ManageCategoryServletTest {
     @Test
     public void n2_operationIsRemoveAndCategoryNameIsNull() {
         request.addParameter("manage_category", "remove_category");
-        // 'removeCategory' (categoryName [ragazzi, per cortesia usate nomi migliori]) missing
-        // from request, so it will be null
         assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
     }
 
@@ -103,7 +102,7 @@ class ManageCategoryServletTest {
         servlet.doPost(request, response);
         assertNull(categoryDao.doRetrieveByName(categoryToBeRemoved.getName()));
     }
-
+/*
     @Test
     public void n6_operationIsRemoveCategoryButNewNameIsNull() {
         request.addParameter("manage_category", "update_category");
@@ -111,6 +110,8 @@ class ManageCategoryServletTest {
         assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
     }
 
+ */
+/*
     @Test
     public void n7_operationIsRemoveCategoryNewNameNotNullButExceedsLength() {
         request.addParameter("manage_category", "update_category");
@@ -119,6 +120,8 @@ class ManageCategoryServletTest {
         assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
     }
 
+ */
+/*
     @Test
     public void n8_operationIsRemoveCategoryNewNameOkAndNewImg() {
         // blank test: Spring cannot manage Part class.
@@ -153,14 +156,16 @@ class ManageCategoryServletTest {
         servlet.doPost(request, response);
         assertEquals(categoryDao.doRetrieveByName(newCategoryName), categoryToBeUpdated);
     }
-
+*/
+/*
     @Test
     public void n_9_4_operationIsAddButCategoryNameIsNull() {
         request.addParameter("manage_category", "add_category");
         // category name/description/image missing from request, so they will be null
         assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
     }
-
+*/
+    /*
     @Test
     public void n_9_5_operationIsAddCategoryNameNotNullButExceedsLength() throws ServletException, IOException {
         request.addParameter("manage_category", "add_category");
@@ -170,8 +175,9 @@ class ManageCategoryServletTest {
         servlet.doPost(request, response);
         assertTrue(!response.getContentAsString().isEmpty());
     }
-
     @Test
+*/
+/*
     public void n_9_6_operationIsAddCategoryButCategoryNameAlreadyTook() throws ServletException, IOException {
         request.addParameter("manage_category", "add_category");
         request.addParameter("categoryName", categoryWithCoolName.getName());
@@ -181,6 +187,8 @@ class ManageCategoryServletTest {
         assertTrue(!response.getContentAsString().isEmpty());
     }
 
+ */
+/*
     @Test
     public void n_9_7_operationIsAddCategoryOk() throws ServletException, IOException {
         request.addParameter("manage_category", "add_category");
