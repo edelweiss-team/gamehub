@@ -311,6 +311,9 @@ public abstract class Product {
                 + '}';
     }
 
+    @NotNull
+    public abstract HashMap<String, String> getAdditionalInformations();
+
     private int id;
     @NotNull
     private String name;

@@ -162,6 +162,7 @@ public class DigitalProduct extends Product {
      */
 
     @NotNull
+    @Override
     public HashMap<String, String> getAdditionalInformations() {
         HashMap<String, String> additionalInformations = new HashMap<>();
 

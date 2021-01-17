@@ -1,5 +1,6 @@
 package model.bean;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,6 +19,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         Collection<Tag> toCompare = p.getTags();
@@ -38,6 +42,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
         assertIterableEquals(tags, p.getTags());
     }
@@ -57,6 +64,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         assertIterableEquals(tags, p.getTags());
@@ -74,6 +84,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         assertIterableEquals(categories, p.getCategories());
@@ -93,6 +106,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         assertIterableEquals(categories, p.getCategories());
@@ -113,6 +129,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         assertIterableEquals(categories, p.getCategories());
@@ -133,6 +152,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         assertEquals(p.hasCategory("cat0"), categories.get(0));
@@ -153,6 +175,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         assertNull(p.hasCategory("cat2"));
@@ -173,6 +198,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         assertEquals(p.hasTag("tag0"), tags.get(0));
@@ -193,6 +221,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         assertNull(p.hasTag("tag3"));
@@ -213,6 +244,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         p.addTag(new Tag("tag3"));
@@ -233,6 +267,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         p.addCategory(new Category("cat1", "desc1", "path0"));
@@ -253,6 +290,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
         assertEquals(p.removeCategory(cat), cat);
     }
@@ -271,6 +311,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         assertNull(p.removeCategory(new Category("cat1", "desc1", "path1")));
@@ -293,6 +336,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
         assertEquals(p.removeTag(t), t);
     }
@@ -313,6 +359,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
         assertNull(p.removeTag(t));
     }
@@ -329,6 +378,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 Arrays.asList(new Tag("tag0"), new Tag("tag1")), 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
         p.setTags(tags);
         assertIterableEquals(tags, p.getTags());
@@ -348,6 +400,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 new ArrayList<>(), 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         p.setTags(tags);
@@ -369,6 +424,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", categories,
                 new ArrayList<>(), 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         p.setTags(tags);
@@ -389,6 +447,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", new ArrayList<>(),
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         p.setCategories(categories);
@@ -409,6 +470,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", new ArrayList<>(),
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         p.setCategories(categories);
@@ -430,6 +494,9 @@ class ProductTest {
                 1, "Prod0", 22.2, "desc", "path", new ArrayList<>(),
                 tags, 2
         ) {
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         };
 
         p.setCategories(categories);
@@ -442,6 +509,9 @@ class ProductTest {
             public ProductImpl0(int id, String name, double price, String description, String image,
                                 Collection<Category> categories, Collection<Tag> tags, int quantity){
                 super(id, name, price, description, image, categories, tags, quantity);
+            }
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
             }
         }
         Product p0 = new ProductImpl0(
@@ -463,6 +533,9 @@ class ProductTest {
                                 Collection<Category> categories, Collection<Tag> tags, int quantity){
                 super(id, name, price, description, image, categories, tags, quantity);
             }
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         }
         Product p0 = new ProductImpl0(
                 1, "p0", 11, "desc0", "path0", new ArrayList<>(),
@@ -483,11 +556,17 @@ class ProductTest {
                                 Collection<Category> categories, Collection<Tag> tags, int quantity){
                 super(id, name, price, description, image, categories, tags, quantity);
             }
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
+            }
         }
         class ProductImpl1 extends Product{
             public ProductImpl1(int id, String name, double price, String description, String image,
                                 Collection<Category> categories, Collection<Tag> tags, int quantity){
                 super(id, name, price, description, image, categories, tags, quantity);
+            }
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
             }
         }
 
@@ -509,6 +588,11 @@ class ProductTest {
             public ProductImpl0(int id, String name, double price, String description, String image,
                                 Collection<Category> categories, Collection<Tag> tags, int quantity){
                 super(id, name, price, description, image, categories, tags, quantity);
+            }
+
+            @Override
+            public @NotNull HashMap<String, String> getAdditionalInformations() {
+                return new HashMap<>();
             }
         }
 

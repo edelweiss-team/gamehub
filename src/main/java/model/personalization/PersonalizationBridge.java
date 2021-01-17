@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
  * application. Note that this class follows the Singleton design pattern, so just a single instance
  * of it can exist at the same time, and the access to the method is synchronized to deny their
  * access to more than one user at once.
+ * Moreover, note that this class's name isn't a reference to the Bridge design pattern in any way.
  */
 public class PersonalizationBridge {
 
