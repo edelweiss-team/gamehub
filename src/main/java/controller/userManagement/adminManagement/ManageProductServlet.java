@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
+import controller.RequestParametersException;
+import controller.userManagement.userProfileManagement.LoginServlet;
 import model.bean.Category;
 import model.bean.DigitalProduct;
 import model.bean.PhysicalProduct;
@@ -117,6 +120,8 @@ public class ManageProductServlet extends HttpServlet {
                         responseObject.addProperty("msg", "The product type is "
                                 + "invalid.");
                     }
+                } else {
+                    throw new RequestParametersException("Length or Regex aren't valid");
                 }
             } else if (operation.equals("update_product")) {
                 if (type.equals("digitalProduct")) {
@@ -196,13 +201,37 @@ public class ManageProductServlet extends HttpServlet {
                                 CategoryDAO cd = new CategoryDAO();
                                 while (!categories.equals("")) {
                                     if (matcher.find()) {
-                                        categoriesList.add(cd.doRetrieveByName(
-                                                matcher.group(1).trim()));
-                                        categories = categories.substring(
-                                                matcher.group(1).trim().length() + 1);
+                                        Category c = cd.doRetrieveByName(matcher.group(1).trim());
+                                        if (c != null) {
+                                            categoriesList.add(c);
+                                            categories = categories.substring(
+                                                    matcher.group(1).trim().length() + 1);
+                                        } else {
+                                            responseObject.addProperty("type", "error");
+                                            responseObject.addProperty("msg", "DigitalProduct "
+                                                    + matcher.group(1).trim() + " cannot be added "
+                                                    + "because the cagegory doesn't"
+                                                    + " exists!");
+                                            resp.getWriter().println(responseObject);
+                                            resp.flushBuffer();
+                                            return;
+                                        }
                                     } else if (!categories.contains(",")) {
-                                        categoriesList.add(cd.doRetrieveByName(categories));
-                                        categories = "";
+                                        Category c = cd.doRetrieveByName(categories);
+                                        if (c != null) {
+                                            categoriesList.add(c);
+                                            categories = "";
+                                        } else {
+                                            responseObject.addProperty("type", "error");
+                                            responseObject.addProperty("msg",
+                                                    "PhysicalProduct "
+                                                            + matcher.group(1).trim() + " cannot be added "
+                                                            + "because the category doesn't"
+                                                            + " exists!");
+                                            resp.getWriter().println(responseObject);
+                                            resp.flushBuffer();
+                                            return;
+                                        }
                                     }
                                 }
                                 d.setCategories(categoriesList);
@@ -212,8 +241,22 @@ public class ManageProductServlet extends HttpServlet {
                                 TagDAO td = new TagDAO();
                                 while (!tags.equals("")) {
                                     if (matcher.find()) {
-                                        tagsList.add(td.doRetrieveByName(matcher.group(1).trim()));
-                                        tags = tags.substring(matcher.group(1).trim().length() + 1);
+                                        Tag t = td.doRetrieveByName(matcher.group(1).trim());
+                                        if (t != null) {
+                                            tagsList.add(t);
+                                            tags = tags.substring(
+                                                    matcher.group(1).trim().length() + 1);
+                                        } else {
+                                            responseObject.addProperty("type", "error");
+                                            responseObject.addProperty("msg",
+                                                    "DigitalProduct "
+                                                            + matcher.group(1).trim() + " cannot be added "
+                                                            + "because the product doesn't"
+                                                            + " exists!");
+                                            resp.getWriter().println(responseObject);
+                                            resp.flushBuffer();
+                                            return;
+                                        }
                                     } else if (!tags.contains(",")) {
                                         tagsList.add(td.doRetrieveByName(tags));
                                         tags = "";
@@ -249,7 +292,7 @@ public class ManageProductServlet extends HttpServlet {
                                 responseDigitalProduct.addProperty("image", d.getImage());
                             }
 
-                            responseJson.addProperty("oldName", id);
+                            responseJson.addProperty("oldName", d.getName());
                             responseJson.add("updatedDigitalProduct", responseDigitalProduct);
                             resp.getWriter().println(responseJson.toString());
                             resp.flushBuffer();
@@ -277,10 +320,11 @@ public class ManageProductServlet extends HttpServlet {
                     String weight = req.getParameter("editable-weight").trim();
                     String size = req.getParameter("editable-size").trim();
                     int quantity = Integer.parseInt(req.getParameter("editable-quantity"));
-                    String categories = req.getParameter("editable-categories");
-                    String tags = req.getParameter("editable-tags");
+                    String categories = req.getParameter("editable-categories").trim();
+                    String tags = req.getParameter("editable-tags").trim();
                     Part physicalProductImage = req.getPart("editable-image");
-                    if (name != null && description != null && weight != null && size != null) {
+                    if (name != null && description != null && weight != null && size != null
+                        && categories != null && tags != null) {
                         if (name.length() >= PRODUCT_MIN_LENGTH
                                 && name.length() <= PRODUCT_MAX_LENGTH
                                 && description.length() >= DESCRIPTION_MIN_LENGTH
@@ -308,29 +352,17 @@ public class ManageProductServlet extends HttpServlet {
                                 bin.close();
                             }
 
-                            String oldName = req.getParameter("old-name");
-                            p = ppd.doRetrieveByAllFragment(oldName, "%",
-                                    Double.parseDouble("1000"), "%",
-                                    "%", 0, 10000).get(0);
-                            PhysicalProduct pCheck = ppd.doRetrieveByAllFragment(name, "%",
-                                    Double.parseDouble("1000"), "%",
-                                    "%", 0, 10000).get(0);
+                            int id = Integer.parseInt(req.getParameter("old-name"));
+                            p = ppd.doRetrieveById(id);
                             JsonObject responsePhysicalProduct = new JsonObject();
                             JsonObject responseJson = new JsonObject();
-                            if (pCheck != null && !pCheck.equals(p)) {
+                            if (p== null) {
                                 responseJson.addProperty("type", "error");
-                                responseJson.addProperty("message", "Digital Product "
+                                responseJson.addProperty("msg", "Digital Product "
                                         + name + " already exists!");
-                                responsePhysicalProduct.addProperty("name", p.getName());
-                                responsePhysicalProduct.addProperty("price", p.getPrice());
-                                responsePhysicalProduct.addProperty("description",
-                                        p.getDescription());
-                                responsePhysicalProduct.addProperty("quantity",
-                                        p.getQuantity());
-                                responsePhysicalProduct.addProperty("image", p.getImage());
-                                responsePhysicalProduct.addProperty("weight",
-                                        p.getWeight());
-                                responsePhysicalProduct.addProperty("size", p.getSize());
+                                resp.getWriter().println(responseObject);
+                                resp.flushBuffer();
+                                return;
                             } else {
                                 p.setName(name);
                                 p.setPrice(price);
@@ -345,13 +377,37 @@ public class ManageProductServlet extends HttpServlet {
                                 CategoryDAO cd = new CategoryDAO();
                                 while (!categories.equals("")) {
                                     if (matcher.find()) {
-                                        categoriesList.add(cd.doRetrieveByName(
-                                                matcher.group(1).trim()));
-                                        categories = categories.substring(
-                                                matcher.group(1).trim().length() + 1);
+                                        Category c = cd.doRetrieveByName(matcher.group(1).trim());
+                                        if (c != null) {
+                                            categoriesList.add(c);
+                                            categories = categories.substring(
+                                                    matcher.group(1).trim().length() + 1);
+                                        } else {
+                                            responseObject.addProperty("type", "error");
+                                            responseObject.addProperty("msg", "DigitalProduct "
+                                                    + matcher.group(1).trim() + " cannot be added "
+                                                    + "because the cagegory doesn't"
+                                                    + " exists!");
+                                            resp.getWriter().println(responseObject);
+                                            resp.flushBuffer();
+                                            return;
+                                        }
                                     } else if (!categories.contains(",")) {
-                                        categoriesList.add(cd.doRetrieveByName(categories));
-                                        categories = "";
+                                        Category c = cd.doRetrieveByName(categories);
+                                        if (c != null) {
+                                            categoriesList.add(c);
+                                            categories = "";
+                                        } else {
+                                            responseObject.addProperty("type", "error");
+                                            responseObject.addProperty("msg",
+                                                    "PhysicalProduct "
+                                                            + matcher.group(1).trim() + " cannot be added "
+                                                            + "because the category doesn't"
+                                                            + " exists!");
+                                            resp.getWriter().println(responseObject);
+                                            resp.flushBuffer();
+                                            return;
+                                        }
                                     }
                                 }
                                 p.setCategories(categoriesList);
@@ -361,11 +417,38 @@ public class ManageProductServlet extends HttpServlet {
                                 TagDAO td = new TagDAO();
                                 while (!tags.equals("")) {
                                     if (matcher.find()) {
-                                        tagsList.add(td.doRetrieveByName(matcher.group(1).trim()));
-                                        tags = tags.substring(matcher.group(1).trim().length() + 1);
+                                        Tag t = td.doRetrieveByName(matcher.group(1).trim());
+                                        if (t != null) {
+                                            tagsList.add(t);
+                                            tags = tags.substring(
+                                                    matcher.group(1).trim().length() + 1);
+                                        } else {
+                                            responseObject.addProperty("type", "error");
+                                            responseObject.addProperty("msg",
+                                                    "DigitalProduct "
+                                                            + matcher.group(1).trim() + " cannot be added "
+                                                            + "because the product doesn't"
+                                                            + " exists!");
+                                            resp.getWriter().println(responseObject);
+                                            resp.flushBuffer();
+                                            return;
+                                        }
                                     } else if (!tags.contains(",")) {
-                                        tagsList.add(td.doRetrieveByName(tags));
-                                        tags = "";
+                                        Tag t = td.doRetrieveByName(tags);
+                                        if (t != null) {
+                                            tagsList.add(t);
+                                            tags = "";
+                                        } else {
+                                            responseObject.addProperty("type", "error");
+                                            responseObject.addProperty("msg",
+                                                    "PhysicalProduct "
+                                                            + matcher.group(1).trim() + " cannot be added "
+                                                            + "because the tag doesn't"
+                                                            + " exists!");
+                                            resp.getWriter().println(responseObject);
+                                            resp.flushBuffer();
+                                            return;
+                                        }
                                     }
                                 }
                                 p.setTags(tagsList);
@@ -390,7 +473,7 @@ public class ManageProductServlet extends HttpServlet {
                                         p.getWeight());
                                 responsePhysicalProduct.addProperty("size", p.getSize());
                             }
-                            responseJson.addProperty("oldName", oldName);
+                            responseJson.addProperty("oldName", p.getName());
                             responseJson.add("updatedPhysicalProduct", responsePhysicalProduct);
                             resp.getWriter().println(responseJson.toString());
                             resp.flushBuffer();
@@ -634,7 +717,7 @@ public class ManageProductServlet extends HttpServlet {
                                         responseObject.addProperty("msg",
                                                 "PhysicalProduct "
                                                 + matcher.group(1).trim() + " cannot be added "
-                                                + "because the cagegory doesn't"
+                                                + "because the category doesn't"
                                                 + " exists!");
                                         resp.getWriter().println(responseObject);
                                         resp.flushBuffer();
@@ -666,8 +749,21 @@ public class ManageProductServlet extends HttpServlet {
                                         return;
                                     }
                                 } else if (!tags.contains(",")) {
-                                    tagsList.add(td.doRetrieveByName(tags));
-                                    tags = "";
+                                    Tag t = td.doRetrieveByName(tags);
+                                    if (t != null) {
+                                        tagsList.add(t);
+                                        tags = "";
+                                    } else {
+                                        responseObject.addProperty("type", "error");
+                                        responseObject.addProperty("msg",
+                                                "PhysicalProduct "
+                                                        + matcher.group(1).trim() + " cannot be added "
+                                                        + "because the tag doesn't"
+                                                        + " exists!");
+                                        resp.getWriter().println(responseObject);
+                                        resp.flushBuffer();
+                                        return;
+                                    }
                                 }
                             }
                             p.setTags(tagsList);
@@ -709,8 +805,11 @@ public class ManageProductServlet extends HttpServlet {
                     responseObject.addProperty("msg", "The product type is "
                             + "invalid.");
                 }
+            } else {
+                throw new RequestParametersException("Operation wrong");
             }
+        } else {
+            throw new RequestParametersException("Null Parameters");
         }
-
     }
 }
