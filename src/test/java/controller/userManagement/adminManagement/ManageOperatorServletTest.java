@@ -128,6 +128,26 @@ class ManageOperatorServletTest {
     }
 
     @Test
+    public void operationUpdateContractTimeNull() throws ServletException, IOException {
+        request.addParameter("manage_operator","update_operator");
+        request.addParameter("editable-contractTime", (String) null);
+        request.addParameter("editable-cv","ciao");
+        request.addParameter("old-name","MyUser1234");
+        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
+    }
+
+    @Test
+    public void operationUpdateCVNull() throws ServletException, IOException {
+        request.addParameter("manage_operator","update_operator");
+        request.addParameter("editable-contractTime","2021-01-15");
+        request.addParameter("editable-cv",(String) null);
+        request.addParameter("old-name","MyUser1234");
+        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
+    }
+
+
+
+    @Test
     public void operationOkRemoveNotOk() throws ServletException, IOException {
         request.addParameter("manage_operator","remove_operator");
         assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
