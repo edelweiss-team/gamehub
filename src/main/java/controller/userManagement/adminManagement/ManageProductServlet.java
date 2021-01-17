@@ -137,7 +137,7 @@ public class ManageProductServlet extends HttpServlet {
                     String softwareHouse = req.getParameter("editable-softwareHouse").trim();
                     String publisher = req.getParameter("editable-publisher").trim();
                     int quantity = Integer.parseInt(req.getParameter("editable-quantity").trim());
-                    Part digitalProductImage = req.getPart("editable-imagePath");
+                    //Part digitalProductImage = req.getPart("editable-imagePath");
                     String categories = req.getParameter("editable-categories").trim();
                     String tags = req.getParameter("editable-tags").trim();
                     if (name != null && description != null && platform != null
@@ -153,6 +153,7 @@ public class ManageProductServlet extends HttpServlet {
                                 && softwareHouse.length() <= PRODUCT_MAX_LENGTH
                                 && publisher.length() >= PRODUCT_MIN_LENGTH
                                 && publisher.length() <= PRODUCT_MAX_LENGTH) {
+                            Part digitalProductImage = req.getPart("editable-imagePath");
                             if (digitalProductImage != null) {
                                 InputStream is = digitalProductImage.getInputStream();
                                 BufferedInputStream bin = new BufferedInputStream(is);
@@ -321,13 +322,14 @@ public class ManageProductServlet extends HttpServlet {
                     int quantity = Integer.parseInt(req.getParameter("editable-quantity").trim());
                     String categories = req.getParameter("editable-categories").trim();
                     String tags = req.getParameter("editable-tags").trim();
-                    Part physicalProductImage = req.getPart("editable-imagePath");
+                    //Part physicalProductImage = req.getPart("editable-imagePath");
                     if (name != null && description != null && weight != null && size != null
                         && categories != null && tags != null) {
                         if (name.length() >= PRODUCT_MIN_LENGTH
                                 && name.length() <= PRODUCT_MAX_LENGTH
                                 && description.length() >= DESCRIPTION_MIN_LENGTH
                                 && description.length() <= DESCRIPTION_MAX_LENGTH) {
+                            Part physicalProductImage = req.getPart("editable-imagePath");
                             if (physicalProductImage != null) {
                                 //se la nuova immagine esiste sovrascriviamo quella vecchia
                                 InputStream is = physicalProductImage.getInputStream();
@@ -481,7 +483,7 @@ public class ManageProductServlet extends HttpServlet {
                     String softwareHouse = req.getParameter("softwareHouse").trim();
                     String publisher = req.getParameter("publisher").trim();
                     int quantity = Integer.parseInt(req.getParameter("quantity"));
-                    Part digitalProductImage = req.getPart("image");
+                    //Part digitalProductImage = req.getPart("image");
                     String categories = req.getParameter("categories");
                     String tags = req.getParameter("tags");
 
@@ -498,6 +500,7 @@ public class ManageProductServlet extends HttpServlet {
                                 && softwareHouse.length() <= PRODUCT_MAX_LENGTH
                                 && publisher.length() >= PRODUCT_MIN_LENGTH
                                 && publisher.length() <= PRODUCT_MAX_LENGTH) {
+                            Part digitalProductImage = req.getPart("image");
                             InputStream is = digitalProductImage.getInputStream();
                             BufferedInputStream bin = new BufferedInputStream(is);
 
@@ -622,7 +625,7 @@ public class ManageProductServlet extends HttpServlet {
                     String weight = req.getParameter("weight").trim();
                     String size = req.getParameter("size").trim();
                     int quantity = Integer.parseInt(req.getParameter("quantity"));
-                    Part physicalProductImage = req.getPart("image");
+                    //Part physicalProductImage = req.getPart("image");
                     String categories = req.getParameter("categories");
                     String tags = req.getParameter("tags");
                     if (name != null && description != null && weight != null && size != null
@@ -631,6 +634,7 @@ public class ManageProductServlet extends HttpServlet {
                                 && name.length() <= PRODUCT_MAX_LENGTH
                                 && description.length() >= DESCRIPTION_MIN_LENGTH
                                 && description.length() <= DESCRIPTION_MAX_LENGTH) {
+                            Part physicalProductImage = req.getPart("image");
                             InputStream is = physicalProductImage.getInputStream();
                             BufferedInputStream bin = new BufferedInputStream(is);
 
