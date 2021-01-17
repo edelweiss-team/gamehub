@@ -1,6 +1,7 @@
 package controller.userManagement.adminManagement;
 
 import com.google.gson.JsonObject;
+import controller.RequestParametersException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -12,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import controller.RequestParametersException;
 import model.bean.Category;
 import model.bean.DigitalProduct;
 import model.bean.PhysicalProduct;
@@ -136,14 +136,17 @@ public class ManageProductServlet extends HttpServlet {
                             && req.getParameter("editable-categories") != null
                             && req.getParameter("editable-tags") != null) {
                         String name = req.getParameter("editable-name").trim();
-                        double price = Double.parseDouble(req.getParameter("editable-price").trim());
+                        double price = Double.parseDouble(
+                                req.getParameter("editable-price").trim());
                         String description = req.getParameter("editable-description").trim();
                         String platform = req.getParameter("editable-platform").trim();
                         String releaseDate = req.getParameter("editable-releaseDate").trim();
-                        int requiredAge = Integer.parseInt(req.getParameter("editable-requiredAge").trim());
+                        int requiredAge = Integer.parseInt(
+                                req.getParameter("editable-requiredAge").trim());
                         String softwareHouse = req.getParameter("editable-softwareHouse").trim();
                         String publisher = req.getParameter("editable-publisher").trim();
-                        int quantity = Integer.parseInt(req.getParameter("editable-quantity").trim());
+                        int quantity = Integer.parseInt(
+                                req.getParameter("editable-quantity").trim());
                         //Part digitalProductImage = req.getPart("editable-imagePath");
                         String categories = req.getParameter("editable-categories").trim();
                         String tags = req.getParameter("editable-tags").trim();
@@ -323,14 +326,15 @@ public class ManageProductServlet extends HttpServlet {
                             && req.getParameter("editable-description") != null
                             && req.getParameter("editable-weight") != null
                             && req.getParameter("editable-size") != null
-                        && req.getParameter("editable-categories") != null
+                            && req.getParameter("editable-categories") != null
                             && req.getParameter("editable-tags") != null) {
                         String name = req.getParameter("editable-name").trim();
                         double price = Double.parseDouble(req.getParameter("editable-price"));
                         String description = req.getParameter("editable-description").trim();
                         String weight = req.getParameter("editable-weight").trim();
                         String size = req.getParameter("editable-size").trim();
-                        int quantity = Integer.parseInt(req.getParameter("editable-quantity").trim());
+                        int quantity = Integer.parseInt(
+                                req.getParameter("editable-quantity").trim());
                         String categories = req.getParameter("editable-categories").trim();
                         String tags = req.getParameter("editable-tags").trim();
                         //Part physicalProductImage = req.getPart("editable-imagePath");
@@ -366,7 +370,7 @@ public class ManageProductServlet extends HttpServlet {
                             p = ppd.doRetrieveById(id);
                             JsonObject responsePhysicalProduct = new JsonObject();
                             JsonObject responseJson = new JsonObject();
-                            if (p== null) {
+                            if (p == null) {
                                 responseJson.addProperty("type", "error");
                                 responseJson.addProperty("msg", "Digital Product "
                                         + name + " already exists!");
@@ -483,8 +487,6 @@ public class ManageProductServlet extends HttpServlet {
                 }
             } else if (operation.equals("add_product")) {
                 if (type.equals("digitalProduct")) {
-
-
                     if (req.getParameter("name") != null
                             && req.getParameter("description") != null
                             && req.getParameter("platform") != null
@@ -632,6 +634,13 @@ public class ManageProductServlet extends HttpServlet {
                             resp.flushBuffer();
                             return;
                         }
+                    } else {
+                        responseObject.addProperty("type", "error");
+                        responseObject.addProperty("msg", "The product parameters"
+                                + " are null.");
+                        resp.getWriter().println(responseObject);
+                        resp.flushBuffer();
+                        return;
                     }
                 } else if (type.equals("physicalProduct")) {
 
@@ -790,12 +799,26 @@ public class ManageProductServlet extends HttpServlet {
                             responseObject.addProperty("type", "error");
                             responseObject.addProperty("msg", "The product parameters"
                                     + " aren't valid.");
+                            resp.getWriter().println(responseObject);
+                            resp.flushBuffer();
+                            return;
                         }
+                    } else {
+                        responseObject.addProperty("type", "error");
+                        responseObject.addProperty("msg", "Physical Product "
+                                + " cannot be added,"
+                                + " because parameters null");
+                        resp.getWriter().println(responseObject);
+                        resp.flushBuffer();
+                        return;
                     }
                 } else {
                     responseObject.addProperty("type", "error");
                     responseObject.addProperty("msg", "The product type is "
                             + "invalid.");
+                    resp.getWriter().println(responseObject);
+                    resp.flushBuffer();
+                    return;
                 }
             } else {
                 throw new RequestParametersException("Operation wrong");
