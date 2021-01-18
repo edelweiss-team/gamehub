@@ -539,7 +539,8 @@ public class ManageProductServlet extends HttpServlet {
                             bin.close();
 
                             d = new DigitalProduct(1, name, price, description,
-                                    name + "-DigitalImage.jpg", new ArrayList<>(),
+                                    name.toLowerCase().replace(" ", "-")
+                                            + "-DigitalImage.jpg", new ArrayList<>(),
                                     new ArrayList<>(), quantity, platform, releaseDate, requiredAge,
                                     softwareHouse, publisher);
 
@@ -682,7 +683,8 @@ public class ManageProductServlet extends HttpServlet {
                             bin.close();
 
                             p = new PhysicalProduct(1, name, price, description,
-                                    name + "-PhysicalImage.jpg",
+                                    name.toLowerCase().replace(" ", "-")
+                                            + "-PhysicalImage.jpg",
                                     new ArrayList<>(), new ArrayList<>(), quantity, size,
                                     Double.parseDouble(weight));
 
