@@ -320,6 +320,23 @@ public class UpdateUserServletTest {
         assertTrue(!response.getContentAsString().isEmpty());
     }
 
+    @Test
+    public void passwordNull() throws ServletException, IOException {
+        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        servlet.doPost(request, response);
+        assertTrue(!response.getContentAsString().isEmpty());
+    }
+
     //TC_3b.1_3
     @Test
     public void passwordOk() throws ServletException, IOException {
@@ -714,6 +731,79 @@ public class UpdateUserServletTest {
         request.addParameter("editable-birthDate", "1999-05-22");
         request.addParameter("editable-telephone", "3281883997");
         request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        servlet.doPost(request, response);
+        assertTrue(!response.getContentAsString().isEmpty());
+    }
+
+    @Test
+    public void usernameTooLong() throws ServletException, IOException {
+        request.addParameter("editable-username",
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigi");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        servlet.doPost(request, response);
+        assertTrue(!response.getContentAsString().isEmpty());
+    }
+
+    @Test
+    public void nameTooLong() throws ServletException, IOException {
+        request.addParameter("editable-username", "giggino2888");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+        request.addParameter("editable-surname", "Rossi");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        servlet.doPost(request, response);
+        assertTrue(!response.getContentAsString().isEmpty());
+    }
+
+    @Test
+    public void surnameTooLong() throws ServletException, IOException {
+        request.addParameter("editable-username", "giggino2888");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigii");
+        request.addParameter("editable-surname", "Rossiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "m");
+        request.addParameter("table-triggered", "1");
+        servlet.doPost(request, response);
+        assertTrue(!response.getContentAsString().isEmpty());
+    }
+
+    @Test
+    public void surnameTooLongFemale() throws ServletException, IOException {
+        request.addParameter("editable-username", "giggino2888");
+        request.addParameter("editable-password", "Password1");
+        request.addParameter("editable-mail", "Utente80@gmail.it");
+        request.addParameter("editable-name", "Luigii");
+        request.addParameter("editable-surname", "Rossiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+        request.addParameter("editable-address", "Via Castello");
+        request.addParameter("editable-city", "Fisciano");
+        request.addParameter("editable-country", "FR");
+        request.addParameter("editable-birthDate", "1999-05-22");
+        request.addParameter("editable-telephone", "3281883997");
+        request.addParameter("editable-sex", "f");
         request.addParameter("table-triggered", "1");
         servlet.doPost(request, response);
         assertTrue(!response.getContentAsString().isEmpty());

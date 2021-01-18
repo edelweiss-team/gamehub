@@ -20,31 +20,6 @@ public class DatasetSampleDAO {
             HomeServlet.EXECUTION_PATH + "/WEB-INF/personalization/buffer.csv";
 
     /**
-     * This method buffers all user samples in a given range.
-     * It is synchronized because no more than one user at time may access to the buffer file.
-     *
-     * @param offset the starting index of the user sample.
-     * @param limit the max number of users to buffer.
-     */
-    public synchronized void doBufferAll(int offset, int limit) {
-        try {
-            Connection cn = ConPool.getConnection();
-            CSVWriter csvWriter = new CSVWriter(new FileWriter(BUFFER)); //creiamo il CSVWriter
-            PreparedStatement ps = cn.prepareStatement(
-                    "SELECT * from game_hub_db.datasetsample limit ? offset ?;"
-            );
-            ps.setInt(1, limit);
-            ps.setInt(2, offset);
-            ResultSet rs = ps.executeQuery();
-            csvWriter.writeAll(rs, true); //scriviamo sul csv i nuovi dati
-            csvWriter.flush();
-            csvWriter.close();
-        } catch (SQLException | IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
      * This method buffers the user sample corresponding to the given username.
      * It is synchronized because no more than one user at time may access to the buffer file.
      *

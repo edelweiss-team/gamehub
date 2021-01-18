@@ -17,6 +17,8 @@ import org.springframework.mock.web.MockHttpSession;
 import javax.servlet.ServletException;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,11 +42,21 @@ public class ApproveOrderServletTest {
     private static @NotNull Order orderByUnregisteredUserMultiOrder1;
     private static @NotNull Order orderByUnregisteredUserMultiOrder2;
     private static final @NotNull OrderDAO orderDao = new OrderDAO();
-
+    private static DigitalProductDAO dpd = new DigitalProductDAO();
+    private static PhysicalProductDAO ppd = new PhysicalProductDAO();
+    private static DigitalProduct dp1 =
+            new DigitalProduct(10001, "prod1", 300, "desc", "path",
+                   new ArrayList<>(), new ArrayList<>(), 3, "ps3", "2021-12-12",
+                    18, "giggino", "giggino");
+    private static PhysicalProduct pp2 =
+            new PhysicalProduct(10002, "prod2", 300, "desc", "path",
+                    new ArrayList<>(), new ArrayList<>(), 3, "3x3x3",3);
 
 
     @BeforeAll
     static public void init() {
+        dpd.doSave(dp1);
+        ppd.doSave(pp2);
         // ---------------------------------> user
         buyerUser = new User(
                 "buyer",
@@ -120,6 +132,8 @@ public class ApproveOrderServletTest {
                 buyerUser,
                 operator,
                 "11/11/11");
+        orderByRegisteredUser.addProduct(pp2, 1);
+        orderByRegisteredUser.addProduct(dp1, 1);
         orderDao.doSave(orderByRegisteredUser);
 
 
@@ -147,6 +161,7 @@ public class ApproveOrderServletTest {
                 operator,
                 "9/9/9"
         );
+
         orderDao.doSave(orderByUnregisteredUserMultiOrder2);
     }
 
@@ -161,6 +176,8 @@ public class ApproveOrderServletTest {
 
         udao.doDeleteFromUsername(buyerUser.getUsername());
         udao.doDeleteFromUsername(unregisteredUser2.getUsername());
+        dpd.doDelete(dp1.getId());
+        ppd.doDelete(pp2.getId());
     }
 
     @BeforeEach
@@ -172,6 +189,12 @@ public class ApproveOrderServletTest {
         session.setAttribute("loggedUser", operator);
         request.setSession(session);
         BasicConfigurator.configure();
+    }
+
+    @Test
+    public void orderNotExists() {
+        request.addParameter("approveOrder", "-1");
+        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
     }
 
     @Test
