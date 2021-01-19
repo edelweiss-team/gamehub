@@ -6,7 +6,7 @@ import os
 
 
 def formatTagList(tagList: list):
-    for i in range(0, len(tagList)):
+    for i in range(len(tagList)):
         tagList[i] = regex.sub("Tag_", "", tagList[i])
 
 
