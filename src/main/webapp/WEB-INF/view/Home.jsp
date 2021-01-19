@@ -18,17 +18,17 @@
                 <div class="hs-text">
                     <div class="container">
                         <h2>The Best <span>Games</span> Out There</h2>
-                        <p>Scopri ed acquista i giochi più recenti, all'inerno del nostro nuovissimo store <br> I Giochi Migliori a Prezzi Imbattibili, lasciati andare e scegli un gioco. <br>Non esitare scopri di più.</p>
-                        <a href="#" class="site-btn">Know More</a>
+                        <p>Scopri ed acquista i giochi più recenti, all'inerno del nostro nuovissimo store. <br> I giochi migliori a prezzi imbattibili! lasciati andare e scegli un gioco. <br>Non esitare, scopri di più!</p>
+                        <a href="shop.html?productType=Digital" class="site-btn">I nostri prodotti!</a>
                     </div>
                 </div>
             </div>
             <div class="hs-item set-bg" data-setbg="${pageContext.request.contextPath}/img/slider-2.jpg">
                 <div class="hs-text">
                     <div class="container">
-                        <h2>The Best <span>Games</span> Out There</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada <br> lorem maximus mauris scelerisque, at rutrum nulla dictum. Ut ac ligula sapien. <br>Suspendisse cursus faucibus finibus.</p>
-                        <a href="#" class="site-btn">Read More</a>
+                        <h2>The Best <span>Community</span> Out There</h2>
+                        <p>Confrontati con la miglior Community di sempre! <br> Esprimi le tue opinioni, confrontati con altri giocatori e divertiti nei limiti del rispetto altrui. <br>I moderatori ti aiuteranno a vivere questa esperienza al meglio!</p>
+                        <a href="community.html" class="site-btn">Area Community!</a>
                     </div>
                 </div>
             </div>
@@ -52,18 +52,17 @@
 
 
 <!-- Feature section -->
-    <section class="feature-section spad">
+    <section class="feature-section spad" style="background: #212529;">
         <div class="container">
             <div class="row">
                 <c:forEach items="${newProducts}" var="product">
-                    <div class="col-lg-3 col-md-6 p-0">
-                        <div class="feature-item set-bg" data-setbg="${pageContext.request.contextPath}/img/features/1.jpg">
+                    <div class="col-lg-3 col-md-6 p-0" style="padding: 2px !important;">
+                        <div class="feature-item set-bg" data-setbg="${pageContext.request.contextPath}/img/${product.getImage()}">
                             <span class="cata new">New</span>
                                 <div class="fi-content text-white">
-                                    <h5><a href="#">${product.name}</a></h5>
-                                    <p>${product.description}</p>
+                                    <h5 style="word-break: break-word"><a href="showProduct.html?productId=${product.getId()}&productType=${product.getClass().getSimpleName().replaceAll("(Product)","")}">${product.name}</a></h5>
                                     <br>
-                                   <a href="#" class="fi-content text-white">${product.price}</a>
+                                   <p class="fi-content text-white" style="margin: 0">${product.price}€</p>
                                 </div>
                         </div>
                     </div>
@@ -74,93 +73,41 @@
     <!-- Feature section end -->
 
 
-    <!-- Recent game section  -->
-    <section class="recent-game-section spad set-bg" data-setbg="${pageContext.request.contextPath}/img/recent-game-bg.png">
-        <div class="container">
-            <div class="section-title">
-                <div class="cata new">new</div>
-                <h2>Recent Games</h2>
-            </div>
-            <div class="row">
-                <c:forEach items="${secondProducts}" var="product">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="review-item">
-                            <div class="review-cover set-bg" data-setbg="${pageContext.request.contextPath}/img/review/1.jpg">
-                                <div class="score yellow">${product.price}€</div>
-                            </div>
-                            <div class="review-text">
-                                <h5>${product.name}</h5>
-                                <p>${product.description}</p>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-        </div>
-    </section>
-    <!-- Recent game section end -->
-
 
     <!-- Tournaments section -->
     <section class="tournaments-section spad">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="tournament-item mb-4 mb-lg-0">
-                        <div class="ti-content">
-                            <div class="ti-thumb set-bg" data-setbg="${pageContext.request.contextPath}/img/tournament/1.jpg"></div>
-                            <div class="ti-text">
-                                <br><br><br>
-                                <h4 style="text-align: center; vertical-align: center" >Prodotti Fisici</h4>
+                    <a href="shop.html?productType=Physical">
+                        <div class="tournament-item mb-4 mb-lg-0">
+                            <div class="ti-content">
+                                <div class="ti-thumb set-bg" data-setbg="${pageContext.request.contextPath}/img/tournament/1.jpg"></div>
+                                <div class="ti-text">
+                                    <br><br><br>
+                                    <h4 style="text-align: center; vertical-align: center" >Prodotti Fisici</h4>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-md-6">
-                    <div class="tournament-item">
-                        <div class="ti-content">
-                            <div class="ti-thumb set-bg" data-setbg="${pageContext.request.contextPath}/img/tournament/2.jpg"></div>
-                            <div class="ti-text">
-                                <br><br><br>
-                                <h4 style="text-align: center; vertical-align: center" >Prodotti Digitali</h4>
+                    <a href="shop.html?productType=Digital">
+                        <div class="tournament-item">
+                            <div class="ti-content">
+                                <div class="ti-thumb set-bg" data-setbg="${pageContext.request.contextPath}/img/tournament/2.jpg"></div>
+                                <div class="ti-text">
+                                    <br><br><br>
+                                    <h4 style="text-align: center; vertical-align: center" >Prodotti Digitali</h4>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
     <!-- Tournaments section bg -->
-
-
-    <!-- Review section -->
-    <section class="review-section spad set-bg" data-setbg="${pageContext.request.contextPath}/img/review-bg.png">
-        <div class="container">
-            <div class="section-title">
-                <div class="cata new">new</div>
-                <h2>Recommended Products</h2>
-            </div>
-            <div class="row">
-                <c:forEach begin="0" end="3" varStatus="loop">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="review-item">
-                            <div class="review-cover set-bg" data-setbg="${pageContext.request.contextPath}/img/review/1.jpg">
-                                <div class="score yellow">9.3</div>
-                            </div>
-                            <div class="review-text">
-                                <h5>Assasin’’s Creed</h5>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-
-            </div>
-        </div>
-    </section>
-    <!-- Review section end -->
-
 
 
 <!-- Footer top section end -->
