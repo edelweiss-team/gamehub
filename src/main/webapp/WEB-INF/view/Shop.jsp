@@ -144,7 +144,7 @@
                                                 </form>
                                                 <h6 style="color: whitesmoke; margin-top: 16px;">${product.getDescription()}</h6>
                                                 <p style="margin: 16px 0 0 0">Remaining: ${product.getQuantity()}</p>
-                                                <p style="margin-bottom: 0">${product.getPrice()}$</p>
+                                                <p style="margin-bottom: 0">${product.getPrice()}€</p>
                                             </div>
                                         </div>
                                     </div>
