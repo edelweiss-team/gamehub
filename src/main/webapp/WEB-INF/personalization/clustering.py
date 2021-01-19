@@ -33,40 +33,41 @@ def loadClusterer() -> (KMeans, list):
 	return clusterAndTagList
 
 # costruiamo una lista di mappe (una per cluster), ogni mappa e' caratterizzata da: key->nomeTag, value->frequenzaTag
-def findMostCommonTagsList(df: pd.DataFrame, clustererTrained: KMeans, amountTags: int, n_clusters: int) -> list:
+def findMostCommonTagsList(df: pd.DataFrame, clustererTrained: KMeans) -> list:
 	df['cluster'] = clustererTrained.labels_ #prendiamo le label
 	listMaps = []
 
-	for i in range (n_clusters):
+	for i in range (NUM_CLUSTERS):
 		tagsHead = df.filter(regex="((^Tag_.*$)|(usesMultiplayer))", axis=1).columns
-		listMaps.append({})
 		filteredDf = df.filter(regex="((^Tag_.*$)|(usesMultiplayer)|(cluster))", axis=1)
+
+		listMaps.append({})
 		for tag in tagsHead:
 			#tagColumn = filteredDf.filter(like=tag, axis=1)
 			buffer = filteredDf[filteredDf[tag]==1]
 			listMaps[i][tag] = len(buffer[buffer['cluster']==i])
 
-	#estraiamo i migliori amountTags da ogni cluster
-	bestLists = [[] for l in range(n_clusters)] #lista di best vuoti
-	for i in range(n_clusters):
-		for j in range(amountTags):
-			#chiave con il massimo valore, ripetuto per amountTags volte
+	#estraiamo i migliori TAG_AMOUNT da ogni cluster
+	bestLists = [[] for l in range(NUM_CLUSTERS)] #lista di best vuoti
+	for i in range(NUM_CLUSTERS):
+		for j in range(TAG_AMOUNT):
+			#chiave con il massimo valore, ripetuto per TAG_AMOUNT volte
 			maxKey = max(listMaps[i].keys(), key=(lambda k: listMaps[i][k]))
 			listMaps[i].pop(maxKey) #rimuoviamo il massimo
 			bestLists[i].append(maxKey) #aggiungiamo la sua chiave alla lista dei migliori tag per il cluster specificato
 	return bestLists
 
 
-def trainClusterer(num_clusters: int) -> (KMeans, list):
+def trainClusterer() -> (KMeans, list):
 	df = pd.read_csv(DATASET_FILENAME)
 	X = df.drop(['Id', 'Username'], axis=1)
-	km = KMeans(n_clusters=num_clusters, max_iter=1000).fit(X)
-	mostCommonTagsList = findMostCommonTagsList(df, km, TAG_AMOUNT, num_clusters)
+	km = KMeans(n_clusters=NUM_CLUSTERS, max_iter=1000).fit(X)
+	mostCommonTagsList = findMostCommonTagsList(df, km)
 	return km, mostCommonTagsList
 
 
 def main():
-	clusterer, mostCommonTagsList = trainClusterer(NUM_CLUSTERS)
+	clusterer, mostCommonTagsList = trainClusterer()
 	saveClusterer(clusterer, mostCommonTagsList)
 
 
