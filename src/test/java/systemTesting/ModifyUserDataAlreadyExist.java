@@ -31,7 +31,6 @@ public class ModifyUserDataAlreadyExist {
 
         us.doSave(u);
         us.doSave(u2);
-
     }
 
 
