@@ -11,7 +11,9 @@ import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
-
+/*
+ * TC_5.1_8
+ */
 public class CheckOutLoggedUserCVVShort {
 
     private WebDriver driver;

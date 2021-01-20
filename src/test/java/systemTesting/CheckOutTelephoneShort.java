@@ -13,7 +13,9 @@ import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
-
+/*
+ * TC_4.1_14
+ */
 public class CheckOutTelephoneShort {
 
     private WebDriver driver;

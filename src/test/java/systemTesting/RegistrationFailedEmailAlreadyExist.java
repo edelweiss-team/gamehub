@@ -13,7 +13,9 @@ import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
-
+/*
+ * TC_1.1_9
+ */
 public class RegistrationFailedEmailAlreadyExist{
 
     private WebDriver driver;

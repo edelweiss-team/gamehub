@@ -242,7 +242,6 @@ class CartServletTest {
         request.setParameter("productId", "100000");
         request.setParameter("quantity", "1");
         assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
-
     }
 
     @Test

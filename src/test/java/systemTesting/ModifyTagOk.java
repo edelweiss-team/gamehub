@@ -19,7 +19,9 @@ import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
-
+/*
+ * TC_9.1_3
+ */
 public class ModifyTagOk {
 
     private WebDriver driver;
@@ -45,9 +47,6 @@ public class ModifyTagOk {
         ad.doSave(a);
         Tag t = new Tag("AAAAA");
         tg.doSave(t);
-
-
-
     }
 
     @Test
