@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="imageContainer">
                                     <a href="showProduct.html?productId=<%=p.getId()%>&productType=<%=productType%>" target="_blank">
-                                        <img alt="No image, sorry :(" src="${pageContext.request.contextPath}/img/<%=p.getImage()%>">
+                                        <img alt="No image, sorry :(" src="${pageContext.request.contextPath}/img/products/<%=p.getImage()%>">
                                     </a>
                                 </div>
                                 <div class="genericInfo">
