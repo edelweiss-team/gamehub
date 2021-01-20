@@ -145,7 +145,7 @@ public class ManageAdminsServlet extends HttpServlet {
                     );
                 } else {
                     JsonObject responseJson = new JsonObject();
-                    responseJson.addProperty("type", "success");
+                    responseJson.addProperty("type", "error");
                     responseJson.addProperty(
                             "msg",
                             "Error superAdmin must be either true or false,"

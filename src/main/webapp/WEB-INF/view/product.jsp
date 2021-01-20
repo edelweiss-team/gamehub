@@ -79,7 +79,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <div class="blog-thumb set-bg" data-setbg="img/<%=product.getImage()%>">
+                <div class="blog-thumb set-bg" data-setbg="img/products/<%=product.getImage()%>">
                     <div class="rgi-extra"></div>
                 </div>
             </div>

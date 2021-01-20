@@ -32,6 +32,7 @@ public class UpdateUserServletTest {
         servlet = new UpdateUserServlet();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
+        session.setAttribute("loggedUser" , u2);
         request.setSession(session);
         BasicConfigurator.configure();
     }
