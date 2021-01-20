@@ -86,7 +86,7 @@
                                 <c:if test="${count < 8}">
                                     <div class="col-md-6">
                                         <div class="recent-game-item">
-                                            <div class="rgi-thumb set-bg" data-setbg="img/${category.getImage()}"}>
+                                            <div class="rgi-thumb set-bg" data-setbg="img/categories/${category.getImage()}"}>
                                                 <div class="cata new">
                                                     <form action="shop.html" method="get" id="category-form">
                                                         <button type="submit" id="category-button" name="categoryName" value="${category.getName()}">

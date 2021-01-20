@@ -18,8 +18,8 @@ function getMoreCategoriesPaging(startingIndex, search=""){
             //aggiungiamo le categorie alla target page
             for(let category of newCategories) {
                 //let imagePath = '/gamehub-1.0-SNAPSHOT/img/' + category.imagePath; //eventualmente sostituire
-                let imagePath = 'img/'+category.imagePath;
-                let imagePath2 = '"img/'+category.imagePath+'"';
+                let imagePath = 'img/categories/'+category.imagePath;
+                let imagePath2 = '"img/categories/'+category.imagePath+'"';
                 $targetContainer.append("    <div class=\"col-md-6\">\n" +
                     "                                    <div class=\"recent-game-item\">\n" +
                     "                                        <div class=\"rgi-thumb set-bg\" data-setbg=\""+imagePath+"\" style='background-image: url("+imagePath2+");'>\n" +

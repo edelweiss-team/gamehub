@@ -121,7 +121,7 @@
                                 <c:if test="${count<8}">
                                     <div class="col-md-6">
                                         <div class="recent-game-item">
-                                            <div class="rgi-thumb set-bg" data-setbg="img/${product.getImage()}">
+                                            <div class="rgi-thumb set-bg" data-setbg="img/products/${product.getImage()}">
                                                 <div class="cata new">
                                                     <form action="add-cart" method="get" class="shop-form">
                                                         <input type="hidden" name="addCart" value="true">

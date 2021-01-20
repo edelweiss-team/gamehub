@@ -57,7 +57,7 @@
             <div class="row">
                 <c:forEach items="${newProducts}" var="product">
                     <div class="col-lg-3 col-md-6 p-0" style="padding: 2px !important;">
-                        <div class="feature-item set-bg" data-setbg="${pageContext.request.contextPath}/img/${product.getImage()}">
+                        <div class="feature-item set-bg" data-setbg="${pageContext.request.contextPath}/img/products/${product.getImage()}">
                             <span class="cata new">New</span>
                                 <div class="fi-content text-white">
                                     <h5 style="word-break: break-word"><a href="showProduct.html?productId=${product.getId()}&productType=${product.getClass().getSimpleName().replaceAll("(Product)","")}">${product.name}</a></h5>
