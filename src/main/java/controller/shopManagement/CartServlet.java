@@ -1,14 +1,13 @@
 package controller.shopManagement;
 
 import com.google.gson.JsonObject;
+import controller.RequestParametersException;
 import java.io.IOException;
 import java.text.*;
 import java.util.Objects;
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
-
-import controller.RequestParametersException;
 import model.bean.*;
 import model.dao.CartDAO;
 import model.dao.DigitalProductDAO;
@@ -38,6 +37,7 @@ public class CartServlet extends HttpServlet {
             throws ServletException, IOException {
         this.doGet(req, resp);
     }
+
     /**
      * this method manages Get requests.
      *

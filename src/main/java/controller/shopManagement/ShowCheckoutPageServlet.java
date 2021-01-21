@@ -1,5 +1,7 @@
 package controller.shopManagement;
 
+import controller.RequestParametersException;
+import controller.userManagement.userProfileManagement.SignupServlet;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -7,15 +9,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import controller.RequestParametersException;
-import controller.userManagement.userProfileManagement.SignupServlet;
 import model.bean.Cart;
+
 /**
- * this servlet shows, to the user which wants to proceed to the checkout, the
+ * This servlet shows, to the user which wants to proceed to the checkout, the
  * checkout page only if these conditions are satisfied:
  *      the cart in the session is NOT null
- *      the cart in the session in NOT empty
+ *      the cart in the session in NOT empty.
  */
 @WebServlet(urlPatterns = {"/checkout.html", "/purchase-items"})
 public class ShowCheckoutPageServlet extends HttpServlet {

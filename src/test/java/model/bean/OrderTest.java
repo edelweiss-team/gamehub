@@ -175,4 +175,97 @@ class OrderTest {
         assertEquals(o.getQuantitySingleProduct(53, toAddProduct.getClass()), 0);
     }
 
+    @Test
+    void equalsSameObj() {
+        Order o = new Order(1,
+                new User(
+                        "prova", "provaN", "provaS", "provaA", "provaC",
+                        "provaC2", "12-12-1999", "mail@s.com", 'M',
+                        "33342121212"
+                ), null, "23-23-1999"
+        );
+        assertTrue(o.equals(o));
+    }
+
+    @Test
+    void equalsNotOkNull() {
+        Order o = new Order(1,
+                new User(
+                        "prova", "provaN", "provaS", "provaA", "provaC",
+                        "provaC2", "12-12-1999", "mail@s.com", 'M',
+                        "33342121212"
+                ), null, "23-23-1999"
+        );
+        assertFalse(o.equals(null));
+    }
+
+    @Test
+    void equalsNotOkNotSameClass() {
+        Order o = new Order(1,
+                new User(
+                        "prova", "provaN", "provaS", "provaA", "provaC",
+                        "provaC2", "12-12-1999", "mail@s.com", 'M',
+                        "33342121212"
+                ), null, "23-23-1999"
+        );
+        assertFalse(o.equals("altra classe"));
+    }
+
+    @Test
+    void equalsOk() {
+        Order o = new Order(1,
+                new User(
+                        "prova", "provaN", "provaS", "provaA",
+                        "provaC", "provaC2", "12-12-1999", "mail@s.com",
+                        'M', "33342121212"
+                ), null, "23-23-1999"
+        );
+        Order o2 = new Order(1,
+                new User(
+                        "prova", "provaN", "provaS", "provaA",
+                        "provaC", "provaC2", "12-12-1999", "mail@s.com",
+                        'M', "33342121212"
+                ), null, "23-23-1999"
+        );
+        assertTrue(o.equals(o2));
+    }
+
+    @Test
+    void equalsNotOkDiffUsers() {
+        Order o = new Order(1,
+                new User(
+                        "prova2", "provaN", "provaS", "provaA",
+                        "provaC", "provaC2", "12-12-1999", "mail@s.com",
+                        'M', "33342121212"
+                ), null, "23-23-1999"
+        );
+        Order o2 = new Order(1,
+                new User(
+                        "prova", "provaN", "provaS", "provaA",
+                        "provaC", "provaC2", "12-12-1999", "mail@s.com",
+                        'M', "33342121212"
+                ), null, "12-12-1999"
+        );
+        assertFalse(o.equals(o2));
+    }
+
+    @Test
+    void equalsNotOkDiffDate() {
+        Order o = new Order(1,
+                new User(
+                        "prova", "provaN", "provaS", "provaA",
+                        "provaC", "provaC2", "12-12-1999", "mail@s.com",
+                        'M', "33342121212"
+                ), null, "23-23-1999"
+        );
+        Order o2 = new Order(1,
+                new User(
+                        "prova", "provaN", "provaS", "provaA",
+                        "provaC", "provaC2", "12-12-1999", "mail@s.com",
+                        'M', "33342121212"
+                ), null, "12-10-1999"
+        );
+        assertFalse(o.equals(o2));
+    }
+
 }

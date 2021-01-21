@@ -10,11 +10,11 @@ import model.dao.TagDAO;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This singleton class represents a bridge between the machine learning model and the java
+ * This singleton class represents an adapter between the machine learning model and the java
  * application. Note that this class follows the Singleton design pattern, so just a single instance
  * of it can exist at the same time, and the access to the method is synchronized to deny their
  * access to more than one user at once.
- * Moreover, note that this class's name isn't a reference to the Bridge design pattern in any way.
+ * Moreover, note that this class's name isn't a reference to the bridge design pattern in any way.
  */
 public class PersonalizationBridge {
 

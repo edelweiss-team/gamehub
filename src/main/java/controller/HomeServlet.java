@@ -16,13 +16,14 @@ import model.dao.DigitalProductDAO;
 import model.dao.PhysicalProductDAO;
 import model.dao.TagDAO;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * This servlet allows to initialize the Homepage.
  */
 @WebServlet(urlPatterns = {"/index.html", "/home", "/Home", "/HOME"}, loadOnStartup = 0)
 public class HomeServlet extends HttpServlet {
-    @NotNull
+    @Nullable
     public static String EXECUTION_PATH;
 
     @Override

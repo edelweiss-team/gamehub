@@ -12,6 +12,7 @@ public class SendMailTest {
                 "Ordine #130 ricevuto",
                 "L'ordine #130 è stato ricevuto!"
         );
+
         System.out.println("\n\nMessaggio mail mandato!\n\n");
     }
 }

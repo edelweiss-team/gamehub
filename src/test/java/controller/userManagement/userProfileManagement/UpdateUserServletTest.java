@@ -612,7 +612,7 @@ public class UpdateUserServletTest {
         sessionNuova = new MockHttpSession();
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setSession(sessionNuova);
-        request.addParameter("editable-username", "MyUsername2");
+        request.addParameter("editable-username", "MyUsername2222222222222222222222222222222222222");
         request.addParameter("editable-password", "Password1");
         request.addParameter("editable-mail", "Utente80@gmail.it");
         request.addParameter("editable-name", "Luigi");
