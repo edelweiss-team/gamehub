@@ -11,6 +11,9 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
+/*
+* TC_2.1_2
+ */
 public class LoginUsernameLong {
 
 
@@ -43,7 +46,7 @@ public class LoginUsernameLong {
         Thread.sleep(1000);
         driver.findElement(By.id("usernameField")).clear();
         Thread.sleep(1000);
-        driver.findElement(By.id("usernameField")).sendKeys("MyUsername1");
+        driver.findElement(By.id("usernameField")).sendKeys("MyUsername!");
         Thread.sleep(1000);
         driver.findElement(By.id("passwordField")).click();
         Thread.sleep(1000);

@@ -13,7 +13,9 @@ import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
-
+/*
+ * TC_1.1_10
+ */
 public class RegistrationFailedNameShort {
 
     private WebDriver driver;
@@ -28,7 +30,6 @@ public class RegistrationFailedNameShort {
         driver = SetupTesting.WEB_DRIVER;
         baseUrl = "https://www.google.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
     }
 
     @Test

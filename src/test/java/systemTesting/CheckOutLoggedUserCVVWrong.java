@@ -11,7 +11,9 @@ import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
-
+/*
+ * TC_5.1_9
+ */
 public class CheckOutLoggedUserCVVWrong {
 
     private WebDriver driver;
@@ -28,7 +30,6 @@ public class CheckOutLoggedUserCVVWrong {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         User u = new User("usertest","password", "Name", "Surname", "Address", "City", "IT", "2020-11-16", "Utenteprova@libero.it", 'M', "1111111111");
         us.doSave(u);
-
     }
 
     @Test

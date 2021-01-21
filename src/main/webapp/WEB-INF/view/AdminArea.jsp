@@ -751,7 +751,7 @@
                         <input type='text' id='adminName' class='admin-textbox' name='adminName' placeholder='Username'><br>
                     </div>
                     <div class="admin-textbox">
-                        <input type="text" id="superRoot" class="admin-textbox" name="superRoot" placeholder="superRoot"><br>
+                        <input type="text" id="superRoot" class="admin-textbox" name="editable-isSuperAdmin" placeholder="superRoot"><br>
                     </div>
                     <div class='admin-textbox' style='border: none'>
                         <span id='errorMessageAddAdmin' class='Error'></span><br>
