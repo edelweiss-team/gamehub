@@ -45,11 +45,11 @@ public class ApproveOrderServletTest {
     private static DigitalProductDAO dpd = new DigitalProductDAO();
     private static PhysicalProductDAO ppd = new PhysicalProductDAO();
     private static DigitalProduct dp1 =
-            new DigitalProduct(10001, "prod1", 300, "desc", "path",
+            new DigitalProduct(10001, "prod1", 3, "desc", "path",
                    new ArrayList<>(), new ArrayList<>(), 3, "ps3", "2021-12-12",
                     18, "giggino", "giggino");
     private static PhysicalProduct pp2 =
-            new PhysicalProduct(10002, "prod2", 300, "desc", "path",
+            new PhysicalProduct(10002, "prod2", 3, "desc", "path",
                     new ArrayList<>(), new ArrayList<>(), 3, "3x3x3",3);
 
 

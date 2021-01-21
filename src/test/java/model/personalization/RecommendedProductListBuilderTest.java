@@ -46,6 +46,7 @@ class RecommendedProductListBuilderTest {
                     Arrays.asList(c1), tags, 3, "ps3", "2021-12-12",
                     18, "giggino", "giggino");
     private static RecommendedProductListBuilder rplb = new RecommendedProductListBuilder();
+
     @BeforeAll
     static void setup() {
         td.doSave(t0);

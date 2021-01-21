@@ -189,7 +189,7 @@ public class ManageProductServlet extends HttpServlet {
                                         + id + " cannot be added, "
                                         + "because it doesn't"
                                         + " exists!");
-                                responseObject.addProperty("name", d.getName());
+                                /*responseObject.addProperty("name", d.getName());
                                 responseObject.addProperty("price", d.getPrice());
                                 responseObject.addProperty("description",
                                         d.getDescription());
@@ -205,7 +205,7 @@ public class ManageProductServlet extends HttpServlet {
                                         d.getPublisher());
                                 responseObject.addProperty("quantity",
                                         d.getQuantity());
-                                responseObject.addProperty("image", d.getImage());
+                                responseObject.addProperty("image", d.getImage());*/
                                 resp.getWriter().println(responseObject);
                                 resp.flushBuffer();
                                 return;

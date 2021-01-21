@@ -1,5 +1,7 @@
 package controller.shopManagement;
 
+import controller.RequestParametersException;
+import controller.userManagement.userProfileManagement.SignupServlet;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -12,19 +14,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import controller.RequestParametersException;
-import controller.userManagement.userProfileManagement.SignupServlet;
 import model.bean.*;
 import model.dao.*;
 import org.jetbrains.annotations.NotNull;
+
 /**
  * This servlet complete the checkout if:
- *      payment informations are valid,
- *      there's a cart in the session and is not empty,
- *      there's an user in the session,
- *      the user informations are valid,
- *
+ *      -payment informations are valid,
+ *      -there's a cart in the session and is not empty,
+ *      -there's an user in the session,
+ *      -the user informations are valid,
  * after that the we clean the session's cart and
  * save an order in the db.
  */

@@ -32,6 +32,7 @@ public class RecommendedProductListBuilder {
      *             It has to be not null nor empty.
      * @return a recommended product list that maximize the number of products that match the given
      *         tags
+     * @throws IllegalArgumentException if tags.isEmpty()
      */
     @NotNull
 

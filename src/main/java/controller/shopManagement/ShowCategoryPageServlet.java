@@ -1,7 +1,9 @@
 package controller.shopManagement;
 
+
 import static controller.shopManagement.GetMoreCategoriesServlet.CATEGORY_NAME_LENGTH;
 
+import controller.RequestParametersException;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -10,10 +12,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import controller.RequestParametersException;
 import model.bean.Category;
 import model.dao.CategoryDAO;
+
 /**
  * This servlet shows to the users the page containing categories.
  *

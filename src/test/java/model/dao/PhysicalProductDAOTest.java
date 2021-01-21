@@ -100,7 +100,7 @@ class PhysicalProductDAOTest {
     void doRetrieveAllXAll() {
         PhysicalProduct p = new PhysicalProduct(7, "NuovoProdottoTesting", 23.56,
                 "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
-                200, "sizetest", 20.05);
+                200, "3x3x3", 20.05);
 
         Category c1= new Category("CategoriaTest1","descrizione","immagine");
         p.addCategory(c1);
@@ -118,7 +118,7 @@ class PhysicalProductDAOTest {
 
         PhysicalProduct p2 = new PhysicalProduct(7, "NuovoProdottoTesting2", 23.56,
                 "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
-                200, "sizetest", 20.05);
+                200, "3x3x3", 20.05);
 
         p2.addCategory(c1);
         p2.addTag(t2);
@@ -226,14 +226,14 @@ class PhysicalProductDAOTest {
                 "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
                 200, "sizetest", 20.05);
 
-        Category c1= new Category("CategoriaTest1","descrizione","immagine");
+        Category c1= new Category("CategoriaTest500","descrizione","immagine");
         p.addCategory(c1);
         catdao.doSave(c1);
 
         PhysicalProduct dp = dao.doSave(p);
 
         ArrayList<PhysicalProduct> dg;
-        dg = dao.doRetrieveAllByCategory("CategoriaTest1",0,100);
+        dg = dao.doRetrieveAllByCategory("CategoriaTest500",0,100);
 
         assertTrue(dg.get(0).equals(dp));
 
@@ -365,7 +365,7 @@ class PhysicalProductDAOTest {
     void doUpdateNoCategoryNoTag() {
         PhysicalProduct p = new PhysicalProduct(7, "NuovoProdottoTesting", 23.56,
                 "testing", "imagetest", new ArrayList<Category>() , new ArrayList<Tag>(),
-                200, "sizetest", 20.05);
+                200, "3x3x3", 20.05);
 
 
         p = dao.doSave(p);
@@ -524,11 +524,11 @@ class PhysicalProductDAOTest {
 
     @Test
     void doRetrieveAllByTagNoProduct() {
-        Tag t1= new Tag("TagTest1");
+        Tag t1= new Tag("TagTest80");
         tagdao.doSave(t1);
 
         ArrayList<PhysicalProduct> dg;
-        dg = dao.doRetrieveAllByTag("TagTest1",0,100);
+        dg = dao.doRetrieveAllByTag("TagTest80",0,100);
 
         assertTrue(dg.size()==0);
 
