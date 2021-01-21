@@ -91,3 +91,6 @@ SetupTesting.java
 
 #chromedriver
 chromedriver.exe
+
+#mail test
+MailTest.java

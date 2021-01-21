@@ -1,5 +1,8 @@
 package controller.shopManagement;
 
+import static controller.shopManagement.GetMoreProductsServlet.PRODUCTS_PER_REQUEST_DEFAULT;
+
+import controller.RequestParametersException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,19 +12,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import controller.RequestParametersException;
 import model.bean.DigitalProduct;
 import model.bean.PhysicalProduct;
 import model.bean.Product;
 import model.dao.DigitalProductDAO;
 import model.dao.PhysicalProductDAO;
 
-import static controller.shopManagement.GetMoreProductsServlet.PRODUCTS_PER_REQUEST_DEFAULT;
+
 /**
  * this servlet shows, to the user which wants visualize the shop, the shop page.
  * It gets the from the request parameters supposed to be the filters.
- *
  * Gets a list of products based on these filters and add them to request.
  */
 @WebServlet(urlPatterns = {"/shop.html", "/show-products"})

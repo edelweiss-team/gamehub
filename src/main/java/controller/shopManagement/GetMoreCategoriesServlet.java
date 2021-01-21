@@ -1,16 +1,15 @@
 package controller.shopManagement;
 
 import com.google.gson.*;
+import controller.RequestParametersException;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-
-import controller.RequestParametersException;
 import model.bean.Category;
 import model.dao.CategoryDAO;
-import net.bytebuddy.implementation.bytecode.Throw;
+
 /**
  * This servlet adds more categories to the response.
  */

@@ -2,6 +2,7 @@ package controller.shopManagement;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import controller.RequestParametersException;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -9,12 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import controller.RequestParametersException;
 import model.bean.Tag;
 import model.dao.TagDAO;
+
 /**
- * this servlet adds more Tag to the response.
+ * This servlet adds more Tag to the response.
  */
 @WebServlet(urlPatterns = {"/get-more-tags"})
 public class GetMoreTagsServlet extends HttpServlet {

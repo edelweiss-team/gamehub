@@ -170,7 +170,7 @@ public class UpdateUserServlet extends HttpServlet {
                     responseUser.addProperty("address", u.getAddress());
                     responseUser.addProperty("city", u.getCity());
                     responseUser.addProperty("country", u.getCountry());
-                } else if (u1 != null && !u1.equals(u)) {
+                } else if (u1 != null) {
                     responseJson.addProperty("type", "error");
                     responseJson.addProperty("message", "User with "
                             + u1.getUsername() + " already exists!");
