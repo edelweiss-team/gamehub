@@ -1,6 +1,8 @@
 package controller.userManagement.userProfileManagement;
 
+
 import com.google.gson.JsonObject;
+import controller.RequestParametersException;
 import java.io.IOException;
 import java.util.Locale;
 import javax.servlet.ServletException;
@@ -10,8 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import controller.RequestParametersException;
 import controller.userManagement.userProfileManagement.LoginServlet;
 import controller.userManagement.userProfileManagement.SignupServlet;
 import model.bean.User;

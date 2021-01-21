@@ -149,13 +149,13 @@ public class SignupServlet extends HttpServlet {
                     || !u.getCountry().matches(COUNTRY_NAME_REGEX)
                     || !COUNTRIES.containsKey(u.getCountry().trim())
                     || u.getMail().length() > MAIL_MAX
-                    || u.getUsername().length() < USERNAME_MIN
-                    || u.getUsername().length() > USERNAME_MAX || u.getMail().length() > 40
+                    /*|| u.getUsername().length() < USERNAME_MIN
+                    || u.getUsername().length() > USERNAME_MAX || u.getMail().length() > 40 */
                     || u.getName().length() > NAME_MAX || u.getName().length() < NAME_MIN
                     || u.getSurname().length() < NAME_MIN || u.getSurname().length() > NAME_MAX
                     || u.getAddress().length() > STREET_MAX
                     || u.getAddress().length() < STREET_MIN
-                    || u.getCity().length() < CITY_MIN || u.getCity().length() > CITY_MAX
+                    /*|| u.getCity().length() < CITY_MIN || u.getCity().length() > CITY_MAX */
                     || !req.getParameter("repeatPassword").equals(req.getParameter("password"))) {
                 req.setAttribute("showCredentialError",
                         "Errore: credenziali di registrazione errate.");

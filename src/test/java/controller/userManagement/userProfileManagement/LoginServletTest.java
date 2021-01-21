@@ -46,6 +46,8 @@ public class LoginServletTest {
         dao.doSave(u);
     }
 
+
+
     //TC_2.1_1
     @Test
     public void userTooShort() throws ServletException, IOException {
@@ -56,31 +58,20 @@ public class LoginServletTest {
         assertEquals("/WEB-INF/view/Login.jsp" , response.getForwardedUrl());
     }
 
-    //TC_2.1_1
     @Test
     public void userTooLong() throws ServletException, IOException {
         request.addParameter("login", "login");
-        request.addParameter("username", "Myaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        request.addParameter("username", "Myyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
         request.addParameter("password", "Password1");
         servlet.doPost(request,response);
         assertEquals("/WEB-INF/view/Login.jsp" , response.getForwardedUrl());
     }
-
     //TC_2.1_2
     @Test
     public void userFormatNotValid() throws ServletException, IOException {
         request.addParameter("login", "login");
         request.addParameter("username", "MyUsername!");
         request.addParameter("password", "Password1");
-        servlet.doPost(request,response);
-        assertEquals("/WEB-INF/view/Login.jsp" , response.getForwardedUrl());
-    }
-
-    @Test
-    public void passwordNotValid() throws ServletException, IOException {
-        request.addParameter("login", "login");
-        request.addParameter("username", "MyUsername!");
-        request.addParameter("password", "Pass");
         servlet.doPost(request,response);
         assertEquals("/WEB-INF/view/Login.jsp" , response.getForwardedUrl());
     }
@@ -94,6 +85,7 @@ public class LoginServletTest {
         servlet.doPost(request,response);
         assertEquals("/WEB-INF/view/Login.jsp" , response.getForwardedUrl());
     }
+
 
 
     //TC_2.1_4

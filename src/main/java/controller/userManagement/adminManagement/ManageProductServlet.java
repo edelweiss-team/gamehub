@@ -23,7 +23,7 @@ import model.dao.PhysicalProductDAO;
 import model.dao.TagDAO;
 
 /**
- * this servlet let Admin to add/remove/edit a product saved in the DB.
+ * This servlet let Admin to add/remove/edit a product saved in the DB.
  */
 @WebServlet(urlPatterns = {"/manageProduct-servlet", "/manage-product"})
 @MultipartConfig
@@ -35,7 +35,7 @@ public class ManageProductServlet extends HttpServlet {
     public static final int DESCRIPTION_MIN_LENGTH = 3;
 
     /**
-     * this method manages Post request calling doGet method.
+     * This method manages Post request calling doGet method.
      *
      * @param req a HttpServletRequest
      * @param resp an HttpServletResponse
@@ -49,7 +49,7 @@ public class ManageProductServlet extends HttpServlet {
     }
 
     /**
-     * this method manages Get requests.
+     * This method manages Get requests.
      *
      * @param req a HttpServletRequest
      * @param resp an HttpServletResponse

@@ -67,6 +67,13 @@ class ShowCheckoutPageServletTest {
     }
 
     @Test
+    public void cartNullandEmpty() throws ServletException, IOException {
+        session.setAttribute("cart", null);
+        session.setAttribute("numOfItems", 0);
+        assertThrows(RequestParametersException.class, ()->servlet.doPost(request, response));
+    }
+
+    @Test
     public void cartIsEmpty() throws ServletException, IOException{
         cart.removeProduct(p,1);
         cart.removeProduct(pp,2);

@@ -32,7 +32,6 @@ public class UpdateUserServletTest {
         servlet = new UpdateUserServlet();
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
-        session.setAttribute("loggedUser" , u2);
         request.setSession(session);
         BasicConfigurator.configure();
     }
@@ -53,6 +52,9 @@ public class UpdateUserServletTest {
         session.setAttribute("loggedUser" , u2);
 
     }
+
+
+
 
     //TC_3a.1_1
     @Test
@@ -606,13 +608,14 @@ public class UpdateUserServletTest {
 
 
 
+
     @Test
     public void NotLoggedSelect() throws ServletException, IOException {
         MockHttpSession sessionNuova;
         sessionNuova = new MockHttpSession();
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setSession(sessionNuova);
-        request.addParameter("editable-username", "MyUsername2222222222222222222222222222222222222");
+        request.addParameter("editable-username", "MyUsername2");
         request.addParameter("editable-password", "Password1");
         request.addParameter("editable-mail", "Utente80@gmail.it");
         request.addParameter("editable-name", "Luigi");

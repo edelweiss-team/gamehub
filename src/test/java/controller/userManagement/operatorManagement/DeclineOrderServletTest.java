@@ -41,8 +41,8 @@ class DeclineOrderServletTest {
     @BeforeAll
     public static void populate() {
         User u = new User("MyUsername11", "Password1","Nomenuovo", "Cognomenuovo",
-                "Inidirizzo","Città","Nazione",
-                "1999-05-22", "Utente11@gmail.it", 'm',
+                "Via Inidirizzo","Città","IT",
+                "1999-05-22", "test6@ananana.it", 'm',
                 "3281883997");
         UserDAO ud = new UserDAO();
         ud.doSave(u);
@@ -73,8 +73,8 @@ class DeclineOrderServletTest {
     @AfterAll
     public static void clear() {
         User u = new User("MyUsername11", "Password1","Nomenuovo", "Cognomenuovo",
-                "Inidirizzo","Città","Nazione",
-                "1999-05-22", "Utente11@gmail.it", 'm',
+                "Via Inidirizzo","Città","IT",
+                "1999-05-22", "test6@ananana.it", 'm',
                 "3281883997");
         UserDAO ud = new UserDAO();
         ud.doDeleteFromUsername(u.getUsername());

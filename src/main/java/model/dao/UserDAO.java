@@ -246,6 +246,19 @@ public class UserDAO {
         }
     }
 
+    //per testing
+    public void doDeleteAllUser() {
+        try {
+            Connection cn = ConPool.getConnection();
+            PreparedStatement st = cn.prepareStatement("DELETE from user WHERE 1=1;");
+            st.executeUpdate();
+            st.close();
+            cn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * This method allows to find all the Users saved into the database.
      *

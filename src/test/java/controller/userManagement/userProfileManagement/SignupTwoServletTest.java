@@ -7,11 +7,14 @@ import org.apache.log4j.BasicConfigurator;
 import org.junit.jupiter.api.*;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockHttpSession;
+
 
 import javax.servlet.ServletException;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class SignupTwoServletTest {
@@ -19,6 +22,8 @@ public class SignupTwoServletTest {
     private SignupServlet servlet;
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
+    private MockHttpSession session;
+    private static User u;
     private static UserDAO dao = new UserDAO();
 
     @BeforeEach
@@ -37,6 +42,7 @@ public class SignupTwoServletTest {
                 "3281883997");
         dao.doSave(u);
     }
+
 
     //TC_1.1_27
     @Test
@@ -58,6 +64,9 @@ public class SignupTwoServletTest {
         UserDAO udao = new UserDAO();
         udao.doDeleteFromUsername("MyUsername");
     }
+
+
+
 
     //TC_1.1_1
     @Test
@@ -456,8 +465,7 @@ public class SignupTwoServletTest {
         request.addParameter("address", "Via Castello");
         request.addParameter("city", "Fisciano");
         request.addParameter("country", "FR");
-        request.addParameter("birthdate", "1999-05-22");
-        request.addParameter("telephone", "");
+        request.addParameter("telephone", "3281883997");
         request.addParameter("sex", "m");
         servlet.doPost(request, response);
         assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
@@ -536,7 +544,6 @@ public class SignupTwoServletTest {
         request.addParameter("telephone", "3281883997");
         request.addParameter("sex", "paschio");
         servlet.doPost(request, response);
-        servlet.doPost(request, response);
         assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
     }
 
@@ -560,6 +567,337 @@ public class SignupTwoServletTest {
         assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
     }
 
+    @Test
+    public void usernameNull() throws ServletException, IOException {
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utente@gmail.it");
+        request.addParameter("name", "Luigi");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+    @Test
+    public void passwordNull() throws ServletException, IOException {
+        request.addParameter("username", "MyUsername");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utente@gmail.it");
+        request.addParameter("name", "Luigi");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+    @Test
+    public void nameNull() throws ServletException, IOException {
+        request.addParameter("username", "MyUsername");
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utente@gmail.it");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+    @Test
+    public void surnameNull() throws ServletException, IOException {
+        request.addParameter("username", "MyUsername");
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utente@gmail.it");
+        request.addParameter("name", "Luigi");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+    @Test
+    public void addressNull() throws ServletException, IOException {
+        request.addParameter("username", "MyUsername");
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utente@gmail.it");
+        request.addParameter("name", "Luigi");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+    @Test
+    public void cityNull() throws ServletException, IOException {
+        request.addParameter("username", "MyUsername");
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utente@gmail.it");
+        request.addParameter("name", "Luigi");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+    @Test
+    public void countyNull() throws ServletException, IOException {
+        request.addParameter("username", "MyUsername");
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utente@gmail.it");
+        request.addParameter("name", "Luigi");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+    @Test
+    public void mailNull() throws ServletException, IOException {
+        request.addParameter("username", "MyUsername");
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("name", "Luigi");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+    @Test
+    public void telephoneNull() throws ServletException, IOException {
+        request.addParameter("username", "MyUsername");
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utente@gmail.it");
+        request.addParameter("name", "Luigi");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+    @Test
+    public void sexNull() throws ServletException, IOException {
+        request.addParameter("username", "MyUsername");
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utente@gmail.it");
+        request.addParameter("name", "Luigi");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+    @Test
+    public void repeatpasswordNull() throws ServletException, IOException {
+        request.addParameter("username", "MyUsername");
+        request.addParameter("password", "Password1");
+        request.addParameter("mail", "Utente@gmail.it");
+        request.addParameter("name", "Luigi");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+
+    @Test
+    public void mailMax() throws ServletException, IOException {
+        request.addParameter("username", "MyUsername");
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffente@gmail.it");
+        request.addParameter("name", "Luigi");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+    @Test
+    public void userMin() throws ServletException, IOException {
+        request.addParameter("username", "");
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utente@gmail.it");
+        request.addParameter("name", "Luigi");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+
+    @Test
+    public void unameMax() throws ServletException, IOException {
+        request.addParameter("username", "MyUserrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffname");
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnfffffffffffffffffffffffffffffnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnte@gmail.it");
+        request.addParameter("name", "Luigi");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+    @Test
+    public void nameMax() throws ServletException, IOException {
+        request.addParameter("username", "MyUsername");
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utente@gmail.it");
+        request.addParameter("name", "Luiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiigi");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+    @Test
+    public void surnameMin() throws ServletException, IOException {
+        request.addParameter("username", "MyUsername");
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utente@gmail.it");
+        request.addParameter("name", "Luigi");
+        request.addParameter("surname", "R");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+    @Test
+    public void addressMax() throws ServletException, IOException {
+        request.addParameter("username", "MyUsername");
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utente@gmail.it");
+        request.addParameter("name", "Luigi");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("address", "Via Casssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssstello");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+    @Test
+    public void cityMax() throws ServletException, IOException {
+        request.addParameter("username", "MyUsername");
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utente@gmail.it");
+        request.addParameter("name", "Luigi");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("city", "Romaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
+
+    @Test
+    public void nomeMin() throws ServletException, IOException {
+        request.addParameter("username", "MyUsername");
+        request.addParameter("password", "Password1");
+        request.addParameter("repeatPassword", "Password1");
+        request.addParameter("mail", "Utente@gmail.it");
+        request.addParameter("name", "L");
+        request.addParameter("surname", "Rossi");
+        request.addParameter("address", "Via Castello");
+        request.addParameter("city", "Fisciano");
+        request.addParameter("country", "FR");
+        request.addParameter("birthdate", "1999-05-22");
+        request.addParameter("telephone", "3281883997");
+        request.addParameter("sex", "m");
+        servlet.doPost(request, response);
+        assertEquals("/WEB-INF/view/Signup.jsp", response.getForwardedUrl());
+    }
 
     @AfterAll
     static public void DeSetup() {

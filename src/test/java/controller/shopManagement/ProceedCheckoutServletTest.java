@@ -638,7 +638,7 @@ public class ProceedCheckoutServletTest {
         request.addParameter("telephone", "3328985488");
         request.addParameter("country", "FR");
         request.addParameter("cc-expiration", "12/31");
-        request.addParameter("cc-name", "NomeCarta");
+        request.addParameter("cc-name", "Nomecarta");
         request.addParameter("cc-number", "4916551444956962");
         request.addParameter("cc-cvv", "345");
         request.addParameter("paymentMethod", "creditCard");
@@ -648,20 +648,39 @@ public class ProceedCheckoutServletTest {
 
 
     @Test
-    public void mailTooLongNotLogged() throws ServletException, IOException {
+    public void lastnameTooLongNotLogged() throws ServletException, IOException {
 
         request.addParameter("firstName", "Gerardo");
-        request.addParameter("lastName", "Brescia");
-        request.addParameter("mail","Gerardo@gmail.commmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm" +
-                "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm" +
-                "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm" +
-                "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+        request.addParameter("lastName", "Gerardooooooooooooooooooooooooooooooooooooooooooooooooo" +
+                "ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" +
+                "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo" +
+                "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+        request.addParameter("mail","Gerardo@gmail.com");
         request.addParameter("address","Via Castello");
         request.addParameter("city","Fisciano");
         request.addParameter("telephone", "3328985488");
         request.addParameter("country", "FR");
         request.addParameter("cc-expiration", "12/31");
-        request.addParameter("cc-name", "NomeCarta");
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-number", "4916551444956962");
+        request.addParameter("cc-cvv", "345");
+        request.addParameter("paymentMethod", "creditCard");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+
+    }
+
+    @Test
+    public void mailTooLongNotLogged() throws ServletException, IOException {
+
+        request.addParameter("firstName", "Gerardo");
+        request.addParameter("lastName", "Brescia");
+        request.addParameter("mail","Gerardo@ghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhmail.com");
+        request.addParameter("address","Via Castello");
+        request.addParameter("city","Fisciano");
+        request.addParameter("telephone", "3328985488");
+        request.addParameter("country", "FR");
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-name", "Nomecarta");
         request.addParameter("cc-number", "4916551444956962");
         request.addParameter("cc-cvv", "346");
         request.addParameter("paymentMethod", "creditCard");
@@ -710,7 +729,7 @@ public class ProceedCheckoutServletTest {
 
 
 
-
+/*
     @Test
     public void purchaseOkNotLogged() throws ServletException, IOException {
 
@@ -750,7 +769,7 @@ public class ProceedCheckoutServletTest {
         assertEquals("/WEB-INF/view/purchaseConfirmed.jsp", response.getForwardedUrl());
 
     }
-
+*/
 
     @Test
     public void purchaseOkEmailNotValidNotLogged() throws ServletException, IOException {
@@ -916,7 +935,7 @@ public class ProceedCheckoutServletTest {
         assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
 
     }
-
+/*
     @Test
     public void purchaseOkLogged() throws ServletException, IOException {
         session.setAttribute("loggedUser", u2);
@@ -934,6 +953,7 @@ public class ProceedCheckoutServletTest {
         assertEquals("/WEB-INF/view/purchaseConfirmed.jsp", response.getForwardedUrl());
 
     }
+*/
 
     @Test
     public void expirationNullOkLogged() throws ServletException, IOException {
@@ -979,6 +999,38 @@ public class ProceedCheckoutServletTest {
                 "jojoijijaojoaijjaojosovojfoiojfzojooefeusnnijidbdsjdjnvonnojdnjddjno");
         request.addParameter("cc-number", "4916551444956962");
         request.addParameter("cc-cvv", "347");
+        request.addParameter("paymentMethod", "creditCard");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+
+    }
+
+    @Test
+    public void ccNumberNoRegex() throws ServletException, IOException {
+        session.setAttribute("loggedUser", u2);
+        cart = new Cart(u2);
+        session.setAttribute("cart", cart);
+        cart.addProduct(p,1);
+        request.setSession(session);
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-number", "491655@@@@@@@1444956962");
+        request.addParameter("cc-cvv", "347");
+        request.addParameter("paymentMethod", "creditCard");
+        assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
+
+    }
+
+    @Test
+    public void cvvNoRegex() throws ServletException, IOException {
+        session.setAttribute("loggedUser", u2);
+        cart = new Cart(u2);
+        session.setAttribute("cart", cart);
+        cart.addProduct(p,1);
+        request.setSession(session);
+        request.addParameter("cc-expiration", "12/31");
+        request.addParameter("cc-name", "Nomecarta");
+        request.addParameter("cc-number", "4916551444956962");
+        request.addParameter("cc-cvv", "3@7");
         request.addParameter("paymentMethod", "creditCard");
         assertThrows(RequestParametersException.class,() -> servlet.doPost(request, response));
 
@@ -1077,10 +1129,13 @@ public class ProceedCheckoutServletTest {
 
 
 
+
+
     @AfterAll
     public static void clear(){
         dao.doDeleteFromUsername(u2.getUsername());
-        dao.doDeleteFromUsername("Gerardo@gmail.com");
+        if(dao.doRetrieveByMail("Gerardo@gmail.com") != null)
+            dao.doDeleteFromUsername("Gerardo@gmail.com");
         daoP.doDelete(p.getId());
         daoPP.doDelete(pp.getId());
     }
