@@ -20,7 +20,7 @@ import model.dao.PhysicalProductDAO;
 
 
 /**
- * this servlet shows, to the user which wants visualize the shop, the shop page.
+ * This servlet shows, to the user which wants visualize the shop, the shop page.
  * It gets the from the request parameters supposed to be the filters.
  * Gets a list of products based on these filters and add them to request.
  */
@@ -31,7 +31,7 @@ public class ShowShopPageServlet extends HttpServlet {
     private static final int LIMIT_MAX = 2000000;
 
     /**
-     * this method manages Post request calling doGet method.
+     * This method manages Post request calling doGet method.
      *
      * @param req a HttpServletRequest
      * @param resp an HttpServletResponse
@@ -45,7 +45,7 @@ public class ShowShopPageServlet extends HttpServlet {
     }
 
     /**
-     * this method manages Get requests.
+     * This method manages Get requests.
      *
      * @param req a HttpServletRequest
      * @param resp an HttpServletResponse

@@ -114,7 +114,7 @@ class ManageProductServletTest {
         assertThrows(RequestParametersException.class, () -> servlet.doPost(request, response) );
     }
 
-    /*@Test
+    @Test
     public void  oprationOkTypeNotExist() throws ServletException, IOException {
         request.addParameter("manage_product", "remove_product");
         request.addParameter("product_type", "digitalP");
@@ -161,7 +161,7 @@ class ManageProductServletTest {
         ppd.doDelete(p1.getId());
         servlet.doPost(request, response);
         assertTrue( !response.getContentAsString().isEmpty());
-    }*/
+    }
 
     @Test
     public void  oprationOkTypeOkLongOkUpdateNotOK() throws ServletException, IOException {

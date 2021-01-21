@@ -4,7 +4,6 @@ import controller.RequestParametersException;
 import model.bean.EmailUtility;
 import model.bean.Order;
 import model.dao.OrderDAO;
-
 import javax.mail.MessagingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
